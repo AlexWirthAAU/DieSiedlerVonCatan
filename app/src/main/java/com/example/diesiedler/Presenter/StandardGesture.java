@@ -104,11 +104,11 @@ public class StandardGesture implements View.OnTouchListener, GestureDetector.On
     @Override
     public boolean onScale(ScaleGestureDetector detector) {
         scaleFactor *= detector.getScaleFactor();
-        scaleFactor = scaleFactor < 1 ? 1 : scaleFactor; // prevent our image from becoming too small
-        scaleFactor = (float) (int) (scaleFactor * 100) / 100; // Change precision to help with jitter when user just rests their fingers //
+        scaleFactor = scaleFactor < 1 ? 1 : scaleFactor;        // prevent our image from becoming too small
+        scaleFactor = (float) (int) (scaleFactor * 100) / 100;  // Change precision to help with jitter when user just rests their fingers //
         view.setScaleX(scaleFactor);
         view.setScaleY(scaleFactor);
-        onScroll(null, null, 0, 0); // call scroll to make sure our bounds are still ok //
+        onScroll(null, null, 0, 0);         // call scroll to make sure our bounds are still ok //
         return false;
     }
 

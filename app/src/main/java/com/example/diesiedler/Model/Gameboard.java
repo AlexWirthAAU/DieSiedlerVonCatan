@@ -1,63 +1,64 @@
-package com.example.diesiedler.gameboard;
+package com.example.diesiedler.Model;
 
 import android.content.Context;
 
 import com.richpath.RichPathView;
 
 public class Gameboard {
-    private Tile[] tiles = new Tile[19];
-    private Knot[] knots = new Knot[54];
-    //private Edge[] edges = new Edge[72];
+    private Tile[] tiles = new Tile[19];        //Gameboard is always compound of 19 hexagons
+    private Knot[] knots = new Knot[54];        //Gameboard is always compound of 54 knots
+    public Edge[] edges = new Edge[72];         //Gameboard is always compound of 72 edges
 
-    public Gameboard(final Context c, RichPathView richPathView) {
+    public Gameboard(final Context c, RichPathView gameBoardView) {
         for (int i = 1; i < 20; i++) {
-            tiles[i - 1] = new Tile(i, c, richPathView);
+            tiles[i - 1] = new Tile(i, c, gameBoardView);
         }
-        initKnots();
+        initKnots(gameBoardView);
         initTileKnots();
+        initEdges(gameBoardView);
     }
 
-    private void initKnots() {
+    private void initKnots(RichPathView gameBoardView) {
         int row = 1;
         int column = 1;
         for (int i = 0; i < 54; i++) {
             if (row == 1 && column < 10) {
-                knots[i] = new Knot(row, column + 2);
+                knots[i] = new Knot(row, column + 2, gameBoardView);
                 column++;
                 if (column + 2 == 10) {
                     row = 2;
                     column = 1;
                 }
             } else if (row == 2 && column < 11) {
-                knots[i] = new Knot(row, column + 1);
+                knots[i] = new Knot(row, column + 1, gameBoardView);
                 column++;
                 if (column + 1 == 11) {
                     row = 3;
                     column = 1;
                 }
             } else if (row == 3 && column < 12) {
-                knots[i] = new Knot(row, column);
+                knots[i] = new Knot(row, column, gameBoardView);
                 column++;
                 if (column == 12) {
                     row = 4;
                     column = 1;
                 }
             } else if (row == 4 && column < 12) {
-                knots[i] = new Knot(row, column);
+                knots[i] = new Knot(row, column, gameBoardView);
                 column++;
                 if (column == 12) {
                     row = 5;
                     column = 1;
                 }
             } else if (row == 5 && column < 11) {
-                knots[i] = new Knot(row, column + 1);
+                knots[i] = new Knot(row, column + 1, gameBoardView);
                 column++;
                 if (column + 1 == 11) {
                     row = 6;
                     column = 1;
                 }
             } else if (row == 6 && column < 10) {
-                knots[i] = new Knot(row, column + 2);
+                knots[i] = new Knot(row, column + 2, gameBoardView);
                 column++;
                 if (column + 2 == 10) {
                     row = 7;
@@ -243,5 +244,63 @@ public class Gameboard {
 
     }
 
+    private void initEdges(RichPathView gameBoard) {
+        for (int i = 0; i < 6; i++) {
+            edges[i] = new Edge(knots[i], knots[i + 1], gameBoard);
+        }
+        int d = 0;
+        for (int i = 6; i < 10; i++) {
+            edges[i] = new Edge(knots[d], knots[d + 8], gameBoard);
+            d = d + 2;
+        }
+        for (int i = 10; i < 18; i++) {
+            edges[i] = new Edge(knots[i - 3], knots[i - 2], gameBoard);
+        }
+        int c = 7;
+        for (int i = 18; i < 23; i++) {
+            edges[i] = new Edge(knots[c], knots[c + 10], gameBoard);
+            c = c + 2;
+        }
+        for (int i = 23; i < 33; i++) {
+            edges[i] = new Edge(knots[i - 7], knots[i - 6], gameBoard);
+        }
+        int e = 16;
+        for (int i = 33; i < 39; i++) {
+            edges[i] = new Edge(knots[e], knots[e + 11], gameBoard);
+            e = e + 2;
+        }
+        for (int i = 39; i < 49; i++) {
+            edges[i] = new Edge(knots[i - 12], knots[i - 11], gameBoard);
+        }
+        int f = 28;
+        for (int i = 49; i < 54; i++) {
+            edges[i] = new Edge(knots[f], knots[f + 10], gameBoard);
+            f = f + 2;
+        }
+        for (int i = 54; i < 62; i++) {
+            edges[i] = new Edge(knots[i - 16], knots[i - 15], gameBoard);
+        }
+        int g = 39;
+        for (int i = 62; i < 66; i++) {
+            edges[i] = new Edge(knots[g], knots[g + 8], gameBoard);
+            g = g + 2;
+        }
+        for (int i = 66; i < 72; i++) {
+            edges[i] = new Edge(knots[i - 19], knots[i - 18], gameBoard);
+            {
+            }
+        }
+    }
 
+    public Tile[] getTiles() {
+        return tiles;
+    }
+
+    public Knot[] getKnots() {
+        return knots;
+    }
+
+    public Edge[] getEdges() {
+        return edges;
+    }
 }

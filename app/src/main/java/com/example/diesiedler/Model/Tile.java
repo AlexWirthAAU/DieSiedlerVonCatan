@@ -1,31 +1,30 @@
-package com.example.diesiedler.gameboard;
+package com.example.diesiedler.Model;
 
 import android.content.Context;
-
 import com.richpath.RichPath;
 import com.richpath.RichPathView;
 
 
 public class Tile {
-    private RichPathView richPathView;
+    private RichPathView gameBoardView;
     private RichPath surfaceTile;               //Touchable Surface
     private RichPath backgroundTile;            //Only the underlying TileDesign
     private RichPath thief;                     //Each backgroundTile has a red dot as thief -> thief.setFillAlpha(1)
     private boolean isThief;                    //to notate that the Thief is on this certain Tile
     private int id;                             //gives each Tile a id
     private int diceValue;                      //each Tile needs to have a certain value between 2-12
-    private String resource;                    //Each Tile has a certain resource (Wood, Clay,...)
-    private Knot[] knots;                       //Each Tile has a set of 6 adjoining knots
+    //private Resource resource;                //Each Tile has a certain resource (Wood, Clay,...)
+    private Knot[] knots;                       //Each Tile has a set of 6 adjoining knots (needed to check which settlement gets resources after rolling the dice
 
 
     public Tile(int Tid, Context c, RichPathView rpv) {
         isThief = false;
         id = Tid;
         setDiceValue();
-        richPathView = rpv;
-        surfaceTile = richPathView.findRichPathByName("tile_" + id);
-        backgroundTile = richPathView.findRichPathByName("backgroundTile_" + id);
-        thief = richPathView.findRichPathByName("thief_" + id);
+        gameBoardView = rpv;
+        surfaceTile = gameBoardView.findRichPathByName("tile_" + id);
+        backgroundTile = gameBoardView.findRichPathByName("backgroundTile_" + id);
+        thief = gameBoardView.findRichPathByName("thief_" + id);
         setResource();
         knots = new Knot[54];
     }
@@ -43,8 +42,8 @@ public class Tile {
         return thief;
     }
 
-    public RichPathView getRichPathView() {
-        return richPathView;
+    public RichPathView getGameBoardView() {
+        return gameBoardView;
     }
 
     public RichPath getSurfaceTile() {
@@ -55,16 +54,16 @@ public class Tile {
         return id;
     }
 
-    public String getResource() {
-        return resource;
-    }
+    //public Resource getResource() {
+    //    return resource;
+    //}
 
     public boolean isThief() {
         return isThief;
     }
 
-    public void setRichPathView(RichPathView richPathView) {
-        this.richPathView = richPathView;
+    public void setGameBoardView(RichPathView gameBoardView) {
+        this.gameBoardView = gameBoardView;
     }
 
     public void setSurfaceTile(RichPath surfaceTile) {
@@ -83,8 +82,8 @@ public class Tile {
         this.id = id;
     }
 
-    public void setResource(String resource) {
-        this.resource = resource;
+    private void setResource(String resource) {                     //Depending on the color of the underlying Tile, the tiles resource has to be set
+
     }
 
     public void setThief(boolean thief) {
@@ -116,10 +115,13 @@ public class Tile {
                 this.diceValue = 9;
                 break;
             }
-            case 4: {
+            case 4:
+            case 13: {
                 this.diceValue = 3;
+                break;
             }
-            case 5: {
+            case 5:
+            case 18: {
                 this.diceValue = 8;
                 break;
             }
@@ -147,16 +149,12 @@ public class Tile {
                 this.diceValue = 2;
                 break;
             }
-            case 13: {
-                this.diceValue = 3;
-                break;
-            }
-            case 18: {
-                this.diceValue = 8;
-                break;
-            }
 
 
         }
+    }
+
+    public int getDiceValue() {
+        return diceValue;
     }
 }
