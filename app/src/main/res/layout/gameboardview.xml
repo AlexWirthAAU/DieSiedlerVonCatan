@@ -8,6 +8,6 @@
         android:id="@+id/ic_gameboardView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        app:vector="@drawable/ic_backgroundboard1" />
+        app:vector="@drawable/ic_backgroundboard2" />
 
 </RelativeLayout>

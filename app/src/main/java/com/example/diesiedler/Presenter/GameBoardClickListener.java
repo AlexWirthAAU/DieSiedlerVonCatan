@@ -42,6 +42,7 @@ public class GameBoardClickListener {
                     for (Knot k : gameboard.getKnots()) {
                         if (k.getRow() == row && k.getColumn() == column) {
                             Log.d("DEBUG", "Clicked Knot: " + k.toString());
+                            Log.d("DEBUG", "KnotisHarbour: " + k.getIsHarbourKnot());
                         }
                     }
                 } else if (pathType.contains("edge")) {

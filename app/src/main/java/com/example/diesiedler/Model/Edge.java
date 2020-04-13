@@ -1,5 +1,7 @@
 package com.example.diesiedler.Model;
 
+import android.media.Image;
+
 import com.richpath.RichPath;
 import com.richpath.RichPathView;
 
@@ -15,6 +17,7 @@ public class Edge {
         this.one = one;
         this.two = two;
         this.id = "edge_" + one.getRow() + "" + one.getColumn() + "" + two.getRow() + "" + two.getColumn();
+        this.road = gameBoard.findRichPathByName(this.id);
         this.gameBoard = gameBoard;
     }
 
@@ -29,4 +32,15 @@ public class Edge {
     public String getId() {
         return id;
     }
+
+    public RichPath road() {
+        return this.road;
+    }
+
+    /*TODO:
+    public void buildRoad(Player p){
+        this.p=p;
+        road.setFillColor(p.getColor);
+    }
+     */
 }
