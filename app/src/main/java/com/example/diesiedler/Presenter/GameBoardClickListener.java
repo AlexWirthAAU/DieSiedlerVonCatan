@@ -33,7 +33,6 @@ public class GameBoardClickListener {
                     for (Tile t : gameboard.getTiles()) {
                         if (t.getId() == pathID) {
                             Log.d("DEBUG", "Clicked Tile: " + t.getId());
-                            Log.d("DEBUG", "Tile: " + t.getId() + " has divevalue: " + t.getDiceValue());
                         }
                     }
                 } else if (pathType.contains("settlement")) {
@@ -43,7 +42,6 @@ public class GameBoardClickListener {
                     for (Knot k : gameboard.getKnots()) {
                         if (k.getRow() == row && k.getColumn() == column) {
                             Log.d("DEBUG", "Clicked Knot: " + k.toString());
-
                         }
                     }
                 } else if (pathType.contains("edge")) {
@@ -52,7 +50,6 @@ public class GameBoardClickListener {
                     for (Edge e : gameboard.getEdges()) {
                         if (e.getId().equals(edgeID)) {
                             Log.d("DEBUG", "Clicked Edge: " + richPath.getName());
-
                         }
                     }
                 } else if (pathType.contains("background")) {

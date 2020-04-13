@@ -6,13 +6,13 @@ import com.richpath.RichPathView;
 import java.util.ArrayList;
 
 public class Knot {
-    private int row;                    //Each Knot is idntified by row and column
+    private int row;                    //Each Knot is identified by row and column
     private int column;
     private RichPathView gameBoardView;
     private RichPath settlement;        //Richpath Element to click on, when building a new settlement
     private RichPath city;              //Richpath Element that gets visible, as soon as a player upgrades his settlement to a city
     private ArrayList<Knot> path;       //As soon as a knots Player != null -> path = new ArrayList and push the knot in this list (beginning of a path)
-    //Player p;                         //When a player builds a settlement, he owns this knot
+    //Player p;                         //TODO: When a player builds a settlement, he owns this knot
 
     public Knot(int row, int column, RichPathView gameBoardView) {
         this.gameBoardView = gameBoardView;
@@ -46,4 +46,19 @@ public class Knot {
     public ArrayList<Knot> getPath() {
         return path;
     }
+
+    /*
+
+    TODO: method to build a settlement or city on a specific knot
+
+    public void buildSettlement(Player p){
+         this.p=p;
+         this.settlement.setFillColor(p.getColor);
+    }
+
+    public void buildCity(){
+          this.city.setFillAlpha(1);
+    }
+
+     */
 }

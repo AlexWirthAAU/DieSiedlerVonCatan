@@ -4,7 +4,7 @@ import com.richpath.RichPath;
 import com.richpath.RichPathView;
 
 public class Edge {
-    private String id;              //Each Edge has a Idea named: edge_<Knot1_Row><Knot1_Column><Knot2_Row><Knot2_Column>
+    private String id;              //Each Edge has a Id named: edge_<Knot1_Row><Knot1_Column><Knot2_Row><Knot2_Column>
     private Knot one;               //Each edge is defined as straight between two knots
     private Knot two;
     RichPathView gameBoard;

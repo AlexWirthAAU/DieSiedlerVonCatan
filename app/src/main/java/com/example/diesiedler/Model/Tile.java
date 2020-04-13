@@ -13,7 +13,7 @@ public class Tile {
     private boolean isThief;                    //to notate that the Thief is on this certain Tile
     private int id;                             //gives each Tile a id
     private int diceValue;                      //each Tile needs to have a certain value between 2-12
-    //private Resource resource;                //Each Tile has a certain resource (Wood, Clay,...)
+    //private Resource resource;                //TODO: Each Tile has a certain resource (Wood, Clay,...)
     private Knot[] knots;                       //Each Tile has a set of 6 adjoining knots (needed to check which settlement gets resources after rolling the dice
 
 
@@ -31,7 +31,7 @@ public class Tile {
 
     private void setResource() {
         //int color = backgroundTile.getFillColor();
-        //TODO: Why does it giveback int?
+        //TODO: set resource depending on backgroundTile.getFillAlpha
     }
 
     public RichPath getBackgroundTile() {
@@ -74,20 +74,17 @@ public class Tile {
         this.backgroundTile = backgroundTile;
     }
 
-    public void setThief(RichPath thief) {
-        this.thief = thief;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
 
-    private void setResource(String resource) {                     //Depending on the color of the underlying Tile, the tiles resource has to be set
-
-    }
-
-    public void setThief(boolean thief) {
-        isThief = thief;
+    public void setThief(boolean isthief) {
+        isThief = isthief;
+        if (isthief == true) {
+            this.thief.setFillAlpha(1);
+        } else {
+            this.thief.setFillAlpha(0);
+        }
     }
 
     public void setKnots(Knot[] knots) {

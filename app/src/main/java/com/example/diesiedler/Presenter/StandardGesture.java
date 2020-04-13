@@ -17,6 +17,8 @@ public class StandardGesture implements View.OnTouchListener, GestureDetector.On
     private float scaleFactor = 1;
     private boolean inScale;
 
+    //Does not yet work properly, as it makes problems with GameBoardClickListener
+
 
     public StandardGesture(Context c) {
         gesture = new GestureDetector(c, this);

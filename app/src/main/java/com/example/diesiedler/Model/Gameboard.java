@@ -70,24 +70,24 @@ public class Gameboard {
 
     private void initTileKnots() {
         Knot[] tile1Knots = new Knot[6];
-        Knot[] tile2Knotes = new Knot[6];
+        Knot[] tile2Knots = new Knot[6];
         Knot[] tile3Knots = new Knot[6];
-        Knot[] tile4Knotes = new Knot[6];
+        Knot[] tile4Knots = new Knot[6];
         Knot[] tile5Knots = new Knot[6];
-        Knot[] tile6Knotes = new Knot[6];
+        Knot[] tile6Knots = new Knot[6];
         Knot[] tile7Knots = new Knot[6];
-        Knot[] tile8Knotes = new Knot[6];
+        Knot[] tile8Knots = new Knot[6];
         Knot[] tile9Knots = new Knot[6];
-        Knot[] tile10Knotes = new Knot[6];
+        Knot[] tile10Knots = new Knot[6];
         Knot[] tile11Knots = new Knot[6];
-        Knot[] tile12Knotes = new Knot[6];
+        Knot[] tile12Knots = new Knot[6];
         Knot[] tile13Knots = new Knot[6];
-        Knot[] tile14Knotes = new Knot[6];
+        Knot[] tile14Knots = new Knot[6];
         Knot[] tile15Knots = new Knot[6];
-        Knot[] tile16Knotes = new Knot[6];
-        Knot[] tile17Knotes = new Knot[6];
+        Knot[] tile16Knots = new Knot[6];
+        Knot[] tile17Knots = new Knot[6];
         Knot[] tile18Knots = new Knot[6];
-        Knot[] tile19Knotes = new Knot[6];
+        Knot[] tile19Knots = new Knot[6];
 
         for (int i = 0; i < 3; i++) {
             tile1Knots[i] = knots[i];
@@ -97,10 +97,10 @@ public class Gameboard {
         }
 
         for (int i = 0; i < 3; i++) {
-            tile2Knotes[i] = knots[i + 2];
+            tile2Knots[i] = knots[i + 2];
         }
         for (int i = 3; i < 6; i++) {
-            tile2Knotes[i] = knots[i + 6];
+            tile2Knots[i] = knots[i + 6];
         }
 
         for (int i = 0; i < 3; i++) {
@@ -111,10 +111,10 @@ public class Gameboard {
         }
 
         for (int i = 0; i < 3; i++) {
-            tile4Knotes[i] = knots[i + 7];
+            tile4Knots[i] = knots[i + 7];
         }
         for (int i = 3; i < 6; i++) {
-            tile4Knotes[i] = knots[i + 13];
+            tile4Knots[i] = knots[i + 13];
         }
 
         for (int i = 0; i < 3; i++) {
@@ -125,10 +125,10 @@ public class Gameboard {
         }
 
         for (int i = 0; i < 3; i++) {
-            tile6Knotes[i] = knots[i + 11];
+            tile6Knots[i] = knots[i + 11];
         }
         for (int i = 3; i < 6; i++) {
-            tile6Knotes[i] = knots[i + 17];
+            tile6Knots[i] = knots[i + 17];
         }
 
         for (int i = 0; i < 3; i++) {
@@ -139,10 +139,10 @@ public class Gameboard {
         }
 
         for (int i = 0; i < 3; i++) {
-            tile8Knotes[i] = knots[i + 15];
+            tile8Knots[i] = knots[i + 15];
         }
         for (int i = 3; i < 6; i++) {
-            tile8Knotes[i] = knots[i + 23];
+            tile8Knots[i] = knots[i + 23];
         }
 
         for (int i = 0; i < 3; i++) {
@@ -153,10 +153,10 @@ public class Gameboard {
         }
 
         for (int i = 0; i < 3; i++) {
-            tile10Knotes[i] = knots[i + 19];
+            tile10Knots[i] = knots[i + 19];
         }
         for (int i = 3; i < 6; i++) {
-            tile10Knotes[i] = knots[i + 27];
+            tile10Knots[i] = knots[i + 27];
         }
 
         for (int i = 0; i < 3; i++) {
@@ -167,10 +167,10 @@ public class Gameboard {
         }
 
         for (int i = 0; i < 3; i++) {
-            tile12Knotes[i] = knots[i + 23];
+            tile12Knots[i] = knots[i + 23];
         }
         for (int i = 3; i < 6; i++) {
-            tile12Knotes[i] = knots[i + 31];
+            tile12Knots[i] = knots[i + 31];
         }
 
         for (int i = 0; i < 3; i++) {
@@ -181,10 +181,10 @@ public class Gameboard {
         }
 
         for (int i = 0; i < 3; i++) {
-            tile14Knotes[i] = knots[i + 29];
+            tile14Knots[i] = knots[i + 29];
         }
         for (int i = 3; i < 6; i++) {
-            tile14Knotes[i] = knots[i + 35];
+            tile14Knots[i] = knots[i + 35];
         }
 
         for (int i = 0; i < 3; i++) {
@@ -195,17 +195,17 @@ public class Gameboard {
         }
 
         for (int i = 0; i < 3; i++) {
-            tile16Knotes[i] = knots[i + 33];
+            tile16Knots[i] = knots[i + 33];
         }
         for (int i = 3; i < 6; i++) {
-            tile16Knotes[i] = knots[i + 39];
+            tile16Knots[i] = knots[i + 39];
         }
 
         for (int i = 0; i < 3; i++) {
-            tile17Knotes[i] = knots[i + 37];
+            tile17Knots[i] = knots[i + 37];
         }
         for (int i = 3; i < 6; i++) {
-            tile17Knotes[i] = knots[i + 41];
+            tile17Knots[i] = knots[i + 41];
         }
 
         for (int i = 0; i < 3; i++) {
@@ -216,31 +216,31 @@ public class Gameboard {
         }
 
         for (int i = 0; i < 3; i++) {
-            tile19Knotes[i] = knots[i + 41];
+            tile19Knots[i] = knots[i + 41];
         }
         for (int i = 3; i < 6; i++) {
-            tile19Knotes[i] = knots[i + 45];
+            tile19Knots[i] = knots[i + 45];
         }
 
         tiles[0].setKnots(tile1Knots);
-        tiles[1].setKnots(tile2Knotes);
+        tiles[1].setKnots(tile2Knots);
         tiles[2].setKnots(tile3Knots);
-        tiles[3].setKnots(tile4Knotes);
+        tiles[3].setKnots(tile4Knots);
         tiles[4].setKnots(tile5Knots);
-        tiles[5].setKnots(tile6Knotes);
+        tiles[5].setKnots(tile6Knots);
         tiles[6].setKnots(tile7Knots);
-        tiles[7].setKnots(tile8Knotes);
+        tiles[7].setKnots(tile8Knots);
         tiles[8].setKnots(tile9Knots);
-        tiles[9].setKnots(tile10Knotes);
+        tiles[9].setKnots(tile10Knots);
         tiles[10].setKnots(tile11Knots);
-        tiles[11].setKnots(tile12Knotes);
+        tiles[11].setKnots(tile12Knots);
         tiles[12].setKnots(tile13Knots);
-        tiles[13].setKnots(tile14Knotes);
+        tiles[13].setKnots(tile14Knots);
         tiles[14].setKnots(tile15Knots);
-        tiles[15].setKnots(tile16Knotes);
-        tiles[16].setKnots(tile17Knotes);
+        tiles[15].setKnots(tile16Knots);
+        tiles[16].setKnots(tile17Knots);
         tiles[17].setKnots(tile18Knots);
-        tiles[18].setKnots(tile19Knotes);
+        tiles[18].setKnots(tile19Knots);
 
     }
 
