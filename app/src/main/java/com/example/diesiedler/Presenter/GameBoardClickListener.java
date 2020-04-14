@@ -3,10 +3,10 @@ package com.example.diesiedler.Presenter;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.diesiedler.Model.Edge;
-import com.example.diesiedler.Model.Gameboard;
-import com.example.diesiedler.Model.Knot;
-import com.example.diesiedler.Model.Tile;
+import com.example.diesiedler.Model.Gameboard.Edge;
+import com.example.diesiedler.Model.Gameboard.Gameboard;
+import com.example.diesiedler.Model.Gameboard.Knot;
+import com.example.diesiedler.Model.Gameboard.Tile;
 import com.richpath.RichPath;
 import com.richpath.RichPathView;
 
@@ -33,6 +33,7 @@ public class GameBoardClickListener {
                     for (Tile t : gameboard.getTiles()) {
                         if (t.getId() == pathID) {
                             Log.d("DEBUG", "Clicked Tile: " + t.getId());
+                            Log.d("DEBUG", "Tile resource is: " + t.getResource());
                         }
                     }
                 } else if (pathType.contains("settlement")) {
@@ -53,9 +54,8 @@ public class GameBoardClickListener {
                             Log.d("DEBUG", "Clicked Edge: " + richPath.getName());
                         }
                     }
-                } else if (pathType.contains("background")) {
+                } else if (pathType.contains("background") || pathType.contains("harbour")) {
                     Log.d("DEBUG", "Touched background");
-
                 }
             }
         });

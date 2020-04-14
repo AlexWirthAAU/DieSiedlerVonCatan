@@ -1,4 +1,4 @@
-package com.example.diesiedler.Model;
+package com.example.diesiedler.Model.Gameboard;
 
 import com.richpath.RichPath;
 import com.richpath.RichPathView;
@@ -86,7 +86,6 @@ public class Knot {
 
 
     /*
-
     TODO: method to build a settlement or city on a specific knot
 
     public void buildSettlement(Player p){
@@ -97,6 +96,5 @@ public class Knot {
     public void buildCity(){
           this.city.setFillAlpha(1);
     }
-
      */
 }

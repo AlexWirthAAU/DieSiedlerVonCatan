@@ -1,6 +1,4 @@
-package com.example.diesiedler.Model;
-
-import android.media.Image;
+package com.example.diesiedler.Model.Gameboard;
 
 import com.richpath.RichPath;
 import com.richpath.RichPathView;

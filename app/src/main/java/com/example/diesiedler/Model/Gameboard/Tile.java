@@ -1,4 +1,4 @@
-package com.example.diesiedler.Model;
+package com.example.diesiedler.Model.Gameboard;
 
 import android.content.Context;
 import com.richpath.RichPath;
@@ -13,11 +13,11 @@ public class Tile {
     private boolean isThief;                    //to notate that the Thief is on this certain Tile
     private int id;                             //gives each Tile a id
     private int diceValue;                      //each Tile needs to have a certain value between 2-12
-    //private Resource resource;                //TODO: Each Tile has a certain resource (Wood, Clay,...)
+    private String resource;                    //Each Tile has a certain resource (Wood, Clay,...)
     private Knot[] knots;                       //Each Tile has a set of 6 adjoining knots (needed to check which settlement gets resources after rolling the dice
 
 
-    public Tile(int Tid, Context c, RichPathView rpv) {
+    public Tile(int Tid, RichPathView rpv) {
         isThief = false;
         id = Tid;
         setDiceValue();
@@ -30,8 +30,19 @@ public class Tile {
     }
 
     private void setResource() {
-        //int color = backgroundTile.getFillColor();
-        //TODO: set resource depending on backgroundTile.getFillAlpha
+        if (backgroundTile.getFillColor() == -16754944) {
+            this.resource = "WOOD";
+        } else if (backgroundTile.getFillColor() == -11903594) {
+            this.resource = "ORE";
+        } else if (backgroundTile.getFillColor() == -400871) {
+            this.resource = "WHEAT";
+        } else if (backgroundTile.getFillColor() == -6005715) {
+            this.resource = "CLAY";
+        } else if (backgroundTile.getFillColor() == -13321954) {
+            this.resource = "WOOL";
+        } else if (backgroundTile.getFillColor() == -5798865) {
+            this.resource = "DESERT";
+        }
     }
 
     public RichPath getBackgroundTile() {
@@ -54,9 +65,9 @@ public class Tile {
         return id;
     }
 
-    //public Resource getResource() {
-    //    return resource;
-    //}
+    public String getResource() {
+        return resource;
+    }
 
     public boolean isThief() {
         return isThief;
@@ -78,9 +89,9 @@ public class Tile {
         this.id = id;
     }
 
-    public void setThief(boolean isthief) {
-        isThief = isthief;
-        if (isthief == true) {
+    public void setThief(boolean thief) {
+        this.isThief = thief;
+        if (isThief == true) {
             this.thief.setFillAlpha(1);
         } else {
             this.thief.setFillAlpha(0);

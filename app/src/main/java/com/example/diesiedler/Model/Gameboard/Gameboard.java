@@ -1,4 +1,4 @@
-package com.example.diesiedler.Model;
+package com.example.diesiedler.Model.Gameboard;
 
 import android.content.Context;
 
@@ -9,9 +9,9 @@ public class Gameboard {
     private Knot[] knots = new Knot[54];        //Gameboard is always compound of 54 knots
     public Edge[] edges = new Edge[72];         //Gameboard is always compound of 72 edges
 
-    public Gameboard(final Context c, RichPathView gameBoardView) {
+    public Gameboard(RichPathView gameBoardView) {
         for (int i = 1; i < 20; i++) {
-            tiles[i - 1] = new Tile(i, c, gameBoardView);
+            tiles[i - 1] = new Tile(i, gameBoardView);
         }
         initKnots(gameBoardView);
         initTileKnots();
