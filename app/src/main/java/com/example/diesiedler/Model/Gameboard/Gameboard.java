@@ -7,7 +7,7 @@ import com.richpath.RichPathView;
 public class Gameboard {
     private Tile[] tiles = new Tile[19];        //Gameboard is always compound of 19 hexagons
     private Knot[] knots = new Knot[54];        //Gameboard is always compound of 54 knots
-    public Edge[] edges = new Edge[72];         //Gameboard is always compound of 72 edges
+    private Edge[] edges = new Edge[72];         //Gameboard is always compound of 72 edges
 
     public Gameboard(RichPathView gameBoardView) {
         for (int i = 1; i < 20; i++) {

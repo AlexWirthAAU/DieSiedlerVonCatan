@@ -7,8 +7,8 @@ public class Edge {
     private String id;              //Each Edge has a Id named: edge_<Knot1_Row><Knot1_Column><Knot2_Row><Knot2_Column>
     private Knot one;               //Each edge is defined as straight between two knots
     private Knot two;
-    RichPathView gameBoard;
-    RichPath road;                  //Richpath Element to click on
+    private RichPathView gameBoard;
+    private RichPath road;                  //Richpath Element to click on
     //Player p;                     //When a player builds a road -> player owns this specific road/edge
 
     public Edge(Knot one, Knot two, RichPathView gameBoard) {
