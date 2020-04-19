@@ -20,6 +20,7 @@ class PlayerOps {
 
         GameImpl game = new GameImpl();
         PlayerImpl player;
+        int id;
 
         for (String str : usersIn) {
             player = new PlayerImpl(str);
@@ -27,6 +28,8 @@ class PlayerOps {
             game.setPlayer(player);
         }
 
+        id = game.getGameId();
+        System.out.println(id + " gameId in service");
         gsi.insert(game);
 
         return gsi.getList(game.getGameId());
@@ -36,6 +39,12 @@ class PlayerOps {
 
         PlayerImpl player;
         Integer gameId = null;
+
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            System.out.println(entry.getValue() + " userInMap");
+            Colors color = Colors.valueOf(entry.getKey().toUpperCase());
+            System.out.println(color + " colorServer");
+        }
 
         for (Map.Entry<String, String> entry : map.entrySet()) {
 
@@ -67,7 +76,10 @@ class PlayerOps {
         List<PlayerImpl> players = game.getPlayers();
 
         for (PlayerImpl player : players) {
-            map.put(player.getColor().toString().toLowerCase(), player.getDisplayName());
+            System.out.println(player.getPlayerId() + " playerinCheckColors");
+            if (player.getColor() != null) {
+                map.put(player.getColor().toString().toLowerCase(), player.getDisplayName());
+            }
         }
 
         return map;

@@ -99,7 +99,9 @@ public class GameServiceImpl extends ServiceImpl<Integer, GameImpl> implements G
 
         for (PlayerImpl player : game.getPlayers()) {
             gameList.add((player.getDisplayName()));
-            gameList.add(player.getColor().toString());
+            if (player.getColor() != null) {
+                gameList.add(player.getColor().toString());
+            }
         }
 
         return gameList;

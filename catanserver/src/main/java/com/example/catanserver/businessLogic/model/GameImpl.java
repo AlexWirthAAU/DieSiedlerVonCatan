@@ -11,7 +11,6 @@ public class GameImpl implements Game, Serializable {
     private int gameId;
 
     public GameImpl() {
-
         this.gameId = ++currGameId;
     }
 

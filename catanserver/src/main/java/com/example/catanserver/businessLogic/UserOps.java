@@ -34,6 +34,7 @@ class UserOps {
     List<String> updateUserList(int listsize) {
 
         if (listsize == usi.fetchAll().size()) {
+            System.out.println(usi.fetchAll().size() + " realsize");
             return null;
         } else {
             return usi.getNameList();

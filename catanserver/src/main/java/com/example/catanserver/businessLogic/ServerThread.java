@@ -31,72 +31,53 @@ public class ServerThread implements Runnable {
 
             String in;
             int inInt;
-            //System.out.println(inFromClient.readLine());
+            System.out.println(intent);
 
             switch (intent) {
                 case "#LOGIN":
                     System.out.println(intent);
                     in = obInFromClient.readUTF();
+                    System.out.println(in);
                     list = userOps.updateUserList(in);
+                    break;
                 case "#UPDATE":
                     System.out.println(intent);
                     in = obInFromClient.readUTF();
                     inInt = Integer.parseInt(in);
+                    System.out.println(inInt);
                     list = userOps.updateUserList(inInt);
+                    break;
                 case "#STARTGAME":
                     System.out.println(intent);
                     @SuppressWarnings("unchecked")
                     List<String> inList = (List) obInFromClient.readObject();
                     list = playerOps.startGame(inList);
+                    break;
                 case "#CHECKGAME":
                     System.out.println(intent);
                     in = obInFromClient.readUTF();
                     list = playerOps.checkIfIn(in);
+                    break;
                 case "#SETCOLOR":
                     System.out.println(intent);
                     @SuppressWarnings("unchecked")
                     Map<String, String> inMap = (Map) obInFromClient.readObject();
                     list = playerOps.setColor(inMap);
+                    break;
                 case "#CHECKCOLOR":
                     System.out.println(intent);
                     in = obInFromClient.readUTF();
                     inInt = Integer.parseInt(in);
                     Map map = playerOps.checkColors(inInt);
                     outToClient.writeObject(map);
+                    break;
+                default:
+                    break;
             }
 
-            /*
-            try {
-                object=obInFromClient.readObject();
-                if (object instanceof List) {
-                    System.out.println("if");
-                    inList = (List) object;
-                    list = playerOps.startGame(inList);
-                } else {
-                    System.out.println("else");
-                    inMap = (Map) object;
-                    playerOps.setColor(inMap);
-                }
-            } catch (OptionalDataException ode) {
-                in=obInFromClient.readUTF();
-                System.out.println("catchob" + in);
-                try {
-                    System.out.println("try");
-                    inInt = Integer.parseInt(in);
-                    list = userOps.updateUserList(inInt);
-                } catch (NumberFormatException nfe) {
-                    System.out.println("catch");
-                    list = userOps.updateUserList(in);
-                } finally {
-                    if (list != null) {
-                        for (int i = 0; i < list.size(); i++) {
-                            System.out.println(list.get(i) + " thread");
-                        }
-                    }
-                }
-            }*/
-
+            System.out.println("after");
             outToClient.writeObject(list);
+            outToClient.flush();
 
             obInFromClient.close();
             outToClient.close();
