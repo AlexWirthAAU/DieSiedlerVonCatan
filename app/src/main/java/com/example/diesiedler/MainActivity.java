@@ -2,8 +2,9 @@ package com.example.diesiedler;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.example.diesiedler.Presenter.GameBoardClickListener;
-import com.example.diesiedler.Model.Gameboard.Gameboard;
+
+import com.example.diesiedler.presenter.GameBoardClickListener;
+import com.example.diesiedler.model.gameboard.Gameboard;
 import com.richpath.RichPathView;
 
 

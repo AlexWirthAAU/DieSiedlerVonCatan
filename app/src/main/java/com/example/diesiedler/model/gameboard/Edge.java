@@ -1,4 +1,4 @@
-package com.example.diesiedler.Model.Gameboard;
+package com.example.diesiedler.model.gameboard;
 
 import com.richpath.RichPath;
 import com.richpath.RichPathView;

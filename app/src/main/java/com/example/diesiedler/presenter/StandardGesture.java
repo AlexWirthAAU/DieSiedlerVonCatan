@@ -1,4 +1,4 @@
-package com.example.diesiedler.Presenter;
+package com.example.diesiedler.presenter;
 
 import android.content.Context;
 import android.graphics.Point;

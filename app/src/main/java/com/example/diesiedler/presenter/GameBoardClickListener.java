@@ -1,12 +1,12 @@
-package com.example.diesiedler.Presenter;
+package com.example.diesiedler.presenter;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.example.diesiedler.Model.Gameboard.Edge;
-import com.example.diesiedler.Model.Gameboard.Gameboard;
-import com.example.diesiedler.Model.Gameboard.Knot;
-import com.example.diesiedler.Model.Gameboard.Tile;
+import com.example.diesiedler.model.gameboard.Edge;
+import com.example.diesiedler.model.gameboard.Gameboard;
+import com.example.diesiedler.model.gameboard.Knot;
+import com.example.diesiedler.model.gameboard.Tile;
 import com.richpath.RichPath;
 import com.richpath.RichPathView;
 
