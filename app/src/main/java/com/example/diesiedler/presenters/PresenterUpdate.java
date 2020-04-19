@@ -37,12 +37,12 @@ public class PresenterUpdate {
 
                 Socket client;
                 System.out.println(listsize + " background");
-                client = new Socket("10.0.2.2", 2020); // connect to the server
+                client = new Socket("192.168.0.23", 2020); // connect to the server
 
                 ObjectOutputStream outToServer = new ObjectOutputStream(client.getOutputStream());
                 ObjectInputStream inFromServer = new ObjectInputStream(client.getInputStream());
 
-                outToServer.writeUTF("UPDATE");
+                outToServer.writeUTF("#UPDATE");
                 outToServer.writeUTF(listsize); // write the message to output stream
                 outToServer.flush();
                 Object object = inFromServer.readObject();

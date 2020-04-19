@@ -20,6 +20,7 @@ public class PresenterCheckGames {
     public void checkIfIn(String username, Activity activity) {
 
         user = username;
+        System.out.println(user + " checkIfIn");
         CheckGame checkGame = new CheckGame(activity);
         checkGame.execute();
     }
@@ -42,13 +43,14 @@ public class PresenterCheckGames {
 
                 Socket client;
                 System.out.println(user + " background");
-                client = new Socket("10.0.2.2", 2020); // connect to the server
+                client = new Socket("192.168.0.23", 2020); // connect to the server
 
                 ObjectOutputStream outToServer = new ObjectOutputStream(client.getOutputStream());
                 ObjectInputStream inFromServer = new ObjectInputStream(client.getInputStream());
 
                 outToServer.writeUTF("#CHECKGAME");
                 outToServer.writeUTF(user); // write the message to output stream
+                outToServer.flush();
 
                 gameList = inFromServer.readObject();
 

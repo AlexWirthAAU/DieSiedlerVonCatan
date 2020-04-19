@@ -36,7 +36,7 @@ public class PresenterDelete {
 
                 Socket client;
                 System.out.println(myName + " background");
-                client = new Socket("10.0.2.2", 2020); // connect to the server
+                client = new Socket("192.168.0.23", 2020); // connect to the server
 
                 ObjectOutputStream outToServer = new ObjectOutputStream(client.getOutputStream());
                 ObjectInputStream inFromServer = new ObjectInputStream(client.getInputStream());

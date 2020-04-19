@@ -116,6 +116,7 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
                     selectedUsers.add(item.getText());
                 }
 
+                System.out.println(myName + " startnewactivity");
                 presenterStartGame.setInGame(selectedUsers, myName, this);
             }
         }

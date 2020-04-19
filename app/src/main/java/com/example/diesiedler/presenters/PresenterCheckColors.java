@@ -45,7 +45,7 @@ public class PresenterCheckColors {
 
                 Socket client;
                 System.out.println(gameId + " background");
-                client = new Socket("10.0.2.2", 2020); // connect to the server
+                client = new Socket("192.168.0.23", 2020); // connect to the server
 
                 //DataOutputStream outToServer = new DataOutputStream(client.getOutputStream());
                 ObjectOutputStream outToServer = new ObjectOutputStream(client.getOutputStream());
@@ -53,6 +53,7 @@ public class PresenterCheckColors {
 
                 outToServer.writeUTF("#CHECKCOLOR");
                 outToServer.writeUTF(gameId + ""); // write the message to output stream
+                outToServer.flush();
 
                 Object object = inFromServer.readObject();
 

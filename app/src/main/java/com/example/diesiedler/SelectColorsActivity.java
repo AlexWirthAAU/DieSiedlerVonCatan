@@ -27,6 +27,7 @@ public class SelectColorsActivity extends AppCompatActivity {
     private PresenterCheckColors presenterCheckColors = new PresenterCheckColors();
     private HashMap<String, String> map = new HashMap<>();
     private boolean running = true;
+    private List<Button> colors = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,11 @@ public class SelectColorsActivity extends AppCompatActivity {
         orange = findViewById(R.id.orange);
         violett = findViewById(R.id.violett);
         lightblue = findViewById(R.id.lightblue);
+
+        colors.add(green);
+        colors.add(orange);
+        colors.add(violett);
+        colors.add(lightblue);
 
         presenterCheckColors.checkColors(Integer.parseInt(gameList.get(0)), this);
 
@@ -66,8 +72,12 @@ public class SelectColorsActivity extends AppCompatActivity {
 
     public void onGreen(View view) {
 
-        if (!(green.getText().toString()).isEmpty()) {
-            green.setEnabled(false);
+        if ((green.getText().toString()).isEmpty()) {
+            for (Button btn : colors) {
+
+                System.out.println(btn.getText().toString() + " btntext");
+                btn.setEnabled(false);
+            }
             green.setText(myName);
             map.put("green", myName);
             presenterSetColor.setColor(map, this);
@@ -76,8 +86,12 @@ public class SelectColorsActivity extends AppCompatActivity {
 
     public void onOrange(View view) {
 
-        if (!(orange.getText().toString()).isEmpty()) {
-            orange.setEnabled(false);
+        if ((orange.getText().toString()).isEmpty()) {
+            for (Button btn : colors) {
+
+                System.out.println(btn.getText().toString() + " btntext");
+                btn.setEnabled(false);
+            }
             orange.setText(myName);
             map.put("orange", myName);
             presenterSetColor.setColor(map, this);
@@ -86,8 +100,12 @@ public class SelectColorsActivity extends AppCompatActivity {
 
     public void onViolett(View view) {
 
-        if (!(violett.getText().toString()).isEmpty()) {
-            violett.setEnabled(false);
+        if ((violett.getText().toString()).isEmpty()) {
+            for (Button btn : colors) {
+
+                System.out.println(btn.getText().toString() + " btntext");
+                btn.setEnabled(false);
+            }
             violett.setText(myName);
             map.put("violett", myName);
             presenterSetColor.setColor(map, this);
@@ -96,8 +114,12 @@ public class SelectColorsActivity extends AppCompatActivity {
 
     public void onLightblue(View view) {
 
-        if (!(lightblue.getText().toString()).isEmpty()) {
-            lightblue.setEnabled(false);
+        if ((lightblue.getText().toString()).isEmpty()) {
+            for (Button btn : colors) {
+
+                System.out.println(btn.getText().toString() + " btntext");
+                btn.setEnabled(false);
+            }
             lightblue.setText(myName);
             map.put("lightblue", myName);
             presenterSetColor.setColor(map, this);
@@ -106,24 +128,22 @@ public class SelectColorsActivity extends AppCompatActivity {
 
     public void startGame(View view) {
 
+        int selectedColors = 0;
         boolean ready = false;
-        List<String> colors = new ArrayList<>();
-        colors.add("green");
-        colors.add("orange");
-        colors.add("vioett");
-        colors.add("lightblue");
 
-        for (int i = 2; i < gameList.size(); i += 2) {
+        for (Button btn : colors) {
 
-            String toCheck = gameList.get(i).toLowerCase();
+            System.out.println(btn.getText().toString() + " btntext");
+            if (!btn.getText().toString().isEmpty()) {
+                selectedColors++;
+            }
 
-            for (String str : colors) {
-                if (toCheck.equals(str)) {
-                    ready = true;
-                    break;
-                }
+            System.out.println(gameList.size() - 1 + " player " + selectedColors + "selectedcolors");
+            if (gameList.size() == selectedColors) {
+                ready = true;
             }
         }
+
         if (!ready) {
 
             AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
@@ -141,5 +161,9 @@ public class SelectColorsActivity extends AppCompatActivity {
             intent.putStringArrayListExtra("gameList", gameList);
             startActivity(intent);
         }
+    }
+
+    public void update(View view) {
+        presenterCheckColors.checkColors(Integer.parseInt(gameList.get(0)), this);
     }
 }

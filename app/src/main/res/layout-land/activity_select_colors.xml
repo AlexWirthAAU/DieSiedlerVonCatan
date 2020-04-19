@@ -38,7 +38,7 @@
         android:layout_width="277dp"
         android:layout_height="65dp"
         android:layout_marginStart="40dp"
-        android:layout_marginBottom="200dp"
+        android:layout_marginBottom="220dp"
         android:backgroundTint="#A30FFF"
         android:onClick="onViolett"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -61,7 +61,7 @@
         android:id="@+id/lightblue"
         android:layout_width="277dp"
         android:layout_height="65dp"
-        android:layout_marginBottom="200dp"
+        android:layout_marginBottom="220dp"
         android:backgroundTint="#07B9FF"
         android:onClick="onLightblue"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -69,10 +69,26 @@
         app:layout_constraintStart_toEndOf="@+id/violett" />
 
     <Button
+        android:id="@+id/update2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginStart="115dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="#FFA000"
+        android:onClick="update"
+        android:text="@string/reload"
+        android:textColor="#A10101"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
         android:id="@+id/startPlayButton2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginEnd="85dp"
         android:layout_marginBottom="30dp"
         android:backgroundTint="#FFA000"
         android:onClick="startGame"
@@ -80,7 +96,6 @@
         android:textColor="#A10101"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

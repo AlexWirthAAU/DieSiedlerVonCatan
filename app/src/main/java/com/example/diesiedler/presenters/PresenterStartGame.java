@@ -29,6 +29,7 @@ public class PresenterStartGame {
             usersIn.add(0, currUser);
         }
 
+        System.out.println(usersIn.get(0) + " " + usersIn.get(1) + " setinGame");
         StartGame startGame = new StartGame(activity);
         startGame.execute();
     }
@@ -49,15 +50,15 @@ public class PresenterStartGame {
 
             try {
 
-                Socket client;
                 System.out.println(currUser + " background");
-                client = new Socket("10.0.2.2", 2020); // connect to the server
+                Socket client = new Socket("192.168.0.23", 2020); // connect to the server
 
                 ObjectOutputStream outToServer = new ObjectOutputStream(client.getOutputStream());
                 ObjectInputStream inFromServer = new ObjectInputStream(client.getInputStream());
 
                 outToServer.writeUTF("#STARTGAME");
                 outToServer.writeObject(usersIn); // write the message to output stream
+                outToServer.flush();
 
                 gameList = inFromServer.readObject();
 
