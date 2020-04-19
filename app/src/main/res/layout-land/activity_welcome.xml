@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D32F2F"
+    tools:context=".MainActivity">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+
+    <TextView
+        android:id="@+id/fullscreen_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:backgroundTint="#BD1010"
+        android:gravity="center"
+        android:keepScreenOn="true"
+        android:textColor="#FBC02D"
+        android:textSize="60sp"
+        android:textStyle="bold" />
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="355dp"
+            android:layout_height="516dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:contentDescription="@string/pic_sun"
+            app:srcCompat="@drawable/sun" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="35dp"
+            android:text="@string/welcome_text"
+            android:textAlignment="gravity"
+            android:textColor="#A10101"
+            android:textSize="45sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="105dp"
+            android:text="@string/welcome_text2"
+            android:textAlignment="gravity"
+            android:textColor="#A10101"
+            android:textSize="65sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/fullscreen_content_controls"
+            style="?metaButtonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@color/black_overlay"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
+
+            <Button
+                android:id="@+id/dummy_button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:height="80dp"
+                android:backgroundTint="#A10101"
+                android:onClick="discover"
+                android:text="@string/dummy_button"
+                android:textColor="#FBC02D"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="850dp"
+            android:layout_height="185dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="77dp"
+            android:contentDescription="@string/pic_siedlung"
+            app:srcCompat="@drawable/silhouette_klein" />
+
+    </FrameLayout>
+
+</FrameLayout>
