@@ -8,12 +8,14 @@ import android.widget.Button;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.diesiedler.presenters.PresenterCheckColors;
+import com.example.diesiedler.presenters.Presenter;
 import com.example.diesiedler.presenters.PresenterSetColor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SelectColorsActivity extends AppCompatActivity {
 
@@ -23,10 +25,10 @@ public class SelectColorsActivity extends AppCompatActivity {
     private Button violett;
     private Button lightblue;
     private String myName;
-    private PresenterSetColor presenterSetColor = new PresenterSetColor();
-    private PresenterCheckColors presenterCheckColors = new PresenterCheckColors();
     private HashMap<String, String> map = new HashMap<>();
     private List<Button> colors = new ArrayList<>();
+    private static final Logger log = Logger.getLogger(SelectColorsActivity.class.getName());
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,85 +48,80 @@ public class SelectColorsActivity extends AppCompatActivity {
         colors.add(violett);
         colors.add(lightblue);
 
-        presenterCheckColors.checkColors(Integer.parseInt(gameList.get(0)), this);
-
-        /*
-                new Thread() {
-            public void run() {
-                while (running) {
-                    try {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                presenterCheckColors(Integer.parseInt(gameList.get(0)), this);
-                            }
-                        });
-                        Thread.sleep(300);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }.start();
-         */
+        Presenter.checkColors(Integer.parseInt(gameList.get(0)), this);
     }
 
+    /**
+     * @param view current View to access color Button
+     */
     public void onGreen(View view) {
 
         if ((green.getText().toString()).isEmpty()) {
             for (Button btn : colors) {
 
-                System.out.println(btn.getText().toString() + " btntext");
                 btn.setEnabled(false);
             }
             green.setText(myName);
             map.put("green", myName);
-            presenterSetColor.setColor(map);
+            PresenterSetColor.setColor(map);
         }
     }
 
+    /**
+     *
+     * @param view current View to access color Button
+     */
     public void onOrange(View view) {
 
         if ((orange.getText().toString()).isEmpty()) {
             for (Button btn : colors) {
 
-                System.out.println(btn.getText().toString() + " btntext");
                 btn.setEnabled(false);
             }
             orange.setText(myName);
             map.put("orange", myName);
-            presenterSetColor.setColor(map);
+            PresenterSetColor.setColor(map);
         }
     }
 
+    /**
+     *
+     * @param view current View to access color Button
+     */
     public void onViolett(View view) {
 
         if ((violett.getText().toString()).isEmpty()) {
             for (Button btn : colors) {
 
-                System.out.println(btn.getText().toString() + " btntext");
                 btn.setEnabled(false);
             }
             violett.setText(myName);
             map.put("violett", myName);
-            presenterSetColor.setColor(map);
+            PresenterSetColor.setColor(map);
         }
     }
 
+    /**
+     *
+     * @param view current View to access color Button
+     */
     public void onLightblue(View view) {
 
         if ((lightblue.getText().toString()).isEmpty()) {
             for (Button btn : colors) {
 
-                System.out.println(btn.getText().toString() + " btntext");
                 btn.setEnabled(false);
             }
             lightblue.setText(myName);
             map.put("lightblue", myName);
-            presenterSetColor.setColor(map);
+            PresenterSetColor.setColor(map);
         }
     }
 
+    /**
+     *
+     * @param view current View to access Start Button
+     */
     public void startGame(View view) {
 
         int selectedColors = 0;
@@ -132,12 +129,14 @@ public class SelectColorsActivity extends AppCompatActivity {
 
         for (Button btn : colors) {
 
-            System.out.println(btn.getText().toString() + " btntext");
+            log.log(Level.INFO, "btntext", btn.getText().toString());
             if (!btn.getText().toString().isEmpty()) {
                 selectedColors++;
             }
 
-            System.out.println(gameList.size() - 1 + " player " + selectedColors + "selectedcolors");
+            log.log(Level.INFO, "player", gameList.size() - 1);
+            log.log(Level.INFO, "selectedColors", selectedColors);
+
             if (gameList.size() == selectedColors) {
                 ready = true;
             }
@@ -160,7 +159,11 @@ public class SelectColorsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     *
+     * @param view - current View to accesc Reload Button
+     */
     public void update(View view) {
-        presenterCheckColors.checkColors(Integer.parseInt(gameList.get(0)), this);
+        Presenter.checkColors(Integer.parseInt(gameList.get(0)), this);
     }
 }

@@ -14,7 +14,6 @@ import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter implements SelectableViewHolder.OnItemSelectedListener {
 
-    //MyOnClickListener listener;
     private final List<SelectableItem> myValues;
     private SelectableViewHolder.OnItemSelectedListener listener;
     private boolean isMultiSelectionEnabled;

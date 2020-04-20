@@ -24,12 +24,13 @@ class SelectableViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View view) {
 
+                boolean check = false;
 
-                if (myItem.isSelected() && getItemViewType() == MULTI_SELECTION) {
-                    setChecked(false);
-                } else {
-                    setChecked(true);
+                if (!myItem.isSelected() && getItemViewType() == MULTI_SELECTION) {
+                    check = true;
                 }
+
+                setChecked(check);
                 itemSelectedListener.onItemSelected(myItem);
 
             }
@@ -38,7 +39,7 @@ class SelectableViewHolder extends RecyclerView.ViewHolder {
 
     void setChecked(boolean value) {
         if (value) {
-            textView.setBackgroundColor(Color.LTGRAY);
+            textView.setBackgroundColor(Color.YELLOW);
         } else {
             textView.setBackground(null);
         }

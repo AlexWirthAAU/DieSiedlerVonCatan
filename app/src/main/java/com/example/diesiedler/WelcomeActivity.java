@@ -14,6 +14,9 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
     }
 
+    /**
+     * @param view - current View to access Discover Button
+     */
     public void discover(View view) {
 
         Intent intent = new Intent(this, LoginActivity.class);

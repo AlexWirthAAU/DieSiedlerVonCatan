@@ -18,24 +18,32 @@ public class SelectableItem {
         isSelected = selected;
     }
 
-    public String getText() {
+    String getText() {
         return this.text;
     }
 
-    /*
-    public void setText(String text) {
-        this.text = text;
-    }
-    */
-
-    @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     @Override
     public boolean equals(Object obj) {
-        if (obj == null)
-            return false;
 
-        SelectableItem itemCompare = (SelectableItem) obj;
-        return itemCompare.getText().equals(this.getText());
+        SelectableItem itemCompare;
+
+        if (obj != null) {
+
+            if (obj instanceof SelectableItem) {
+
+                itemCompare = (SelectableItem) obj;
+                String testString = itemCompare.getText();
+                return testString.equals(this.getText());
+            }
+        }
+
+        return false;
     }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
 
 }

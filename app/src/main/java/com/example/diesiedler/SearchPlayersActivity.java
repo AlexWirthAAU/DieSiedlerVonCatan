@@ -9,14 +9,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.diesiedler.presenters.PresenterCheckGames;
-import com.example.diesiedler.presenters.PresenterDelete;
-import com.example.diesiedler.presenters.PresenterStartGame;
-import com.example.diesiedler.presenters.PresenterUpdate;
+import com.example.diesiedler.presenters.Presenter;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SearchPlayersActivity extends AppCompatActivity implements SelectableViewHolder.OnItemSelectedListener {
 
@@ -24,12 +23,10 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
     private MyAdapter myAdapter;
 
     private List<String> usernames = new ArrayList<>();
-    private PresenterUpdate presenterUpdate = new PresenterUpdate();
-    private PresenterDelete presenterDelete = new PresenterDelete();
-    private PresenterStartGame presenterStartGame = new PresenterStartGame();
     private String myName;
-    private PresenterCheckGames presenterCheckGames = new PresenterCheckGames();
+    private static final Logger log = Logger.getLogger(SearchPlayersActivity.class.getName());
     private ArrayList<String> selectedUsers = new ArrayList<>();
+    private Presenter presenter = new Presenter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +43,7 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
         }
         myName = intent.getStringExtra("myName");
 
-        System.out.println(usernames.get(0) + " test");
+        log.log(Level.INFO, "firstname", usernames.get(0));
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView = this.findViewById(R.id.userlist);
@@ -66,21 +63,18 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        presenterDelete.removeMeFromUserList(myName, myAdapter);
+        Presenter.removeMeFromUserList(myName, myAdapter);
     }
 
+    /**
+     * @param view - current View to access selected items
+     */
     public void startPlay(View view) {
 
         int size = myAdapter.getSelectedItems().size();
-        System.out.println(size);
         boolean meIn = false;
 
         for (SelectableItem item : myAdapter.getSelectedItems()) {
@@ -116,15 +110,19 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
                     selectedUsers.add(item.getText());
                 }
 
-                System.out.println(myName + " startnewactivity");
-                presenterStartGame.setInGame(selectedUsers, myName, this);
+                log.log(Level.INFO, "startnewactivity");
+                Presenter.setInGame(selectedUsers, myName, this);
             }
         }
     }
 
+    /**
+     *
+     * @param view - current view to access Reload Button
+     */
     public void updateList(View view) {
 
-        presenterUpdate.checkForChanges(usernames.size(), myAdapter);
-        presenterCheckGames.checkIfIn(myName, this);
+        Presenter.checkForChanges(usernames.size(), myAdapter);
+        presenter.checkIfIn(myName, this);
     }
 }

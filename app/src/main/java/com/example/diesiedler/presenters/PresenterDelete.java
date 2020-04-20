@@ -4,16 +4,20 @@ import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 
 import com.example.diesiedler.MyAdapter;
+import com.example.diesiedler.presenters.servercon.ConnectionData;
+import com.example.diesiedler.presenters.servercon.SecureObjectStream;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class PresenterDelete {
+public class PresenterDelete extends ConnectionData {
 
     private static String myName;
+    private static final Logger log = Logger.getLogger(PresenterDelete.class.getName());
 
     public void removeMeFromUserList(String username, MyAdapter adapter) {
         myName = username;
@@ -21,7 +25,7 @@ public class PresenterDelete {
         deleteFromList.execute();
     }
 
-    private static class DeleteFromList extends AsyncTask<Void, Void, Object> implements ConnectionData {
+    private static class DeleteFromList extends AsyncTask<Void, Void, Object> {
 
         @SuppressLint("StaticFieldLeak")
         private MyAdapter adapter;
@@ -32,14 +36,13 @@ public class PresenterDelete {
 
         @Override
         protected Object doInBackground(Void... params) {
-            try {
 
-                Socket client;
+            try (Socket client = new Socket(HOST, PORT)) {
+
                 System.out.println(myName + " background");
-                client = new Socket(host, PORT); // connect to the server
 
                 ObjectOutputStream outToServer = new ObjectOutputStream(client.getOutputStream());
-                ObjectInputStream inFromServer = new ObjectInputStream(client.getInputStream());
+                SecureObjectStream inFromServer = new SecureObjectStream(client.getInputStream());
 
                 outToServer.writeUTF("#LOGIN");
                 outToServer.writeUTF(myName); // write the message to output stream
@@ -52,7 +55,7 @@ public class PresenterDelete {
                 return object;
 
             } catch (ClassNotFoundException | IOException cnfe) {
-                cnfe.printStackTrace();
+                log.log(Level.SEVERE, "Exception", cnfe);
             }
 
             return null;

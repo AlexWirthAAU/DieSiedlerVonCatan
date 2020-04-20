@@ -6,16 +6,20 @@ import android.os.AsyncTask;
 import android.widget.Button;
 
 import com.example.diesiedler.R;
+import com.example.diesiedler.presenters.servercon.ConnectionData;
+import com.example.diesiedler.presenters.servercon.SecureObjectStream;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class PresenterCheckColors {
+public class PresenterCheckColors extends ConnectionData {
 
     private static Integer gameId;
+    private static final Logger log = Logger.getLogger(PresenterCheckColors.class.getName());
 
     public void checkColors(Integer id, Activity activity) {
 
@@ -24,7 +28,7 @@ public class PresenterCheckColors {
         checkColors.execute();
     }
 
-    private static class CheckColors extends AsyncTask<Void, Void, Object> implements ConnectionData {
+    private static class CheckColors extends AsyncTask<Void, Void, Object> {
 
         @SuppressLint("StaticFieldLeak")
         private Activity ac;
@@ -41,15 +45,13 @@ public class PresenterCheckColors {
 
         @Override
         protected Object doInBackground(Void... params) {
-            try {
 
-                Socket client;
+            try (Socket client = new Socket(HOST, PORT)) {
+
                 System.out.println(gameId + " background");
-                client = new Socket(host, PORT); // connect to the server
 
-                //DataOutputStream outToServer = new DataOutputStream(client.getOutputStream());
                 ObjectOutputStream outToServer = new ObjectOutputStream(client.getOutputStream());
-                ObjectInputStream inFromServer = new ObjectInputStream(client.getInputStream());
+                SecureObjectStream inFromServer = new SecureObjectStream(client.getInputStream());
 
                 outToServer.writeUTF("#CHECKCOLOR");
                 outToServer.writeUTF(gameId + ""); // write the message to output stream
@@ -64,7 +66,7 @@ public class PresenterCheckColors {
                 return object;
 
             } catch (ClassNotFoundException | IOException cnfe) {
-                cnfe.printStackTrace();
+                log.log(Level.SEVERE, "Exception", cnfe);
             }
 
             return null;
