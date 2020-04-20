@@ -7,7 +7,6 @@ import com.example.diesiedler.presenter.GameBoardClickListener;
 import com.example.diesiedler.model.gameboard.Gameboard;
 import com.richpath.RichPathView;
 
-
 public class MainActivity extends AppCompatActivity {
 
 
