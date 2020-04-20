@@ -22,7 +22,7 @@ public class PresenterUpdate {
         updateList.execute();
     }
 
-    private static class UpdateList extends AsyncTask<Void, Void, Object> {
+    private static class UpdateList extends AsyncTask<Void, Void, Object> implements ConnectionData {
 
         @SuppressLint("StaticFieldLeak")
         private MyAdapter adapter;
@@ -37,7 +37,7 @@ public class PresenterUpdate {
 
                 Socket client;
                 System.out.println(listsize + " background");
-                client = new Socket("192.168.0.23", 2020); // connect to the server
+                client = new Socket(host, PORT); // connect to the server
 
                 ObjectOutputStream outToServer = new ObjectOutputStream(client.getOutputStream());
                 ObjectInputStream inFromServer = new ObjectInputStream(client.getInputStream());

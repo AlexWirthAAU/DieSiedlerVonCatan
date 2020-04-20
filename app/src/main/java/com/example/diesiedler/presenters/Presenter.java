@@ -18,7 +18,6 @@ public class Presenter {
 
     private static String username;
 
-
     public void addUserAndGetUserList(Activity ac, String toSend) {
         System.out.println(toSend + " send");
         username = toSend;
@@ -26,7 +25,7 @@ public class Presenter {
         send.execute();
     }
 
-    private static class SendStringAndGetUsers extends AsyncTask<Void, Void, List> {
+    private static class SendStringAndGetUsers extends AsyncTask<Void, Void, List> implements ConnectionData {
 
         @SuppressLint("StaticFieldLeak")
         private Activity activity;
@@ -42,7 +41,7 @@ public class Presenter {
 
                 Socket client;
                 System.out.println(username + " background");
-                client = new Socket("192.168.0.23", 2020); // connect to the server
+                client = new Socket(host, PORT); // connect to the server
 
                 ObjectOutputStream outToServer = new ObjectOutputStream(client.getOutputStream());
                 ObjectInputStream inFromServer = new ObjectInputStream(client.getInputStream());

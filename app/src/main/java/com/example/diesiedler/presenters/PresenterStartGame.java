@@ -34,7 +34,7 @@ public class PresenterStartGame {
         startGame.execute();
     }
 
-    private static class StartGame extends AsyncTask<Void, Void, Object> {
+    private static class StartGame extends AsyncTask<Void, Void, Object> implements ConnectionData {
 
         @SuppressLint("StaticFieldLeak")
         private Activity activity;
@@ -51,7 +51,7 @@ public class PresenterStartGame {
             try {
 
                 System.out.println(currUser + " background");
-                Socket client = new Socket("192.168.0.23", 2020); // connect to the server
+                Socket client = new Socket(host, PORT); // connect to the server
 
                 ObjectOutputStream outToServer = new ObjectOutputStream(client.getOutputStream());
                 ObjectInputStream inFromServer = new ObjectInputStream(client.getInputStream());

@@ -19,14 +19,15 @@ public class PresenterSetColor {
         setColor.execute();
     }
 
-    private static class SetColor extends AsyncTask<Void, Void, Void> {
+    private static class SetColor extends AsyncTask<Void, Void, Void> implements ConnectionData {
 
         @Override
         protected Void doInBackground(Void... params) {
+
             try {
 
                 Socket client;
-                client = new Socket("192.168.0.23", 2020); // connect to the server
+                client = new Socket(host, PORT); // connect to the server
 
                 ObjectOutputStream outToServer = new ObjectOutputStream(client.getOutputStream());
                 ObjectInputStream inFromServer = new ObjectInputStream(client.getInputStream());
@@ -35,14 +36,12 @@ public class PresenterSetColor {
                 outToServer.writeObject(playermMap); // write the message to output stream
                 outToServer.flush();
 
-                inFromServer.readObject();
-
                 outToServer.close();
                 inFromServer.close();
-                client.close(); // closing the connection
+                client.close();
 
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
             }
             return null;
         }

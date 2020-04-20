@@ -21,7 +21,7 @@ public class PresenterDelete {
         deleteFromList.execute();
     }
 
-    private static class DeleteFromList extends AsyncTask<Void, Void, Object> {
+    private static class DeleteFromList extends AsyncTask<Void, Void, Object> implements ConnectionData {
 
         @SuppressLint("StaticFieldLeak")
         private MyAdapter adapter;
@@ -36,7 +36,7 @@ public class PresenterDelete {
 
                 Socket client;
                 System.out.println(myName + " background");
-                client = new Socket("192.168.0.23", 2020); // connect to the server
+                client = new Socket(host, PORT); // connect to the server
 
                 ObjectOutputStream outToServer = new ObjectOutputStream(client.getOutputStream());
                 ObjectInputStream inFromServer = new ObjectInputStream(client.getInputStream());

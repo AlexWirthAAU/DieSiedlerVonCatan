@@ -24,7 +24,7 @@ public class PresenterCheckColors {
         checkColors.execute();
     }
 
-    private static class CheckColors extends AsyncTask<Void, Void, Object> {
+    private static class CheckColors extends AsyncTask<Void, Void, Object> implements ConnectionData {
 
         @SuppressLint("StaticFieldLeak")
         private Activity ac;
@@ -45,7 +45,7 @@ public class PresenterCheckColors {
 
                 Socket client;
                 System.out.println(gameId + " background");
-                client = new Socket("192.168.0.23", 2020); // connect to the server
+                client = new Socket(host, PORT); // connect to the server
 
                 //DataOutputStream outToServer = new DataOutputStream(client.getOutputStream());
                 ObjectOutputStream outToServer = new ObjectOutputStream(client.getOutputStream());
