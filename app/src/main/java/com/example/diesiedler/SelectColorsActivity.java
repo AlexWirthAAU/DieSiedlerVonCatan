@@ -153,7 +153,7 @@ public class SelectColorsActivity extends AppCompatActivity {
 
         } else {
 
-            Intent intent = new Intent(this, StartGameActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("myName", myName);
             intent.putStringArrayListExtra("gameList", gameList);
             startActivity(intent);
