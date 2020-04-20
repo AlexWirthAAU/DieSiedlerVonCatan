@@ -1,4 +1,4 @@
-package com.example.diesiedler.presenters;
+package com.example.diesiedler.presenter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -10,13 +10,12 @@ import com.example.diesiedler.MyAdapter;
 import com.example.diesiedler.R;
 import com.example.diesiedler.SearchPlayersActivity;
 import com.example.diesiedler.SelectColorsActivity;
-import com.example.diesiedler.presenters.servercon.ConnectionData;
-import com.example.diesiedler.presenters.servercon.SecureObjectStream;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,8 +25,9 @@ public class Presenter extends ConnectionData {
     private static final Logger log = Logger.getLogger(Presenter.class.getName());
     private static StringBuilder action = new StringBuilder(1);
     private static StringBuilder toWrite = new StringBuilder(1);
-    private static ArrayList usersIn;
+    private static final String startgame = "#STARTGAME";
     private static String currUser;
+    private static List<String> usersIn;
 
     public static void checkColors(Integer id, Activity ac) {
 
@@ -40,7 +40,7 @@ public class Presenter extends ConnectionData {
 
     public static void removeMeFromUserList(String username, MyAdapter adapter) {
 
-        log.log(Level.INFO, "checkIfIn", username);
+        log.log(Level.INFO, "checkIfIn" + username);
         action.replace(0, 0, "#DELETE");
         toWrite.replace(0, 0, username);
 
@@ -48,15 +48,15 @@ public class Presenter extends ConnectionData {
         deleteFromList.execute();
     }
 
-    public static void setInGame(ArrayList<String> users, String curr, Activity activity) {
+    public static void setInGame(List<String> users, String curr, Activity activity) {
 
         if (!users.get(0).equals(curr)) {
             users.remove(curr);
             users.add(0, curr);
         }
 
-        log.log(Level.INFO, "setInGame", curr);
-        action.replace(0, 0, "#STARTGAME");
+        log.log(Level.INFO, "setInGame" + curr);
+        action.replace(0, 0, startgame);
         usersIn = users;
         currUser = curr;
 
@@ -66,7 +66,7 @@ public class Presenter extends ConnectionData {
 
     public static void checkForChanges(int size, MyAdapter adapter) {
 
-        log.log(Level.INFO, "sizesend", size);
+        log.log(Level.INFO, "sizesend" + size);
         action.replace(0, 0, "#UPDATE");
         toWrite.replace(0, 0, size + "");
 
@@ -76,7 +76,7 @@ public class Presenter extends ConnectionData {
 
     public void addUserAndGetUserList(Activity ac, String toSend) {
 
-        log.log(Level.INFO, "send", toSend);
+        log.log(Level.INFO, "send" + toSend);
         action.replace(0, 0, "#LOGIN");
         toWrite.replace(0, 0, toSend);
 
@@ -86,7 +86,7 @@ public class Presenter extends ConnectionData {
 
     public void checkIfIn(String username, Activity ac) {
 
-        log.log(Level.INFO, "checkIfIn", username);
+        log.log(Level.INFO, "checkIfIn" + username);
         action.replace(0, 0, "#CHECKGAME");
         toWrite.replace(0, 0, username);
 
@@ -99,7 +99,13 @@ public class Presenter extends ConnectionData {
         @SuppressLint("StaticFieldLeak")
         private Activity ac;
         @SuppressLint("StaticFieldLeak")
-        private Button green, orange, violett, lightblue;
+        private Button green;
+        @SuppressLint("StaticFieldLeak")
+        private Button orange;
+        @SuppressLint("StaticFieldLeak")
+        private Button violett;
+        @SuppressLint("StaticFieldLeak")
+        private Button lightblue;
         @SuppressLint("StaticFieldLeak")
         private MyAdapter adapter;
 
@@ -129,15 +135,15 @@ public class Presenter extends ConnectionData {
 
             try (Socket client = new Socket(HOST, PORT)) {
 
-                log.log(Level.INFO, "intent", action);
-                log.log(Level.INFO, "background", toWrite);
+                log.log(Level.INFO, "intent" + action);
+                log.log(Level.INFO, "background" + toWrite);
 
                 ObjectOutputStream outToServer = new ObjectOutputStream(client.getOutputStream());
                 SecureObjectStream inFromServer = new SecureObjectStream(client.getInputStream());
 
                 outToServer.writeUTF(action.toString());
 
-                if (!action.toString().equals("#STARTGAME")) {
+                if (!action.toString().equals(startgame)) {
                     outToServer.writeUTF(toWrite.toString()); // write the message to output stream
                 } else {
                     outToServer.writeObject(usersIn); // write the message to output stream
@@ -145,11 +151,10 @@ public class Presenter extends ConnectionData {
                 outToServer.flush();
 
                 Object object = inFromServer.readObject();
-                log.log(Level.INFO, "back", object);
+                log.log(Level.INFO, "back" + object);
 
                 outToServer.close();
                 inFromServer.close();
-                client.close(); // closing the connection
 
                 return object;
 
@@ -164,7 +169,8 @@ public class Presenter extends ConnectionData {
         protected void onPostExecute(Object result) {
 
             String action2 = action.toString();
-            System.out.println(action2);
+            final String myName = "myName";
+            log.log(Level.INFO, action2);
 
             switch (action2) {
 
@@ -173,12 +179,12 @@ public class Presenter extends ConnectionData {
                     ArrayList<String> list = (ArrayList) result;
 
                     for (int i = 0; i < list.size(); i++) {
-                        log.log(Level.INFO, "post", list.get(i));
+                        log.log(Level.INFO, "post" + list.get(i));
                     }
 
                     Intent intent = new Intent(ac, SearchPlayersActivity.class);
                     intent.putExtra("name", list);
-                    intent.putExtra("myName", toWrite.toString());
+                    intent.putExtra(myName, toWrite.toString());
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     ac.getApplicationContext().startActivity(intent);
                     break;
@@ -188,24 +194,8 @@ public class Presenter extends ConnectionData {
                     Map<String, String> gameMap = (Map) result;
 
                     if (gameMap != null) {
-                        System.out.println("colorBack");
-
-                        if (gameMap.containsKey("green")) {
-                            ac.findViewById(R.id.green).setEnabled(false);
-                            green.setText(gameMap.get("green"));
-                        }
-                        if (gameMap.containsKey("orange")) {
-                            ac.findViewById(R.id.orange).setEnabled(false);
-                            orange.setText(gameMap.get("orange"));
-                        }
-                        if (gameMap.containsKey("violett")) {
-                            ac.findViewById(R.id.violett).setEnabled(false);
-                            violett.setText(gameMap.get("violett"));
-                        }
-                        if (gameMap.containsKey("lightblue")) {
-                            ac.findViewById(R.id.lightblue).setEnabled(false);
-                            lightblue.setText(gameMap.get("lightblue"));
-                        }
+                        log.log(Level.INFO, "colorBack");
+                        updateUI(gameMap);
                     }
                     break;
 
@@ -218,7 +208,7 @@ public class Presenter extends ConnectionData {
                         ArrayList<String> gameList = (ArrayList<String>) result;
 
                         intent2.putStringArrayListExtra("gameList", gameList);
-                        intent2.putExtra("myName", toWrite.toString());
+                        intent2.putExtra(myName, toWrite.toString());
                         intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         ac.getApplicationContext().startActivity(intent2);
                     }
@@ -236,20 +226,40 @@ public class Presenter extends ConnectionData {
                     }
                     break;
 
-                case "#STARTGAME":
+                case startgame:
                     Intent intent3 = new Intent(ac, SelectColorsActivity.class);
 
                     @SuppressWarnings("unchecked")
                     ArrayList<String> gameList = (ArrayList<String>) result;
 
                     intent3.putStringArrayListExtra("gameList", gameList);
-                    intent3.putExtra("myName", currUser);
+                    intent3.putExtra(myName, currUser);
                     intent3.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     ac.getApplicationContext().startActivity(intent3);
                     break;
 
                 default:
                     break;
+            }
+        }
+
+        private void updateUI(Map<String, String> gameMap) {
+
+            if (gameMap.containsKey("green")) {
+                ac.findViewById(R.id.green).setEnabled(false);
+                green.setText(gameMap.get("green"));
+            }
+            if (gameMap.containsKey("orange")) {
+                ac.findViewById(R.id.orange).setEnabled(false);
+                orange.setText(gameMap.get("orange"));
+            }
+            if (gameMap.containsKey("violett")) {
+                ac.findViewById(R.id.violett).setEnabled(false);
+                violett.setText(gameMap.get("violett"));
+            }
+            if (gameMap.containsKey("lightblue")) {
+                ac.findViewById(R.id.lightblue).setEnabled(false);
+                lightblue.setText(gameMap.get("lightblue"));
             }
         }
     }

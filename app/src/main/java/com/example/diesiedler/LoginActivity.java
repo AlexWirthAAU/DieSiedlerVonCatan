@@ -6,7 +6,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.diesiedler.presenters.Presenter;
+import com.example.diesiedler.presenter.Presenter;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     public void setName(View view) {
 
         String username = displayName.getText().toString();
-        log.log(Level.INFO, "username", username);
+        log.log(Level.INFO, username);
         new Presenter().addUserAndGetUserList(this, username);
     }
 }

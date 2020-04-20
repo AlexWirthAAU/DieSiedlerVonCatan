@@ -114,4 +114,17 @@
     <string name="startPlay">Spiel Starten</string>
     <string name="select_color">Wähle deine Farbe</string>
     <string name="reload">Reload</string>
+    <string name="costs">Baukosten</string>
+    <string name="street">Straße</string>
+    <string name="settlement">Siedlung</string>
+    <string name="city">Stadt</string>
+    <string name="devCard">Entwickungskarte</string>
+    <string name="pointsstreet">+ 0 Punkte</string>
+    <string name="costsstreet">- 1 Holz / - 1 Lehm</string>
+    <string name="costsettlement">- 1 Holz / - 1 Lehm / - 1 Korn / - 1 Wolle</string>
+    <string name="pointssettlement">+ 1 Punkt</string>
+    <string name="pointscity">+ 2 Punkte</string>
+    <string name="costscity">- 2 Korn / - 3 Erz</string>
+    <string name="pointsdevCard">+ ? Punkte</string>
+    <string name="costsdevCard">- 1 Wolle / - 1 Korn / - 1 Erz</string>
 </resources>

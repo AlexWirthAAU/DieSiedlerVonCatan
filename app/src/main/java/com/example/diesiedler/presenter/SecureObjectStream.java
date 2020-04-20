@@ -1,4 +1,4 @@
-package com.example.diesiedler.presenters.servercon;
+package com.example.diesiedler.presenter;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,7 +11,7 @@ import java.util.List;
 
 public class SecureObjectStream extends ObjectInputStream {
 
-    private List<Class> allowed = new ArrayList<>();
+    private List<Class<?>> allowed = new ArrayList<>();
 
     public SecureObjectStream(InputStream inputStream) throws IOException {
         super(inputStream);
@@ -24,7 +24,7 @@ public class SecureObjectStream extends ObjectInputStream {
     @Override
     protected Class<?> resolveClass(ObjectStreamClass osc) throws IOException, ClassNotFoundException {
         // Only deserialize instances of AllowedClass
-        for (Class c : allowed) {
+        for (Class<?> c : allowed) {
             if (osc.getName().equals(c.getName())) {
                 return super.resolveClass(osc);
             }

@@ -1,9 +1,6 @@
-package com.example.diesiedler.presenters;
+package com.example.diesiedler.presenter;
 
 import android.os.AsyncTask;
-
-import com.example.diesiedler.presenters.servercon.ConnectionData;
-import com.example.diesiedler.presenters.servercon.SecureObjectStream;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -40,7 +37,6 @@ public class PresenterSetColor extends ConnectionData {
 
                 outToServer.close();
                 inFromServer.close();
-                client.close();
 
             } catch (IOException ioe) {
                 log.log(Level.SEVERE, "Exception", ioe);
