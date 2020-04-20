@@ -1,10 +1,11 @@
 package com.example.diesiedler;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.diesiedler.presenter.GameBoardClickListener;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.diesiedler.model.gameboard.Gameboard;
+import com.example.diesiedler.presenter.GameBoardClickListener;
 import com.richpath.RichPathView;
 
 public class MainActivity extends AppCompatActivity {

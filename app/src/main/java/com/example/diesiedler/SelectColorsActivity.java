@@ -8,8 +8,8 @@ import android.widget.Button;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.diesiedler.presenters.Presenter;
-import com.example.diesiedler.presenters.PresenterSetColor;
+import com.example.diesiedler.presenter.Presenter;
+import com.example.diesiedler.presenter.PresenterSetColor;
 
 import java.util.ArrayList;
 import java.util.HashMap;

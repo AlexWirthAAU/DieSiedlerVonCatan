@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.diesiedler.presenters.Presenter;
+import com.example.diesiedler.presenter.Presenter;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
         }
         myName = intent.getStringExtra("myName");
 
-        log.log(Level.INFO, "firstname", usernames.get(0));
+        log.log(Level.INFO, usernames.get(0));
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView = this.findViewById(R.id.userlist);
