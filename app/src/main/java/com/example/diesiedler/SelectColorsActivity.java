@@ -26,7 +26,6 @@ public class SelectColorsActivity extends AppCompatActivity {
     private PresenterSetColor presenterSetColor = new PresenterSetColor();
     private PresenterCheckColors presenterCheckColors = new PresenterCheckColors();
     private HashMap<String, String> map = new HashMap<>();
-    private boolean running = true;
     private List<Button> colors = new ArrayList<>();
 
     @Override
@@ -80,7 +79,7 @@ public class SelectColorsActivity extends AppCompatActivity {
             }
             green.setText(myName);
             map.put("green", myName);
-            presenterSetColor.setColor(map, this);
+            presenterSetColor.setColor(map);
         }
     }
 
@@ -94,7 +93,7 @@ public class SelectColorsActivity extends AppCompatActivity {
             }
             orange.setText(myName);
             map.put("orange", myName);
-            presenterSetColor.setColor(map, this);
+            presenterSetColor.setColor(map);
         }
     }
 
@@ -108,7 +107,7 @@ public class SelectColorsActivity extends AppCompatActivity {
             }
             violett.setText(myName);
             map.put("violett", myName);
-            presenterSetColor.setColor(map, this);
+            presenterSetColor.setColor(map);
         }
     }
 
@@ -122,7 +121,7 @@ public class SelectColorsActivity extends AppCompatActivity {
             }
             lightblue.setText(myName);
             map.put("lightblue", myName);
-            presenterSetColor.setColor(map, this);
+            presenterSetColor.setColor(map);
         }
     }
 
@@ -153,8 +152,6 @@ public class SelectColorsActivity extends AppCompatActivity {
             alert1.show();
 
         } else {
-
-            running = false;
 
             Intent intent = new Intent(this, StartGameActivity.class);
             intent.putExtra("myName", myName);

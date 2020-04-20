@@ -16,6 +16,7 @@ public class PlayerServiceImpl extends ServiceImpl<Integer, PlayerImpl> implemen
         return this.list;
     }
 
+
     public PlayerImpl findElement(Integer id) {
         for (PlayerImpl player : this.list) {
             if (player.getPlayerId() == id) {
@@ -67,6 +68,7 @@ public class PlayerServiceImpl extends ServiceImpl<Integer, PlayerImpl> implemen
         }
         return null;
     }
+
 
     public PlayerImpl findPlayerByUserid(int id) {
         for (PlayerImpl player : this.list) {
