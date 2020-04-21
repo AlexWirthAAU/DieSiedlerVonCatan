@@ -71,6 +71,13 @@ public class ServerThread implements Runnable {
                     Map map = playerOps.checkColors(inInt);
                     outToClient.writeObject(map);
                     break;
+                case "#BUILDREQUEST":
+                    System.out.println(intent);
+                    in = obInFromClient.readUTF();
+                    /**TODO: Implement build logic: Client will send String with the path-assets id (e.g. "knot_1314") and Server has to check if building at this asset for this player is allowed
+                     * Client can't yet send to the Server (not implemented)
+                     */
+                    break;
                 default:
                     break;
             }
