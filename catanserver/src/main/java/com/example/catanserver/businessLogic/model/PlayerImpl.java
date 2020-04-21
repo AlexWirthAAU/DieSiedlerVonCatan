@@ -5,9 +5,11 @@ public class PlayerImpl extends UserImpl implements Player {
     private int gameId;
     private int playerId;
     private Colors color;
+    private PlayerInventory inventory;
 
     public PlayerImpl(String displayName) {
         super(displayName);
+        inventory = new PlayerInventory();
     }
 
     public int getPlayerId() {
@@ -32,5 +34,13 @@ public class PlayerImpl extends UserImpl implements Player {
 
     public void setColor(Colors color) {
         this.color = color;
+    }
+
+    public PlayerInventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(PlayerInventory inventory) {
+        this.inventory = inventory;
     }
 }
