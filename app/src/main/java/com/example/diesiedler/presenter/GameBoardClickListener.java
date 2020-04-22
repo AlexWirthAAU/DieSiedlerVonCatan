@@ -24,14 +24,17 @@ public class GameBoardClickListener {
                 if (pathType.contains("tile")) {
                     //TODO: What should happen if Tile is clicked:
                     String pathID = richPath.getName();
+                    new PresenterBuild().chooseAssetID(pathID);
 
                 } else if (pathType.contains("settlement")) {
                     //TODO: What should happen if Knot is clicked:
                     String pathID = richPath.getName();
+                    new PresenterBuild().chooseAssetID(pathID);
 
                 } else if (pathType.contains("edge")) {
                     //TODO: What should happen if Edge is clicked:
                     String pathID = richPath.getName();
+                    new PresenterBuild().chooseAssetID(pathID);
 
                 } else if (pathType.contains("background") || pathType.contains("harbour")) {
                     Log.d("DEBUG", "Touched background");

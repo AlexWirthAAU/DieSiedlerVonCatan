@@ -1,6 +1,8 @@
 package com.example.diesiedler;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,6 +26,5 @@ public class BuildActivity extends AppCompatActivity {
 
         GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView, this);
         gameBoardClickListener.clickBoard();
-
     }
 }

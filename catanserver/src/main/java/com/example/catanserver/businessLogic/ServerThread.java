@@ -74,9 +74,11 @@ public class ServerThread implements Runnable {
                 case "#BUILDREQUEST":
                     System.out.println(intent);
                     in = obInFromClient.readUTF();
+                    System.out.println("BUILDREQUEST delivered: " + in);
                     /**TODO: Implement build logic: Client will send String with the path-assets id (e.g. "knot_1314") and Server has to check if building at this asset for this player is allowed
                      * Client can't yet send to the Server (not implemented)
                      */
+                    outToClient.writeObject("HALLO");
                     break;
                 default:
                     break;
