@@ -6,8 +6,16 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * @author Christina Senger
+ * <p>
+ * Startaktivität, die zum Spielen einlädt
+ */
 public class WelcomeActivity extends AppCompatActivity {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -15,7 +23,10 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     /**
-     * @param view - current View to access Discover Button
+     * Wird auf den Button mit dem Text "Entdecke die Welt von Catan geklickt,
+     * wird die LoginActivity gestartet, in der der User seinen Namen auswählt.
+     *
+     *  @param view View, um den Button anzusprechen
      */
     public void discover(View view) {
 
