@@ -5,7 +5,6 @@ import com.example.catanserver.businessLogic.model.PlayerInventory;
 import com.example.catanserver.businessLogic.model.gameboard.Edge;
 import com.example.catanserver.businessLogic.model.gameboard.Gameboard;
 import com.example.catanserver.businessLogic.model.gameboard.Knot;
-import sun.rmi.runtime.Log;
 
 public class BuildSettlement implements BuildStructure {
     private boolean enoughResources = false;
@@ -47,9 +46,9 @@ public class BuildSettlement implements BuildStructure {
         Edge[] edges = gameboard.getEdges();
         for(Edge edge : edges) {
             if (edge.getOne().equals(knot) || edge.getTwo().equals(knot)){
-                if (edge.getUser().equals(knot.getUser())) {
+                if (edge.getUser().equals(knot.getUser())) { //todo: getPlayer() instead of getUser() ?
                     isAdjacentRoad = true;
-                    //Log.d(TAG, "Edge: " + edge + ", Knot: " + knot); //todo: why doesnt Log.d work?
+                    //Log.d(TAG, "Edge: " + edge + ", Knot: " + knot); //todo: why doesn't Log.d work?
                     break;
                 }
             }
