@@ -15,11 +15,12 @@ public class PlayerImpl extends UserImpl implements Player {
     private int gameId;
     private int playerId;
     private Colors color;
+    private PlayerInventory inventory;
 
     public PlayerImpl(String displayName, String host, int playerId) {
         super(displayName, host);
         this.playerId = playerId;
-    }
+        inventory = new PlayerInventory();
 
     public int getPlayerId() {
         return this.playerId;
@@ -43,5 +44,13 @@ public class PlayerImpl extends UserImpl implements Player {
 
     public void setColor(Colors color) {
         this.color = color;
+    }
+
+    public PlayerInventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(PlayerInventory inventory) {
+        this.inventory = inventory;
     }
 }
