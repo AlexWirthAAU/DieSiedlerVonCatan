@@ -17,6 +17,7 @@ public class GameImpl implements Game, Serializable {
     private LinkedList<Knot> settlements;
     private LinkedList<Knot> cities;
     private int currPlayer;
+
     // private LinkedList<Entwicklungskarte> entwicklungskartenStapel;
 
     public GameImpl() {
@@ -42,6 +43,18 @@ public class GameImpl implements Game, Serializable {
 
     public Gameboard getGameboard() {
         return gameboard;
+    }
+
+    public LinkedList<Edge> getRoads() {
+        return roads;
+    }
+
+    public LinkedList<Knot> getSettlements() {
+        return settlements;
+    }
+
+    public LinkedList<Knot> getCities() {
+        return cities;
     }
 
     private void addRoad(Edge road){
