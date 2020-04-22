@@ -1,6 +1,8 @@
 package com.example.catanserver.businessLogic.model;
 
-import com.example.catanserver.businessLogic.model.gameboard.*;
+import com.example.catanserver.businessLogic.model.gameboard.Edge;
+import com.example.catanserver.businessLogic.model.gameboard.Gameboard;
+import com.example.catanserver.businessLogic.model.gameboard.Knot;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,8 +20,6 @@ public class GameImpl implements Game, Serializable {
 
     private static int currGameId = 0; //fortlaufende Id
     private List<PlayerImpl> list = new ArrayList<>(4);
-    private static int currGameId = 0;
-    protected List<PlayerImpl> playerList = new ArrayList<>();
     private int gameId;
     private Gameboard gameboard;
     private LinkedList<Edge> roads;
@@ -43,11 +43,15 @@ public class GameImpl implements Game, Serializable {
     }
 
     public List<PlayerImpl> getPlayers() {
-        return this.playerList;
+        return this.list;
     }
 
     public void setPlayers(List<PlayerImpl> players) {
         this.list = players;
+    }
+
+    public void setPlayer(PlayerImpl player) {
+        this.list.add(player);
     }
 
     public Gameboard getGameboard() {
@@ -80,7 +84,7 @@ public class GameImpl implements Game, Serializable {
     }
 
     private void nextPlayer(){
-        if(currPlayer == playerList.size()-1){
+        if (currPlayer == list.size() - 1) {
             currPlayer = 0;
         }
         else{

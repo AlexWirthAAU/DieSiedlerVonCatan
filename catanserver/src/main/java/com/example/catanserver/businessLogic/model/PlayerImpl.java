@@ -21,6 +21,7 @@ public class PlayerImpl extends UserImpl implements Player {
         super(displayName, host);
         this.playerId = playerId;
         inventory = new PlayerInventory();
+    }
 
     public int getPlayerId() {
         return this.playerId;
