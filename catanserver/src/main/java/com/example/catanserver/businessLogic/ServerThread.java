@@ -30,6 +30,7 @@ public class ServerThread implements Runnable {
             String intent = obInFromClient.readUTF();
 
             String in;
+            String sender;
             int inInt;
             System.out.println(intent);
 
@@ -74,11 +75,13 @@ public class ServerThread implements Runnable {
                 case "#BUILDREQUEST":
                     System.out.println(intent);
                     in = obInFromClient.readUTF();
-                    System.out.println("BUILDREQUEST delivered: " + in);
-                    /**TODO: Implement build logic: Client will send String with the path-assets id (e.g. "knot_1314") and Server has to check if building at this asset for this player is allowed
-                     * Client can't yet send to the Server (not implemented)
+                    sender = obInFromClient.readUTF();
+                    System.out.println("BUILDREQUEST delivered: " + in + " " + sender);
+                    /**TODO: Implement build logic: Client will send String with the path-assets id (e.g. "settlement_1_3") + his InetAddress and Server has to check if building at this asset for this player is allowed
+                     * in contains the name of the clicked asset
+                     * sender contains InetAddress of the client
                      */
-                    outToClient.writeObject("HALLO");
+                    outToClient.writeObject("TEST");
                     break;
                 default:
                     break;

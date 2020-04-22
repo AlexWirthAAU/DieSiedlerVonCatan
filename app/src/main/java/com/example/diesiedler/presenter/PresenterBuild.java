@@ -17,11 +17,14 @@ public class PresenterBuild extends ConnectionData {
     private static final Logger log = Logger.getLogger(Presenter.class.getName());
     private static StringBuilder action;
     private static StringBuilder toWrite;
+    private static StringBuilder sender;
 
     public void chooseAssetID(String toSend) {
 
         action = new StringBuilder(1);
         toWrite = new StringBuilder(1);
+        sender = new StringBuilder(1);
+
 
         log.log(Level.INFO, "send" + toSend);
         action.replace(0, 0, "#BUILDREQUEST");
@@ -45,8 +48,11 @@ public class PresenterBuild extends ConnectionData {
                 ObjectOutputStream outToServer = new ObjectOutputStream(client.getOutputStream());
                 SecureObjectStream inFromServer = new SecureObjectStream(client.getInputStream());
 
+                sender.replace(0, 0, String.valueOf(client.getInetAddress()));
+
                 outToServer.writeUTF(action.toString());
                 outToServer.writeUTF(toWrite.toString());
+                outToServer.writeUTF(sender.toString());
                 outToServer.flush();
 
                 Object object = inFromServer.readObject();
