@@ -1,14 +1,8 @@
-package com.example.diesiedler.model.gameboard;
-
-import com.richpath.RichPath;
-import com.richpath.RichPathView;
+package com.example.catanserver.businessLogic.model.gameboard;
 
 
 public class Tile {
-    private RichPathView gameBoardView;
-    private RichPath surfaceTile;               //Touchable Surface
-    private RichPath backgroundTile;            //Only the underlying TileDesign
-    private RichPath thief;                     //Each backgroundTile has a red dot as thief -> thief.setFillAlpha(1)
+    //Each backgroundTile has a red dot as thief -> thief.setFillAlpha(1)
     private boolean isThief;                    //to notate that the Thief is on this certain Tile
     private int id;                             //gives each Tile a id
     private int diceValue;                      //each Tile needs to have a certain value between 2-12
@@ -16,48 +10,50 @@ public class Tile {
     private Knot[] knots;                       //Each Tile has a set of 6 adjoining knots (needed to check which settlement gets resources after rolling the dice
 
 
-    public Tile(int Tid, RichPathView rpv) {
+    public Tile(int Tid) {
         isThief = false;
         id = Tid;
         setDiceValue();
-        gameBoardView = rpv;
-        surfaceTile = gameBoardView.findRichPathByName("tile_" + id);
-        backgroundTile = gameBoardView.findRichPathByName("backgroundTile_" + id);
-        thief = gameBoardView.findRichPathByName("thief_" + id);
         setResource();
-        knots = new Knot[54];
+        knots = new Knot[6];
     }
 
     private void setResource() {
-        if (backgroundTile.getFillColor() == -16754944) {
-            this.resource = "WOOD";
-        } else if (backgroundTile.getFillColor() == -11903594) {
-            this.resource = "ORE";
-        } else if (backgroundTile.getFillColor() == -400871) {
-            this.resource = "WHEAT";
-        } else if (backgroundTile.getFillColor() == -6005715) {
-            this.resource = "CLAY";
-        } else if (backgroundTile.getFillColor() == -13321954) {
-            this.resource = "WOOL";
-        } else if (backgroundTile.getFillColor() == -5798865) {
-            this.resource = "DESERT";
+        int id = this.id;
+        switch (id) {
+            case 1:
+            case 9:
+            case 15:
+            case 19:
+                this.resource = "WOOD";
+                break;
+            case 2:
+            case 4:
+            case 18:
+                this.resource = "ORE";
+                break;
+            case 3:
+            case 8:
+            case 10:
+            case 16:
+                this.resource = "WHEAT";
+                break;
+            case 5:
+            case 12:
+            case 17:
+                this.resource = "CLAY";
+                break;
+            case 6:
+            case 7:
+            case 13:
+            case 14:
+                this.resource = "WOOL";
+                break;
+            case 11:
+                this.resource = "DESERT";
+                break;
         }
-    }
 
-    public RichPath getBackgroundTile() {
-        return backgroundTile;
-    }
-
-    public RichPath getThief() {
-        return thief;
-    }
-
-    public RichPathView getGameBoardView() {
-        return gameBoardView;
-    }
-
-    public RichPath getSurfaceTile() {
-        return surfaceTile;
     }
 
     public int getId() {
@@ -72,29 +68,12 @@ public class Tile {
         return isThief;
     }
 
-    public void setGameBoardView(RichPathView gameBoardView) {
-        this.gameBoardView = gameBoardView;
-    }
-
-    public void setSurfaceTile(RichPath surfaceTile) {
-        this.surfaceTile = surfaceTile;
-    }
-
-    public void setBackgroundTile(RichPath backgroundTile) {
-        this.backgroundTile = backgroundTile;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
 
     public void setThief(boolean thief) {
-        this.isThief = thief;
-        if (isThief == true) {
-            this.thief.setFillAlpha(1);
-        } else {
-            this.thief.setFillAlpha(0);
-        }
+        this.isThief = true;
     }
 
     public void setKnots(Knot[] knots) {
@@ -165,3 +144,4 @@ public class Tile {
         return diceValue;
     }
 }
+

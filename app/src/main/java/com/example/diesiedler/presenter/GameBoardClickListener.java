@@ -3,90 +3,55 @@ package com.example.diesiedler.presenter;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.diesiedler.model.gameboard.Edge;
-import com.example.diesiedler.model.gameboard.Gameboard;
-import com.example.diesiedler.model.gameboard.Knot;
-import com.example.diesiedler.model.gameboard.Tile;
+import com.example.diesiedler.BuildRoadActivity;
+import com.example.diesiedler.BuildSettlementActivity;
 import com.richpath.RichPath;
 import com.richpath.RichPathView;
 
 public class GameBoardClickListener {
 
     RichPathView richPathView;
-    Context c;
-    Gameboard gameboard;
+    Context context;
 
-    public GameBoardClickListener(RichPathView richPathView, Context c, Gameboard g) {
+    public GameBoardClickListener(RichPathView richPathView, Context c) {
         this.richPathView = richPathView;
-        this.c = c;
-        this.gameboard = g;
+        this.context = c;
     }
 
     public void clickBoard() {
+        final String[] toSend = {""};
         richPathView.setOnPathClickListener(new RichPath.OnPathClickListener() {
             @Override
             public void onClick(RichPath richPath) {
                 String pathType = getPathType(richPath);
                 if (pathType.contains("tile")) {
                     //TODO: What should happen if Tile is clicked:
-                    int pathID = getTilePathId(richPath);
-                    for (Tile t : gameboard.getTiles()) {
-                        if (t.getId() == pathID) {
-                            Log.d("DEBUG", "Clicked Tile: " + t.getId());
-                            Log.d("DEBUG", "Tile resource is: " + t.getResource());
-                        }
-                    }
+                    toSend[0] = richPath.getName();
+
                 } else if (pathType.contains("settlement")) {
                     //TODO: What should happen if Knot is clicked:
-                    int row = getKnotPathId(richPath)[0];
-                    int column = getKnotPathId(richPath)[1];
-                    for (Knot k : gameboard.getKnots()) {
-                        if (k.getRow() == row && k.getColumn() == column) {
-                            Log.d("DEBUG", "Clicked Knot: " + k.toString());
-                            Log.d("DEBUG", "KnotisHarbour: " + k.getIsHarbourKnot());
-                        }
-                    }
+                    toSend[0] = richPath.getName();
+                    new BuildSettlementActivity().clicked(toSend[0]);
+
                 } else if (pathType.contains("edge")) {
                     //TODO: What should happen if Edge is clicked:
-                    String edgeID = getEdgeId(richPath);
-                    for (Edge e : gameboard.getEdges()) {
-                        if (e.getId().equals(edgeID)) {
-                            Log.d("DEBUG", "Clicked Edge: " + richPath.getName());
-                        }
-                    }
+                    toSend[0] = richPath.getName();
+                    new BuildRoadActivity().clicked(toSend[0]);
+
                 } else if (pathType.contains("background") || pathType.contains("harbour")) {
                     Log.d("DEBUG", "Touched background");
                 }
             }
         });
+        Log.d("DEBUG", toSend[0]);
     }
 
     public void scaleBoard() {
-        richPathView.setOnTouchListener(new StandardGesture(this.c));
-    }
-
-    private int getTilePathId(RichPath richPath) {
-        int id = Integer.parseInt(richPath.getName().split("_")[1]);
-        return id;
-    }
-
-    private int[] getKnotPathId(RichPath richPath) {
-        int[] values = new int[2];
-        String row = richPath.getName().split("_")[1];
-        String column = richPath.getName().split("_")[2];
-        values[0] = Integer.parseInt(row);
-        values[1] = Integer.parseInt(column);
-        return values;
+        richPathView.setOnTouchListener(new StandardGesture(this.context));
     }
 
     private String getPathType(RichPath richPath) {
         String type = richPath.getName().split("_")[0];
         return type;
     }
-
-    private String getEdgeId(RichPath richPath) {
-        String id = richPath.getName();
-        return id;
-    }
-
 }

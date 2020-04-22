@@ -13,7 +13,7 @@ import java.net.Socket;
  */
 class ConnectionData {
 
-    static final String HOST = "192.168.0.23";
+    static final String HOST = "10.0.0.138";
     static final int PORT = 2020;
     static Socket client;
     static ObjectOutputStream outToServer;
