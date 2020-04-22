@@ -1,22 +1,38 @@
 package com.example.catanserver.businessLogic.services;
 
+import com.example.catanserver.businessLogic.model.Colors;
 import com.example.catanserver.businessLogic.model.GameImpl;
 import com.example.catanserver.businessLogic.model.PlayerImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Christina Senger
+ * <p>
+ * Der GameService verfügt zusätzlich über Methoden, um eine Spiel
+ * über seine Id oder seine Spieler zu finden. Außerdem kann er
+ * Spieler und deren Farben einander zuordnen und er hat eine Methode,
+ * um die Id, die Namen aller Nutzer und deren Farben als Liste von
+ * Stringelementen zurückzugeben.
+ */
 public class GameServiceImpl extends ServiceImpl<Integer, GameImpl> implements GameService {
 
+    /**
+     * Konstruktor - setzt die aktuelle Id auf 1
+     */
     public GameServiceImpl() {
         this.currentId = 1;
     }
 
-    public List<GameImpl> fetchAll() {
-        return this.list;
-    }
-
-    public GameImpl findElement(Integer id) {
+    /**
+     * Durchsucht die Liste mit allen Spielen. Ist eine
+     * gameId gleich der gegebenen Id, wird das Spiel zurückgegeben.
+     *
+     * @param id Gameid
+     * @return das Spiel mit der angegebenen Id, sonst null
+     */
+    public GameImpl findObject(Integer id) {
         for (GameImpl game : this.list) {
             if (game.getGameId() == id) {
                 return game;
@@ -25,12 +41,32 @@ public class GameServiceImpl extends ServiceImpl<Integer, GameImpl> implements G
         return null;
     }
 
+    /**
+     * @return Liste aller User
+     */
+    public ArrayList<GameImpl> fetchAll() {
+        return this.list;
+    }
+
+    /**
+     * Das Spiel bekommt die nächste freie Id
+     * und wird in die Liste aller Spiele eingefügt.
+     *
+     * @param game einzufügendes Spiel
+     * @return eingefügtes Spiel
+     */
     public GameImpl insert(GameImpl game) {
         game.setGameId(currentId++);
         this.list.add(game);
         return game;
     }
 
+    /**
+     * Gibt es unter allen Spielen eine Spiel mit der
+     * gesuchten Id, wird dieses aus der Liste entfernt.
+     *
+     * @param id GameId des zu löschenden Spiels
+     */
     public void delete(Integer id) {
         GameImpl g = null;
         for (GameImpl game : this.list) {
@@ -44,6 +80,14 @@ public class GameServiceImpl extends ServiceImpl<Integer, GameImpl> implements G
         }
     }
 
+    /**
+     * Gibt es unter allen Spielen eine Spiel mit der
+     * gegebenen Id, wird dieses aus der Liste entfernt
+     * und das neue Spiel an der Stelle eingesetzt.
+     *
+     * @param game upzudatendes Spiel
+     * @return das neu eingefügte Spiel
+     */
     public GameImpl update(GameImpl game) {
         GameImpl g = null;
         for (GameImpl gi : this.list) {
@@ -59,10 +103,22 @@ public class GameServiceImpl extends ServiceImpl<Integer, GameImpl> implements G
         return g;
     }
 
-    public GameImpl findGameByPlayername(String name) {
+    /**
+     * Durchsucht die Liste mit allen Spielen. Hat ein Spiel die
+     * übergebenen Spieler, wird das Spiel zurückgegeben.
+     *
+     * @param players Liste den Spielern
+     * @return das gesuchte Spiel, sonst null
+     */
+    public GameImpl findGameByPlayers(ArrayList<String> players) {
+
         for (GameImpl game : this.list) {
-            for (PlayerImpl player : game.getPlayers()) {
-                if (name.equals(player.getDisplayName())) {
+            List<PlayerImpl> toCheck = game.getPlayers();
+
+            for (int i = 0; i < players.size() && i < toCheck.size(); i++) {
+                String strToCheck = toCheck.get(i).getDisplayName();
+
+                if ((players.get(i)).equals(strToCheck)) {
                     return game;
                 }
             }
@@ -70,30 +126,35 @@ public class GameServiceImpl extends ServiceImpl<Integer, GameImpl> implements G
         return null;
     }
 
-    public GameImpl findGameByGameId(Integer id) {
-        for (GameImpl game : this.list) {
-            if (id.equals(game.getGameId())) {
-                return game;
+    /**
+     * Durchsucht die Spielerliste des gegebenen Spieles.
+     * Hat ein Spieler die gesuchte Farbe, wird das Spiel zurückgegeben.
+     *
+     * @param color Farbe des Spielers
+     * @param game  Spiel des Spielers
+     * @return den gesuchten Spieler, sonst null
+     */
+    public PlayerImpl findPlayerInGameByColor(Colors color, GameImpl game) {
+
+        List<PlayerImpl> toCheck = game.getPlayers();
+
+        for (PlayerImpl player : toCheck) {
+
+            if (player.getColor().equals(color)) {
+                return player;
             }
         }
         return null;
     }
 
-    public GameImpl findGameByPlayers(List<String> players) {
-        for (GameImpl game : this.list) {
-            for (int i = 0; i < players.size() && i < game.getPlayers().size(); i++) {
-                if ((players.get(i)).equals((game.getPlayers()).get(i).toString())) {
-                    return game;
-                }
-            }
-        }
-        return null;
-    }
+    /**
+     * @param id Id des Spiels
+     * @return Liste mit GameId, Spieler und deren Farben als String
+     */
+    public ArrayList<String> getList(Integer id) {
 
-    public List<String> getList(Integer id) {
-
-        GameImpl game = findGameByGameId(id);
-        List<String> gameList = new ArrayList<>();
+        GameImpl game = findObject(id);
+        ArrayList<String> gameList = new ArrayList<>();
 
         gameList.add(id.toString());
 

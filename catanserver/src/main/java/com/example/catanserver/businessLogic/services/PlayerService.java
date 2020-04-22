@@ -1,20 +1,22 @@
 package com.example.catanserver.businessLogic.services;
 
-import com.example.catanserver.businessLogic.model.Colors;
 import com.example.catanserver.businessLogic.model.PlayerImpl;
 
-import java.util.List;
+import java.util.ArrayList;
 
-
+/**
+ * @author Christina Senger
+ * <p>
+ * Der PlayerService verfügt zusätzlich übe Methoden, um einen Player
+ * über seinen Namen oder seinen Host zu finden. Außerdem
+ * hat er eine Methode, um die Namen aller Spieler als Liste von
+ * Stringelementen zurückzugeben.
+ */
 public interface PlayerService extends Service<Integer, PlayerImpl> {
 
     PlayerImpl findPlayerByUsername(String name);
 
-    PlayerImpl findPlayerByUserid(int id);
+    PlayerImpl findPlayerByHost(String host);
 
-    List<PlayerImpl> findPlayersByGameid(int id);
-
-    PlayerImpl findPlayerByColor(Colors color);
-
-    List<String> getNameList();
+    ArrayList<String> getNameList();
 }
