@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ShowCostsActivity">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:backgroundTint="#BD1010"
+        android:fitsSystemWindows="true"
+        tools:context=".SearchPlayersActivity">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="35dp"
+            android:text="@string/costs"
+            android:textAlignment="gravity"
+            android:textColor="#FBC02D"
+            android:textSize="35sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/straße"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="90dp"
+            android:text="@string/street"
+            android:textAlignment="gravity"
+            android:textColor="#FBC02D"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/points1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="150dp"
+            android:layout_marginTop="135dp"
+            android:text="@string/pointsstreet"
+            android:textColor="#FBC02D"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/costs1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="135dp"
+            android:layout_marginEnd="135dp"
+            android:gravity="end"
+            android:text="@string/costsstreet"
+            android:textAlignment="viewEnd"
+            android:textColor="#FBC02D"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/siedlung"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="155dp"
+            android:text="@string/settlement"
+            android:textAlignment="gravity"
+            android:textColor="#FBC02D"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/points2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="150dp"
+            android:layout_marginTop="200dp"
+            android:text="@string/pointssettlement"
+            android:textAlignment="viewStart"
+            android:textColor="#FBC02D"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/costs2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="200dp"
+            android:layout_marginEnd="50dp"
+            android:gravity="end"
+            android:text="@string/costsettlement"
+            android:textAlignment="viewEnd"
+            android:textColor="#FBC02D"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="240dp"
+            android:text="@string/city"
+            android:textAlignment="gravity"
+            android:textColor="#FBC02D"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/points3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="150dp"
+            android:layout_marginTop="285dp"
+            android:text="@string/pointscity"
+            android:textAlignment="viewStart"
+            android:textColor="#FBC02D"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/costs3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="285dp"
+            android:layout_marginEnd="150dp"
+            android:gravity="end"
+            android:text="@string/costscity"
+            android:textAlignment="viewEnd"
+            android:textColor="#FBC02D"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/devCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="315dp"
+            android:text="@string/devCard"
+            android:textAlignment="gravity"
+            android:textColor="#FBC02D"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/points4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="150dp"
+            android:layout_marginTop="360dp"
+            android:text="@string/pointsdevCard"
+            android:textAlignment="viewStart"
+            android:textColor="#FBC02D"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/costs4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="360dp"
+            android:layout_marginEnd="150dp"
+            android:gravity="end"
+            android:text="@string/costsdevCard"
+            android:textAlignment="viewEnd"
+            android:textColor="#FBC02D"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

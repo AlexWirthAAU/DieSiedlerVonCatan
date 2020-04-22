@@ -1,2 +1,3 @@
-rootProject.name='Die Siedler'
+rootProject.name='Catan'
 include ':app'
+include ':catanserver'
