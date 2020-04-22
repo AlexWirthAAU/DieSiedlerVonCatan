@@ -1,23 +1,27 @@
 package com.example.catanserver.businessLogic.services;
 
-import com.example.catanserver.businessLogic.model.Colors;
 import com.example.catanserver.businessLogic.model.PlayerImpl;
 
 import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * @author Christina Senger
+ * <p>
+ * Der PlayerService verfügt zusätzlich übe Methoden, um einen Player
+ * über seinen Namen oder seinen Host zu finden. Außerdem
+ * hat er eine Methode, um die Namen aller Spieler als Liste von
+ * Stringelementen zurückzugeben.
+ */
 public class PlayerServiceImpl extends ServiceImpl<Integer, PlayerImpl> implements PlayerService {
 
-    public PlayerServiceImpl() {
-        this.currentId = 1;
-    }
-
-    public List<PlayerImpl> fetchAll() {
-        return this.list;
-    }
-
-
-    public PlayerImpl findElement(Integer id) {
+    /**
+     * Durchsucht die Liste mit allen Spielern. Ist eine
+     * playerId gleich der gegebenen Id, wird der player zurückgegeben.
+     *
+     * @param id Playerid
+     * @return den Player mit der angegebenen Id, sonst null
+     */
+    public PlayerImpl findObject(Integer id) {
         for (PlayerImpl player : this.list) {
             if (player.getPlayerId() == id) {
                 return player;
@@ -26,12 +30,32 @@ public class PlayerServiceImpl extends ServiceImpl<Integer, PlayerImpl> implemen
         return null;
     }
 
+    /**
+     * @return Liste aller Player
+     */
+    public ArrayList<PlayerImpl> fetchAll() {
+        return this.list;
+    }
+
+    /**
+     * Der Player erhält die seine UserId als PlayerId
+     * und wird in die Liste aller Spieler eingefügt.
+     *
+     * @param player einzufügender Spieler
+     * @return eingefügter Spieler
+     */
     public PlayerImpl insert(PlayerImpl player) {
-        player.setPlayerId(currentId++);
+        player.setPlayerId(player.getUserId());
         this.list.add(player);
         return player;
     }
 
+    /**
+     * Gibt es unter allen Spielern einen Spieler mit der
+     * gesuchten Id, wird dieser aus der Liste entfernt.
+     *
+     * @param id PlayerId des zu löschenden Spielers
+     */
     public void delete(Integer id) {
         PlayerImpl p = null;
         for (PlayerImpl player : this.list) {
@@ -45,6 +69,14 @@ public class PlayerServiceImpl extends ServiceImpl<Integer, PlayerImpl> implemen
         }
     }
 
+    /**
+     * Gibt es unter allen Spielern einen Spieler mit der
+     * gegebenen Id, wird dieser aus der Liste entfernt
+     * und der neue Spieler an der Stelle eingesetzt.
+     *
+     * @param player upzudatender Spieler
+     * @return den neu eingefügen Spieler
+     */
     public PlayerImpl update(PlayerImpl player) {
         PlayerImpl p = null;
         for (PlayerImpl play : this.list) {
@@ -60,48 +92,43 @@ public class PlayerServiceImpl extends ServiceImpl<Integer, PlayerImpl> implemen
         return p;
     }
 
-    public PlayerImpl findPlayerByUsername(String name) {
+    /**
+     * Durchsucht die Liste mit allen Spielern. Ist ein
+     * displayName gleich dem gegebenen Namen, wird der player zurückgegeben.
+     *
+     * @param username Username des gesuchten Spielers
+     * @return den gesuchten Spieler, sonst null
+     */
+    public PlayerImpl findPlayerByUsername(String username) {
         for (PlayerImpl player : this.list) {
-            if (name.equals(player.getDisplayName())) {
+            if (username.equals(player.getDisplayName())) {
                 return player;
             }
         }
         return null;
     }
 
-
-    public PlayerImpl findPlayerByUserid(int id) {
+    /**
+     * Durchsucht die Liste mit allen Spielern. Ist ein
+     * Host gleich dem gegebenen Host, wird der playe zurückgegeben.
+     *
+     * @param host Host des gesuchten Spielers
+     * @return den gesuchten Spieler, sonst null
+     */
+    public PlayerImpl findPlayerByHost(String host) {
         for (PlayerImpl player : this.list) {
-            if (id == player.getUserId()) {
+            if (host.equals(player.getHost())) {
                 return player;
             }
         }
         return null;
     }
 
-    public List<PlayerImpl> findPlayersByGameid(int id) {
-
-        List<PlayerImpl> l = new ArrayList<>();
-
-        for (PlayerImpl player : this.list) {
-            if (id == player.getGameId()) {
-                l.add(player);
-            }
-        }
-        return l;
-    }
-
-    public PlayerImpl findPlayerByColor(Colors color) {
-        for (PlayerImpl player : this.list) {
-            if (color == player.getColor()) {
-                return player;
-            }
-        }
-        return null;
-    }
-
-    public List<String> getNameList() {
-        List<String> names = new ArrayList<>();
+    /**
+     * @return eine Liste aller DisplayNames
+     */
+    public ArrayList<String> getNameList() {
+        ArrayList<String> names = new ArrayList<>();
 
         for (PlayerImpl player : this.list) {
             names.add(player.getDisplayName());

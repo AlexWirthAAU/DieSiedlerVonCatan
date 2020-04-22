@@ -17,6 +17,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * @author Christina Senger
+ * <p>
+ * Aktivität in der die Spieler ihre Spielfarbe auswählen können
+ */
 public class SelectColorsActivity extends AppCompatActivity {
 
     private ArrayList<String> gameList = new ArrayList<>();
@@ -28,8 +33,22 @@ public class SelectColorsActivity extends AppCompatActivity {
     private HashMap<String, String> map = new HashMap<>();
     private List<Button> colors = new ArrayList<>();
     private static final Logger log = Logger.getLogger(SelectColorsActivity.class.getName());
+    private PresenterSetColor presenterSetColor = new PresenterSetColor();
 
-
+    /**
+     * Eine Liste mit der GameId an erster an den Spielern mit ihren
+     * Farben wird aus dem Intent geholt und in der Varible gameList
+     * gespeichert. Der Name des aktuellen Users wird als myName geseichert.
+     *
+     * Die Buttons werden aus der ContentView geholt, lokal gespeichert und zu
+     * einer Liste colors hinzugefügt.
+     *
+     * Die GameId und die aktuelle Aktivität werden dem Presenter übergeben.
+     * Dieser warten auf Nachrichten vom Server, dass die Mitspieler Farben
+     * gewählt haben und aktualisiert die View dementsprechend.
+     *
+     * @param savedInstanceState gespeicherter Status
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +71,13 @@ public class SelectColorsActivity extends AppCompatActivity {
     }
 
     /**
-     * @param view current View to access color Button
+     * Ist die Farbe des gelickten Button noch frei,
+     * werden alle anderen Farbbuttons für den aktuellen Spieler
+     * unklickbar. Der Username erscheint als Buttontext.
+     * Gleichzeitig wird die Wahl als Map von Farbe und Name an den
+     * Presenter übergeben, der dies an den Server weiterleitet.
+     *
+     * @param view View, um Farbbutton anzusprechen
      */
     public void onGreen(View view) {
 
@@ -63,13 +88,18 @@ public class SelectColorsActivity extends AppCompatActivity {
             }
             green.setText(myName);
             map.put("green", myName);
-            PresenterSetColor.setColor(map);
+            presenterSetColor.setColor(map);
         }
     }
 
     /**
+     * Ist die Farbe des gelickten Button noch frei,
+     * werden alle anderen Farbbuttons für den aktuellen Spieler
+     * unklickbar. Der Username erscheint als Buttontext.
+     * Gleichzeitig wird die Wahl als Map von Farbe und Name an den
+     * Presenter übergeben, der dies an den Server weiterleitet.
      *
-     * @param view current View to access color Button
+     * @param view View, um Farbbutton anzusprechen
      */
     public void onOrange(View view) {
 
@@ -80,13 +110,18 @@ public class SelectColorsActivity extends AppCompatActivity {
             }
             orange.setText(myName);
             map.put("orange", myName);
-            PresenterSetColor.setColor(map);
+            presenterSetColor.setColor(map);
         }
     }
 
     /**
+     * Ist die Farbe des gelickten Button noch frei,
+     * werden alle anderen Farbbuttons für den aktuellen Spieler
+     * unklickbar. Der Username erscheint als Buttontext.
+     * Gleichzeitig wird die Wahl als Map von Farbe und Name an den
+     * Presenter übergeben, der dies an den Server weiterleitet.
      *
-     * @param view current View to access color Button
+     * @param view View, um Farbbutton anzusprechen
      */
     public void onViolett(View view) {
 
@@ -97,30 +132,39 @@ public class SelectColorsActivity extends AppCompatActivity {
             }
             violett.setText(myName);
             map.put("violett", myName);
-            PresenterSetColor.setColor(map);
+            presenterSetColor.setColor(map);
         }
     }
 
     /**
+     * Ist die Farbe des gelickten Button noch frei,
+     * werden alle anderen Farbbuttons für den aktuellen Spieler
+     * unklickbar. Der Username erscheint als Buttontext.
+     * Gleichzeitig wird die Wahl als Map von Farbe und Name an den
+     * Presenter übergeben, der dies an den Server weiterleitet.
      *
-     * @param view current View to access color Button
+     * @param view View, um Farbbutton anzusprechen
      */
     public void onLightblue(View view) {
 
         if ((lightblue.getText().toString()).isEmpty()) {
             for (Button btn : colors) {
-
                 btn.setEnabled(false);
             }
+
             lightblue.setText(myName);
             map.put("lightblue", myName);
-            PresenterSetColor.setColor(map);
+            presenterSetColor.setColor(map);
         }
     }
 
     /**
+     * Haben alle Spieler eine Frbe gewählt, wird das Spiel geladen.
+     * Sonst wird eine Warnung angezeigt. Dies wird überprüft, indem
+     * die Anzahl der aktiven Spieler (aus dem Intent) mit der Anzahl
+     * der nichtleeren Buttons verglichen wird.
      *
-     * @param view current View to access Start Button
+     * @param view View, um StartButton anzusprechen
      */
     public void startGame(View view) {
 
@@ -129,15 +173,12 @@ public class SelectColorsActivity extends AppCompatActivity {
 
         for (Button btn : colors) {
 
-            log.log(Level.INFO, "btntext", btn.getText().toString());
+            log.log(Level.INFO, "btntext" + btn.getText().toString());
             if (!btn.getText().toString().isEmpty()) {
                 selectedColors++;
             }
 
-            log.log(Level.INFO, "player", gameList.size() - 1);
-            log.log(Level.INFO, "selectedColors", selectedColors);
-
-            if (gameList.size() == selectedColors) {
+            if (selectedColors >= 2) {
                 ready = true;
             }
         }

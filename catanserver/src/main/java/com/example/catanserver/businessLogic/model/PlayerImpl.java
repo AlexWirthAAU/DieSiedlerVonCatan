@@ -1,5 +1,15 @@
 package com.example.catanserver.businessLogic.model;
 
+/**
+ * @author Christina Senger
+ * <p>
+ * Ein Player kennt seine PlayerId, die GameId
+ * des Spiel in dem er ist und seine Farbe und
+ * hat entsprechende Getter und Setter.
+ * <p>
+ * Vom User erbt er dessen DisplayName, die UserId,
+ * und den Host des Geräts.
+ */
 public class PlayerImpl extends UserImpl implements Player {
 
     private int gameId;
@@ -7,8 +17,9 @@ public class PlayerImpl extends UserImpl implements Player {
     private Colors color;
     private PlayerInventory inventory;
 
-    public PlayerImpl(String displayName) {
-        super(displayName);
+    public PlayerImpl(String displayName, String host, int playerId) {
+        super(displayName, host);
+        this.playerId = playerId;
         inventory = new PlayerInventory();
     }
 

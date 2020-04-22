@@ -13,7 +13,7 @@ public class Edge {
         this.one = one;
         this.two = two;
         this.id = "edge_" + one.getRow() + "" + one.getColumn() + "" + two.getRow() + "" + two.getColumn();
-        this.user = new UserImpl("nullUser");
+        this.user = new UserImpl("nullUser", "nullip");
         this.user.setUserId(0);
     }
 

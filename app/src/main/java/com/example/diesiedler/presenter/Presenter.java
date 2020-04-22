@@ -23,14 +23,16 @@ import java.util.logging.Logger;
 public class Presenter extends ConnectionData {
 
     private static final Logger log = Logger.getLogger(Presenter.class.getName());
-    private static StringBuilder action = new StringBuilder(1);
-    private static StringBuilder toWrite = new StringBuilder(1);
+    private static StringBuilder action;
+    private static StringBuilder toWrite;
     private static final String startgame = "#STARTGAME";
     private static String currUser;
     private static List<String> usersIn;
 
     public static void checkColors(Integer id, Activity ac) {
 
+        action = new StringBuilder(1);
+        toWrite = new StringBuilder(1);
         action.replace(0, 0, "#CHECKCOLOR");
         toWrite.replace(0, 0, id + "");
 
@@ -41,6 +43,8 @@ public class Presenter extends ConnectionData {
     public static void removeMeFromUserList(String username, MyAdapter adapter) {
 
         log.log(Level.INFO, "checkIfIn" + username);
+        action = new StringBuilder(1);
+        toWrite = new StringBuilder(1);
         action.replace(0, 0, "#DELETE");
         toWrite.replace(0, 0, username);
 
@@ -56,6 +60,8 @@ public class Presenter extends ConnectionData {
         }
 
         log.log(Level.INFO, "setInGame" + curr);
+        action = new StringBuilder(1);
+        toWrite = new StringBuilder(1);
         action.replace(0, 0, startgame);
         usersIn = users;
         currUser = curr;
@@ -64,31 +70,38 @@ public class Presenter extends ConnectionData {
         startGame.execute();
     }
 
-    public static void checkForChanges(int size, MyAdapter adapter) {
+    public static void checkForChanges(int size, MyAdapter adapter, String name, Activity ac) {
 
         log.log(Level.INFO, "sizesend" + size);
+        currUser = name;
+        action = new StringBuilder(1);
+        toWrite = new StringBuilder(1);
         action.replace(0, 0, "#UPDATE");
         toWrite.replace(0, 0, size + "");
 
-        SendToServer updateList = new SendToServer(adapter);
+        SendToServer updateList = new SendToServer(adapter, ac);
         updateList.execute();
     }
 
-    public void addUserAndGetUserList(Activity ac, String toSend) {
+    public static void addUserAndGetUserList(Activity ac, String toSend) {
 
         log.log(Level.INFO, "send" + toSend);
-        action.replace(0, 0, "#LOGIN");
-        toWrite.replace(0, 0, toSend);
+        action = new StringBuilder(1);
+        toWrite = new StringBuilder(1);
+        action.replace(0, 1, "#LOGIN");
+        toWrite.replace(0, 1, toSend);
 
         SendToServer send = new SendToServer(ac);
         send.execute();
     }
 
-    public void checkIfIn(String username, Activity ac) {
+    public static void checkIfIn(String username, Activity ac) {
 
         log.log(Level.INFO, "checkIfIn" + username);
-        action.replace(0, 0, "#CHECKGAME");
-        toWrite.replace(0, 0, username);
+        action = new StringBuilder(1);
+        toWrite = new StringBuilder(1);
+        action.replace(0, 1, "#CHECKGAME");
+        toWrite.replace(0, 1, username);
 
         SendToServer checkGame = new SendToServer(ac);
         checkGame.execute();
@@ -127,6 +140,13 @@ public class Presenter extends ConnectionData {
         SendToServer(MyAdapter adapter) {
 
             this.adapter = adapter;
+
+        }
+
+        SendToServer(MyAdapter adapter, Activity ac) {
+
+            this.adapter = adapter;
+            this.ac = ac;
 
         }
 
@@ -189,7 +209,7 @@ public class Presenter extends ConnectionData {
                     ac.getApplicationContext().startActivity(intent);
                     break;
 
-                case "CHECKCOLOR":
+                case "#CHECKCOLOR":
                     @SuppressWarnings("unchecked")
                     Map<String, String> gameMap = (Map) result;
 
@@ -199,7 +219,7 @@ public class Presenter extends ConnectionData {
                     }
                     break;
 
-                case "CHECKGAME":
+                case "#CHECKGAME":
                     if (result != null) {
                         log.log(Level.INFO, "neuesSpiel");
                         Intent intent2 = new Intent(ac, SelectColorsActivity.class);
@@ -224,6 +244,7 @@ public class Presenter extends ConnectionData {
 
                         adapter.update(newlist);
                     }
+                    Presenter.checkIfIn(currUser, ac);
                     break;
 
                 case startgame:

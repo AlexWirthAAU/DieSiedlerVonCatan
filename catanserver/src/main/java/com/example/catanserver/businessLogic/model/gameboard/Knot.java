@@ -17,7 +17,7 @@ public class Knot {
     private boolean isHarbourKnot;      //States whether a Knot has a harbour or not
 
     public Knot(int row, int column) {
-        this.user = new UserImpl("nullUser");
+        this.user = new UserImpl("nullUser", "nullip");
         this.user.setUserId(0);
         this.row = row;
         this.column = column;

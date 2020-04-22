@@ -1,16 +1,25 @@
 package com.example.catanserver.businessLogic.services;
 
-import java.util.List;
+import java.util.ArrayList;
 
-public interface Service<S, T> {
+/**
+ * @param <I> Platzhalter für den Objekttyp des Suchparameters
+ * @param <T> Platzhalter für den Objekttyp des Elements
+ *            <p>
+ *            Der Service kennt Methoden, um ein Element zu finden,
+ *            einzufügen, upzudaten, zu löschen oder alle Elemente zu
+ *            finden.
+ * @author Christina Senger
+ */
+public interface Service<I, T> {
 
-    T findElement(S id);
+    T findObject(I id);
 
-    List<T> fetchAll();
+    ArrayList<T> fetchAll();
 
     T insert(T element);
 
-    void delete(S id);
+    void delete(I id);
 
     T update(T element);
 

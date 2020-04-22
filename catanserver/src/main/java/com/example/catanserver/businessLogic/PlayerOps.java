@@ -4,27 +4,41 @@ import com.example.catanserver.businessLogic.model.Colors;
 import com.example.catanserver.businessLogic.model.Game;
 import com.example.catanserver.businessLogic.model.GameImpl;
 import com.example.catanserver.businessLogic.model.PlayerImpl;
+import com.example.catanserver.businessLogic.model.User;
 import com.example.catanserver.businessLogic.services.GameServiceImpl;
 import com.example.catanserver.businessLogic.services.PlayerServiceImpl;
+import com.example.catanserver.businessLogic.services.UserServiceImpl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 class PlayerOps {
 
-    private PlayerServiceImpl psi = new PlayerServiceImpl();
-    private GameServiceImpl gsi = new GameServiceImpl();
+    private static UserServiceImpl usi;
+    private static PlayerServiceImpl psi;
+    private static GameServiceImpl gsi;
 
-    synchronized List<String> startGame(List<String> usersIn) {
+    public PlayerOps(UserServiceImpl u, PlayerServiceImpl p, GameServiceImpl g) {
+        usi = u;
+        psi = p;
+        gsi = g;
+
+    }
+
+    synchronized ArrayList<String> startGame(List<String> usersIn) {
 
         GameImpl game = new GameImpl();
         PlayerImpl player;
         int id;
 
         for (String str : usersIn) {
-            player = new PlayerImpl(str);
+
+            User user = usi.findUserByUsername(str);
+            player = new PlayerImpl(str, user.getHost(), user.getUserId());
             psi.insert(player);
+            usi.delete(user.getUserId());
             game.setPlayer(player);
         }
 
@@ -35,7 +49,7 @@ class PlayerOps {
         return gsi.getList(game.getGameId());
     }
 
-    List<String> setColor(Map<String, String> map) {
+    synchronized ArrayList<String> setColor(Map<String, String> map) {
 
         PlayerImpl player;
         Integer gameId = null;
@@ -58,12 +72,17 @@ class PlayerOps {
         return gsi.getList(gameId);
     }
 
-    List<String> checkIfIn(String username) {
+    ArrayList<String> checkIfIn(String username) {
 
-        GameImpl game = gsi.findGameByPlayername(username);
+        List<GameImpl> list = gsi.fetchAll();
 
-        if (game != null) {
-            return gsi.getList(game.getGameId());
+        for (GameImpl game : list) {
+            List<PlayerImpl> p = game.getPlayers();
+            for (PlayerImpl player : p) {
+                if (player.getDisplayName().equals(username)) {
+                    return gsi.getList(game.getGameId());
+                }
+            }
         }
         return null;
     }
@@ -72,7 +91,7 @@ class PlayerOps {
 
         Map<String, String> map = new HashMap<>();
 
-        Game game = gsi.findGameByGameId(id);
+        Game game = gsi.findObject(id);
         List<PlayerImpl> players = game.getPlayers();
 
         for (PlayerImpl player : players) {
