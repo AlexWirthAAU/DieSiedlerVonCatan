@@ -1,7 +1,10 @@
 package com.example.diesiedler.presenter;
 
 
+import android.content.Context;
 import android.os.AsyncTask;
+
+import androidx.appcompat.app.AlertDialog;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -21,14 +24,18 @@ public class PresenterBuild extends ConnectionData {
 
     public void chooseAssetID(String toSend) {
 
+
         action = new StringBuilder(1);
         toWrite = new StringBuilder(1);
         sender = new StringBuilder(1);
 
-
-        log.log(Level.INFO, "send" + toSend);
-        action.replace(0, 0, "#BUILDREQUEST");
-        toWrite.replace(0, 0, toSend);
+        if (toSend.contains("settlement")) {
+            action.replace(0, 0, "#BUILDSETTLEMENT");
+            toWrite.replace(0, 0, toSend);
+        } else if (toSend.contains("edge")) {
+            action.replace(0, 0, "#BUILDEDGE");
+            toWrite.replace(0, 0, toSend);
+        }
 
         SendToServer send = new SendToServer();
         send.execute();
