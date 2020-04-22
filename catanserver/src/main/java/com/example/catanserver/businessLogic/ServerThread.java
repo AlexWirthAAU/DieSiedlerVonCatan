@@ -30,6 +30,7 @@ public class ServerThread implements Runnable {
             String intent = obInFromClient.readUTF();
 
             String in;
+            String sender;
             int inInt;
             System.out.println(intent);
 
@@ -71,12 +72,30 @@ public class ServerThread implements Runnable {
                     Map map = playerOps.checkColors(inInt);
                     outToClient.writeObject(map);
                     break;
-                case "#BUILDREQUEST":
+                case "#BUILDSETTLEMENT":
                     System.out.println(intent);
                     in = obInFromClient.readUTF();
-                    /**TODO: Implement build logic: Client will send String with the path-assets id (e.g. "knot_1314") and Server has to check if building at this asset for this player is allowed
-                     * Client can't yet send to the Server (not implemented)
+                    sender = obInFromClient.readUTF();
+                    System.out.println("BUILDREQUEST delivered: " + in + " " + sender);
+                    /**TODO: Implement build logic: Client will send String with the path-assets id (e.g. "settlement_1_3") + his InetAddress and Server has to check if building at this asset for this player is allowed
+                     * in contains the name of the clicked asset
+                     * sender contains InetAddress of the client
+                     *
+                     * If the knot is free to build, a broadcast message is necessary to update each player's gameboard
+                     * If the knot is not free to build, only the player that requested to build, should receive a message and be able to select another knot
                      */
+                    outToClient.writeObject("SETTLED");
+                    break;
+                case "#BUILDEDGE":
+                    System.out.println(intent);
+                    in = obInFromClient.readUTF();
+                    sender = obInFromClient.readUTF();
+                    System.out.println("BUILDREQUEST delivered: " + in + " " + sender);
+                    /**TODO: Implement build logic: Client will send String with the path-assets id (e.g. "edge_1314") + his InetAddress and Server has to check if building at this asset for this player is allowed
+                     * in contains the name of the clicked asset
+                     * sender contains InetAddress of the client
+                     */
+                    outToClient.writeObject("BUILD");
                     break;
                 default:
                     break;
