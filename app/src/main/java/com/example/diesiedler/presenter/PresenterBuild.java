@@ -44,8 +44,9 @@ public class PresenterBuild extends ConnectionData {
             toWrite.replace(0, 0, settlementName);
         }
 
-        SendToServer send = new SendToServer();
-        return send.execute().get();
+        //SendToServer send = new SendToServer();
+        //return send.execute().get();
+        return "testString";
     }
 
 
