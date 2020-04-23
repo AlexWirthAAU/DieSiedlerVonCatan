@@ -6,7 +6,7 @@ import java.util.LinkedList;
 
 public class PlayerInventory {
 
-    private final int STARTVALUE = 0;
+    private final int STARTVALUE = 1;
     private int wood;
     private int wool;
     private int wheat;

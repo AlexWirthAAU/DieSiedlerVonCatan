@@ -8,7 +8,7 @@ import com.example.catanserver.businessLogic.model.gameboard.Knot;
 
 public class BuildSettlement implements BuildStructure {
     private boolean enoughResources = false;
-    private PlayerImpl player;
+    private PlayerImpl player = new PlayerImpl("Klemens"); //todo: change name to input of name
     PlayerInventory playerInventory = player.getInventory();
     //Gameboard gameboard = new Gameboard();
     private Knot knot;
@@ -60,8 +60,6 @@ public class BuildSettlement implements BuildStructure {
         //todo implementation missing
         return true;
     }
-
-
 
     @Override
     public void updateGameboard() {

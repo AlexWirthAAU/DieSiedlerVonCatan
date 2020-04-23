@@ -11,12 +11,12 @@ import java.util.logging.Logger;
 
 public class PresenterSetColor extends ConnectionData {
 
-    private static Map<String, String> playermMap;
+    private static Map<String, String> playerMap;
     private static final Logger log = Logger.getLogger(PresenterSetColor.class.getName());
 
     public static void setColor(Map<String, String> map) {
 
-        playermMap = map;
+        playerMap = map;
         SetColor setColor = new SetColor();
         setColor.execute();
     }
@@ -32,7 +32,7 @@ public class PresenterSetColor extends ConnectionData {
                 SecureObjectStream inFromServer = new SecureObjectStream(client.getInputStream());
 
                 outToServer.writeUTF("#SETCOLOR");
-                outToServer.writeObject(playermMap); // write the message to output stream
+                outToServer.writeObject(playerMap); // write the message to output stream
                 outToServer.flush();
 
                 outToServer.close();
