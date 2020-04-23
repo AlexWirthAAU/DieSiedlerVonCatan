@@ -1,13 +1,9 @@
 package com.example.diesiedler;
 
-import com.example.diesiedler.presenter.Presenter;
 import com.example.diesiedler.presenter.PresenterBuild;
-
 import org.junit.Assert;
 import org.junit.Test;
-
 import java.util.concurrent.ExecutionException;
-
 import static org.junit.Assert.*;
 
 /**
