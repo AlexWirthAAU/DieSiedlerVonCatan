@@ -1,9 +1,6 @@
 package com.example.diesiedler;
 
-import com.example.diesiedler.presenter.PresenterBuild;
-import org.junit.Assert;
 import org.junit.Test;
-import java.util.concurrent.ExecutionException;
 import static org.junit.Assert.*;
 
 /**
@@ -15,12 +12,5 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
-    }
-
-    @Test
-    public void test() throws ExecutionException, InterruptedException {
-        PresenterBuild presenterBuild = new PresenterBuild();
-        String value = (String) presenterBuild.chooseAssetID("test");
-        Assert.assertEquals("testString", value);
     }
 }
