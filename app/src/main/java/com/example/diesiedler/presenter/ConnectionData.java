@@ -10,7 +10,7 @@ class ConnectionData {
         //sonarcloud message: "Utility classes should not have public constructors"
     } */
 
-    private ConnectionData() {
+    public ConnectionData() {
         //as proposed from sonarcloud:
         throw new IllegalStateException("Utility class");
     }

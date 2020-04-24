@@ -25,7 +25,7 @@ public class Presenter extends ConnectionData {
     private static final Logger log = Logger.getLogger(Presenter.class.getName());
     private static StringBuilder action = new StringBuilder(1);
     private static StringBuilder toWrite = new StringBuilder(1);
-    private static final String startgame = "#STARTGAME";
+    private static final String startgame = "STARTGAME"; //todo: was "#STARTGAME" (still working?)
     private static String currUser;
     private static List<String> usersIn;
 
