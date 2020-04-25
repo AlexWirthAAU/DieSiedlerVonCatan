@@ -1,10 +1,15 @@
 package com.example.diesiedler;
 
+import android.content.Context;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.diesiedler.presenter.GameBoardClickListener;
 import com.example.diesiedler.presenter.PresenterBuild;
 import com.richpath.RichPathView;
+
+import java.util.concurrent.ExecutionException;
 
 public class BuildSettlementActivity extends AppCompatActivity {
 
@@ -15,6 +20,7 @@ public class BuildSettlementActivity extends AppCompatActivity {
      * If not -> User has to click another asset
      */
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,10 +28,24 @@ public class BuildSettlementActivity extends AppCompatActivity {
         RichPathView richPathView = findViewById(R.id.ic_gameboardView);
 
         GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView, this);
-        gameBoardClickListener.clickBoard();
+        gameBoardClickListener.clickBoard("BuildSettlement");
     }
 
-    public void clicked(String s) {
-        new PresenterBuild().chooseAssetID(s);
+    public void clicked(String s, Context context) throws ExecutionException, InterruptedException {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+        builder1.setCancelable(true);
+
+        PresenterBuild presenterBuild = new PresenterBuild();
+        String o = (String) presenterBuild.chooseAssetID(s);
+
+        if (o.equals("SETTLED")) {
+            builder1.setMessage("Bauen erfolgreich");
+            AlertDialog alert1 = builder1.create();
+            alert1.show();
+        } else {
+            builder1.setMessage("Hier kannst du nicht bauen");
+            AlertDialog alert1 = builder1.create();
+            alert1.show();
+        }
     }
 }

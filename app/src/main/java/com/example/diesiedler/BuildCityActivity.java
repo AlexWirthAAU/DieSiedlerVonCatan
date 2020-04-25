@@ -12,11 +12,10 @@ import com.richpath.RichPathView;
 
 import java.util.concurrent.ExecutionException;
 
-public class BuildRoadActivity extends AppCompatActivity {
-
+public class BuildCityActivity extends AppCompatActivity {
     /**
-     * This activity should allow the user to click the edge he wants to build on
-     * The clicked asset's ID will be sent to the Server that (PresenterBuild) where it is checked whether user is allowed to build or not
+     * This activity should allow the user to click the knot he wants to build on
+     * The clicked asset's ID will be sent to the Server (PresenterBuild) where it is checked whether user is allowed to build or not
      * If yes -> this asset will be colored in user's color
      * If not -> User has to click another asset
      */
@@ -28,7 +27,7 @@ public class BuildRoadActivity extends AppCompatActivity {
         RichPathView richPathView = findViewById(R.id.ic_gameboardView);
 
         GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView, this);
-        gameBoardClickListener.clickBoard("BuildRoad");
+        gameBoardClickListener.clickBoard("BuildCity");
     }
 
     public void clicked(String s, Context context) throws ExecutionException, InterruptedException {
@@ -38,7 +37,7 @@ public class BuildRoadActivity extends AppCompatActivity {
         PresenterBuild presenterBuild = new PresenterBuild();
         String o = (String) presenterBuild.chooseAssetID(s);
 
-        if (o.equals("SETTLED")) {
+        if (o.equals("CITY-BUILD")) {
             builder1.setMessage("Bauen erfolgreich");
             AlertDialog alert1 = builder1.create();
             alert1.show();
@@ -48,4 +47,5 @@ public class BuildRoadActivity extends AppCompatActivity {
             alert1.show();
         }
     }
+
 }
