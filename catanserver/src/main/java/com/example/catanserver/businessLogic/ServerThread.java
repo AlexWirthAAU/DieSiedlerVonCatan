@@ -89,11 +89,18 @@ public class ServerThread implements Runnable {
                     Map map = playerOps.checkColors(inInt);
                     this.outToClient.writeObject(map);
                     break;
+                case "#BUILDREQUEST":
+                    System.out.println(intent);
+                    //in = this.obInFromClient.readUTF();
+                    /**TODO: Implement build logic: Client will send String with the path-assets id (e.g. "knot_1314") and Server has to check if building at this asset for this player is allowed
+                     * Client can't yet send to the Server (not implemented)
+                     */
+                    break;
                 case "#BUILDSETTLEMENT":
                     System.out.println(intent);
                     in = obInFromClient.readUTF();
                     sender = obInFromClient.readUTF();
-                    System.out.println("BUILDREQUEST delivered: " + in + "\n" + sender);
+                    System.out.println("BUILDREQUEST delivered: " + in + " " + sender);
                     /**TODO: Implement build logic: Client will send String with the path-assets id (e.g. "settlement_1_3") + his InetAddress and Server has to check if building at this asset for this player is allowed
                      * in contains the name of the clicked asset
                      * sender contains InetAddress of the client
@@ -107,19 +114,12 @@ public class ServerThread implements Runnable {
                     System.out.println(intent);
                     in = obInFromClient.readUTF();
                     sender = obInFromClient.readUTF();
-                    System.out.println("BUILDREQUEST delivered: " + in + "\n" + sender);
+                    System.out.println("BUILDREQUEST delivered: " + in + " " + sender);
                     /**TODO: Implement build logic: Client will send String with the path-assets id (e.g. "edge_1314") + his InetAddress and Server has to check if building at this asset for this player is allowed
                      * in contains the name of the clicked asset
                      * sender contains InetAddress of the client
                      */
                     outToClient.writeObject("BUILD");
-                    break;
-                case "#BUILDCITY":
-                    System.out.println(intent);
-                    in = obInFromClient.readUTF();
-                    sender = obInFromClient.readUTF();
-                    System.out.println("BUILDREQUEST delivered: " + in + "\n" + sender);
-                    outToClient.writeObject("CITY-BUILD");
                     break;
                 default:
                     break;

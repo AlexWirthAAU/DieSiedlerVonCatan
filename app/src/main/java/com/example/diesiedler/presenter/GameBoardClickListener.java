@@ -3,13 +3,10 @@ package com.example.diesiedler.presenter;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.diesiedler.BuildCityActivity;
 import com.example.diesiedler.BuildRoadActivity;
 import com.example.diesiedler.BuildSettlementActivity;
 import com.richpath.RichPath;
 import com.richpath.RichPathView;
-
-import java.util.concurrent.ExecutionException;
 
 public class GameBoardClickListener {
 
@@ -21,9 +18,8 @@ public class GameBoardClickListener {
         this.context = c;
     }
 
-    public void clickBoard(String activity) {
+    public void clickBoard() {
         final String[] toSend = {""};
-        final String a = activity;
         richPathView.setOnPathClickListener(new RichPath.OnPathClickListener() {
             @Override
             public void onClick(RichPath richPath) {
@@ -34,37 +30,14 @@ public class GameBoardClickListener {
 
                 } else if (pathType.contains("settlement")) {
                     //TODO: What should happen if Knot is clicked:
-                    if (a.equals("BuildSettlement")) {
-                        toSend[0] = richPath.getName() + " BuildSettlement";
-                        try {
-                            new BuildSettlementActivity().clicked(toSend[0], context);
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    } else if (a.equals("BuildCity")) {
-                        toSend[0] = richPath.getName() + " BuildCity";
-                        try {
-                            new BuildCityActivity().clicked(toSend[0], context);
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                    toSend[0] = richPath.getName();
+                    new BuildSettlementActivity().clicked(toSend[0]);
+
                 } else if (pathType.contains("edge")) {
                     //TODO: What should happen if Edge is clicked:
-                    if (a.equals("BuildRoad")) {
-                        toSend[0] = richPath.getName() + " BuildRoad";
-                        try {
-                            new BuildRoadActivity().clicked(toSend[0], context);
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                    toSend[0] = richPath.getName();
+                    new BuildRoadActivity().clicked(toSend[0]);
+
                 } else if (pathType.contains("background") || pathType.contains("harbour")) {
                     Log.d("DEBUG", "Touched background");
                 }
