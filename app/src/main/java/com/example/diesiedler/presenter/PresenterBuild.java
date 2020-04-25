@@ -9,7 +9,6 @@ import androidx.appcompat.app.AlertDialog;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,29 +22,23 @@ public class PresenterBuild extends ConnectionData {
     private static StringBuilder toWrite;
     private static StringBuilder sender;
 
-    public Object chooseAssetID(String toSend) throws ExecutionException, InterruptedException {
+    public void chooseAssetID(String toSend) {
 
 
         action = new StringBuilder(1);
         toWrite = new StringBuilder(1);
         sender = new StringBuilder(1);
 
-        if (toSend.contains("BuildSettlement")) {
+        if (toSend.contains("settlement")) {
             action.replace(0, 0, "#BUILDSETTLEMENT");
-            String settlementName = toSend.split(" ")[0];
-            toWrite.replace(0, 0, settlementName);
-        } else if (toSend.contains("BuildRoad")) {
+            toWrite.replace(0, 0, toSend);
+        } else if (toSend.contains("edge")) {
             action.replace(0, 0, "#BUILDEDGE");
-            String edgeName = toSend.split(" ")[0];
-            toWrite.replace(0, 0, edgeName);
-        } else if (toSend.contains("BuildCity")) {
-            action.replace(0, 0, "#BUILDCITY");
-            String settlementName = toSend.split(" ")[0];
-            toWrite.replace(0, 0, settlementName);
+            toWrite.replace(0, 0, toSend);
         }
 
         SendToServer send = new SendToServer();
-        return send.execute().get();
+        send.execute();
     }
 
 
