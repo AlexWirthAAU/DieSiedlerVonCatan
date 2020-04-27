@@ -48,7 +48,7 @@
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="240dp"
+                android:layout_marginStart="140dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/wood"
                 android:textColor="#FBC02D"
@@ -58,7 +58,7 @@
                 android:id="@+id/countWoodGive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="340dp"
+                android:layout_marginStart="240dp"
                 android:layout_marginTop="-35dp"
                 android:text="@string/count"
                 android:textColor="#FBC02D"
@@ -69,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginStart="100dp"
+                android:layout_marginStart="80dp"
                 android:layout_marginTop="-40dp"
                 android:backgroundTint="#FFA000"
                 android:onClick="plus"
@@ -77,11 +77,24 @@
                 android:textColor="#A10101"
                 android:textSize="20sp" />
 
+            <Button
+                android:id="@+id/minusWoodGive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginStart="180dp"
+                android:layout_marginTop="-48dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="minus"
+                android:text="@string/minus"
+                android:textColor="#A10101"
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/textView17"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="240dp"
+                android:layout_marginStart="140dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/wool"
                 android:textColor="#FBC02D"
@@ -91,7 +104,7 @@
                 android:id="@+id/countWoolGive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="340dp"
+                android:layout_marginStart="240dp"
                 android:layout_marginTop="-35dp"
                 android:text="@string/count"
                 android:textColor="#FBC02D"
@@ -102,7 +115,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginStart="100dp"
+                android:layout_marginStart="80dp"
                 android:layout_marginTop="-40dp"
                 android:backgroundTint="#FFA000"
                 android:onClick="plus"
@@ -110,11 +123,24 @@
                 android:textColor="#A10101"
                 android:textSize="20sp" />
 
+            <Button
+                android:id="@+id/minusWoolGive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginStart="180dp"
+                android:layout_marginTop="-48dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="minus"
+                android:text="@string/minus"
+                android:textColor="#A10101"
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/textView18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="240dp"
+                android:layout_marginStart="140dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/wheat"
                 android:textColor="#FBC02D"
@@ -124,7 +150,7 @@
                 android:id="@+id/countWheatGive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="340dp"
+                android:layout_marginStart="240dp"
                 android:layout_marginTop="-35dp"
                 android:text="@string/count"
                 android:textColor="#FBC02D"
@@ -135,7 +161,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginStart="100dp"
+                android:layout_marginStart="80dp"
                 android:layout_marginTop="-40dp"
                 android:backgroundTint="#FFA000"
                 android:onClick="plus"
@@ -143,11 +169,24 @@
                 android:textColor="#A10101"
                 android:textSize="20sp" />
 
+            <Button
+                android:id="@+id/minusWheatGive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginStart="180dp"
+                android:layout_marginTop="-48dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="minus"
+                android:text="@string/minus"
+                android:textColor="#A10101"
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/textView19"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="240dp"
+                android:layout_marginStart="140dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/ore"
                 android:textColor="#FBC02D"
@@ -157,7 +196,7 @@
                 android:id="@+id/countOreGive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="340dp"
+                android:layout_marginStart="240dp"
                 android:layout_marginTop="-35dp"
                 android:text="@string/count"
                 android:textColor="#FBC02D"
@@ -168,7 +207,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginStart="100dp"
+                android:layout_marginStart="80dp"
                 android:layout_marginTop="-40dp"
                 android:backgroundTint="#FFA000"
                 android:onClick="plus"
@@ -176,11 +215,24 @@
                 android:textColor="#A10101"
                 android:textSize="20sp" />
 
+            <Button
+                android:id="@+id/minusOreGive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginStart="180dp"
+                android:layout_marginTop="-48dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="minus"
+                android:text="@string/minus"
+                android:textColor="#A10101"
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/textView20"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="240dp"
+                android:layout_marginStart="140dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/clay"
                 android:textColor="#FBC02D"
@@ -190,7 +242,7 @@
                 android:id="@+id/countClayGive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="340dp"
+                android:layout_marginStart="240dp"
                 android:layout_marginTop="-35dp"
                 android:text="@string/count"
                 android:textColor="#FBC02D"
@@ -201,11 +253,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginStart="100dp"
+                android:layout_marginStart="80dp"
                 android:layout_marginTop="-40dp"
                 android:backgroundTint="#FFA000"
                 android:onClick="plus"
                 android:text="@string/plus"
+                android:textColor="#A10101"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/minusClayGive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginStart="180dp"
+                android:layout_marginTop="-48dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="minus"
+                android:text="@string/minus"
                 android:textColor="#A10101"
                 android:textSize="20sp" />
 
@@ -225,7 +290,7 @@
                 android:id="@+id/textView21"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="240dp"
+                android:layout_marginStart="140dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/wood"
                 android:textColor="#FBC02D"
@@ -235,7 +300,7 @@
                 android:id="@+id/countWoodGet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="340dp"
+                android:layout_marginStart="240dp"
                 android:layout_marginTop="-35dp"
                 android:text="@string/count"
                 android:textColor="#FBC02D"
@@ -246,7 +311,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginStart="100dp"
+                android:layout_marginStart="80dp"
                 android:layout_marginTop="-40dp"
                 android:backgroundTint="#FFA000"
                 android:onClick="plus"
@@ -254,11 +319,24 @@
                 android:textColor="#A10101"
                 android:textSize="20sp" />
 
+            <Button
+                android:id="@+id/minusWoodGet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginStart="180dp"
+                android:layout_marginTop="-48dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="minus"
+                android:text="@string/minus"
+                android:textColor="#A10101"
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/textView22"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="240dp"
+                android:layout_marginStart="140dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/wool"
                 android:textColor="#FBC02D"
@@ -268,7 +346,7 @@
                 android:id="@+id/countWoolGet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="340dp"
+                android:layout_marginStart="240dp"
                 android:layout_marginTop="-35dp"
                 android:text="@string/count"
                 android:textColor="#FBC02D"
@@ -279,7 +357,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginStart="100dp"
+                android:layout_marginStart="80dp"
                 android:layout_marginTop="-40dp"
                 android:backgroundTint="#FFA000"
                 android:onClick="plus"
@@ -287,11 +365,24 @@
                 android:textColor="#A10101"
                 android:textSize="20sp" />
 
+            <Button
+                android:id="@+id/minusWoolGet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginStart="180dp"
+                android:layout_marginTop="-48dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="minus"
+                android:text="@string/minus"
+                android:textColor="#A10101"
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/textView23"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="240dp"
+                android:layout_marginStart="140dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/wheat"
                 android:textColor="#FBC02D"
@@ -301,7 +392,7 @@
                 android:id="@+id/countWheatGet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="340dp"
+                android:layout_marginStart="240dp"
                 android:layout_marginTop="-35dp"
                 android:text="@string/count"
                 android:textColor="#FBC02D"
@@ -312,7 +403,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginStart="100dp"
+                android:layout_marginStart="80dp"
                 android:layout_marginTop="-40dp"
                 android:backgroundTint="#FFA000"
                 android:onClick="plus"
@@ -320,11 +411,24 @@
                 android:textColor="#A10101"
                 android:textSize="20sp" />
 
+            <Button
+                android:id="@+id/minusWheatGet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginStart="180dp"
+                android:layout_marginTop="-48dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="minus"
+                android:text="@string/minus"
+                android:textColor="#A10101"
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/textView24"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="240dp"
+                android:layout_marginStart="140dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/ore"
                 android:textColor="#FBC02D"
@@ -334,7 +438,7 @@
                 android:id="@+id/countOreGet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="340dp"
+                android:layout_marginStart="240dp"
                 android:layout_marginTop="-35dp"
                 android:text="@string/count"
                 android:textColor="#FBC02D"
@@ -345,7 +449,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginStart="100dp"
+                android:layout_marginStart="80dp"
                 android:layout_marginTop="-40dp"
                 android:backgroundTint="#FFA000"
                 android:onClick="plus"
@@ -353,11 +457,24 @@
                 android:textColor="#A10101"
                 android:textSize="20sp" />
 
+            <Button
+                android:id="@+id/minusOreGet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginStart="180dp"
+                android:layout_marginTop="-48dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="minus"
+                android:text="@string/minus"
+                android:textColor="#A10101"
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/textView25"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="240dp"
+                android:layout_marginStart="140dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/clay"
                 android:textColor="#FBC02D"
@@ -367,7 +484,7 @@
                 android:id="@+id/countClayGet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="340dp"
+                android:layout_marginStart="240dp"
                 android:layout_marginTop="-35dp"
                 android:text="@string/count"
                 android:textColor="#FBC02D"
@@ -378,11 +495,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginStart="100dp"
+                android:layout_marginStart="80dp"
                 android:layout_marginTop="-40dp"
                 android:backgroundTint="#FFA000"
                 android:onClick="plus"
                 android:text="@string/plus"
+                android:textColor="#A10101"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/minusClayGet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginStart="180dp"
+                android:layout_marginTop="-48dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="minus"
+                android:text="@string/minus"
                 android:textColor="#A10101"
                 android:textSize="20sp" />
 
