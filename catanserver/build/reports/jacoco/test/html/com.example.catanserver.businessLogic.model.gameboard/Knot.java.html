@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>Knot.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">catanserver</a> &gt; <a href="index.source.html"
+                                                                       class="el_package">com.example.catanserver.businessLogic.model.gameboard</a>
+    &gt; <span class="el_source">Knot.java</span></div>
+<h1>Knot.java</h1>
+<pre class="source lang-java linenums">package com.example.catanserver.businessLogic.model.gameboard;
+
+
+import com.example.catanserver.businessLogic.model.User;
+import com.example.catanserver.businessLogic.model.UserImpl;
+
+import java.util.ArrayList;
+
+public class Knot {
+    private int row;                    //Each Knot is identified by row and column
+    private int column;
+    private String id;
+    private ArrayList&lt;Knot&gt; path;       //As soon as a knots Player != null -&gt; path = new ArrayList and push the knot in this list (beginning of a path)
+    private boolean isSettled;
+    private boolean hasCity;
+    private User user;                  //TODO: When a player builds a settlement, he owns this knot
+    private boolean isHarbourKnot;      //States whether a Knot has a harbour or not
+
+<span class="fc" id="L19">    public Knot(int row, int column) {</span>
+<span class="fc" id="L20">        this.user = new UserImpl(&quot;nullUser&quot;, &quot;nullip&quot;);</span>
+<span class="fc" id="L21">        this.user.setUserId(0);</span>
+<span class="fc" id="L22">        this.row = row;</span>
+<span class="fc" id="L23">        this.column = column;</span>
+<span class="fc" id="L24">        this.id = row + &quot;&quot; + column;</span>
+<span class="fc" id="L25">        this.path = null;</span>
+<span class="fc" id="L26">        this.isSettled = false;</span>
+<span class="fc" id="L27">        this.hasCity = false;</span>
+<span class="fc" id="L28">        setIsHarbourKnot();</span>
+<span class="fc" id="L29">    }</span>
+
+    public String toString() {
+<span class="nc" id="L32">        return &quot;Zeile &quot; + this.row + &quot; Spalte &quot; + this.column;        //Only for testing</span>
+    }
+
+    public int getRow() {
+<span class="fc" id="L36">        return row;</span>
+    }
+
+    public int getColumn() {
+<span class="nc" id="L40">        return column;</span>
+    }
+
+    public ArrayList&lt;Knot&gt; getPath() {
+<span class="nc" id="L44">        return path;</span>
+    }
+
+    private void setIsHarbourKnot() {
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">        switch (this.id) {</span>
+            case &quot;15&quot;:
+            case &quot;16&quot;:
+            case &quot;18&quot;:
+            case &quot;19&quot;:
+            case &quot;22&quot;:
+            case &quot;23&quot;:
+            case &quot;210&quot;:
+            case &quot;310&quot;:
+            case &quot;410&quot;:
+            case &quot;411&quot;:
+            case &quot;63&quot;:
+            case &quot;65&quot;:
+            case &quot;66&quot;:
+            case &quot;68&quot;:
+            case &quot;69&quot;:
+            case &quot;53&quot;:
+            case &quot;41&quot;:
+            case &quot;31&quot;: {
+<span class="nc" id="L67">                this.isHarbourKnot = true;</span>
+<span class="nc" id="L68">                break;</span>
+            }
+            default: {
+<span class="fc" id="L71">                this.isHarbourKnot = false;</span>
+            }
+        }
+<span class="fc" id="L74">    }</span>
+
+    public boolean getIsHarbourKnot() {
+<span class="nc" id="L77">        return this.isHarbourKnot;</span>
+    }
+
+    public String getId() {
+<span class="nc" id="L81">        return id;</span>
+    }
+
+    public boolean isSettled() {
+<span class="nc" id="L85">        return isSettled;</span>
+    }
+
+    public boolean HasCity() {
+<span class="nc" id="L89">        return hasCity;</span>
+    }
+
+    public User getUser() {
+<span class="nc" id="L93">        return user;</span>
+    }
+
+    public boolean isHarbourKnot() {
+<span class="nc" id="L97">        return isHarbourKnot;</span>
+    }
+
+    public void setPath(ArrayList&lt;Knot&gt; path) {
+<span class="nc" id="L101">        this.path = path;</span>
+<span class="nc" id="L102">    }</span>
+
+    public void setSettled(boolean settled) {
+<span class="nc" id="L105">        isSettled = settled;</span>
+<span class="nc" id="L106">    }</span>
+
+    public void setHasCity(boolean hasCity) {
+<span class="nc" id="L109">        this.hasCity = hasCity;</span>
+<span class="nc" id="L110">    }</span>
+
+    public void setUser(User user) {
+<span class="nc" id="L113">        this.user = user;</span>
+<span class="nc" id="L114">    }</span>
+}
+
+</pre>
+<div class="footer"><span class="right">Created with <a
+        href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div>
+</body>
+</html>

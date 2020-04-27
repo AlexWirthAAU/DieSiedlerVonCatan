@@ -27,6 +27,7 @@ public class StandardGesture implements View.OnTouchListener, GestureDetector.On
 
     @Override
     public boolean onTouch(View view, MotionEvent event) {
+
         this.view = view;
         gesture.onTouchEvent(event);
         gestureScale.onTouchEvent(event);

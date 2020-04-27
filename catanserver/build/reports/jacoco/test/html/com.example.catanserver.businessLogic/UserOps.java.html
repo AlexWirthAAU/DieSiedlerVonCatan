@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>UserOps.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">catanserver</a> &gt; <a href="index.source.html"
+                                                                       class="el_package">com.example.catanserver.businessLogic</a>
+    &gt; <span class="el_source">UserOps.java</span></div>
+<h1>UserOps.java</h1>
+<pre class="source lang-java linenums">package com.example.catanserver.businessLogic;
+
+import com.example.catanserver.businessLogic.model.UserImpl;
+import com.example.catanserver.businessLogic.services.UserServiceImpl;
+
+import java.util.ArrayList;
+
+class UserOps {
+
+    private static UserServiceImpl usi;
+
+<span class="nc" id="L12">    UserOps(UserServiceImpl u) {</span>
+<span class="nc" id="L13">        usi = u;</span>
+<span class="nc" id="L14">    }</span>
+
+    synchronized ArrayList&lt;String&gt; updateUserList(String username, String ip) {
+
+<span class="nc" id="L18">        UserImpl user = usi.findUserByUsername(username);</span>
+
+<span class="nc bnc" id="L20" title="All 2 branches missed.">        if (user == null) {</span>
+<span class="nc" id="L21">            UserImpl newUser = new UserImpl(username, ip);</span>
+<span class="nc" id="L22">            usi.insert(newUser);</span>
+<span class="nc" id="L23">        } else {</span>
+<span class="nc" id="L24">            int id = user.getUserId();</span>
+<span class="nc" id="L25">            usi.delete(id);</span>
+        }
+
+<span class="nc" id="L28">        return usi.getNameList();</span>
+    }
+
+    ArrayList&lt;String&gt; updateUserList(int listsize) {
+
+<span class="nc bnc" id="L33" title="All 2 branches missed.">        if (listsize == usi.fetchAll().size()) {</span>
+<span class="nc" id="L34">            System.out.println(usi.fetchAll().size() + &quot; realsize&quot;);</span>
+<span class="nc" id="L35">            return null;</span>
+        } else {
+<span class="nc" id="L37">            return usi.getNameList();</span>
+        }
+    }
+}
+</pre>
+<div class="footer"><span class="right">Created with <a
+        href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div>
+</body>
+</html>

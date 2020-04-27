@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.diesiedler.ExampleUnitTest" tests="2" skipped="0" failures="0"
+    errors="0" timestamp="2020-04-24T13:37:45" hostname="DESKTOP-QS2OAVP" time="0.01">
+    <properties />
+    <testcase name="simpleTest" classname="com.example.diesiedler.ExampleUnitTest" time="0.01" />
+    <testcase name="addition_isCorrect" classname="com.example.diesiedler.ExampleUnitTest"
+        time="0.0" />
+    <system-out><![CDATA[]]></system-out>
+    <system-err><![CDATA[]]></system-err>
+</testsuite>

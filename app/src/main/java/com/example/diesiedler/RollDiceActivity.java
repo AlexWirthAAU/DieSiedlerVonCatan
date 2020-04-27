@@ -1,6 +1,7 @@
 package com.example.diesiedler;
 
 
+import android.app.AlertDialog;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -16,7 +17,7 @@ public class RollDiceActivity extends AppCompatActivity implements SensorEventLi
 
     private SensorManager sensorManager;
     private Sensor accelerometer;
-    private final int SHAKE_THRESHOLD = 9;
+    private final int SHAKE_THRESHOLD = 8;
     private int sum;
     private int statusStarts = 0;
     private int finalSum = 0;
@@ -60,6 +61,8 @@ public class RollDiceActivity extends AppCompatActivity implements SensorEventLi
         if (Math.abs(acceleration) < 0.1 && statusStarts == 1) {
             finalSum = sum;
             sensorManager.unregisterListener(this);
+            Log.d("DEBUG", "FINAL VALUE IS: " + finalSum);
+            new AlertDialog.Builder(this).setTitle("YOUR VALUE").setMessage("Du hast " + finalSum + " gewürfelt.").show();
         }
     }
 

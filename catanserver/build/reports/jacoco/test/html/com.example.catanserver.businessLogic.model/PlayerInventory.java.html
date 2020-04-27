@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>PlayerInventory.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">catanserver</a> &gt; <a href="index.source.html"
+                                                                       class="el_package">com.example.catanserver.businessLogic.model</a>
+    &gt; <span class="el_source">PlayerInventory.java</span></div>
+<h1>PlayerInventory.java</h1>
+<pre class="source lang-java linenums">package com.example.catanserver.businessLogic.model;
+
+import com.example.catanserver.businessLogic.model.gameboard.*;
+
+import java.util.LinkedList;
+
+public class PlayerInventory {
+
+<span class="nc" id="L9">    private final int STARTVALUE = 0;</span>
+    private int wood;
+    private int wool;
+    private int wheat;
+    private int ore;
+    private int clay;
+    private int victoryPoints;
+<span class="nc" id="L16">    public int victoryPointsSettlement = 2;</span>
+<span class="nc" id="L17">    public int victoryPointsCity = 3;</span>
+
+<span class="nc"
+      id="L19">    private LinkedList&lt;Knot&gt; cities = new LinkedList&lt;&gt;();</span>
+<span class="nc"
+      id="L20">    private LinkedList&lt;Knot&gt; settlements = new LinkedList&lt;&gt;();</span>
+<span class="nc"
+      id="L21">    private LinkedList&lt;Edge&gt; roads = new LinkedList&lt;&gt;();</span>
+
+    // private ArrayList&lt;Entwicklungskarte&gt; entwicklungskarten = new ArrayList&lt;&gt;();
+
+<span class="nc" id="L25">    public PlayerInventory() {</span>
+<span class="nc" id="L26">        this.wood = STARTVALUE;</span>
+<span class="nc" id="L27">        this.wool = STARTVALUE;</span>
+<span class="nc" id="L28">        this.wheat = STARTVALUE;</span>
+<span class="nc" id="L29">        this.ore = STARTVALUE;</span>
+<span class="nc" id="L30">        this.clay = STARTVALUE;</span>
+<span class="nc" id="L31">        this.victoryPoints = 0;</span>
+<span class="nc" id="L32">    }</span>
+
+    // displaying all resources and victory points
+    public String getAllSupplies() {
+        //TODO adding Entwicklungskarten (later)
+<span class="nc" id="L37">        return &quot;Wood: &quot; + this.wood + &quot;\nWool: &quot; + this.wool + &quot;\nWheat: &quot; + this.wool + &quot;\nOre: &quot; + this.ore</span>
+                + &quot;\nClay: &quot; + this.clay + &quot;\nVictoty points: &quot; + this.victoryPoints;
+    }
+
+    // adding structures
+    public void addRoad(Edge roadEdge){
+<span class="nc" id="L43">        this.roads.add(roadEdge);</span>
+<span class="nc" id="L44">    }</span>
+    public void addSettlement(Knot settlementKnot){
+<span class="nc" id="L46">        this.settlements.add(settlementKnot);</span>
+<span class="nc" id="L47">        this.victoryPoints += this.victoryPointsSettlement;</span>
+<span class="nc" id="L48">    }</span>
+
+    public void addCity(Knot cityKnot){
+<span class="nc" id="L51">        this.cities.add(cityKnot);</span>
+<span class="nc" id="L52">        this.victoryPoints += this.victoryPointsCity;</span>
+<span class="nc" id="L53">    }</span>
+
+    // removing structures
+    public void removeRoad(Edge roadEdge){
+<span class="nc" id="L57">        this.roads.remove(roadEdge);</span>
+<span class="nc" id="L58">    }</span>
+
+    public void removeSettlement(Knot settlementKnot){
+<span class="nc" id="L61">        this.settlements.remove(settlementKnot);</span>
+<span class="nc" id="L62">        this.victoryPoints -= this.victoryPointsSettlement;</span>
+<span class="nc" id="L63">    }</span>
+
+    public void removeCity(Knot cityKnot){
+<span class="nc" id="L66">        this.cities.remove(cityKnot);</span>
+<span class="nc" id="L67">        this.victoryPoints -= this.victoryPointsCity;</span>
+<span class="nc" id="L68">    }</span>
+
+    // adding resources
+    public void addWood(int amount) {
+<span class="nc" id="L72">        this.wood += amount;</span>
+<span class="nc" id="L73">    }</span>
+
+    public void addWool(int amount) {
+<span class="nc" id="L76">        this.wool += amount;</span>
+<span class="nc" id="L77">    }</span>
+
+    public void addWheat(int amount) {
+<span class="nc" id="L80">        this.wheat += amount;</span>
+<span class="nc" id="L81">    }</span>
+
+    public void addOre(int amount) {
+<span class="nc" id="L84">        this.ore += amount;</span>
+<span class="nc" id="L85">    }</span>
+
+    public void addClay(int amount) {
+<span class="nc" id="L88">        this.clay += amount;</span>
+<span class="nc" id="L89">    }</span>
+
+    public void addVictoryPoints(int amount) {
+<span class="nc" id="L92">        this.victoryPoints += amount;</span>
+<span class="nc" id="L93">    }</span>
+
+
+    // removing resources
+    public void removeWood(int amount) {
+<span class="nc" id="L98">        this.wood -= amount;</span>
+<span class="nc" id="L99">    }</span>
+
+    public void removeWool(int amount) {
+<span class="nc" id="L102">        this.wool -= amount;</span>
+<span class="nc" id="L103">    }</span>
+
+    public void removeWheat(int amount) {
+<span class="nc" id="L106">        this.wheat -= amount;</span>
+<span class="nc" id="L107">    }</span>
+
+    public void removeOre(int amount) {
+<span class="nc" id="L110">        this.ore -= amount;</span>
+<span class="nc" id="L111">    }</span>
+
+    public void removeClay(int amount) {
+<span class="nc" id="L114">        this.clay -= amount;</span>
+<span class="nc" id="L115">    }</span>
+
+    public void removeVictoryPoints(int amount) {
+<span class="nc" id="L118">        this.victoryPoints -= amount;</span>
+<span class="nc" id="L119">    }</span>
+
+    //getting the amount of resources
+    public int getWood() {
+<span class="nc" id="L123">        return wood;</span>
+    }
+
+    public void setWood(int wood) {
+<span class="nc" id="L127">        this.wood = wood;</span>
+<span class="nc" id="L128">    }</span>
+
+    public int getWool() {
+<span class="nc" id="L131">        return wool;</span>
+    }
+
+    public void setWool(int wool) {
+<span class="nc" id="L135">        this.wool = wool;</span>
+<span class="nc" id="L136">    }</span>
+
+    public int getWheat() {
+<span class="nc" id="L139">        return wheat;</span>
+    }
+
+    public void setWheat(int wheat) {
+<span class="nc" id="L143">        this.wheat = wheat;</span>
+<span class="nc" id="L144">    }</span>
+
+    public int getOre() {
+<span class="nc" id="L147">        return ore;</span>
+    }
+
+    public void setOre(int ore) {
+<span class="nc" id="L151">        this.ore = ore;</span>
+<span class="nc" id="L152">    }</span>
+
+    public int getClay() {
+<span class="nc" id="L155">        return clay;</span>
+    }
+
+    public void setClay(int clay) {
+<span class="nc" id="L159">        this.clay = clay;</span>
+<span class="nc" id="L160">    }</span>
+
+    public int getVictoryPoints() {
+<span class="nc" id="L163">        return victoryPoints;</span>
+    }
+
+    public void setVictoryPoints(int victoryPoints) {
+<span class="nc" id="L167">        this.victoryPoints = victoryPoints;</span>
+<span class="nc" id="L168">    }</span>
+}
+</pre>
+<div class="footer"><span class="right">Created with <a
+        href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>Tile.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">catanserver</a> &gt; <a href="index.source.html"
+                                                                       class="el_package">com.example.catanserver.businessLogic.model.gameboard</a>
+    &gt; <span class="el_source">Tile.java</span></div>
+<h1>Tile.java</h1>
+<pre class="source lang-java linenums">package com.example.catanserver.businessLogic.model.gameboard;
+
+
+public class Tile {
+    //Each backgroundTile has a red dot as thief -&gt; thief.setFillAlpha(1)
+    private boolean isThief;                    //to notate that the Thief is on this certain Tile
+    private int id;                             //gives each Tile a id
+    private int diceValue;                      //each Tile needs to have a certain value between 2-12
+    private String resource;                    //Each Tile has a certain resource (Wood, Clay,...)
+    private Knot[] knots;                       //Each Tile has a set of 6 adjoining knots (needed to check which settlement gets resources after rolling the dice
+
+
+<span class="nc" id="L13">    public Tile(int Tid) {</span>
+<span class="nc" id="L14">        isThief = false;</span>
+<span class="nc" id="L15">        id = Tid;</span>
+<span class="nc" id="L16">        setDiceValue();</span>
+<span class="nc" id="L17">        setResource();</span>
+<span class="nc" id="L18">        knots = new Knot[6];</span>
+<span class="nc" id="L19">    }</span>
+
+    private void setResource() {
+<span class="nc" id="L22">        int id = this.id;</span>
+<span class="nc bnc" id="L23" title="All 7 branches missed.">        switch (id) {</span>
+            case 1:
+            case 9:
+            case 15:
+            case 19:
+<span class="nc" id="L28">                this.resource = &quot;WOOD&quot;;</span>
+<span class="nc" id="L29">                break;</span>
+            case 2:
+            case 4:
+            case 18:
+<span class="nc" id="L33">                this.resource = &quot;ORE&quot;;</span>
+<span class="nc" id="L34">                break;</span>
+            case 3:
+            case 8:
+            case 10:
+            case 16:
+<span class="nc" id="L39">                this.resource = &quot;WHEAT&quot;;</span>
+<span class="nc" id="L40">                break;</span>
+            case 5:
+            case 12:
+            case 17:
+<span class="nc" id="L44">                this.resource = &quot;CLAY&quot;;</span>
+<span class="nc" id="L45">                break;</span>
+            case 6:
+            case 7:
+            case 13:
+            case 14:
+<span class="nc" id="L50">                this.resource = &quot;WOOL&quot;;</span>
+<span class="nc" id="L51">                break;</span>
+            case 11:
+<span class="nc" id="L53">                this.resource = &quot;DESERT&quot;;</span>
+                break;
+        }
+
+<span class="nc" id="L57">    }</span>
+
+    public int getId() {
+<span class="nc" id="L60">        return id;</span>
+    }
+
+    public String getResource() {
+<span class="nc" id="L64">        return resource;</span>
+    }
+
+    public boolean isThief() {
+<span class="nc" id="L68">        return isThief;</span>
+    }
+
+    public void setId(int id) {
+<span class="nc" id="L72">        this.id = id;</span>
+<span class="nc" id="L73">    }</span>
+
+    public void setThief(boolean thief) {
+<span class="nc" id="L76">        this.isThief = true;</span>
+<span class="nc" id="L77">    }</span>
+
+    public void setKnots(Knot[] knots) {
+<span class="nc" id="L80">        this.knots = knots;</span>
+<span class="nc" id="L81">    }</span>
+
+    public Knot[] getKnots() {
+<span class="nc" id="L84">        return knots;</span>
+    }
+
+    private void setDiceValue() {
+<span class="nc bnc" id="L88" title="All 11 branches missed.">        switch (this.id) {</span>
+            case 1:
+            case 14: {
+<span class="nc" id="L91">                this.diceValue = 11;</span>
+<span class="nc" id="L92">                break;</span>
+            }
+            case 2:
+            case 16: {
+<span class="nc" id="L96">                this.diceValue = 10;</span>
+<span class="nc" id="L97">                break;</span>
+            }
+            case 3:
+            case 15: {
+<span class="nc" id="L101">                this.diceValue = 9;</span>
+<span class="nc" id="L102">                break;</span>
+            }
+            case 4:
+            case 13: {
+<span class="nc" id="L106">                this.diceValue = 3;</span>
+<span class="nc" id="L107">                break;</span>
+            }
+            case 5:
+            case 18: {
+<span class="nc" id="L111">                this.diceValue = 8;</span>
+<span class="nc" id="L112">                break;</span>
+            }
+            case 6: {
+<span class="nc" id="L115">                this.diceValue = 12;</span>
+<span class="nc" id="L116">                break;</span>
+            }
+            case 7:
+            case 19: {
+<span class="nc" id="L120">                this.diceValue = 5;</span>
+<span class="nc" id="L121">                break;</span>
+            }
+            case 8:
+            case 11: {
+<span class="nc" id="L125">                this.diceValue = 6;</span>
+<span class="nc" id="L126">                break;</span>
+            }
+            case 9:
+            case 17: {
+<span class="nc" id="L130">                this.diceValue = 4;</span>
+<span class="nc" id="L131">                break;</span>
+            }
+            case 10:
+            case 12: {
+<span class="nc" id="L135">                this.diceValue = 2;</span>
+                break;
+            }
+
+
+        }
+<span class="nc" id="L141">    }</span>
+
+    public int getDiceValue() {
+<span class="nc" id="L144">        return diceValue;</span>
+    }
+}
+
+</pre>
+<div class="footer"><span class="right">Created with <a
+        href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div>
+</body>
+</html>

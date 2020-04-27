@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>PlayerServiceImpl.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">catanserver</a> &gt; <a href="index.source.html"
+                                                                       class="el_package">com.example.catanserver.businessLogic.services</a>
+    &gt; <span class="el_source">PlayerServiceImpl.java</span></div>
+<h1>PlayerServiceImpl.java</h1>
+<pre class="source lang-java linenums">package com.example.catanserver.businessLogic.services;
+
+import com.example.catanserver.businessLogic.model.PlayerImpl;
+
+import java.util.ArrayList;
+
+/**
+ * @author Christina Senger
+ * &lt;p&gt;
+ * Der PlayerService verfÃ¼gt zusÃ¤tzlich Ã¼be Methoden, um einen Player
+ * Ã¼ber seinen Namen oder seinen Host zu finden. AuÃŸerdem
+ * hat er eine Methode, um die Namen aller Spieler als Liste von
+ * Stringelementen zurÃ¼ckzugeben.
+ */
+<span class="nc" id="L15">public class PlayerServiceImpl extends ServiceImpl&lt;Integer, PlayerImpl&gt; implements PlayerService {</span>
+
+    /**
+     * Durchsucht die Liste mit allen Spielern. Ist eine
+     * playerId gleich der gegebenen Id, wird der player zurÃ¼ckgegeben.
+     *
+     * @param id Playerid
+     * @return den Player mit der angegebenen Id, sonst null
+     */
+    public PlayerImpl findObject(Integer id) {
+<span class="nc bnc" id="L25" title="All 2 branches missed.">        for (PlayerImpl player : this.list) {</span>
+<span class="nc bnc" id="L26" title="All 2 branches missed.">            if (player.getPlayerId() == id) {</span>
+<span class="nc" id="L27">                return player;</span>
+            }
+<span class="nc" id="L29">        }</span>
+<span class="nc" id="L30">        return null;</span>
+    }
+
+    /**
+     * @return Liste aller Player
+     */
+    public ArrayList&lt;PlayerImpl&gt; fetchAll() {
+<span class="nc" id="L37">        return this.list;</span>
+    }
+
+    /**
+     * Der Player erhÃ¤lt die seine UserId als PlayerId
+     * und wird in die Liste aller Spieler eingefÃ¼gt.
+     *
+     * @param player einzufÃ¼gender Spieler
+     * @return eingefÃ¼gter Spieler
+     */
+    public PlayerImpl insert(PlayerImpl player) {
+<span class="nc" id="L48">        player.setPlayerId(player.getUserId());</span>
+<span class="nc" id="L49">        this.list.add(player);</span>
+<span class="nc" id="L50">        return player;</span>
+    }
+
+    /**
+     * Gibt es unter allen Spielern einen Spieler mit der
+     * gesuchten Id, wird dieser aus der Liste entfernt.
+     *
+     * @param id PlayerId des zu lÃ¶schenden Spielers
+     */
+    public void delete(Integer id) {
+<span class="nc" id="L60">        PlayerImpl p = null;</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        for (PlayerImpl player : this.list) {</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">            if (player.getPlayerId() == id) {</span>
+<span class="nc" id="L63">                p = player;</span>
+<span class="nc" id="L64">                break;</span>
+            }
+<span class="nc" id="L66">        }</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        if (p != null) {</span>
+<span class="nc" id="L68">            this.list.remove(p);</span>
+        }
+<span class="nc" id="L70">    }</span>
+
+    /**
+     * Gibt es unter allen Spielern einen Spieler mit der
+     * gegebenen Id, wird dieser aus der Liste entfernt
+     * und der neue Spieler an der Stelle eingesetzt.
+     *
+     * @param player upzudatender Spieler
+     * @return den neu eingefÃ¼gen Spieler
+     */
+    public PlayerImpl update(PlayerImpl player) {
+<span class="nc" id="L81">        PlayerImpl p = null;</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">        for (PlayerImpl play : this.list) {</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">            if (play.getPlayerId() == player.getPlayerId()) {</span>
+<span class="nc" id="L84">                p = play;</span>
+<span class="nc" id="L85">                break;</span>
+            }
+<span class="nc" id="L87">        }</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">        if (p != null) {</span>
+<span class="nc" id="L89">            this.list.remove(p);</span>
+        }
+<span class="nc" id="L91">        this.list.add(player);</span>
+<span class="nc" id="L92">        return p;</span>
+    }
+
+    /**
+     * Durchsucht die Liste mit allen Spielern. Ist ein
+     * displayName gleich dem gegebenen Namen, wird der player zurÃ¼ckgegeben.
+     *
+     * @param username Username des gesuchten Spielers
+     * @return den gesuchten Spieler, sonst null
+     */
+    public PlayerImpl findPlayerByUsername(String username) {
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        for (PlayerImpl player : this.list) {</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">            if (username.equals(player.getDisplayName())) {</span>
+<span class="nc" id="L105">                return player;</span>
+            }
+<span class="nc" id="L107">        }</span>
+<span class="nc" id="L108">        return null;</span>
+    }
+
+    /**
+     * Durchsucht die Liste mit allen Spielern. Ist ein
+     * Host gleich dem gegebenen Host, wird der playe zurÃ¼ckgegeben.
+     *
+     * @param host Host des gesuchten Spielers
+     * @return den gesuchten Spieler, sonst null
+     */
+    public PlayerImpl findPlayerByHost(String host) {
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        for (PlayerImpl player : this.list) {</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">            if (host.equals(player.getHost())) {</span>
+<span class="nc" id="L121">                return player;</span>
+            }
+<span class="nc" id="L123">        }</span>
+<span class="nc" id="L124">        return null;</span>
+    }
+
+    /**
+     * @return eine Liste aller DisplayNames
+     */
+    public ArrayList&lt;String&gt; getNameList() {
+<span class="nc" id="L131">        ArrayList&lt;String&gt; names = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L133" title="All 2 branches missed.">        for (PlayerImpl player : this.list) {</span>
+<span class="nc" id="L134">            names.add(player.getDisplayName());</span>
+<span class="nc" id="L135">        }</span>
+<span class="nc" id="L136">        return names;</span>
+    }
+}
+</pre>
+<div class="footer"><span class="right">Created with <a
+        href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div>
+</body>
+</html>

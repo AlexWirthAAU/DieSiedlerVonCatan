@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>ServerThread.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">catanserver</a> &gt; <a href="index.source.html"
+                                                                       class="el_package">com.example.catanserver.businessLogic</a>
+    &gt; <span class="el_source">ServerThread.java</span></div>
+<h1>ServerThread.java</h1>
+<pre class="source lang-java linenums">package com.example.catanserver.businessLogic;
+
+import com.example.catanserver.businessLogic.services.GameServiceImpl;
+import com.example.catanserver.businessLogic.services.PlayerServiceImpl;
+import com.example.catanserver.businessLogic.services.UserServiceImpl;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+
+public class ServerThread implements Runnable {
+
+<span class="nc" id="L18">    private static UserServiceImpl usi = new UserServiceImpl();</span>
+<span class="nc" id="L19">    private static PlayerServiceImpl psi = new PlayerServiceImpl();</span>
+<span class="nc" id="L20">    private static GameServiceImpl gsi = new GameServiceImpl();</span>
+<span class="nc" id="L21">    private UserOps userOps = new UserOps(usi);</span>
+<span class="nc" id="L22">    private PlayerOps playerOps = new PlayerOps(usi, psi, gsi);</span>
+    private Socket client;
+    private ObjectOutputStream outToClient;
+    private ObjectInputStream obInFromClient;
+    private String name;
+
+<span class="nc" id="L28">    private List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L30">    ServerThread(Socket connection, ObjectInputStream obInFromClient, ObjectOutputStream outToClient) {</span>
+<span class="nc" id="L31">        this.client = connection;</span>
+<span class="nc" id="L32">        this.name = connection.getInetAddress().getHostAddress();</span>
+<span class="nc" id="L33">        this.outToClient = outToClient;</span>
+<span class="nc" id="L34">        this.obInFromClient = obInFromClient;</span>
+<span class="nc" id="L35">    }</span>
+
+    public void run() {
+
+        try {
+<span class="nc" id="L40">            System.out.println(&quot;thread&quot;);</span>
+
+            //ObjectInputStream obInFromClient = new ObjectInputStream(client.getInputStream());
+            //ObjectOutputStream outToClient = new ObjectOutputStream(client.getOutputStream());
+
+<span class="nc" id="L45">            String intent = this.obInFromClient.readUTF();</span>
+
+<span class="nc" id="L47">            String ip = client.getInetAddress().getHostAddress();</span>
+
+            String in;
+            String sender;
+            int inInt;
+<span class="nc" id="L52">            System.out.println(intent);</span>
+
+<span class="nc bnc" id="L54" title="All 10 branches missed.">            switch (intent) {</span>
+                case &quot;#LOGIN&quot;:
+<span class="nc" id="L56">                    System.out.println(intent);</span>
+<span class="nc" id="L57">                    in = this.obInFromClient.readUTF();</span>
+<span class="nc" id="L58">                    System.out.println(in);</span>
+<span class="nc" id="L59">                    list = userOps.updateUserList(in, ip);</span>
+<span class="nc" id="L60">                    break;</span>
+                case &quot;#UPDATE&quot;:
+<span class="nc" id="L62">                    System.out.println(intent);</span>
+<span class="nc" id="L63">                    in = this.obInFromClient.readUTF();</span>
+<span class="nc" id="L64">                    inInt = Integer.parseInt(in);</span>
+<span class="nc" id="L65">                    System.out.println(inInt);</span>
+<span class="nc" id="L66">                    list = userOps.updateUserList(inInt);</span>
+<span class="nc" id="L67">                    break;</span>
+                case &quot;#STARTGAME&quot;:
+<span class="nc" id="L69">                    System.out.println(intent);</span>
+                    @SuppressWarnings(&quot;unchecked&quot;)
+<span class="nc" id="L71">                    List&lt;String&gt; inList = (List) obInFromClient.readObject();</span>
+<span class="nc" id="L72">                    list = playerOps.startGame(inList);</span>
+<span class="nc" id="L73">                    break;</span>
+                case &quot;#CHECKGAME&quot;:
+<span class="nc" id="L75">                    System.out.println(intent);</span>
+<span class="nc" id="L76">                    in = this.obInFromClient.readUTF();</span>
+<span class="nc" id="L77">                    list = playerOps.checkIfIn(in);</span>
+<span class="nc" id="L78">                    break;</span>
+                case &quot;#SETCOLOR&quot;:
+<span class="nc" id="L80">                    System.out.println(intent);</span>
+                    @SuppressWarnings(&quot;unchecked&quot;)
+<span class="nc" id="L82">                    Map&lt;String, String&gt; inMap = (Map) this.obInFromClient.readObject();</span>
+<span class="nc" id="L83">                    list = playerOps.setColor(inMap);</span>
+<span class="nc" id="L84">                    break;</span>
+                case &quot;#CHECKCOLOR&quot;:
+<span class="nc" id="L86">                    System.out.println(intent);</span>
+<span class="nc" id="L87">                    in = this.obInFromClient.readUTF();</span>
+<span class="nc" id="L88">                    inInt = Integer.parseInt(in);</span>
+<span class="nc" id="L89">                    Map map = playerOps.checkColors(inInt);</span>
+<span class="nc" id="L90">                    this.outToClient.writeObject(map);</span>
+<span class="nc" id="L91">                    break;</span>
+                case &quot;#BUILDSETTLEMENT&quot;:
+<span class="nc" id="L93">                    System.out.println(intent);</span>
+<span class="nc" id="L94">                    in = obInFromClient.readUTF();</span>
+<span class="nc" id="L95">                    sender = obInFromClient.readUTF();</span>
+<span class="nc" id="L96">                    System.out.println(&quot;BUILDREQUEST delivered: &quot; + in + &quot;\n&quot; + sender);</span>
+                    /**TODO: Implement build logic: Client will send String with the path-assets id (e.g. &quot;settlement_1_3&quot;) + his InetAddress and Server has to check if building at this asset for this player is allowed
+                     * in contains the name of the clicked asset
+                     * sender contains InetAddress of the client
+                     *
+                     * If the knot is free to build, a broadcast message is necessary to update each player's gameboard
+                     * If the knot is not free to build, only the player that requested to build, should receive a message and be able to select another knot
+                     */
+<span class="nc" id="L104">                    outToClient.writeObject(&quot;SETTLED&quot;);</span>
+<span class="nc" id="L105">                    break;</span>
+                case &quot;#BUILDEDGE&quot;:
+<span class="nc" id="L107">                    System.out.println(intent);</span>
+<span class="nc" id="L108">                    in = obInFromClient.readUTF();</span>
+<span class="nc" id="L109">                    sender = obInFromClient.readUTF();</span>
+<span class="nc" id="L110">                    System.out.println(&quot;BUILDREQUEST delivered: &quot; + in + &quot;\n&quot; + sender);</span>
+                    /**TODO: Implement build logic: Client will send String with the path-assets id (e.g. &quot;edge_1314&quot;) + his InetAddress and Server has to check if building at this asset for this player is allowed
+                     * in contains the name of the clicked asset
+                     * sender contains InetAddress of the client
+                     */
+<span class="nc" id="L115">                    outToClient.writeObject(&quot;BUILD&quot;);</span>
+<span class="nc" id="L116">                    break;</span>
+                case &quot;#BUILDCITY&quot;:
+<span class="nc" id="L118">                    System.out.println(intent);</span>
+<span class="nc" id="L119">                    in = obInFromClient.readUTF();</span>
+<span class="nc" id="L120">                    sender = obInFromClient.readUTF();</span>
+<span class="nc" id="L121">                    System.out.println(&quot;BUILDREQUEST delivered: &quot; + in + &quot;\n&quot; + sender);</span>
+<span class="nc"
+      id="L122">                    outToClient.writeObject(&quot;CITY-BUILD&quot;);</span>
+<span class="nc" id="L123">                    break;</span>
+                default:
+                    break;
+            }
+
+<span class="nc" id="L128">            System.out.println(&quot;after&quot;);</span>
+<span class="nc" id="L129">            System.out.println(list);</span>
+<span class="nc" id="L130">            this.outToClient.writeObject(list);</span>
+<span class="nc" id="L131">            this.outToClient.flush();</span>
+
+<span class="nc" id="L133">            this.obInFromClient.close();</span>
+<span class="nc" id="L134">            this.outToClient.close();</span>
+<span class="nc" id="L135">            this.client.close();</span>
+
+<span class="nc" id="L137">        } catch (IOException | ClassNotFoundException ioe) {</span>
+<span class="nc" id="L138">            ioe.printStackTrace();</span>
+<span class="nc" id="L139">        }</span>
+<span class="nc" id="L140">    }</span>
+}
+</pre>
+<div class="footer"><span class="right">Created with <a
+        href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div>
+</body>
+</html>

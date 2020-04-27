@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>Gameboard.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">catanserver</a> &gt; <a href="index.source.html"
+                                                                       class="el_package">com.example.catanserver.businessLogic.model.gameboard</a>
+    &gt; <span class="el_source">Gameboard.java</span></div>
+<h1>Gameboard.java</h1>
+<pre class="source lang-java linenums">package com.example.catanserver.businessLogic.model.gameboard;
+
+
+public class Gameboard {
+<span class="nc" id="L5">    private Tile[] tiles = new Tile[19];        //Gameboard is always compound of 19 hexagons</span>
+<span class="nc" id="L6">    private Knot[] knots = new Knot[54];        //Gameboard is always compound of 54 knots</span>
+<span class="nc" id="L7">    private Edge[] edges = new Edge[72];         //Gameboard is always compound of 72 edges</span>
+
+<span class="nc" id="L9">    public Gameboard() {</span>
+<span class="nc bnc" id="L10" title="All 2 branches missed.">        for (int i = 1; i &lt; 20; i++) {</span>
+<span class="nc" id="L11">            tiles[i - 1] = new Tile(i);</span>
+        }
+<span class="nc" id="L13">        initKnots();</span>
+<span class="nc" id="L14">        initTileKnots();</span>
+<span class="nc" id="L15">        initEdges();</span>
+<span class="nc" id="L16">    }</span>
+
+    private void initKnots() {
+<span class="nc" id="L19">        int row = 1;</span>
+<span class="nc" id="L20">        int column = 1;</span>
+<span class="nc bnc" id="L21" title="All 2 branches missed.">        for (int i = 0; i &lt; 54; i++) {</span>
+<span class="nc bnc" id="L22" title="All 4 branches missed.">            if (row == 1 &amp;&amp; column &lt; 10) {</span>
+<span class="nc" id="L23">                knots[i] = new Knot(row, column + 2);</span>
+<span class="nc" id="L24">                column++;</span>
+<span class="nc bnc" id="L25"
+      title="All 2 branches missed.">                if (column + 2 == 10) {</span>
+<span class="nc" id="L26">                    row = 2;</span>
+<span class="nc" id="L27">                    column = 1;</span>
+                }
+<span class="nc bnc" id="L29" title="All 4 branches missed.">            } else if (row == 2 &amp;&amp; column &lt; 11) {</span>
+<span class="nc" id="L30">                knots[i] = new Knot(row, column + 1);</span>
+<span class="nc" id="L31">                column++;</span>
+<span class="nc bnc" id="L32"
+      title="All 2 branches missed.">                if (column + 1 == 11) {</span>
+<span class="nc" id="L33">                    row = 3;</span>
+<span class="nc" id="L34">                    column = 1;</span>
+                }
+<span class="nc bnc" id="L36" title="All 4 branches missed.">            } else if (row == 3 &amp;&amp; column &lt; 12) {</span>
+<span class="nc" id="L37">                knots[i] = new Knot(row, column);</span>
+<span class="nc" id="L38">                column++;</span>
+<span class="nc bnc" id="L39"
+      title="All 2 branches missed.">                if (column == 12) {</span>
+<span class="nc" id="L40">                    row = 4;</span>
+<span class="nc" id="L41">                    column = 1;</span>
+                }
+<span class="nc bnc" id="L43" title="All 4 branches missed.">            } else if (row == 4 &amp;&amp; column &lt; 12) {</span>
+<span class="nc" id="L44">                knots[i] = new Knot(row, column);</span>
+<span class="nc" id="L45">                column++;</span>
+<span class="nc bnc" id="L46"
+      title="All 2 branches missed.">                if (column == 12) {</span>
+<span class="nc" id="L47">                    row = 5;</span>
+<span class="nc" id="L48">                    column = 1;</span>
+                }
+<span class="nc bnc" id="L50" title="All 4 branches missed.">            } else if (row == 5 &amp;&amp; column &lt; 11) {</span>
+<span class="nc" id="L51">                knots[i] = new Knot(row, column + 1);</span>
+<span class="nc" id="L52">                column++;</span>
+<span class="nc bnc" id="L53"
+      title="All 2 branches missed.">                if (column + 1 == 11) {</span>
+<span class="nc" id="L54">                    row = 6;</span>
+<span class="nc" id="L55">                    column = 1;</span>
+                }
+<span class="nc bnc" id="L57" title="All 4 branches missed.">            } else if (row == 6 &amp;&amp; column &lt; 10) {</span>
+<span class="nc" id="L58">                knots[i] = new Knot(row, column + 2);</span>
+<span class="nc" id="L59">                column++;</span>
+<span class="nc bnc" id="L60"
+      title="All 2 branches missed.">                if (column + 2 == 10) {</span>
+<span class="nc" id="L61">                    row = 7;</span>
+<span class="nc" id="L62">                    column = 1;</span>
+                }
+            }
+        }
+<span class="nc" id="L66">    }</span>
+
+    private void initTileKnots() {
+<span class="nc" id="L69">        Knot[] tile1Knots = new Knot[6];</span>
+<span class="nc" id="L70">        Knot[] tile2Knots = new Knot[6];</span>
+<span class="nc" id="L71">        Knot[] tile3Knots = new Knot[6];</span>
+<span class="nc" id="L72">        Knot[] tile4Knots = new Knot[6];</span>
+<span class="nc" id="L73">        Knot[] tile5Knots = new Knot[6];</span>
+<span class="nc" id="L74">        Knot[] tile6Knots = new Knot[6];</span>
+<span class="nc" id="L75">        Knot[] tile7Knots = new Knot[6];</span>
+<span class="nc" id="L76">        Knot[] tile8Knots = new Knot[6];</span>
+<span class="nc" id="L77">        Knot[] tile9Knots = new Knot[6];</span>
+<span class="nc" id="L78">        Knot[] tile10Knots = new Knot[6];</span>
+<span class="nc" id="L79">        Knot[] tile11Knots = new Knot[6];</span>
+<span class="nc" id="L80">        Knot[] tile12Knots = new Knot[6];</span>
+<span class="nc" id="L81">        Knot[] tile13Knots = new Knot[6];</span>
+<span class="nc" id="L82">        Knot[] tile14Knots = new Knot[6];</span>
+<span class="nc" id="L83">        Knot[] tile15Knots = new Knot[6];</span>
+<span class="nc" id="L84">        Knot[] tile16Knots = new Knot[6];</span>
+<span class="nc" id="L85">        Knot[] tile17Knots = new Knot[6];</span>
+<span class="nc" id="L86">        Knot[] tile18Knots = new Knot[6];</span>
+<span class="nc" id="L87">        Knot[] tile19Knots = new Knot[6];</span>
+
+<span class="nc bnc" id="L89" title="All 2 branches missed.">        for (int i = 0; i &lt; 3; i++) {</span>
+<span class="nc" id="L90">            tile1Knots[i] = knots[i];</span>
+        }
+<span class="nc bnc" id="L92" title="All 2 branches missed.">        for (int i = 3; i &lt; 6; i++) {</span>
+<span class="nc" id="L93">            tile1Knots[i] = knots[i + 5];</span>
+        }
+
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        for (int i = 0; i &lt; 3; i++) {</span>
+<span class="nc" id="L97">            tile2Knots[i] = knots[i + 2];</span>
+        }
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        for (int i = 3; i &lt; 6; i++) {</span>
+<span class="nc" id="L100">            tile2Knots[i] = knots[i + 6];</span>
+        }
+
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        for (int i = 0; i &lt; 3; i++) {</span>
+<span class="nc" id="L104">            tile3Knots[i] = knots[i + 4];</span>
+        }
+<span class="nc bnc" id="L106" title="All 2 branches missed.">        for (int i = 3; i &lt; 6; i++) {</span>
+<span class="nc" id="L107">            tile3Knots[i] = knots[i + 9];</span>
+        }
+
+<span class="nc bnc" id="L110" title="All 2 branches missed.">        for (int i = 0; i &lt; 3; i++) {</span>
+<span class="nc" id="L111">            tile4Knots[i] = knots[i + 7];</span>
+        }
+<span class="nc bnc" id="L113" title="All 2 branches missed.">        for (int i = 3; i &lt; 6; i++) {</span>
+<span class="nc" id="L114">            tile4Knots[i] = knots[i + 13];</span>
+        }
+
+<span class="nc bnc" id="L117" title="All 2 branches missed.">        for (int i = 0; i &lt; 3; i++) {</span>
+<span class="nc" id="L118">            tile5Knots[i] = knots[i + 9];</span>
+        }
+<span class="nc bnc" id="L120" title="All 2 branches missed.">        for (int i = 3; i &lt; 6; i++) {</span>
+<span class="nc" id="L121">            tile5Knots[i] = knots[i + 15];</span>
+        }
+
+<span class="nc bnc" id="L124" title="All 2 branches missed.">        for (int i = 0; i &lt; 3; i++) {</span>
+<span class="nc" id="L125">            tile6Knots[i] = knots[i + 11];</span>
+        }
+<span class="nc bnc" id="L127" title="All 2 branches missed.">        for (int i = 3; i &lt; 6; i++) {</span>
+<span class="nc" id="L128">            tile6Knots[i] = knots[i + 17];</span>
+        }
+
+<span class="nc bnc" id="L131" title="All 2 branches missed.">        for (int i = 0; i &lt; 3; i++) {</span>
+<span class="nc" id="L132">            tile7Knots[i] = knots[i + 13];</span>
+        }
+<span class="nc bnc" id="L134" title="All 2 branches missed.">        for (int i = 3; i &lt; 6; i++) {</span>
+<span class="nc" id="L135">            tile7Knots[i] = knots[i + 19];</span>
+        }
+
+<span class="nc bnc" id="L138" title="All 2 branches missed.">        for (int i = 0; i &lt; 3; i++) {</span>
+<span class="nc" id="L139">            tile8Knots[i] = knots[i + 15];</span>
+        }
+<span class="nc bnc" id="L141" title="All 2 branches missed.">        for (int i = 3; i &lt; 6; i++) {</span>
+<span class="nc" id="L142">            tile8Knots[i] = knots[i + 23];</span>
+        }
+
+<span class="nc bnc" id="L145" title="All 2 branches missed.">        for (int i = 0; i &lt; 3; i++) {</span>
+<span class="nc" id="L146">            tile9Knots[i] = knots[i + 17];</span>
+        }
+<span class="nc bnc" id="L148" title="All 2 branches missed.">        for (int i = 3; i &lt; 6; i++) {</span>
+<span class="nc" id="L149">            tile9Knots[i] = knots[i + 25];</span>
+        }
+
+<span class="nc bnc" id="L152" title="All 2 branches missed.">        for (int i = 0; i &lt; 3; i++) {</span>
+<span class="nc" id="L153">            tile10Knots[i] = knots[i + 19];</span>
+        }
+<span class="nc bnc" id="L155" title="All 2 branches missed.">        for (int i = 3; i &lt; 6; i++) {</span>
+<span class="nc" id="L156">            tile10Knots[i] = knots[i + 27];</span>
+        }
+
+<span class="nc bnc" id="L159" title="All 2 branches missed.">        for (int i = 0; i &lt; 3; i++) {</span>
+<span class="nc" id="L160">            tile11Knots[i] = knots[i + 21];</span>
+        }
+<span class="nc bnc" id="L162" title="All 2 branches missed.">        for (int i = 3; i &lt; 6; i++) {</span>
+<span class="nc" id="L163">            tile11Knots[1] = knots[i + 29];</span>
+        }
+
+<span class="nc bnc" id="L166" title="All 2 branches missed.">        for (int i = 0; i &lt; 3; i++) {</span>
+<span class="nc" id="L167">            tile12Knots[i] = knots[i + 23];</span>
+        }
+<span class="nc bnc" id="L169" title="All 2 branches missed.">        for (int i = 3; i &lt; 6; i++) {</span>
+<span class="nc" id="L170">            tile12Knots[i] = knots[i + 31];</span>
+        }
+
+<span class="nc bnc" id="L173" title="All 2 branches missed.">        for (int i = 0; i &lt; 3; i++) {</span>
+<span class="nc" id="L174">            tile13Knots[i] = knots[i + 27];</span>
+        }
+<span class="nc bnc" id="L176" title="All 2 branches missed.">        for (int i = 3; i &lt; 6; i++) {</span>
+<span class="nc" id="L177">            tile13Knots[i] = knots[i + 33];</span>
+        }
+
+<span class="nc bnc" id="L180" title="All 2 branches missed.">        for (int i = 0; i &lt; 3; i++) {</span>
+<span class="nc" id="L181">            tile14Knots[i] = knots[i + 29];</span>
+        }
+<span class="nc bnc" id="L183" title="All 2 branches missed.">        for (int i = 3; i &lt; 6; i++) {</span>
+<span class="nc" id="L184">            tile14Knots[i] = knots[i + 35];</span>
+        }
+
+<span class="nc bnc" id="L187" title="All 2 branches missed.">        for (int i = 0; i &lt; 3; i++) {</span>
+<span class="nc" id="L188">            tile15Knots[i] = knots[i + 31];</span>
+        }
+<span class="nc bnc" id="L190" title="All 2 branches missed.">        for (int i = 3; i &lt; 6; i++) {</span>
+<span class="nc" id="L191">            tile15Knots[i] = knots[i + 37];</span>
+        }
+
+<span class="nc bnc" id="L194" title="All 2 branches missed.">        for (int i = 0; i &lt; 3; i++) {</span>
+<span class="nc" id="L195">            tile16Knots[i] = knots[i + 33];</span>
+        }
+<span class="nc bnc" id="L197" title="All 2 branches missed.">        for (int i = 3; i &lt; 6; i++) {</span>
+<span class="nc" id="L198">            tile16Knots[i] = knots[i + 39];</span>
+        }
+
+<span class="nc bnc" id="L201" title="All 2 branches missed.">        for (int i = 0; i &lt; 3; i++) {</span>
+<span class="nc" id="L202">            tile17Knots[i] = knots[i + 37];</span>
+        }
+<span class="nc bnc" id="L204" title="All 2 branches missed.">        for (int i = 3; i &lt; 6; i++) {</span>
+<span class="nc" id="L205">            tile17Knots[i] = knots[i + 41];</span>
+        }
+
+<span class="nc bnc" id="L208" title="All 2 branches missed.">        for (int i = 0; i &lt; 3; i++) {</span>
+<span class="nc" id="L209">            tile18Knots[i] = knots[i + 39];</span>
+        }
+<span class="nc bnc" id="L211" title="All 2 branches missed.">        for (int i = 3; i &lt; 6; i++) {</span>
+<span class="nc" id="L212">            tile18Knots[i] = knots[i + 43];</span>
+        }
+
+<span class="nc bnc" id="L215" title="All 2 branches missed.">        for (int i = 0; i &lt; 3; i++) {</span>
+<span class="nc" id="L216">            tile19Knots[i] = knots[i + 41];</span>
+        }
+<span class="nc bnc" id="L218" title="All 2 branches missed.">        for (int i = 3; i &lt; 6; i++) {</span>
+<span class="nc" id="L219">            tile19Knots[i] = knots[i + 45];</span>
+        }
+
+<span class="nc" id="L222">        tiles[0].setKnots(tile1Knots);</span>
+<span class="nc" id="L223">        tiles[1].setKnots(tile2Knots);</span>
+<span class="nc" id="L224">        tiles[2].setKnots(tile3Knots);</span>
+<span class="nc" id="L225">        tiles[3].setKnots(tile4Knots);</span>
+<span class="nc" id="L226">        tiles[4].setKnots(tile5Knots);</span>
+<span class="nc" id="L227">        tiles[5].setKnots(tile6Knots);</span>
+<span class="nc" id="L228">        tiles[6].setKnots(tile7Knots);</span>
+<span class="nc" id="L229">        tiles[7].setKnots(tile8Knots);</span>
+<span class="nc" id="L230">        tiles[8].setKnots(tile9Knots);</span>
+<span class="nc" id="L231">        tiles[9].setKnots(tile10Knots);</span>
+<span class="nc" id="L232">        tiles[10].setKnots(tile11Knots);</span>
+<span class="nc" id="L233">        tiles[11].setKnots(tile12Knots);</span>
+<span class="nc" id="L234">        tiles[12].setKnots(tile13Knots);</span>
+<span class="nc" id="L235">        tiles[13].setKnots(tile14Knots);</span>
+<span class="nc" id="L236">        tiles[14].setKnots(tile15Knots);</span>
+<span class="nc" id="L237">        tiles[15].setKnots(tile16Knots);</span>
+<span class="nc" id="L238">        tiles[16].setKnots(tile17Knots);</span>
+<span class="nc" id="L239">        tiles[17].setKnots(tile18Knots);</span>
+<span class="nc" id="L240">        tiles[18].setKnots(tile19Knots);</span>
+
+<span class="nc" id="L242">    }</span>
+
+    private void initEdges() {
+<span class="nc bnc" id="L245" title="All 2 branches missed.">        for (int i = 0; i &lt; 6; i++) {</span>
+<span class="nc" id="L246">            edges[i] = new Edge(knots[i], knots[i + 1]);</span>
+        }
+<span class="nc" id="L248">        int d = 0;</span>
+<span class="nc bnc" id="L249" title="All 2 branches missed.">        for (int i = 6; i &lt; 10; i++) {</span>
+<span class="nc" id="L250">            edges[i] = new Edge(knots[d], knots[d + 8]);</span>
+<span class="nc" id="L251">            d = d + 2;</span>
+        }
+<span class="nc bnc" id="L253" title="All 2 branches missed.">        for (int i = 10; i &lt; 18; i++) {</span>
+<span class="nc" id="L254">            edges[i] = new Edge(knots[i - 3], knots[i - 2]);</span>
+        }
+<span class="nc" id="L256">        int c = 7;</span>
+<span class="nc bnc" id="L257" title="All 2 branches missed.">        for (int i = 18; i &lt; 23; i++) {</span>
+<span class="nc" id="L258">            edges[i] = new Edge(knots[c], knots[c + 10]);</span>
+<span class="nc" id="L259">            c = c + 2;</span>
+        }
+<span class="nc bnc" id="L261" title="All 2 branches missed.">        for (int i = 23; i &lt; 33; i++) {</span>
+<span class="nc" id="L262">            edges[i] = new Edge(knots[i - 7], knots[i - 6]);</span>
+        }
+<span class="nc" id="L264">        int e = 16;</span>
+<span class="nc bnc" id="L265" title="All 2 branches missed.">        for (int i = 33; i &lt; 39; i++) {</span>
+<span class="nc" id="L266">            edges[i] = new Edge(knots[e], knots[e + 11]);</span>
+<span class="nc" id="L267">            e = e + 2;</span>
+        }
+<span class="nc bnc" id="L269" title="All 2 branches missed.">        for (int i = 39; i &lt; 49; i++) {</span>
+<span class="nc" id="L270">            edges[i] = new Edge(knots[i - 12], knots[i - 11]);</span>
+        }
+<span class="nc" id="L272">        int f = 28;</span>
+<span class="nc bnc" id="L273" title="All 2 branches missed.">        for (int i = 49; i &lt; 54; i++) {</span>
+<span class="nc" id="L274">            edges[i] = new Edge(knots[f], knots[f + 10]);</span>
+<span class="nc" id="L275">            f = f + 2;</span>
+        }
+<span class="nc bnc" id="L277" title="All 2 branches missed.">        for (int i = 54; i &lt; 62; i++) {</span>
+<span class="nc" id="L278">            edges[i] = new Edge(knots[i - 16], knots[i - 15]);</span>
+        }
+<span class="nc" id="L280">        int g = 39;</span>
+<span class="nc bnc" id="L281" title="All 2 branches missed.">        for (int i = 62; i &lt; 66; i++) {</span>
+<span class="nc" id="L282">            edges[i] = new Edge(knots[g], knots[g + 8]);</span>
+<span class="nc" id="L283">            g = g + 2;</span>
+        }
+<span class="nc bnc" id="L285" title="All 2 branches missed.">        for (int i = 66; i &lt; 72; i++) {</span>
+<span class="nc" id="L286">            edges[i] = new Edge(knots[i - 19], knots[i - 18]);</span>
+            {
+            }
+        }
+<span class="nc" id="L290">    }</span>
+
+    public Tile[] getTiles() {
+<span class="nc" id="L293">        return tiles;</span>
+    }
+
+    public Knot[] getKnots() {
+<span class="nc" id="L297">        return knots;</span>
+    }
+
+    public Edge[] getEdges() {
+<span class="nc" id="L301">        return edges;</span>
+    }
+}
+</pre>
+<div class="footer"><span class="right">Created with <a
+        href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div>
+</body>
+</html>

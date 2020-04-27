@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>GameServiceImpl.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">catanserver</a> &gt; <a href="index.source.html"
+                                                                       class="el_package">com.example.catanserver.businessLogic.services</a>
+    &gt; <span class="el_source">GameServiceImpl.java</span></div>
+<h1>GameServiceImpl.java</h1>
+<pre class="source lang-java linenums">package com.example.catanserver.businessLogic.services;
+
+import com.example.catanserver.businessLogic.model.Colors;
+import com.example.catanserver.businessLogic.model.GameImpl;
+import com.example.catanserver.businessLogic.model.PlayerImpl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @author Christina Senger
+ * &lt;p&gt;
+ * Der GameService verfÃ¼gt zusÃ¤tzlich Ã¼ber Methoden, um eine Spiel
+ * Ã¼ber seine Id oder seine Spieler zu finden. AuÃŸerdem kann er
+ * Spieler und deren Farben einander zuordnen und er hat eine Methode,
+ * um die Id, die Namen aller Nutzer und deren Farben als Liste von
+ * Stringelementen zurÃ¼ckzugeben.
+ */
+public class GameServiceImpl extends ServiceImpl&lt;Integer, GameImpl&gt; implements GameService {
+
+    /**
+     * Konstruktor - setzt die aktuelle Id auf 1
+     */
+<span class="nc" id="L24">    public GameServiceImpl() {</span>
+<span class="nc" id="L25">        this.currentId = 1;</span>
+<span class="nc" id="L26">    }</span>
+
+    /**
+     * Durchsucht die Liste mit allen Spielen. Ist eine
+     * gameId gleich der gegebenen Id, wird das Spiel zurÃ¼ckgegeben.
+     *
+     * @param id Gameid
+     * @return das Spiel mit der angegebenen Id, sonst null
+     */
+    public GameImpl findObject(Integer id) {
+<span class="nc bnc" id="L36" title="All 2 branches missed.">        for (GameImpl game : this.list) {</span>
+<span class="nc bnc" id="L37" title="All 2 branches missed.">            if (game.getGameId() == id) {</span>
+<span class="nc" id="L38">                return game;</span>
+            }
+<span class="nc" id="L40">        }</span>
+<span class="nc" id="L41">        return null;</span>
+    }
+
+    /**
+     * @return Liste aller User
+     */
+    public ArrayList&lt;GameImpl&gt; fetchAll() {
+<span class="nc" id="L48">        return this.list;</span>
+    }
+
+    /**
+     * Das Spiel bekommt die nÃ¤chste freie Id
+     * und wird in die Liste aller Spiele eingefÃ¼gt.
+     *
+     * @param game einzufÃ¼gendes Spiel
+     * @return eingefÃ¼gtes Spiel
+     */
+    public GameImpl insert(GameImpl game) {
+<span class="nc" id="L59">        game.setGameId(currentId++);</span>
+<span class="nc" id="L60">        this.list.add(game);</span>
+<span class="nc" id="L61">        return game;</span>
+    }
+
+    /**
+     * Gibt es unter allen Spielen eine Spiel mit der
+     * gesuchten Id, wird dieses aus der Liste entfernt.
+     *
+     * @param id GameId des zu lÃ¶schenden Spiels
+     */
+    public void delete(Integer id) {
+<span class="nc" id="L71">        GameImpl g = null;</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        for (GameImpl game : this.list) {</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">            if (game.getGameId() == id) {</span>
+<span class="nc" id="L74">                g = game;</span>
+<span class="nc" id="L75">                break;</span>
+            }
+<span class="nc" id="L77">        }</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">        if (g != null) {</span>
+<span class="nc" id="L79">            this.list.remove(g);</span>
+        }
+<span class="nc" id="L81">    }</span>
+
+    /**
+     * Gibt es unter allen Spielen eine Spiel mit der
+     * gegebenen Id, wird dieses aus der Liste entfernt
+     * und das neue Spiel an der Stelle eingesetzt.
+     *
+     * @param game upzudatendes Spiel
+     * @return das neu eingefÃ¼gte Spiel
+     */
+    public GameImpl update(GameImpl game) {
+<span class="nc" id="L92">        GameImpl g = null;</span>
+<span class="nc bnc" id="L93"
+      title="All 2 branches missed.">        for (GameImpl gi : this.list) {</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">            if (gi.getGameId() == game.getGameId()) {</span>
+<span class="nc" id="L95">                g = gi;</span>
+<span class="nc" id="L96">                break;</span>
+            }
+<span class="nc" id="L98">        }</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        if (g != null) {</span>
+<span class="nc" id="L100">            this.list.remove(g);</span>
+        }
+<span class="nc" id="L102">        this.list.add(game);</span>
+<span class="nc" id="L103">        return g;</span>
+    }
+
+    /**
+     * Durchsucht die Liste mit allen Spielen. Hat ein Spiel die
+     * Ã¼bergebenen Spieler, wird das Spiel zurÃ¼ckgegeben.
+     *
+     * @param players Liste den Spielern
+     * @return das gesuchte Spiel, sonst null
+     */
+    public GameImpl findGameByPlayers(ArrayList&lt;String&gt; players) {
+
+<span class="nc bnc" id="L115" title="All 2 branches missed.">        for (GameImpl game : this.list) {</span>
+<span class="nc" id="L116">            List&lt;PlayerImpl&gt; toCheck = game.getPlayers();</span>
+
+<span class="nc bnc" id="L118" title="All 4 branches missed.">            for (int i = 0; i &lt; players.size() &amp;&amp; i &lt; toCheck.size(); i++) {</span>
+<span class="nc"
+      id="L119">                String strToCheck = toCheck.get(i).getDisplayName();</span>
+
+<span class="nc bnc" id="L121" title="All 2 branches missed.">                if ((players.get(i)).equals(strToCheck)) {</span>
+<span class="nc" id="L122">                    return game;</span>
+                }
+            }
+<span class="nc" id="L125">        }</span>
+<span class="nc" id="L126">        return null;</span>
+    }
+
+    /**
+     * Durchsucht die Spielerliste des gegebenen Spieles.
+     * Hat ein Spieler die gesuchte Farbe, wird das Spiel zurÃ¼ckgegeben.
+     *
+     * @param color Farbe des Spielers
+     * @param game  Spiel des Spielers
+     * @return den gesuchten Spieler, sonst null
+     */
+    public PlayerImpl findPlayerInGameByColor(Colors color, GameImpl game) {
+
+<span class="nc" id="L139">        List&lt;PlayerImpl&gt; toCheck = game.getPlayers();</span>
+
+<span class="nc bnc" id="L141" title="All 2 branches missed.">        for (PlayerImpl player : toCheck) {</span>
+
+<span class="nc bnc" id="L143" title="All 2 branches missed.">            if (player.getColor().equals(color)) {</span>
+<span class="nc" id="L144">                return player;</span>
+            }
+<span class="nc" id="L146">        }</span>
+<span class="nc" id="L147">        return null;</span>
+    }
+
+    /**
+     * @param id Id des Spiels
+     * @return Liste mit GameId, Spieler und deren Farben als String
+     */
+    public ArrayList&lt;String&gt; getList(Integer id) {
+
+<span class="nc" id="L156">        GameImpl game = findObject(id);</span>
+<span class="nc"
+      id="L157">        ArrayList&lt;String&gt; gameList = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L159">        gameList.add(id.toString());</span>
+
+<span class="nc bnc" id="L161" title="All 2 branches missed.">        for (PlayerImpl player : game.getPlayers()) {</span>
+<span class="nc" id="L162">            gameList.add((player.getDisplayName()));</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">            if (player.getColor() != null) {</span>
+<span class="nc" id="L164">                gameList.add(player.getColor().toString());</span>
+            }
+<span class="nc" id="L166">        }</span>
+
+<span class="nc" id="L168">        return gameList;</span>
+    }
+}
+</pre>
+<div class="footer"><span class="right">Created with <a
+        href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div>
+</body>
+</html>

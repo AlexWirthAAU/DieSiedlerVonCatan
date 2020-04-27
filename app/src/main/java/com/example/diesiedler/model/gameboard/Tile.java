@@ -25,7 +25,7 @@ public class Tile {
         backgroundTile = gameBoardView.findRichPathByName("backgroundTile_" + id);
         thief = gameBoardView.findRichPathByName("thief_" + id);
         setResource();
-        knots = new Knot[54];
+        knots = new Knot[6];
     }
 
     private void setResource() {
@@ -156,8 +156,6 @@ public class Tile {
                 this.diceValue = 2;
                 break;
             }
-
-
         }
     }
 

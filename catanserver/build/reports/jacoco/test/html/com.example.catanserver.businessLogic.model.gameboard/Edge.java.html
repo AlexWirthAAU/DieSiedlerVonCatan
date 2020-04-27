@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>Edge.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">catanserver</a> &gt; <a href="index.source.html"
+                                                                       class="el_package">com.example.catanserver.businessLogic.model.gameboard</a>
+    &gt; <span class="el_source">Edge.java</span></div>
+<h1>Edge.java</h1>
+<pre class="source lang-java linenums">package com.example.catanserver.businessLogic.model.gameboard;
+
+import com.example.catanserver.businessLogic.model.User;
+import com.example.catanserver.businessLogic.model.UserImpl;
+
+public class Edge {
+    private String id;              //Each Edge has a Id named: edge_&lt;Knot1_Row&gt;&lt;Knot1_Column&gt;&lt;Knot2_Row&gt;&lt;Knot2_Column&gt;
+    private Knot one;               //Each edge is defined as straight between two knots
+    private Knot two;
+    private User user;                   //When a player builds a road -&gt; player owns this specific road/edge
+
+<span class="nc" id="L12">    public Edge(Knot one, Knot two) {</span>
+<span class="nc" id="L13">        this.one = one;</span>
+<span class="nc" id="L14">        this.two = two;</span>
+<span class="nc" id="L15">        this.id = &quot;edge_&quot; + one.getRow() + &quot;&quot; + one.getColumn() + &quot;&quot; + two.getRow() + &quot;&quot; + two.getColumn();</span>
+<span class="nc" id="L16">        this.user = new UserImpl(&quot;nullUser&quot;, &quot;nullip&quot;);</span>
+<span class="nc" id="L17">        this.user.setUserId(0);</span>
+<span class="nc" id="L18">    }</span>
+
+    public Knot getOne() {
+<span class="nc" id="L21">        return one;</span>
+    }
+
+    public Knot getTwo() {
+<span class="nc" id="L25">        return two;</span>
+    }
+
+    public String getId() {
+<span class="nc" id="L29">        return id;</span>
+    }
+
+    public User getUser() {
+<span class="nc" id="L33">        return user;</span>
+    }
+
+    public void setUser(User user) {
+<span class="nc" id="L37">        this.user = user;</span>
+<span class="nc" id="L38">    }</span>
+}
+</pre>
+<div class="footer"><span class="right">Created with <a
+        href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div>
+</body>
+</html>

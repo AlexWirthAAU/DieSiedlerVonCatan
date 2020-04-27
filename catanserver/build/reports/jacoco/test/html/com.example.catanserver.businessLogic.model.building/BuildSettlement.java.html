@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>BuildSettlement.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">catanserver</a> &gt; <a href="index.source.html"
+                                                                       class="el_package">com.example.catanserver.businessLogic.model.building</a>
+    &gt; <span class="el_source">BuildSettlement.java</span></div>
+<h1>BuildSettlement.java</h1>
+<pre class="source lang-java linenums">package com.example.catanserver.businessLogic.model.building;
+
+import com.example.catanserver.businessLogic.model.PlayerImpl;
+import com.example.catanserver.businessLogic.model.PlayerInventory;
+import com.example.catanserver.businessLogic.model.gameboard.Edge;
+import com.example.catanserver.businessLogic.model.gameboard.Gameboard;
+import com.example.catanserver.businessLogic.model.gameboard.Knot;
+
+<span class="nc" id="L9">public class BuildSettlement implements BuildStructure {</span>
+<span class="nc" id="L10">    private boolean enoughResources = false;</span>
+    private PlayerImpl player;
+<span class="nc" id="L12">    PlayerInventory playerInventory = player.getInventory();</span>
+    //Gameboard gameboard = new Gameboard();
+    private Knot knot;
+
+    private static final String TAG = &quot;BuildSettlement&quot;; //for logging
+
+    @Override
+    public boolean checkResources() {
+        // cost for settlement: 1 wood, 1 clay, 1 wheat, 1 wool
+<span class="nc" id="L21">        int wood = playerInventory.getWood();</span>
+<span class="nc" id="L22">        int clay = playerInventory.getClay();</span>
+<span class="nc" id="L23">        int wheat = playerInventory.getWheat();</span>
+<span class="nc" id="L24">        int wool = playerInventory.getWool();</span>
+<span class="nc bnc" id="L25" title="All 8 branches missed.">        if (wood &gt;= 1 &amp;&amp; clay &gt;= 1 &amp;&amp; wheat &gt;= 1 &amp;&amp; wool &gt;= 1) {</span>
+<span class="nc" id="L26">            enoughResources = true;</span>
+        }
+<span class="nc" id="L28">        return enoughResources;</span>
+    }
+
+    @Override
+    public void selectBuildingSite() {
+        /* settlement can only be built:
+         - if there is a road of the player leading to the chosen place and
+         - there is no other settlement or city only one distance (road or possible road) away
+         */
+<span class="nc bnc" id="L37" title="All 6 branches missed.">        if (enoughResources &amp;&amp; adjacentRoadOfPlayer() &amp;&amp; notTooCloseToSettlementOrCity()) {</span>
+<span class="nc" id="L38">            updateGameboard();</span>
+<span class="nc" id="L39">            updatePlayerInventory();</span>
+        }
+<span class="nc" id="L41">    }</span>
+
+    private boolean adjacentRoadOfPlayer() {
+<span class="nc" id="L44">        boolean isAdjacentRoad = false;</span>
+<span class="nc" id="L45">        Gameboard gameboard = new Gameboard();</span>
+<span class="nc" id="L46">        Edge[] edges = gameboard.getEdges();</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        for(Edge edge : edges) {</span>
+<span class="nc bnc" id="L48" title="All 4 branches missed.">            if (edge.getOne().equals(knot) || edge.getTwo().equals(knot)){</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">                if (edge.getUser().equals(knot.getUser())) { //todo: getPlayer() instead of getUser() ?</span>
+<span class="nc" id="L50">                    isAdjacentRoad = true;</span>
+                    //Log.d(TAG, &quot;Edge: &quot; + edge + &quot;, Knot: &quot; + knot); //todo: why doesn't Log.d work?
+<span class="nc" id="L52">                    break;</span>
+                }
+            }
+        }
+<span class="nc" id="L56">        return isAdjacentRoad;</span>
+    }
+
+    private boolean notTooCloseToSettlementOrCity() {
+        //todo implementation missing
+<span class="nc" id="L61">        return true;</span>
+    }
+
+
+
+    @Override
+    public void updateGameboard() {
+<span class="nc" id="L68">        knot.setUser(player);</span>
+<span class="nc" id="L69">    }</span>
+
+    @Override
+    public void updatePlayerInventory() {
+        //todo implementation missing
+<span class="nc" id="L74">    }</span>
+}
+</pre>
+<div class="footer"><span class="right">Created with <a
+        href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div>
+</body>
+</html>

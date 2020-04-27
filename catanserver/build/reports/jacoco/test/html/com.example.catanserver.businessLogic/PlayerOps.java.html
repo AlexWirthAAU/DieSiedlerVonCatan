@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>PlayerOps.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">catanserver</a> &gt; <a href="index.source.html"
+                                                                       class="el_package">com.example.catanserver.businessLogic</a>
+    &gt; <span class="el_source">PlayerOps.java</span></div>
+<h1>PlayerOps.java</h1>
+<pre class="source lang-java linenums">package com.example.catanserver.businessLogic;
+
+import com.example.catanserver.businessLogic.model.Colors;
+import com.example.catanserver.businessLogic.model.Game;
+import com.example.catanserver.businessLogic.model.GameImpl;
+import com.example.catanserver.businessLogic.model.PlayerImpl;
+import com.example.catanserver.businessLogic.model.User;
+import com.example.catanserver.businessLogic.services.GameServiceImpl;
+import com.example.catanserver.businessLogic.services.PlayerServiceImpl;
+import com.example.catanserver.businessLogic.services.UserServiceImpl;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+class PlayerOps {
+
+    private static UserServiceImpl usi;
+    private static PlayerServiceImpl psi;
+    private static GameServiceImpl gsi;
+
+<span class="nc" id="L23">    public PlayerOps(UserServiceImpl u, PlayerServiceImpl p, GameServiceImpl g) {</span>
+<span class="nc" id="L24">        usi = u;</span>
+<span class="nc" id="L25">        psi = p;</span>
+<span class="nc" id="L26">        gsi = g;</span>
+
+<span class="nc" id="L28">    }</span>
+
+    synchronized ArrayList&lt;String&gt; startGame(List&lt;String&gt; usersIn) {
+
+<span class="nc" id="L32">        GameImpl game = new GameImpl();</span>
+        PlayerImpl player;
+        int id;
+
+<span class="nc bnc" id="L36"
+      title="All 2 branches missed.">        for (String str : usersIn) {</span>
+
+<span class="nc" id="L38">            User user = usi.findUserByUsername(str);</span>
+<span class="nc" id="L39">            player = new PlayerImpl(str, user.getHost(), user.getUserId());</span>
+<span class="nc" id="L40">            psi.insert(player);</span>
+<span class="nc" id="L41">            usi.delete(user.getUserId());</span>
+<span class="nc" id="L42">            game.setPlayer(player);</span>
+<span class="nc" id="L43">        }</span>
+
+<span class="nc" id="L45">        id = game.getGameId();</span>
+<span class="nc" id="L46">        System.out.println(id + &quot; gameId in service&quot;);</span>
+<span class="nc" id="L47">        gsi.insert(game);</span>
+
+<span class="nc" id="L49">        return gsi.getList(game.getGameId());</span>
+    }
+
+    synchronized ArrayList&lt;String&gt; setColor(Map&lt;String, String&gt; map) {
+
+        PlayerImpl player;
+<span class="nc" id="L55">        Integer gameId = null;</span>
+
+<span class="nc bnc" id="L57" title="All 2 branches missed.">        for (Map.Entry&lt;String, String&gt; entry : map.entrySet()) {</span>
+<span class="nc"
+      id="L58">            System.out.println(entry.getValue() + &quot; userInMap&quot;);</span>
+<span class="nc"
+      id="L59">            Colors color = Colors.valueOf(entry.getKey().toUpperCase());</span>
+<span class="nc" id="L60">            System.out.println(color + &quot; colorServer&quot;);</span>
+<span class="nc" id="L61">        }</span>
+
+<span class="nc bnc" id="L63" title="All 2 branches missed.">        for (Map.Entry&lt;String, String&gt; entry : map.entrySet()) {</span>
+
+<span class="nc" id="L65">            player = psi.findPlayerByUsername(entry.getValue());</span>
+<span class="nc"
+      id="L66">            Colors color = Colors.valueOf(entry.getKey().toUpperCase());</span>
+<span class="nc" id="L67">            player.setColor(color);</span>
+
+<span class="nc" id="L69">            gameId = player.getGameId();</span>
+<span class="nc" id="L70">        }</span>
+
+<span class="nc" id="L72">        return gsi.getList(gameId);</span>
+    }
+
+    ArrayList&lt;String&gt; checkIfIn(String username) {
+
+<span class="nc" id="L77">        List&lt;GameImpl&gt; list = gsi.fetchAll();</span>
+
+<span class="nc bnc" id="L79"
+      title="All 2 branches missed.">        for (GameImpl game : list) {</span>
+<span class="nc" id="L80">            List&lt;PlayerImpl&gt; p = game.getPlayers();</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">            for (PlayerImpl player : p) {</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">                if (player.getDisplayName().equals(username)) {</span>
+<span class="nc" id="L83">                    return gsi.getList(game.getGameId());</span>
+                }
+<span class="nc" id="L85">            }</span>
+<span class="nc" id="L86">        }</span>
+<span class="nc" id="L87">        return null;</span>
+    }
+
+    Map&lt;String, String&gt; checkColors(Integer id) {
+
+<span class="nc" id="L92">        Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
+
+<span class="nc" id="L94">        Game game = gsi.findObject(id);</span>
+<span class="nc" id="L95">        List&lt;PlayerImpl&gt; players = game.getPlayers();</span>
+
+<span class="nc bnc" id="L97" title="All 2 branches missed.">        for (PlayerImpl player : players) {</span>
+<span class="nc" id="L98">            System.out.println(player.getPlayerId() + &quot; playerinCheckColors&quot;);</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">            if (player.getColor() != null) {</span>
+<span class="nc" id="L100">                map.put(player.getColor().toString().toLowerCase(), player.getDisplayName());</span>
+            }
+<span class="nc" id="L102">        }</span>
+
+<span class="nc" id="L104">        return map;</span>
+    }
+}
+</pre>
+<div class="footer"><span class="right">Created with <a
+        href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div>
+</body>
+</html>
