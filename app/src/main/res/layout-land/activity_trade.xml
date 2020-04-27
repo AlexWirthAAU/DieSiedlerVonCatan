@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TradeActivity">
+
+    <ScrollView
+        style="@android:style/Widget.DeviceDefault.ScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#BD1010"
+        android:clipToPadding="false"
+        android:scrollbarStyle="outsideInset"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-82dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
+                android:text="@string/select_action"
+                android:textAlignment="gravity"
+                android:textColor="#FBC02D"
+                android:textSize="35sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:text="@string/resToGive"
+                android:textAlignment="gravity"
+                android:textColor="#FBC02D"
+                android:textSize="35sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="240dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/wood"
+                android:textColor="#FBC02D"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/countWoodGive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="340dp"
+                android:layout_marginTop="-35dp"
+                android:text="@string/count"
+                android:textColor="#FBC02D"
+                android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/plusWoodGive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="-40dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="plus"
+                android:text="@string/plus"
+                android:textColor="#A10101"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="240dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/wool"
+                android:textColor="#FBC02D"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/countWoolGive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="340dp"
+                android:layout_marginTop="-35dp"
+                android:text="@string/count"
+                android:textColor="#FBC02D"
+                android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/plusWoolGive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="-40dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="plus"
+                android:text="@string/plus"
+                android:textColor="#A10101"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="240dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/wheat"
+                android:textColor="#FBC02D"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/countWheatGive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="340dp"
+                android:layout_marginTop="-35dp"
+                android:text="@string/count"
+                android:textColor="#FBC02D"
+                android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/plusWheatGive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="-40dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="plus"
+                android:text="@string/plus"
+                android:textColor="#A10101"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="240dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/ore"
+                android:textColor="#FBC02D"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/countOreGive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="340dp"
+                android:layout_marginTop="-35dp"
+                android:text="@string/count"
+                android:textColor="#FBC02D"
+                android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/plusOreGive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="-40dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="plus"
+                android:text="@string/plus"
+                android:textColor="#A10101"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="240dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/clay"
+                android:textColor="#FBC02D"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/countClayGive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="340dp"
+                android:layout_marginTop="-35dp"
+                android:text="@string/count"
+                android:textColor="#FBC02D"
+                android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/plusClayGive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="-40dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="plus"
+                android:text="@string/plus"
+                android:textColor="#A10101"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:text="@string/resToGet"
+                android:textAlignment="gravity"
+                android:textColor="#FBC02D"
+                android:textSize="35sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="240dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/wood"
+                android:textColor="#FBC02D"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/countWoodGet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="340dp"
+                android:layout_marginTop="-35dp"
+                android:text="@string/count"
+                android:textColor="#FBC02D"
+                android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/plusWoodGet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="-40dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="plus"
+                android:text="@string/plus"
+                android:textColor="#A10101"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="240dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/wool"
+                android:textColor="#FBC02D"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/countWoolGet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="340dp"
+                android:layout_marginTop="-35dp"
+                android:text="@string/count"
+                android:textColor="#FBC02D"
+                android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/plusWoolGet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="-40dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="plus"
+                android:text="@string/plus"
+                android:textColor="#A10101"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="240dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/wheat"
+                android:textColor="#FBC02D"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/countWheatGet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="340dp"
+                android:layout_marginTop="-35dp"
+                android:text="@string/count"
+                android:textColor="#FBC02D"
+                android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/plusWheatGet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="-40dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="plus"
+                android:text="@string/plus"
+                android:textColor="#A10101"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView24"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="240dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/ore"
+                android:textColor="#FBC02D"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/countOreGet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="340dp"
+                android:layout_marginTop="-35dp"
+                android:text="@string/count"
+                android:textColor="#FBC02D"
+                android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/plusOreGet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="-40dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="plus"
+                android:text="@string/plus"
+                android:textColor="#A10101"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView25"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="240dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/clay"
+                android:textColor="#FBC02D"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/countClayGet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="340dp"
+                android:layout_marginTop="-35dp"
+                android:text="@string/count"
+                android:textColor="#FBC02D"
+                android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/plusClayGet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="-40dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="plus"
+                android:text="@string/plus"
+                android:textColor="#A10101"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/reload"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginTop="35dp"
+                android:layout_marginBottom="35dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="trade"
+                android:text="@string/trade"
+                android:textColor="#A10101"
+                android:textSize="30sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

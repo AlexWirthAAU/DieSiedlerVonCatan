@@ -127,4 +127,16 @@
     <string name="costscity">- 2 Korn / - 3 Erz</string>
     <string name="pointsdevCard">+ ? Punkte</string>
     <string name="costsdevCard">- 1 Wolle / - 1 Korn / - 1 Erz</string>
+    <string name="select_action">Wähle deine Aktion</string>
+    <string name="trade">Handeln</string>
+    <string name="ahead">Weiter</string>
+    <string name="resToGive">Geboten</string>
+    <string name="resToGet">Gesucht</string>
+    <string name="wood">Holz</string>
+    <string name="wool">Wolle</string>
+    <string name="wheat">Weizen</string>
+    <string name="ore">Erz</string>
+    <string name="clay">Lehm</string>
+    <string name="count">0</string>
+    <string name="plus">+</string>
 </resources>
