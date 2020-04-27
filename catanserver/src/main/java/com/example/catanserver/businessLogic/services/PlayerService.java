@@ -1,6 +1,6 @@
 package com.example.catanserver.businessLogic.services;
 
-import com.example.catanserver.businessLogic.model.PlayerImpl;
+import com.example.catanserver.businessLogic.model.player.PlayerImpl;
 
 import java.util.ArrayList;
 

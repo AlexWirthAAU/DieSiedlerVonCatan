@@ -169,6 +169,7 @@ public class SelectColorsActivity extends AppCompatActivity {
     public void startGame(View view) {
 
         int selectedColors = 0;
+        int setColors = 0;
         boolean ready = false;
 
         for (Button btn : colors) {
@@ -177,10 +178,10 @@ public class SelectColorsActivity extends AppCompatActivity {
             if (!btn.getText().toString().isEmpty()) {
                 selectedColors++;
             }
+        }
 
-            if (selectedColors >= 2) {
-                ready = true;
-            }
+        if (selectedColors == Integer.parseInt(gameList.get(1))) {
+            ready = true;
         }
 
         if (!ready) {

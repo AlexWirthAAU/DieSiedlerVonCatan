@@ -2,7 +2,7 @@ package com.example.catanserver.businessLogic.services;
 
 import com.example.catanserver.businessLogic.model.Colors;
 import com.example.catanserver.businessLogic.model.GameImpl;
-import com.example.catanserver.businessLogic.model.PlayerImpl;
+import com.example.catanserver.businessLogic.model.player.PlayerImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -157,6 +157,11 @@ public class GameServiceImpl extends ServiceImpl<Integer, GameImpl> implements G
         ArrayList<String> gameList = new ArrayList<>();
 
         gameList.add(id.toString());
+        gameList.add(game.getPlayers().size() + "");
+
+        for (PlayerImpl player : game.getPlayers()) {
+            gameList.add((player.getDisplayName()));
+        }
 
         for (PlayerImpl player : game.getPlayers()) {
             gameList.add((player.getDisplayName()));

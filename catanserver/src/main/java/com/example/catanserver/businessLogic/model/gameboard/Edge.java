@@ -1,7 +1,7 @@
 package com.example.catanserver.businessLogic.model.gameboard;
 
-import com.example.catanserver.businessLogic.model.User;
-import com.example.catanserver.businessLogic.model.UserImpl;
+import com.example.catanserver.businessLogic.model.player.User;
+import com.example.catanserver.businessLogic.model.player.UserImpl;
 
 public class Edge {
     private String id;              //Each Edge has a Id named: edge_<Knot1_Row><Knot1_Column><Knot2_Row><Knot2_Column>

@@ -3,8 +3,8 @@ package com.example.catanserver.businessLogic;
 import com.example.catanserver.businessLogic.model.Colors;
 import com.example.catanserver.businessLogic.model.Game;
 import com.example.catanserver.businessLogic.model.GameImpl;
-import com.example.catanserver.businessLogic.model.PlayerImpl;
-import com.example.catanserver.businessLogic.model.User;
+import com.example.catanserver.businessLogic.model.player.PlayerImpl;
+import com.example.catanserver.businessLogic.model.player.User;
 import com.example.catanserver.businessLogic.services.GameServiceImpl;
 import com.example.catanserver.businessLogic.services.PlayerServiceImpl;
 import com.example.catanserver.businessLogic.services.UserServiceImpl;
@@ -39,10 +39,12 @@ class PlayerOps {
             player = new PlayerImpl(str, user.getHost(), user.getUserId());
             psi.insert(player);
             usi.delete(user.getUserId());
+            System.out.println(player);
             game.setPlayer(player);
         }
 
         id = game.getGameId();
+        System.out.println(game);
         System.out.println(id + " gameId in service");
         gsi.insert(game);
 
