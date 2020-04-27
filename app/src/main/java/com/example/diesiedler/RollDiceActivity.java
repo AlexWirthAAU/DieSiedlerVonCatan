@@ -59,10 +59,12 @@ public class RollDiceActivity extends AppCompatActivity implements SensorEventLi
             Log.d("DEBUG", "Sum is: " + sum);
         }
         if (Math.abs(acceleration) < 0.1 && statusStarts == 1) {
+            //This is where the shaking stops
             finalSum = sum;
             sensorManager.unregisterListener(this);
             Log.d("DEBUG", "FINAL VALUE IS: " + finalSum);
-            new AlertDialog.Builder(this).setTitle("YOUR VALUE").setMessage("Du hast " + finalSum + " gewürfelt.").show();
+            new AlertDialog.Builder(this).setTitle("AUGENSUMME:").setMessage("Du hast " + finalSum + " gewürfelt.").show();
+            //TODO: Next activity call
         }
     }
 
