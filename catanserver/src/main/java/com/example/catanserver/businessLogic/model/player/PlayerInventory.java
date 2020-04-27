@@ -1,6 +1,11 @@
-package com.example.catanserver.businessLogic.model;
+package com.example.catanserver.businessLogic.model.player;
 
-import com.example.catanserver.businessLogic.model.gameboard.*;
+import com.example.catanserver.businessLogic.model.devcards.BuildStreetCard;
+import com.example.catanserver.businessLogic.model.devcards.InventionCard;
+import com.example.catanserver.businessLogic.model.devcards.KnightCard;
+import com.example.catanserver.businessLogic.model.devcards.MonopolCard;
+import com.example.catanserver.businessLogic.model.gameboard.Edge;
+import com.example.catanserver.businessLogic.model.gameboard.Knot;
 
 import java.util.LinkedList;
 
@@ -12,6 +17,10 @@ public class PlayerInventory {
     private int wheat;
     private int ore;
     private int clay;
+    private int knightCard;
+    private int buildStreetCard;
+    private int inventionCard;
+    private int monopolCard;
     private int victoryPoints;
     public int victoryPointsSettlement = 2;
     public int victoryPointsCity = 3;
@@ -19,6 +28,10 @@ public class PlayerInventory {
     private LinkedList<Knot> cities = new LinkedList<>();
     private LinkedList<Knot> settlements = new LinkedList<>();
     private LinkedList<Edge> roads = new LinkedList<>();
+    private LinkedList<KnightCard> knightCards = new LinkedList<>();
+    private LinkedList<BuildStreetCard> buildStreetCards = new LinkedList<>();
+    private LinkedList<InventionCard> inventionCards = new LinkedList<>();
+    private LinkedList<MonopolCard> monopolCards = new LinkedList<>();
 
     // private ArrayList<Entwicklungskarte> entwicklungskarten = new ArrayList<>();
 
@@ -28,6 +41,10 @@ public class PlayerInventory {
         this.wheat = STARTVALUE;
         this.ore = STARTVALUE;
         this.clay = STARTVALUE;
+        this.buildStreetCard = STARTVALUE;
+        this.inventionCard = STARTVALUE;
+        this.knightCard = STARTVALUE;
+        this.monopolCard = STARTVALUE;
         this.victoryPoints = 0;
     }
 
@@ -35,7 +52,9 @@ public class PlayerInventory {
     public String getAllSupplies() {
         //TODO adding Entwicklungskarten (later)
         return "Wood: " + this.wood + "\nWool: " + this.wool + "\nWheat: " + this.wool + "\nOre: " + this.ore
-                + "\nClay: " + this.clay + "\nVictoty points: " + this.victoryPoints;
+                + "\nClay: " + this.clay + "\nKnightCard: " + this.knightCard
+                + "\nInventionCard: " + this.inventionCard + "\nBuildStreetCard: " + this.buildStreetCard
+                + "\nMonopolCard: " + this.monopolCard + "\nVictoty points: " + this.victoryPoints;
     }
 
     // adding structures
@@ -92,6 +111,26 @@ public class PlayerInventory {
         this.victoryPoints += amount;
     }
 
+    public void addKnightCard(int amount) {
+        this.knightCard += amount;
+    }
+
+    public void addBuildStreetCard(int amount) {
+        this.buildStreetCard += amount;
+    }
+
+    public void addInventianCard(int amount) {
+        this.inventionCard += amount;
+    }
+
+    public void addMonopolCard(int amount) {
+        this.monopolCard += amount;
+    }
+
+    public void addVictoryCard(int amount) {
+        this.victoryPoints++;
+    }
+
 
     // removing resources
     public void removeWood(int amount) {
@@ -115,6 +154,26 @@ public class PlayerInventory {
     }
 
     public void removeVictoryPoints(int amount) {
+        this.victoryPoints -= amount;
+    }
+
+    public void removeKnightCard(int amount) {
+        this.knightCard -= amount;
+    }
+
+    public void removeBuildStreetCard(int amount) {
+        this.buildStreetCard -= amount;
+    }
+
+    public void removeInventianCard(int amount) {
+        this.inventionCard -= amount;
+    }
+
+    public void removeMonopolCard(int amount) {
+        this.monopolCard -= amount;
+    }
+
+    public void removeVictoryCard(int amount) {
         this.victoryPoints -= amount;
     }
 
@@ -165,5 +224,37 @@ public class PlayerInventory {
 
     public void setVictoryPoints(int victoryPoints) {
         this.victoryPoints = victoryPoints;
+    }
+
+    public int getKnightCard() {
+        return knightCard;
+    }
+
+    public void setKnightCard(int knightCard) {
+        this.knightCard = knightCard;
+    }
+
+    public int getBuildStreetCard() {
+        return buildStreetCard;
+    }
+
+    public void setBuildStreetCard(int buildStreetCard) {
+        this.buildStreetCard = buildStreetCard;
+    }
+
+    public int getInventionCard() {
+        return inventionCard;
+    }
+
+    public void setInventionCard(int inventionCard) {
+        this.inventionCard = inventionCard;
+    }
+
+    public int getMonopolCard() {
+        return monopolCard;
+    }
+
+    public void setMonopolCard(int monopolCard) {
+        this.monopolCard = monopolCard;
     }
 }

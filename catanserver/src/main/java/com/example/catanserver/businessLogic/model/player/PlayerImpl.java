@@ -1,4 +1,6 @@
-package com.example.catanserver.businessLogic.model;
+package com.example.catanserver.businessLogic.model.player;
+
+import com.example.catanserver.businessLogic.model.Colors;
 
 /**
  * @author Christina Senger

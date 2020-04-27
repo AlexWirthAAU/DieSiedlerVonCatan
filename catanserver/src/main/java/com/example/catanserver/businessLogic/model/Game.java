@@ -1,5 +1,7 @@
 package com.example.catanserver.businessLogic.model;
 
+import com.example.catanserver.businessLogic.model.player.PlayerImpl;
+
 import java.util.List;
 
 /**

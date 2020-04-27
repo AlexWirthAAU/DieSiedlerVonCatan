@@ -1,8 +1,11 @@
 package com.example.catanserver.businessLogic.model;
 
+import com.example.catanserver.businessLogic.model.devcards.DevCard;
+import com.example.catanserver.businessLogic.model.devcards.DevCardStack;
 import com.example.catanserver.businessLogic.model.gameboard.Edge;
 import com.example.catanserver.businessLogic.model.gameboard.Gameboard;
 import com.example.catanserver.businessLogic.model.gameboard.Knot;
+import com.example.catanserver.businessLogic.model.player.PlayerImpl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,12 +29,14 @@ public class GameImpl implements Game, Serializable {
     private LinkedList<Knot> settlements;
     private LinkedList<Knot> cities;
     private int currPlayer;
+    private ArrayList<DevCard> devCards;
 
     // private LinkedList<Entwicklungskarte> entwicklungskartenStapel;
 
     public GameImpl() {
 
         this.gameId = ++currGameId;
+        this.devCards = new DevCardStack().getDevCardStack();
     }
 
     public int getGameId() {
@@ -68,6 +73,10 @@ public class GameImpl implements Game, Serializable {
 
     public LinkedList<Knot> getCities() {
         return cities;
+    }
+
+    public ArrayList<DevCard> getDevCards() {
+        return devCards;
     }
 
     private void addRoad(Edge road){
