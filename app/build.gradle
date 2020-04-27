@@ -3,7 +3,7 @@ apply plugin: 'jacoco'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    buildToolsVersion "29.0.3"
 
     defaultConfig {
         applicationId "com.example.diesiedler"
@@ -16,13 +16,23 @@ android {
     }
 
     buildTypes {
+
+        debug{
+            testCoverageEnabled true
+            debuggable true
+        }
+
         release {
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            testCoverageEnabled true
+
         }
     }
 
 }
+
 
 task jacocoTestReport(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
 
@@ -35,10 +45,13 @@ task jacocoTestReport(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
     def debugTree = fileTree(dir: "${buildDir}/intermediates/javac/debug", excludes: fileFilter)
     def mainSrc = "${project.projectDir}/src/main/java"
 
-    sourceDirectories = files([mainSrc])
-    classDirectories = files([debugTree])
-    executionData = files("${buildDir}/jacoco/testDebugUnitTest.exec")
+    sourceDirectories.from = files([mainSrc])
+    classDirectories.from  = files([debugTree])
+    executionData.from = files("${buildDir}/jacoco/testDebugUnitTest.exec")
+
+
 }
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -51,4 +64,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.google.android.material:material:1.1.0'
 }

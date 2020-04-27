@@ -1,7 +1,8 @@
-package com.example.diesiedler.model.gameboard;
+package com.example.catanserver.businessLogic.model.gameboard;
 
-import com.richpath.RichPath;
-import com.richpath.RichPathView;
+
+import com.example.catanserver.businessLogic.model.player.User;
+import com.example.catanserver.businessLogic.model.player.UserImpl;
 
 import java.util.ArrayList;
 
@@ -9,21 +10,21 @@ public class Knot {
     private int row;                    //Each Knot is identified by row and column
     private int column;
     private String id;
-    private RichPathView gameBoardView;
-    private RichPath settlement;        //Richpath Element to click on, when building a new settlement
-    private RichPath city;              //Richpath Element that gets visible, as soon as a player upgrades his settlement to a city
     private ArrayList<Knot> path;       //As soon as a knots Player != null -> path = new ArrayList and push the knot in this list (beginning of a path)
-    //Player p;                         //TODO: When a player builds a settlement, he owns this knot
+    private boolean isSettled;
+    private boolean hasCity;
+    private User user;                  //TODO: When a player builds a settlement, he owns this knot
     private boolean isHarbourKnot;      //States whether a Knot has a harbour or not
 
-    public Knot(int row, int column, RichPathView gameBoardView) {
-        this.gameBoardView = gameBoardView;
+    public Knot(int row, int column) {
+        this.user = new UserImpl("nullUser", "nullip");
+        this.user.setUserId(0);
         this.row = row;
         this.column = column;
         this.id = row + "" + column;
-        this.settlement = gameBoardView.findRichPathByName("settlement_" + row + "_" + column);
-        this.city = gameBoardView.findRichPathByName("city_" + row + "_" + column);
         this.path = null;
+        this.isSettled = false;
+        this.hasCity = false;
         setIsHarbourKnot();
     }
 
@@ -37,14 +38,6 @@ public class Knot {
 
     public int getColumn() {
         return column;
-    }
-
-    public RichPath getSettlement() {
-        return settlement;
-    }
-
-    public RichPath getCity() {
-        return city;
     }
 
     public ArrayList<Knot> getPath() {
@@ -84,17 +77,40 @@ public class Knot {
         return this.isHarbourKnot;
     }
 
-
-    /*
-    TODO: method to build a settlement or city on a specific knot
-
-    public void buildSettlement(Player p){
-         this.p=p;
-         this.settlement.setFillColor(p.getColor);
+    public String getId() {
+        return id;
     }
 
-    public void buildCity(){
-          this.city.setFillAlpha(1);
+    public boolean isSettled() {
+        return isSettled;
     }
-     */
+
+    public boolean HasCity() {
+        return hasCity;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public boolean isHarbourKnot() {
+        return isHarbourKnot;
+    }
+
+    public void setPath(ArrayList<Knot> path) {
+        this.path = path;
+    }
+
+    public void setSettled(boolean settled) {
+        isSettled = settled;
+    }
+
+    public void setHasCity(boolean hasCity) {
+        this.hasCity = hasCity;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
+

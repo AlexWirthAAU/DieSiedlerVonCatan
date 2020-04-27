@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#BD1010"
+    tools:context=".SelectColorsActivity">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:text="@string/select_color"
+        android:textAlignment="gravity"
+        android:textColor="#FBC02D"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/green"
+        android:layout_width="277dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="200dp"
+        android:backgroundTint="#6AE626"
+        android:onClick="onGreen"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/violett"
+        android:layout_width="277dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="220dp"
+        android:backgroundTint="#A30FFF"
+        android:onClick="onViolett"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/orange"
+        android:layout_width="277dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="200dp"
+        android:backgroundTint="#FF8E07"
+        android:onClick="onOrange"
+        app:layout_constraintBottom_toTopOf="@+id/violett"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/green"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/lightblue"
+        android:layout_width="277dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="220dp"
+        android:backgroundTint="#07B9FF"
+        android:onClick="onLightblue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/violett" />
+
+    <Button
+        android:id="@+id/update2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginStart="115dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="#FFA000"
+        android:onClick="update"
+        android:text="@string/reload"
+        android:textColor="#A10101"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/startPlayButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginEnd="85dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="#FFA000"
+        android:onClick="startGame"
+        android:text="@string/startPlay"
+        android:textColor="#A10101"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
