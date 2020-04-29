@@ -1,15 +1,15 @@
 package com.example.catanserver.businessLogic.model.building;
 
-import com.example.catanserver.businessLogic.model.PlayerImpl;
-import com.example.catanserver.businessLogic.model.PlayerInventory;
-import com.example.catanserver.businessLogic.model.gameboard.Edge;
-import com.example.catanserver.businessLogic.model.gameboard.Gameboard;
-import com.example.catanserver.businessLogic.model.gameboard.Knot;
+import com.example.catangame.Player;
+import com.example.catangame.PlayerInventory;
+import com.example.catangame.gameboard.Edge;
+import com.example.catangame.gameboard.Gameboard;
+import com.example.catangame.gameboard.Knot;
 
 public class BuildSettlement implements BuildStructure {
     private boolean enoughResources = false;
-    private PlayerImpl player;
-    PlayerInventory playerInventory = player.getInventory();
+    private Player player;
+    PlayerInventory playerInventory;
     //Gameboard gameboard = new Gameboard();
     private Knot knot;
 
@@ -46,7 +46,7 @@ public class BuildSettlement implements BuildStructure {
         Edge[] edges = gameboard.getEdges();
         for(Edge edge : edges) {
             if (edge.getOne().equals(knot) || edge.getTwo().equals(knot)){
-                if (edge.getUser().equals(knot.getUser())) { //todo: getPlayer() instead of getUser() ?
+                if (edge.getPlayer().equals(knot.getPlayer())) { //todo: getPlayer() instead of getUser() ?
                     isAdjacentRoad = true;
                     //Log.d(TAG, "Edge: " + edge + ", Knot: " + knot); //todo: why doesn't Log.d work?
                     break;
@@ -65,7 +65,7 @@ public class BuildSettlement implements BuildStructure {
 
     @Override
     public void updateGameboard() {
-        knot.setUser(player);
+        knot.setPlayer(player);
     }
 
     @Override

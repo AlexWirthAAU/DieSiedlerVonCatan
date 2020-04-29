@@ -1,4 +1,4 @@
-package com.example.catanserver.businessLogic.model;
+package com.example.catangame;
 
 /**
  * @author Christina Senger

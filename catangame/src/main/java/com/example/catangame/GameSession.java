@@ -1,8 +1,6 @@
-package com.example.catanserver.businessLogic.model;
+package com.example.catangame;
 
-import com.example.catanserver.businessLogic.model.gameboard.Edge;
-import com.example.catanserver.businessLogic.model.gameboard.Gameboard;
-import com.example.catanserver.businessLogic.model.gameboard.Knot;
+import com.example.catangame.gameboard.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,15 +9,16 @@ import java.util.List;
 
 /**
  * @author Christina Senger
+ * @author Fabian Schaffenrath (edit)
  * <p>
- * Ein Game kennt seine GameId und seine
- * Spieler und deren Id und hat entsprechende
- * Getter und Setter.
+ * Ein Game kennt seine GameId, das Gameboard inklusive
+ * Roads, Settlements und Cities, sowie die zugehörigen Spieler
+ * und enthält entsprechende Getter und Setter.
  */
-public class GameImpl implements Game, Serializable {
+public class GameSession implements Serializable {
 
-    private static int currGameId = 0; //fortlaufende Id
-    private List<PlayerImpl> list = new ArrayList<>(4);
+    private static int gameCounter = 0; //fortlaufende Id
+    private List<Player> players = new ArrayList<>(4);
     private int gameId;
     private Gameboard gameboard;
     private LinkedList<Edge> roads;
@@ -29,29 +28,39 @@ public class GameImpl implements Game, Serializable {
 
     // private LinkedList<Entwicklungskarte> entwicklungskartenStapel;
 
-    public GameImpl() {
+    public GameSession() {
 
-        this.gameId = ++currGameId;
+        this.gameId = ++gameCounter;
+        gameboard = new Gameboard();
+        roads = new LinkedList<>();
+        settlements = new LinkedList<>();
+        cities = new LinkedList<>();
+        currPlayer = 0;
     }
 
     public int getGameId() {
         return gameId;
     }
 
-    public void setGameId(int gameId) {
-        this.gameId = gameId;
+    public List<Player> getPlayers() {
+        return this.players;
     }
 
-    public List<PlayerImpl> getPlayers() {
-        return this.list;
+    public Player getPlayer(int userId){
+        for (Player player:players) {
+            if(player.getUserId() == userId){
+                return player;
+            }
+        }
+        return null;
     }
 
-    public void setPlayers(List<PlayerImpl> players) {
-        this.list = players;
+    public void setPlayers(List<Player> players) {
+        this.players = players;
     }
 
-    public void setPlayer(PlayerImpl player) {
-        this.list.add(player);
+    public void setPlayer(Player player) {
+        this.players.add(player);
     }
 
     public Gameboard getGameboard() {
@@ -84,7 +93,7 @@ public class GameImpl implements Game, Serializable {
     }
 
     private void nextPlayer(){
-        if (currPlayer == list.size() - 1) {
+        if (currPlayer == players.size() - 1) {
             currPlayer = 0;
         }
         else{

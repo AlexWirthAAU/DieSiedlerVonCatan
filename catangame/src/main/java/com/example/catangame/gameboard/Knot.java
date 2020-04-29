@@ -1,8 +1,7 @@
-package com.example.catanserver.businessLogic.model.gameboard;
+package com.example.catangame.gameboard;
 
 
-import com.example.catanserver.businessLogic.model.User;
-import com.example.catanserver.businessLogic.model.UserImpl;
+import com.example.catangame.*;
 
 import java.util.ArrayList;
 
@@ -13,12 +12,11 @@ public class Knot {
     private ArrayList<Knot> path;       //As soon as a knots Player != null -> path = new ArrayList and push the knot in this list (beginning of a path)
     private boolean isSettled;
     private boolean hasCity;
-    private User user;                  //TODO: When a player builds a settlement, he owns this knot
+    private Player player;          //TODO: When a player builds a settlement, he owns this knot
     private boolean isHarbourKnot;      //States whether a Knot has a harbour or not
 
     public Knot(int row, int column) {
-        this.user = new UserImpl("nullUser", "nullip");
-        this.user.setUserId(0);
+        this.player = null;
         this.row = row;
         this.column = column;
         this.id = row + "" + column;
@@ -89,12 +87,12 @@ public class Knot {
         return hasCity;
     }
 
-    public User getUser() {
-        return user;
-    }
-
     public boolean isHarbourKnot() {
         return isHarbourKnot;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     public void setPath(ArrayList<Knot> path) {
@@ -109,8 +107,8 @@ public class Knot {
         this.hasCity = hasCity;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }
 

@@ -1,6 +1,6 @@
-package com.example.catanserver.businessLogic.model;
+package com.example.catangame;
 
-import com.example.catanserver.businessLogic.model.gameboard.*;
+import com.example.catangame.gameboard.*;
 
 import java.util.LinkedList;
 
@@ -65,6 +65,19 @@ public class PlayerInventory {
     public void removeCity(Knot cityKnot){
         this.cities.remove(cityKnot);
         this.victoryPoints -= this.victoryPointsCity;
+    }
+
+    // get structures
+    public LinkedList<Knot> getCities() {
+        return cities;
+    }
+
+    public LinkedList<Knot> getSettlements() {
+        return settlements;
+    }
+
+    public LinkedList<Edge> getRoads() {
+        return roads;
     }
 
     // adding resources

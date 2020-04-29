@@ -1,4 +1,4 @@
-package com.example.catanserver.businessLogic.model.gameboard;
+package com.example.catangame.gameboard;
 
 
 public class Gameboard {

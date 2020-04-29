@@ -1,20 +1,18 @@
-package com.example.catanserver.businessLogic.model.gameboard;
+package com.example.catangame.gameboard;
 
-import com.example.catanserver.businessLogic.model.User;
-import com.example.catanserver.businessLogic.model.UserImpl;
+import com.example.catangame.*;
 
 public class Edge {
     private String id;              //Each Edge has a Id named: edge_<Knot1_Row><Knot1_Column><Knot2_Row><Knot2_Column>
     private Knot one;               //Each edge is defined as straight between two knots
     private Knot two;
-    private User user;                   //When a player builds a road -> player owns this specific road/edge
+    private Player player;      //When a player builds a road -> player owns this specific road/edge
 
     public Edge(Knot one, Knot two) {
         this.one = one;
         this.two = two;
         this.id = "edge_" + one.getRow() + "" + one.getColumn() + "" + two.getRow() + "" + two.getColumn();
-        this.user = new UserImpl("nullUser", "nullip");
-        this.user.setUserId(0);
+        this.player = null;
     }
 
     public Knot getOne() {
@@ -29,11 +27,11 @@ public class Edge {
         return id;
     }
 
-    public User getUser() {
-        return user;
+    public Player getPlayer() {
+        return player;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }
