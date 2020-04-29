@@ -140,4 +140,7 @@
     <string name="count">0</string>
     <string name="plus">+</string>
     <string name="minus">-</string>
+    <string name="accept">Annehmen</string>
+    <string name="dismiss">Ablehnen</string>
+    <string name="tradeAnswer">Handel abschließen</string>
 </resources>

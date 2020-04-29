@@ -2,6 +2,7 @@ package com.example.catanserver.businessLogic;
 
 import com.example.catanserver.businessLogic.services.GameServiceImpl;
 import com.example.catanserver.businessLogic.services.PlayerServiceImpl;
+import com.example.catanserver.businessLogic.services.Trade;
 import com.example.catanserver.businessLogic.services.UserServiceImpl;
 
 import java.io.IOException;
@@ -119,6 +120,23 @@ public class ServerThread implements Runnable {
                      * in contains the name of the clicked asset
                      * sender contains InetAddress of the client
                      */
+                    outToClient.writeObject("BUILD");
+                    break;
+                case "#TRADE":
+                    System.out.println(intent);
+                    int gameId = this.obInFromClient.read();
+                    @SuppressWarnings("unchecked")
+                    Map<String, Integer> inMap2 = (Map) this.obInFromClient.readObject();
+                    /**TODO: Implement send Messages to clients*/
+                    Trade trade = new Trade(inMap2, gameId, gsi, this.client.getInetAddress().getHostAddress(), psi);
+                    outToClient.writeObject("BUILD");
+                    break;
+                case "#TRADEANSWER":
+                    System.out.println(intent);
+                    int gameId2 = this.obInFromClient.read();
+                    Trade trade2 = gsi.findObject(gameId2).getTrade();
+                    trade2.setAnswerList(this.client.getInetAddress().getHostAddress(), this.obInFromClient.readBoolean());
+                    /**TODO: Implement send Messages to clients*/
                     outToClient.writeObject("BUILD");
                     break;
                 default:

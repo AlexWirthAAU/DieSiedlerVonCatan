@@ -6,6 +6,7 @@ import com.example.catanserver.businessLogic.model.gameboard.Edge;
 import com.example.catanserver.businessLogic.model.gameboard.Gameboard;
 import com.example.catanserver.businessLogic.model.gameboard.Knot;
 import com.example.catanserver.businessLogic.model.player.PlayerImpl;
+import com.example.catanserver.businessLogic.services.Trade;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class GameImpl implements Game, Serializable {
     private LinkedList<Knot> cities;
     private int currPlayer;
     private ArrayList<DevCard> devCards;
+    private Trade currTrade;
 
     // private LinkedList<Entwicklungskarte> entwicklungskartenStapel;
 
@@ -57,6 +59,14 @@ public class GameImpl implements Game, Serializable {
 
     public void setPlayer(PlayerImpl player) {
         this.list.add(player);
+    }
+
+    public Trade getTrade() {
+        return this.currTrade;
+    }
+
+    public void setTrade(Trade trade) {
+        this.currTrade = trade;
     }
 
     public Gameboard getGameboard() {

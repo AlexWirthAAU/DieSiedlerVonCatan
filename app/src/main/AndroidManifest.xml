@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".AnswerToTradeActivity" />
         <activity android:name=".TradeActivity" />
         <activity android:name=".SelectActionActivity" />
         <activity android:name=".MainActivity" />

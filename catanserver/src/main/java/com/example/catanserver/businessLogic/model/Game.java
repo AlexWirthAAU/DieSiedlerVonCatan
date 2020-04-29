@@ -1,6 +1,7 @@
 package com.example.catanserver.businessLogic.model;
 
 import com.example.catanserver.businessLogic.model.player.PlayerImpl;
+import com.example.catanserver.businessLogic.services.Trade;
 
 import java.util.List;
 
@@ -22,4 +23,8 @@ public interface Game {
     void setPlayers(List<PlayerImpl> players);
 
     void setPlayer(PlayerImpl player);
+
+    Trade getTrade();
+
+    void setTrade(Trade trade);
 }
