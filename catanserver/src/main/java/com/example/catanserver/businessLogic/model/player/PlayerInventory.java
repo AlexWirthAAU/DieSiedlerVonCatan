@@ -33,8 +33,6 @@ public class PlayerInventory {
     private LinkedList<InventionCard> inventionCards = new LinkedList<>();
     private LinkedList<MonopolCard> monopolCards = new LinkedList<>();
 
-    // private ArrayList<Entwicklungskarte> entwicklungskarten = new ArrayList<>();
-
     public PlayerInventory() {
         this.wood = STARTVALUE;
         this.wool = STARTVALUE;
@@ -50,7 +48,6 @@ public class PlayerInventory {
 
     // displaying all resources and victory points
     public String getAllSupplies() {
-        //TODO adding Entwicklungskarten (later)
         return "Wood: " + this.wood + "\nWool: " + this.wool + "\nWheat: " + this.wool + "\nOre: " + this.ore
                 + "\nClay: " + this.clay + "\nKnightCard: " + this.knightCard
                 + "\nInventionCard: " + this.inventionCard + "\nBuildStreetCard: " + this.buildStreetCard
@@ -127,7 +124,7 @@ public class PlayerInventory {
         this.monopolCard += amount;
     }
 
-    public void addVictoryCard(int amount) {
+    public void addVictoryCard() {
         this.victoryPoints++;
     }
 

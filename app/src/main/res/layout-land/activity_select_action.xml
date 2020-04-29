@@ -41,6 +41,30 @@
                 android:textSize="30sp" />
 
             <Button
+                android:id="@+id/bank"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="bankChange"
+                android:text="@string/bank"
+                android:textColor="#A10101"
+                android:textSize="30sp" />
+
+            <Button
+                android:id="@+id/port"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="portChange"
+                android:text="@string/port"
+                android:textColor="#A10101"
+                android:textSize="30sp" />
+
+            <Button
                 android:id="@+id/ahead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

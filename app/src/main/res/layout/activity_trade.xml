@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="50dp"
-                android:text="@string/select_action"
+                android:text="@string/res"
                 android:textAlignment="gravity"
                 android:textColor="#FBC02D"
                 android:textSize="35sp"

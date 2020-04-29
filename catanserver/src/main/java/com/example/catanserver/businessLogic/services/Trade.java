@@ -30,7 +30,7 @@ public class Trade {
     private PlayerServiceImpl psi;
     private PlayerImpl currPlayer;
     private PlayerImpl tradingPartner;
-    private StringBuffer message = new StringBuffer();
+    private StringBuilder message = new StringBuilder();
 
     public Trade(Map<String, Integer> offer, int gameId, GameServiceImpl gsi, String host, PlayerServiceImpl psi) {
         this.woodGive = offer.get("WoodGive");

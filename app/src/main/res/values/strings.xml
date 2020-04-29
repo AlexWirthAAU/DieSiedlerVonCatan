@@ -143,4 +143,8 @@
     <string name="accept">Annehmen</string>
     <string name="dismiss">Ablehnen</string>
     <string name="tradeAnswer">Handel abschließen</string>
+    <string name="bank">Banktausch</string>
+    <string name="port">Hafentausch</string>
+    <string name="res">Wähle deine Rohstoffe</string>
+    <string name="change">Tauschen</string>
 </resources>
