@@ -7,6 +7,8 @@ import com.example.diesiedler.presenter.GameBoardClickListener;
 import com.example.diesiedler.presenter.PresenterBuild;
 import com.richpath.RichPathView;
 
+import java.util.concurrent.ExecutionException;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -17,10 +19,10 @@ public class MainActivity extends AppCompatActivity {
         RichPathView richPathView = findViewById(R.id.ic_gameboardView);
 
         GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView, this);
-        gameBoardClickListener.clickBoard();
+        gameBoardClickListener.clickBoard("BuildSettlement");
     }
 
-    public void clicked(String s) {
+    public void clicked(String s) throws ExecutionException, InterruptedException {
         new PresenterBuild().chooseAssetID(s);
     }
 

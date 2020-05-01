@@ -110,6 +110,7 @@ public class ServerAcceptanceThread extends Thread {
                                                 Server.currentlyThreaded.add(foundGame.getGameId());
                                                 Thread resourceAllocation = new ResourceAllocationThread(foundGame, dicevalue);
                                                 resourceAllocation.start();
+                                                SendToClient.sendGameSessionBroadcast(connection, foundGame);
                                             }
 
                                         }
