@@ -135,8 +135,6 @@ public class Tile {
                 this.diceValue = 2;
                 break;
             }
-
-
         }
     }
 

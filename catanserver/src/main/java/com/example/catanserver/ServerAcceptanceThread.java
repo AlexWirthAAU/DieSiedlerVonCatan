@@ -102,6 +102,16 @@ public class ServerAcceptanceThread extends Thread {
 
                                             // TODO: Implement all methods post Game creation here
 
+                                            if (messageSplit[2].equals("RESOURCEALLOCATION")) {
+                                                String dicevalue = "5"; //TEST
+                                                /**Todo: Handover string
+                                                 * Could be: messageSplit[3]
+                                                 */
+                                                Server.currentlyThreaded.add(foundGame.getGameId());
+                                                Thread resourceAllocation = new ResourceAllocationThread(foundGame, dicevalue);
+                                                resourceAllocation.start();
+                                            }
+
                                         }
 
                                         /*

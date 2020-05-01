@@ -83,7 +83,7 @@ public class Knot {
         return isSettled;
     }
 
-    public boolean HasCity() {
+    public boolean hasCity() {
         return hasCity;
     }
 
