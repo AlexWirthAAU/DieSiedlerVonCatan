@@ -1,6 +1,10 @@
 package com.example.catangame;
 
-import com.example.catangame.gameboard.*;
+import com.example.catangame.devcards.DevCard;
+import com.example.catangame.devcards.DevCardStack;
+import com.example.catangame.gameboard.Edge;
+import com.example.catangame.gameboard.Gameboard;
+import com.example.catangame.gameboard.Knot;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,6 +29,10 @@ public class GameSession implements Serializable {
     private LinkedList<Knot> settlements;
     private LinkedList<Knot> cities;
     private int currPlayer;
+    private Player curr;
+    private ArrayList<DevCard> devCards;
+    private Trade currTrade;
+
 
     // private LinkedList<Entwicklungskarte> entwicklungskartenStapel;
 
@@ -36,6 +44,7 @@ public class GameSession implements Serializable {
         settlements = new LinkedList<>();
         cities = new LinkedList<>();
         currPlayer = 0;
+        this.devCards = new DevCardStack().getDevCardStack();
     }
 
     public int getGameId() {
@@ -63,6 +72,10 @@ public class GameSession implements Serializable {
         this.players.add(player);
     }
 
+    public Player getCurr() {
+        return players.get(currPlayer);
+    }
+
     public Gameboard getGameboard() {
         return gameboard;
     }
@@ -77,6 +90,18 @@ public class GameSession implements Serializable {
 
     public LinkedList<Knot> getCities() {
         return cities;
+    }
+
+    public Trade getTrade() {
+        return this.currTrade;
+    }
+
+    public void setTrade(Trade trade) {
+        this.currTrade = trade;
+    }
+
+    public ArrayList<DevCard> getDevCards() {
+        return devCards;
     }
 
     private void addRoad(Edge road){

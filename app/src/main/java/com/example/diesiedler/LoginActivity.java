@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.diesiedler.presenter.Presenter;
@@ -41,8 +42,19 @@ public class LoginActivity extends AppCompatActivity {
      */
     public void setName(View view) {
 
-        String username = displayName.getText().toString();
+        String username = displayName.getText().toString().trim();
         log.log(Level.INFO, username);
-        Presenter.addUserAndGetUserList(this, username);
+
+        if (username.equals("")) {
+
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+            builder1.setCancelable(true);
+            builder1.setMessage("Du musst einen Namen angeben!");
+            AlertDialog alert1 = builder1.create();
+            alert1.show();
+
+        } else {
+            Presenter.addUserAndGetUserList(this, username);
+        }
     }
 }

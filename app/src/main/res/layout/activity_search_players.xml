@@ -17,7 +17,7 @@
         android:text="@string/mitspieler"
         android:textAlignment="gravity"
         android:textColor="#FBC02D"
-        android:textSize="35sp"
+        android:textSize="30sp"
         android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
