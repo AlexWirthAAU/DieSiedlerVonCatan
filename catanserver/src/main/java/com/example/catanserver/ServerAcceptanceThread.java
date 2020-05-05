@@ -1,7 +1,13 @@
 package com.example.catanserver;
 
 import com.example.catangame.GameSession;
-import com.example.catanserver.threads.*;
+import com.example.catanserver.threads.ApplyThread;
+import com.example.catanserver.threads.ColorThread;
+import com.example.catanserver.threads.CreateThread;
+import com.example.catanserver.threads.LoginThread;
+import com.example.catanserver.threads.RefreshThread;
+import com.example.catanserver.threads.StartThread;
+import com.example.catanserver.threads.TradeThread;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -54,7 +60,7 @@ public class ServerAcceptanceThread extends Thread {
                         // Apply for searching
                         else if(messageSplit[0].equals("APPLY")){
                             if(messageSplit.length > 1){
-                                int msgUserId = Integer.parseInt(messageSplit[0]);
+                                int msgUserId = Integer.parseInt(messageSplit[1]);
                                 User connectedUser = checkUserExistence(msgUserId,connection);
                                 Thread applyThread = new ApplyThread(connection,connectedUser);
                                 applyThread.start();
@@ -98,6 +104,30 @@ public class ServerAcceptanceThread extends Thread {
                                                 Server.currentlyThreaded.add(foundGame.getGameId());
                                                 Thread startThread = new StartThread(connection,connectedUser,foundGame);
                                                 startThread.start();
+                                            }
+
+                                            if (messageSplit[2].equals("TRADE")) {
+                                                Server.currentlyThreaded.add(foundGame.getGameId());
+                                                Thread tradeThread = new TradeThread(connection, connectedUser, foundGame, messageSplit[3]);
+                                                tradeThread.start();
+                                            }
+
+                                            if (messageSplit[2].equals("BANK")) {
+                                                Server.currentlyThreaded.add(foundGame.getGameId());
+                                                Thread tradeThread = new TradeThread(connection, connectedUser, foundGame, messageSplit[3]);
+                                                tradeThread.start();
+                                            }
+
+                                            if (messageSplit[2].equals("PORT")) {
+                                                Server.currentlyThreaded.add(foundGame.getGameId());
+                                                Thread tradeThread = new TradeThread(connection, connectedUser, foundGame, messageSplit[3]);
+                                                tradeThread.start();
+                                            }
+
+                                            if (messageSplit[2].equals("ANSWER")) {
+                                                Server.currentlyThreaded.add(foundGame.getGameId());
+                                                Thread tradeThread = new TradeThread(connection, connectedUser, foundGame, messageSplit[3]);
+                                                tradeThread.start();
                                             }
 
                                             // TODO: Implement all methods post Game creation here
