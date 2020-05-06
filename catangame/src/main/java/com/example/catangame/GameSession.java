@@ -79,15 +79,15 @@ public class GameSession implements Serializable {
         return cities;
     }
 
-    private void addRoad(Edge road){
+    public void addRoad(Edge road) {
         roads.add(road);
     }
 
-    private void addSettlement(Knot settlement){
+    public void addSettlement(Knot settlement) {
         settlements.add(settlement);
     }
 
-    private void addCity(Knot settlement){
+    public void addCity(Knot settlement) {
         settlements.remove(settlement);
         cities.add(settlement);
     }

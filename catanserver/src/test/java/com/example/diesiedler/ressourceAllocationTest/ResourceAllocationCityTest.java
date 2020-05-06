@@ -9,6 +9,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+//gradlew build jacocoTestReport
+
 public class ResourceAllocationCityTest {
 
     GameSession gameSession;
@@ -62,5 +64,4 @@ public class ResourceAllocationCityTest {
         ResourceAllocation.updateResources(gameSession, 12);
         Assert.assertEquals(2, gameSession.getPlayer(1).getInventory().getWool());
     }
-
 }

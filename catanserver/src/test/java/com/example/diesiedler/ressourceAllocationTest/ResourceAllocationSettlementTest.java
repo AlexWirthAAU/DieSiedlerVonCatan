@@ -28,7 +28,8 @@ public class ResourceAllocationSettlementTest {
     @Test
     public void testWoodUpdate() {
         ResourceAllocation.updateResources(gameSession, 11);
-        Assert.assertEquals(1, gameSession.getPlayer(1).getInventory().getWood());
+        ResourceAllocation.updateResources(gameSession, 11);
+        Assert.assertEquals(2, gameSession.getPlayer(1).getInventory().getWood());
     }
 
     @Test

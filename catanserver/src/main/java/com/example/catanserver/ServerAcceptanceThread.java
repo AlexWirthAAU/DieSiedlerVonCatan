@@ -103,13 +103,26 @@ public class ServerAcceptanceThread extends Thread {
                                             // TODO: Implement all methods post Game creation here
 
                                             if (messageSplit[2].equals("RESOURCEALLOCATION")) {
-                                                String dicevalue = "5"; //TEST
-                                                /**Todo: Handover string
-                                                 * Could be: messageSplit[3]
-                                                 */
+                                                String diceValue = messageSplit[3];
                                                 Server.currentlyThreaded.add(foundGame.getGameId());
-                                                Thread resourceAllocation = new ResourceAllocationThread(foundGame, dicevalue);
+                                                Thread resourceAllocation = new ResourceAllocationThread(connection, connectedUser, foundGame, diceValue);
                                                 resourceAllocation.start();
+                                                SendToClient.sendGameSessionBroadcast(connection, foundGame);
+                                            }
+
+                                            if (messageSplit[2].equals("BUILDSETTLEMENT")) {
+                                                int knotIndex = Integer.parseInt(messageSplit[3]);
+                                                Server.currentlyThreaded.add(foundGame.getGameId());
+                                                Thread buildSettlement = new BuildSettlementThread(connection, connectedUser, foundGame, knotIndex);
+                                                buildSettlement.start();
+                                                SendToClient.sendGameSessionBroadcast(connection, foundGame);
+                                            }
+
+                                            if (messageSplit[2].equals("BUILDCITY")) {
+                                                int knotIndex = Integer.parseInt(messageSplit[3]);
+                                                Server.currentlyThreaded.add(foundGame.getGameId());
+                                                Thread buildCity = new BuildCityThread(connection, foundGame, connectedUser, knotIndex);
+                                                buildCity.start();
                                                 SendToClient.sendGameSessionBroadcast(connection, foundGame);
                                             }
 

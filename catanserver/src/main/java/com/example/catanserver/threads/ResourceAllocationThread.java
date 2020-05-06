@@ -1,9 +1,12 @@
 package com.example.catanserver.threads;
 
 import com.example.catangame.GameSession;
+import com.example.catanserver.User;
 import com.example.catanserver.businessLogic.model.ResourceAllocation;
 
-public class ResourceAllocationThread extends Thread {
+import java.net.Socket;
+
+public class ResourceAllocationThread extends GameThread {
 
     /**
      * @author Alex Wirth
@@ -13,12 +16,13 @@ public class ResourceAllocationThread extends Thread {
     GameSession currentGamesession;
     int diceValue;
 
-    public ResourceAllocationThread(GameSession gameSession, String diceValue) {
+    public ResourceAllocationThread(Socket socket, User user, GameSession gameSession, String diceValue) {
+        super(socket, user, gameSession);
         this.currentGamesession = gameSession;
         this.diceValue = Integer.parseInt(diceValue);
     }
 
-    @Override
+
     public void run() {
         ResourceAllocation.updateResources(currentGamesession, diceValue);
     }
