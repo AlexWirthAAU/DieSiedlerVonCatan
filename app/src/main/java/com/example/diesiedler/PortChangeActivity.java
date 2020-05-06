@@ -32,9 +32,6 @@ public class PortChangeActivity extends AppCompatActivity {
 
     StringBuilder res = new StringBuilder();
 
-    private GameSession game;
-    private Player player;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,26 +49,26 @@ public class PortChangeActivity extends AppCompatActivity {
         getBtns.add(oreGet);
         getBtns.add(clayGet);
 
-        game = (GameSession) getIntent().getSerializableExtra("game");
-        player = game.getCurr();
+        GameSession game = (GameSession) getIntent().getSerializableExtra("game");
+        Player player = game.getCurr();
 
-        if (player.getInventory().getWood() < 3) {
+        if (player.getInventory().isWoodport()) {
             woodGive.setEnabled(false);
         }
 
-        if (player.getInventory().getWool() < 3) {
+        if (player.getInventory().isWoolport()) {
             woolGive.setEnabled(false);
         }
 
-        if (player.getInventory().getWheat() < 3) {
+        if (player.getInventory().isWheatport()) {
             wheatGive.setEnabled(false);
         }
 
-        if (player.getInventory().getOre() < 3) {
+        if (player.getInventory().isOreport()) {
             oreGive.setEnabled(false);
         }
 
-        if (player.getInventory().getClay() < 3) {
+        if (player.getInventory().isClayport()) {
             clayGet.setEnabled(false);
         }
     }
@@ -82,7 +79,7 @@ public class PortChangeActivity extends AppCompatActivity {
             btn.setEnabled(false);
 
             if (btn.getId() == view.getId()) {
-                res.append("Give").append(btn.getText().toString());
+                res.append(btn.getText().toString()).append("/");
             }
         }
     }
@@ -93,7 +90,7 @@ public class PortChangeActivity extends AppCompatActivity {
             btn.setEnabled(false);
 
             if (btn.getId() == view.getId()) {
-                res.append("Get").append(btn.getText().toString());
+                res.append(btn.getText().toString());
             }
         }
     }

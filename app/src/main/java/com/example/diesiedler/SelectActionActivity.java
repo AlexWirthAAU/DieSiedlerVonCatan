@@ -24,17 +24,18 @@ public class SelectActionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_select_action);
 
         game = (GameSession) getIntent().getSerializableExtra("game");
+        assert game != null;
         Player player = game.getCurr();
 
-        if (player.getInventory().getAllRessources().contains("1")) {
+        if (!player.getInventory().canTrade) {
             tradeBtn.setEnabled(false);
         }
 
-        if (player.getInventory().getAllRessources().contains("4")) {
+        if (!player.getInventory().canBankTrade) {
             bankBtn.setEnabled(false);
         }
 
-        if (player.getInventory().getAllRessources().contains("3") && player.getInventory().getPorts() > 0) {
+        if (player.getInventory().canPortTrade) {
             portBtn.setEnabled(false);
         }
     }

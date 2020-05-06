@@ -169,7 +169,6 @@ public class SelectColorsActivity extends AppCompatActivity {
     public void startGame(View view) {
 
         int selectedColors = 0;
-        int setColors = 0;
         boolean ready = false;
 
         for (Button btn : colors) {

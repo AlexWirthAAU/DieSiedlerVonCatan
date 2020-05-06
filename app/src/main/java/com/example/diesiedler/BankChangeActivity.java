@@ -32,9 +32,6 @@ public class BankChangeActivity extends AppCompatActivity {
 
     StringBuilder res = new StringBuilder();
 
-    private GameSession game;
-    private Player player;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +49,8 @@ public class BankChangeActivity extends AppCompatActivity {
         getBtns.add(oreGet);
         getBtns.add(clayGet);
 
-        game = (GameSession) getIntent().getSerializableExtra("game");
-        player = game.getCurr();
+        GameSession game = (GameSession) getIntent().getSerializableExtra("game");
+        Player player = game.getCurr();
 
         if (player.getInventory().getWood() < 4) {
             woodGive.setEnabled(false);
@@ -82,7 +79,7 @@ public class BankChangeActivity extends AppCompatActivity {
             btn.setEnabled(false);
 
             if (btn.getId() == view.getId()) {
-                res.append("Give").append(btn.getText().toString());
+                res.append(btn.getText().toString()).append("/");
             }
         }
     }
@@ -93,7 +90,7 @@ public class BankChangeActivity extends AppCompatActivity {
             btn.setEnabled(false);
 
             if (btn.getId() == view.getId()) {
-                res.append("Get").append(btn.getText().toString());
+                res.append(btn.getText().toString());
             }
         }
     }

@@ -37,18 +37,16 @@ public class TradeActivity extends AppCompatActivity {
     private TextView countClayGive = findViewById(R.id.countClayGive);
     private TextView countClayGet = findViewById(R.id.countClayGet);
 
-    private GameSession game;
     private Player player;
-    private String resString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trade);
 
-        game = (GameSession) getIntent().getSerializableExtra("game");
+        GameSession game = (GameSession) getIntent().getSerializableExtra("game");
         player = game.getCurr();
-        resString = player.getInventory().getAllRessources();
+        String resString = player.getInventory().getAllRessources();
     }
 
     private boolean checkRessources(int value, String res) {
@@ -75,10 +73,7 @@ public class TradeActivity extends AppCompatActivity {
                 break;
         }
 
-        if (availableRes > value) {
-            return true;
-        }
-        return false;
+        return availableRes > value;
     }
 
     private void alert(String res) {
@@ -105,9 +100,7 @@ public class TradeActivity extends AppCompatActivity {
         tradeMap.append("/ClayGet/").append(clayGet);
 
         String toSendTrade = tradeMap.toString();
-
         /**TODO: Implement server call: send map to the Server*/
-
     }
 
     public void plus(View view) {
@@ -149,6 +142,11 @@ public class TradeActivity extends AppCompatActivity {
                     alert("Erz");
                 }
                 break;
+            default:
+                break;
+        }
+
+        switch (view.getId()) {
 
             case R.id.plusClayGive:
                 if (checkRessources(clayGive, "Clay")) {
@@ -182,6 +180,9 @@ public class TradeActivity extends AppCompatActivity {
             case R.id.plusClayGet:
                 clayGet += 1;
                 countClayGet.setText(clayGet);
+                break;
+
+            default:
                 break;
         }
     }
@@ -225,6 +226,12 @@ public class TradeActivity extends AppCompatActivity {
                 }
                 break;
 
+            default:
+                break;
+        }
+
+        switch (view.getId()) {
+
             case R.id.minusWoodGet:
                 if (woodGet >= 1) {
                     woodGet -= 1;
@@ -258,6 +265,9 @@ public class TradeActivity extends AppCompatActivity {
                     clayGet -= 1;
                     countClayGet.setText(clayGet);
                 }
+                break;
+
+            default:
                 break;
         }
     }

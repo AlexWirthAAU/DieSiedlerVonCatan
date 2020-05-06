@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.catangame.GameSession;
+
 //Geladen, wenn eine Trade Message vom Server kommt
 
 /**
@@ -14,14 +16,15 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 public class AnswerToTradeActivity extends AppCompatActivity {
 
-    private String tradeMessage;
+    private GameSession game;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer_to_trade);
 
-        tradeMessage = getIntent().getStringExtra("tradeMessage");
+        game = (GameSession) getIntent().getSerializableExtra("game");
+        String tradeMessage = getIntent().getStringExtra("tradeMessage");
         TextView tradeMes = findViewById(R.id.tradeMes);
         tradeMes.setText(tradeMessage);
     }
@@ -31,6 +34,7 @@ public class AnswerToTradeActivity extends AppCompatActivity {
 
         String toSendanswer = "dismissed";
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("game", game);
         startActivity(intent);
     }
 
@@ -38,7 +42,5 @@ public class AnswerToTradeActivity extends AppCompatActivity {
         /**TODO: Implement server call: send answer to the Server*/
 
         String toSendanswer = "accepted";
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
     }
 }
