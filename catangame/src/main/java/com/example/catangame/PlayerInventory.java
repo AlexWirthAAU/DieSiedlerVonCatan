@@ -366,14 +366,14 @@ public class PlayerInventory {
             if (i >= 4) {
                 canTrade = true;
                 canBankTrade = true;
-                canPortTrade = true;
-                break;
+            }
 
-            } else if (i >= 3) {
+            if (i >= 3 && (isWoodport() || isWoolport() || isWheatport() || isOreport() || isClayport())) {
                 canTrade = true;
                 canPortTrade = true;
+            }
 
-            } else if (i >= 1) {
+            if (i >= 1) {
                 canTrade = true;
             }
         }
