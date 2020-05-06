@@ -25,6 +25,7 @@ public class PlayerInventory {
     private int victoryPoints;
     public int victoryPointsSettlement = 2;
     public int victoryPointsCity = 3;
+    private int ports;
 
     private LinkedList<Knot> cities = new LinkedList<>();
     private LinkedList<Knot> settlements = new LinkedList<>();
@@ -45,6 +46,7 @@ public class PlayerInventory {
         this.knightCard = STARTVALUE;
         this.monopolCard = STARTVALUE;
         this.victoryPoints = 0;
+        this.ports = STARTVALUE;
     }
 
 
@@ -260,5 +262,17 @@ public class PlayerInventory {
 
     public void setMonopolCard(int monopolCard) {
         this.monopolCard = monopolCard;
+    }
+
+    public int getSTARTVALUE() {
+        return STARTVALUE;
+    }
+
+    public int getPorts() {
+        return ports;
+    }
+
+    public void setPorts(int ports) {
+        this.ports = ports;
     }
 }

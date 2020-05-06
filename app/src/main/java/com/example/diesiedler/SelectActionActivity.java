@@ -34,7 +34,7 @@ public class SelectActionActivity extends AppCompatActivity {
             bankBtn.setEnabled(false);
         }
 
-        if (player.getInventory().getAllRessources().contains("3")) {
+        if (player.getInventory().getAllRessources().contains("3") && player.getInventory().getPorts() > 0) {
             portBtn.setEnabled(false);
         }
     }

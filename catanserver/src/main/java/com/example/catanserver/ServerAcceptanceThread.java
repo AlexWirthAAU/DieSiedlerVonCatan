@@ -7,6 +7,7 @@ import com.example.catanserver.threads.CreateThread;
 import com.example.catanserver.threads.LoginThread;
 import com.example.catanserver.threads.RefreshThread;
 import com.example.catanserver.threads.StartThread;
+import com.example.catanserver.threads.TradeAnswerThread;
 import com.example.catanserver.threads.TradeThread;
 
 import java.io.IOException;
@@ -126,8 +127,8 @@ public class ServerAcceptanceThread extends Thread {
 
                                             if (messageSplit[2].equals("ANSWER")) {
                                                 Server.currentlyThreaded.add(foundGame.getGameId());
-                                                Thread tradeThread = new TradeThread(connection, connectedUser, foundGame, messageSplit[3]);
-                                                tradeThread.start();
+                                                Thread tradeanswerThread = new TradeAnswerThread(connection, connectedUser, foundGame, messageSplit[3]);
+                                                tradeanswerThread.start();
                                             }
 
                                             // TODO: Implement all methods post Game creation here

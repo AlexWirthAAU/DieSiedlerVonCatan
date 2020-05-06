@@ -10,9 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class TradeActivity extends AppCompatActivity {
 
     private final int STARTVALUE = 0;
@@ -27,7 +24,7 @@ public class TradeActivity extends AppCompatActivity {
     private int clayGive = STARTVALUE;
     private int clayGet = STARTVALUE;
 
-    private Map<String, Integer> tradeMap = new HashMap<>();
+    private StringBuilder tradeMap = new StringBuilder();
 
     private TextView countWoodGive = findViewById(R.id.countWoodGive);
     private TextView countWoodGet = findViewById(R.id.countWoodGet);
@@ -95,16 +92,17 @@ public class TradeActivity extends AppCompatActivity {
 
     public void trade(View view) {
 
-        tradeMap.put("WoodGive", woodGive);
-        tradeMap.put("WoolGive", woolGive);
-        tradeMap.put("WheatGive", wheatGive);
-        tradeMap.put("OreGive", oreGive);
-        tradeMap.put("ClayGive", clayGive);
-        tradeMap.put("WoodGet", woodGet);
-        tradeMap.put("WoolGet", woolGet);
-        tradeMap.put("WheatGet", wheatGet);
-        tradeMap.put("OreGet", oreGet);
-        tradeMap.put("ClayGet", clayGet);
+        tradeMap.append("WoodGive/").append(woodGive);
+        tradeMap.append("/WoolGive/").append(woolGive);
+        tradeMap.append("/WheatGive/").append(wheatGive);
+        tradeMap.append("/OreGive/").append(oreGive);
+        tradeMap.append("/ClayGive/").append(clayGive);
+        tradeMap.append("/splitter/").append(-1);
+        tradeMap.append("/WoodGet/").append(woodGet);
+        tradeMap.append("/WoolGet/").append(woolGet);
+        tradeMap.append("/WheatGet/").append(wheatGet);
+        tradeMap.append("/OreGet/").append(oreGet);
+        tradeMap.append("/ClayGet/").append(clayGet);
 
         String toSendTrade = tradeMap.toString();
 

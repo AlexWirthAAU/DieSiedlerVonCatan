@@ -10,9 +10,7 @@ import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class PortChangeActivity extends AppCompatActivity {
 
@@ -32,7 +30,7 @@ public class PortChangeActivity extends AppCompatActivity {
 
     List<Button> getBtns = new ArrayList<>();
 
-    Map<String, String> res = new HashMap();
+    StringBuilder res = new StringBuilder();
 
     private GameSession game;
     private Player player;
@@ -84,7 +82,7 @@ public class PortChangeActivity extends AppCompatActivity {
             btn.setEnabled(false);
 
             if (btn.getId() == view.getId()) {
-                res.put("Give", btn.getText().toString());
+                res.append("Give").append(btn.getText().toString());
             }
         }
     }
@@ -95,7 +93,7 @@ public class PortChangeActivity extends AppCompatActivity {
             btn.setEnabled(false);
 
             if (btn.getId() == view.getId()) {
-                res.put("Get", btn.getText().toString());
+                res.append("Get").append(btn.getText().toString());
             }
         }
     }

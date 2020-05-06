@@ -58,6 +58,23 @@ public class SendToClient {
         }
     }
 
+    public static void sendTradeMessageBroadcast(Socket connection, List<Player> toSend, String message) { // TODO: Discuss -> Broadcast or timed refreshes? (or both?)
+        List<User> userList = createTradeUserList(toSend);
+        for (User user : userList) {
+            try {
+                sendToClient(user, message);
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+                System.err.println("Could not send Message to Client" + user.getDisplayName() + ".");
+            }
+        }
+        try {
+            connection.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void sendGameStartBroadcast(Socket connection, GameSession game){
         List<User> userList = createGameUserList(game);
         if(userList.size() == game.getPlayers().size()){
@@ -133,6 +150,23 @@ public class SendToClient {
                 }
             }
             if(foundUser != null){
+                list.add(foundUser);
+            }
+        }
+        return list;
+    }
+
+    private static List<User> createTradeUserList(List<Player> players) {
+        List<User> list = new ArrayList<>();
+        for (Player player : players) {
+            User foundUser = null;
+            for (User user : Server.currentUsers) {
+                if (user.getUserId() == player.getUserId()) {
+                    foundUser = user;
+                    break;
+                }
+            }
+            if (foundUser != null) {
                 list.add(foundUser);
             }
         }
