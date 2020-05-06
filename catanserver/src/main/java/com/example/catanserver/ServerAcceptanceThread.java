@@ -2,9 +2,11 @@ package com.example.catanserver;
 
 import com.example.catangame.GameSession;
 import com.example.catanserver.threads.ApplyThread;
+import com.example.catanserver.threads.BankThread;
 import com.example.catanserver.threads.ColorThread;
 import com.example.catanserver.threads.CreateThread;
 import com.example.catanserver.threads.LoginThread;
+import com.example.catanserver.threads.PortThread;
 import com.example.catanserver.threads.RefreshThread;
 import com.example.catanserver.threads.StartThread;
 import com.example.catanserver.threads.TradeAnswerThread;
@@ -115,14 +117,14 @@ public class ServerAcceptanceThread extends Thread {
 
                                             if (messageSplit[2].equals("BANK")) {
                                                 Server.currentlyThreaded.add(foundGame.getGameId());
-                                                Thread tradeThread = new TradeThread(connection, connectedUser, foundGame, messageSplit[3]);
-                                                tradeThread.start();
+                                                Thread bankThread = new BankThread(connection, connectedUser, foundGame, messageSplit[3]);
+                                                bankThread.start();
                                             }
 
                                             if (messageSplit[2].equals("PORT")) {
                                                 Server.currentlyThreaded.add(foundGame.getGameId());
-                                                Thread tradeThread = new TradeThread(connection, connectedUser, foundGame, messageSplit[3]);
-                                                tradeThread.start();
+                                                Thread portThread = new PortThread(connection, connectedUser, foundGame, messageSplit[3]);
+                                                portThread.start();
                                             }
 
                                             if (messageSplit[2].equals("ANSWER")) {
@@ -179,7 +181,7 @@ public class ServerAcceptanceThread extends Thread {
             msg = msg.substring(index+1,msg.length()-1);
         }
         stringArray.add(msg);
-        return (String[])stringArray.toArray();
+        return stringArray.toArray(new String[0]);
     }
 
 }

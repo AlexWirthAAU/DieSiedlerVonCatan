@@ -28,11 +28,40 @@ public class TradeThread extends GameThread {
     }
 
     public void run() {
+
         setTradeData(tradeStr, game);
+
+        if (checkTrade(offer)) {
+
+            checkAndSetTradingPartners(game, want);
+            String mess = buildMessage();
+            this.trade = new Trade(offer, want, currPlayer, potentialTradingPartners, mess, game);
+            game.setTrade(this.trade);
+
+            distribute(potentialTradingPartners, mess);
+
+        } else {
+            SendToClient.sendErrorMessage(connection, "Nicht genug Rohstoffe um zu handeln");
+        }
     }
 
     private void distribute(List<Player> playersToSend, String mess) {
         SendToClient.sendTradeMessageBroadcast(connection, playersToSend, mess);
+    }
+
+    private boolean checkTrade(Map<String, Integer> offer) {
+
+        if (currPlayer.getInventory().canTrade) {
+            return false;
+        } else if (currPlayer.getInventory().getWood() >= offer.get("WoodGive")
+                && currPlayer.getInventory().getWool() >= offer.get("WoolGive")
+                && currPlayer.getInventory().getWheat() >= offer.get("WheatGive")
+                && currPlayer.getInventory().getOre() >= offer.get("OreGive")
+                && currPlayer.getInventory().getClay() >= offer.get("ClayGive")) {
+
+            return true;
+        }
+        return false;
     }
 
     private void checkAndSetTradingPartners(GameSession game, Map<String, Integer> want) {
@@ -74,13 +103,6 @@ public class TradeThread extends GameThread {
             want.put(trd[i], num);
             i += 2;
         }
-
-        checkAndSetTradingPartners(game, want);
-        String mess = buildMessage();
-        this.trade = new Trade(offer, want, currPlayer, potentialTradingPartners, mess, game);
-        game.setTrade(this.trade);
-
-        distribute(potentialTradingPartners, mess);
     }
 
         private String buildMessage () {

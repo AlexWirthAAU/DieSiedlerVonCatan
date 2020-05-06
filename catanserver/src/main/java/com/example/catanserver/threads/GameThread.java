@@ -11,15 +11,17 @@ import java.net.Socket;
  * Practically every Thread responsible for actions after the game start should inherit from this.
  */
 
-public abstract class GameThread extends Thread {
+abstract class GameThread extends Thread {
 
     Socket connection;
     User user;
     GameSession game;
 
-    public GameThread(Socket connection, User user, GameSession game){
+    GameThread(Socket connection, User user, GameSession game) {
         this.connection = connection;
         this.game = game;
         this.user = user;
     }
+
+    public abstract void run();
 }

@@ -31,10 +31,7 @@ public class GameSession implements Serializable {
     private int currPlayer;
     private Player curr;
     private ArrayList<DevCard> devCards;
-    private Trade currTrade;
-
-
-    // private LinkedList<Entwicklungskarte> entwicklungskartenStapel;
+    public static Trade currTrade;
 
     public GameSession() {
 
@@ -124,6 +121,7 @@ public class GameSession implements Serializable {
         else{
             currPlayer++;
         }
+        curr = players.get(currPlayer);
     }
 
 }

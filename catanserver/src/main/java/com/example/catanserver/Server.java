@@ -21,13 +21,14 @@ import java.util.Set;
 public class Server {
 
     private final static int SERVER_PORT = 2020;
+    public static final List<User> currentUsers = Collections.synchronizedList(new LinkedList<User>());
     private static ServerSocket listenerSocket;
     private static Socket caughtConnection;
-    public static List<Socket> currentConnections = Collections.synchronizedList(new LinkedList<Socket>());
-    public static List<User> currentUsers = Collections.synchronizedList(new LinkedList<User>());
-    public static List<GameSession> currentGames = Collections.synchronizedList(new LinkedList<GameSession>());
-    public static Set<Integer> currentlyThreaded = Collections.synchronizedSet(new HashSet<Integer>());
-    public static Set<User> currentlySearching = Collections.synchronizedSet(new HashSet<User>());
+    protected static final List<Socket> currentConnections = Collections.synchronizedList(new LinkedList<Socket>());
+    protected static final List<GameSession> currentGames = Collections.synchronizedList(new LinkedList<GameSession>());
+    protected static final Set<Integer> currentlyThreaded = Collections.synchronizedSet(new HashSet<Integer>());
+    protected static final Set<User> currentlySearching = Collections.synchronizedSet(new HashSet<User>());
+    private static boolean flag = true;
 
     public static void main(String[] args) {
         try {
@@ -37,9 +38,9 @@ public class Server {
             Thread serverAcceptanceThread = new ServerAcceptanceThread();
             serverAcceptanceThread.start();
 
-            while(true){
+            while (flag) {
                 caughtConnection = listenerSocket.accept();
-                if(caughtConnection != null){
+                if (caughtConnection != null) {
                     System.out.println("Connection to " + caughtConnection.getPort() + "(ListenerThread)");
                     currentConnections.add(caughtConnection);
                 }

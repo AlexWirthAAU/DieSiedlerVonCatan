@@ -27,6 +27,7 @@ public class Trade {
     private Player tradingPartner;
     private Map<Player, Boolean> answers = new HashMap<>();
     private List<Player> answeredPlayers;
+    private String answerMessage;
 
     public Trade(Map<String, Integer> offer, Map<String, Integer> want, Player currPlayer, List<Player> potentialTradingPartners, String mess, GameSession game) {
         this.woodGive = offer.get("WoodGive");
@@ -206,6 +207,14 @@ public class Trade {
 
     public void addAnsweredPlayer(Player player) {
         this.answeredPlayers.add(player);
+    }
+
+    public String getAnswerMessage() {
+        return answerMessage;
+    }
+
+    public void setAnswerMessage(String answerMessage) {
+        this.answerMessage = answerMessage;
     }
 }
 

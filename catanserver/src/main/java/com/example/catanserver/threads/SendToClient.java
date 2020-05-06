@@ -20,7 +20,7 @@ import java.util.Set;
 
 public class SendToClient {
 
-    public static void sendUserId(Socket connection, int userId){
+    static void sendUserId(Socket connection, int userId) {
         try {
             sendToClient(connection,userId);
             connection.close();
@@ -30,7 +30,7 @@ public class SendToClient {
         }
     }
 
-    public static void sendSearchingList(Socket connection, Set<User> set){
+    static void sendSearchingList(Socket connection, Set<User> set) {
         List<String> searchingList = createSearchingList(set);
         try{
             sendToClient(connection,searchingList);
@@ -58,7 +58,7 @@ public class SendToClient {
         }
     }
 
-    public static void sendTradeMessageBroadcast(Socket connection, List<Player> toSend, String message) { // TODO: Discuss -> Broadcast or timed refreshes? (or both?)
+    static void sendTradeMessageBroadcast(Socket connection, List<Player> toSend, String message) { // TODO: Discuss -> Broadcast or timed refreshes? (or both?)
         List<User> userList = createTradeUserList(toSend);
         for (User user : userList) {
             try {
@@ -75,7 +75,17 @@ public class SendToClient {
         }
     }
 
-    public static void sendGameStartBroadcast(Socket connection, GameSession game){
+    static void sendTradeMessage(Socket connection, String message) { // TODO: Discuss -> Broadcast or timed refreshes? (or both?)
+        try {
+            sendToClient(connection, message);
+            connection.close();
+        } catch (IOException ex) {
+            System.err.println(ex.getMessage());
+            System.err.println("Could not send GameSession to Client.");
+        }
+    }
+
+    static void sendGameStartBroadcast(Socket connection, GameSession game) {
         List<User> userList = createGameUserList(game);
         if(userList.size() == game.getPlayers().size()){
             for (User user:userList) {
@@ -107,7 +117,7 @@ public class SendToClient {
         }
     }
 
-    public static void sendGameSessionBroadcast(Socket connection, GameSession game){
+    static void sendGameSessionBroadcast(Socket connection, GameSession game) {
         List<User> userList = createGameUserList(game);
         if(userList.size() == game.getPlayers().size()) {
             for (User user:userList){
@@ -129,7 +139,7 @@ public class SendToClient {
         }
     }
 
-    public static void sendErrorMessage(Socket connection,String message){
+    static void sendErrorMessage(Socket connection, String message) {
         try{
             sendToClient(connection,message);
         }catch (IOException ex){
@@ -183,11 +193,11 @@ public class SendToClient {
     }
 
     private static void sendToClient(User user, Object obj) throws IOException{
-        Socket connection = new Socket(user.getConnectionAddress(),user.getConnectionPort());
-        ObjectOutputStream connectionOutputStream = new ObjectOutputStream(connection.getOutputStream());
-        connectionOutputStream.writeObject(obj);
-        connectionOutputStream.close();
-        connection.close();
+        try (Socket connection = new Socket(user.getConnectionAddress(), user.getConnectionPort())) {
+            ObjectOutputStream connectionOutputStream = new ObjectOutputStream(connection.getOutputStream());
+            connectionOutputStream.writeObject(obj);
+            connectionOutputStream.close();
+        }
     }
 
     private static void sendToClient(Socket connection, Object obj) throws IOException{

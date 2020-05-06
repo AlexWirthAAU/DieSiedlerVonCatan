@@ -47,36 +47,32 @@ public class TradeAnswerThread extends GameThread {
 
     private void setAnswerList() {
 
-        List<Player> toSendNeg = new ArrayList<>();
-        List<Player> toSendPos = new ArrayList<>();
+        List<Player> toSend = new ArrayList<>();
 
         if (tradingPartner == null) {
-            toSendNeg.add(trade.getCurrPlayer());
+            toSend.add(trade.getCurrPlayer());
 
-            for (Player p : trade.getPotentialTradingPartners()) {
-                toSendNeg.add(p);
-            }
-
-            distribute(toSendNeg, "TRADEANSWER/Leider keine Handelspartner");
+            trade.setAnswerMessage("TRADEANSWER/Leider keine Handelspartner");
+            distribute(toSend, "TRADEANSWER/Leider keine Handelspartner");
 
         } else {
 
-            toSendPos.add(trade.getCurrPlayer());
+            toSend.add(trade.getCurrPlayer());
 
-            for (Player p : trade.getPotentialTradingPartners()) {
-                if (!p.equals(tradingPartner)) {
-                    toSendNeg.add(p);
+            for (Player p : trade.getAnsweredPlayers()) {
+                if (trade.getAnswers().get(p)) {
+                    toSend.add(p);
                 }
-                toSendPos.add(p);
             }
 
             exchangeRessources();
-            distribute(toSendPos, "TRADEANSWER/Handel durchgeführt");
-            distribute(toSendNeg, "TRADEANSWER/Kein Handel");
+            trade.setAnswerMessage("TRADEANSWER/Handel zwischen " + trade.getCurrPlayer().getDisplayName() + " und " + trade.getTradingPartner().getDisplayName() + " durchgeführt");
+            distribute(toSend, "TRADEANSWER/Handel zwischen " + trade.getCurrPlayer().getDisplayName() + " und " + trade.getTradingPartner().getDisplayName() + " durchgeführt");
         }
     }
 
     private void exchangeRessources() {
+
         currPlayer.getInventory().addWood(trade.getWoodGet());
         currPlayer.getInventory().addWool(trade.getWoolGet());
         currPlayer.getInventory().addWheat(trade.getWheatGet());
@@ -104,5 +100,6 @@ public class TradeAnswerThread extends GameThread {
 
     private void distribute(List<Player> playersToSend, String mess) {
         SendToClient.sendTradeMessageBroadcast(connection, playersToSend, mess);
+        SendToClient.sendGameSessionBroadcast(connection, game);
     }
 }
