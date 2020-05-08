@@ -2,7 +2,9 @@ package com.example.catangame;
 
 import com.example.catangame.gameboard.*;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class PlayerInventory {
 
@@ -19,6 +21,9 @@ public class PlayerInventory {
     private LinkedList<Knot> cities = new LinkedList<>();
     private LinkedList<Knot> settlements = new LinkedList<>();
     private LinkedList<Edge> roads = new LinkedList<>();
+
+    //Stores Knots, where the Player could add his next road
+    private LinkedList<Knot> roadKnots = new LinkedList<>();
 
     // private ArrayList<Entwicklungskarte> entwicklungskarten = new ArrayList<>();
 
@@ -178,5 +183,15 @@ public class PlayerInventory {
 
     public void setVictoryPoints(int victoryPoints) {
         this.victoryPoints = victoryPoints;
+    }
+
+    /*******/
+
+    public LinkedList<Knot> getRoadKnots() {
+        return roadKnots;
+    }
+
+    public void addRoadKnots(Knot k) {
+        this.roadKnots.add(k);
     }
 }

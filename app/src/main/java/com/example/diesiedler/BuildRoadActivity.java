@@ -1,13 +1,19 @@
 package com.example.diesiedler;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.catangame.Player;
+import com.example.catangame.gameboard.Edge;
+import com.example.catangame.gameboard.Gameboard;
+import com.example.catangame.gameboard.Knot;
 import com.example.diesiedler.presenter.GameBoardClickListener;
 import com.example.diesiedler.presenter.PresenterBuild;
+import com.richpath.RichPath;
 import com.richpath.RichPathView;
 
 import java.util.concurrent.ExecutionException;
@@ -21,31 +27,27 @@ public class BuildRoadActivity extends AppCompatActivity {
      * If not -> User has to click another asset
      */
 
+    Player p = new Player("Test", 1);
+    Gameboard g = new Gameboard();
+    RichPath richPath;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameboardview);
         RichPathView richPathView = findViewById(R.id.ic_gameboardView);
 
-        GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView, this);
-        gameBoardClickListener.clickBoard("BuildRoad");
-    }
 
-    public void clicked(String s, Context context) throws ExecutionException, InterruptedException {
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
-        builder1.setCancelable(true);
-
-        PresenterBuild presenterBuild = new PresenterBuild();
-        String o = (String) presenterBuild.chooseAssetID(s);
-
-        if (o.equals("SETTLED")) {
-            builder1.setMessage("Bauen erfolgreich");
-            AlertDialog alert1 = builder1.create();
-            alert1.show();
-        } else {
-            builder1.setMessage("Hier kannst du nicht bauen!");
-            AlertDialog alert1 = builder1.create();
-            alert1.show();
+        for (Edge e : g.getEdges()
+        ) {
+            if (p.getInventory().getRoadKnots().contains(e.getOne()) || p.getInventory().getRoadKnots().contains(e.getTwo())) {
+                if (e.getPlayer() == null) {
+                    richPath = richPathView.findRichPathByName(e.getId());
+                    richPath.setFillColor(Color.BLACK);
+                }
+            }
         }
+
     }
+
 }

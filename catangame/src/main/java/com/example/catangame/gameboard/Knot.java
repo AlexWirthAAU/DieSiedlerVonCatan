@@ -19,7 +19,7 @@ public class Knot {
         this.player = null;
         this.row = row;
         this.column = column;
-        this.id = row + "" + column;
+        this.id = "settlement_" + row + "_" + column;
         this.path = null;
         this.isSettled = false;
         this.hasCity = false;
@@ -27,7 +27,7 @@ public class Knot {
     }
 
     public String toString() {
-        return "Zeile " + this.row + " Spalte " + this.column;        //Only for testing
+        return "settlement_" + row + "_" + column;
     }
 
     public int getRow() {

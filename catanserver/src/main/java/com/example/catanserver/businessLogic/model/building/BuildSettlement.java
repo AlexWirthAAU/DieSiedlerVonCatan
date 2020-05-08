@@ -94,5 +94,6 @@ public class BuildSettlement {
         playerInventory.removeClay(1);
         playerInventory.removeWheat(1);
         playerInventory.removeWool(1);
+        playerInventory.addVictoryPoints(1);
     }
 }

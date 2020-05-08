@@ -101,4 +101,7 @@ public class GameSession implements Serializable {
         }
     }
 
+    public int getCurrPlayer() {
+        return currPlayer;
+    }
 }
