@@ -2,11 +2,17 @@ package com.example.diesiedler;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.diesiedler.presenter.GameBoardClickListener;
-import com.example.diesiedler.presenter.PresenterBuild;
+
+import com.example.diesiedler.presenter.ServerQueries;
+import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
+import com.example.diesiedler.threads.NetworkThread;
 import com.richpath.RichPathView;
 
+import java.util.logging.Logger;
+
 public class BuildSettlementActivity extends AppCompatActivity {
+
+    private static final Logger logger = Logger.getLogger(BuildSettlementActivity.class.getName());
 
     /**
      * This activity should allow the user to click the knot he wants to build on
@@ -26,6 +32,9 @@ public class BuildSettlementActivity extends AppCompatActivity {
     }
 
     public void clicked(String s) {
-        new PresenterBuild().chooseAssetID(s);
+        Thread networkThread = new NetworkThread(ServerQueries.createStringQueryBuild(s));
+        networkThread.start();
     }
+
+    // TODO: Handler
 }

@@ -4,12 +4,16 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.diesiedler.presenter.GameBoardClickListener;
-import com.example.diesiedler.presenter.PresenterBuild;
+import com.example.diesiedler.presenter.ServerQueries;
+import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
+import com.example.diesiedler.threads.NetworkThread;
 import com.richpath.RichPathView;
+
+import java.util.logging.Logger;
 
 public class BuildRoadActivity extends AppCompatActivity {
 
+    private static final Logger logger = Logger.getLogger(BuildRoadActivity.class.getName());
     /**
      * This activity should allow the user to click the edge he wants to build on
      * The clicked asset's ID will be sent to the Server that (PresenterBuild) where it is checked whether user is allowed to build or not
@@ -28,6 +32,9 @@ public class BuildRoadActivity extends AppCompatActivity {
     }
 
     public void clicked(String s) {
-        new PresenterBuild().chooseAssetID(s);
+        Thread networkThread = new NetworkThread(ServerQueries.createStringQueryBuild(s));
+        networkThread.start();
     }
+
+    // TODO: Handler
 }

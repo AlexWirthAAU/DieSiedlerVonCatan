@@ -1,10 +1,11 @@
-package com.example.diesiedler.presenter;
+package com.example.diesiedler.presenter.interaction;
 
 import android.content.Context;
 import android.util.Log;
 
 import com.example.diesiedler.BuildRoadActivity;
 import com.example.diesiedler.BuildSettlementActivity;
+import com.example.diesiedler.presenter.interaction.StandardGesture;
 import com.richpath.RichPath;
 import com.richpath.RichPathView;
 

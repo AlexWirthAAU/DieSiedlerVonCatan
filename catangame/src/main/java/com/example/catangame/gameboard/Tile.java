@@ -1,7 +1,9 @@
 package com.example.catangame.gameboard;
 
 
-public class Tile {
+import java.io.Serializable;
+
+public class Tile implements Serializable {
     //Each backgroundTile has a red dot as thief -> thief.setFillAlpha(1)
     private boolean isThief;                    //to notate that the Thief is on this certain Tile
     private int id;                             //gives each Tile a id

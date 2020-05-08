@@ -24,8 +24,8 @@
         <activity android:name=".SearchPlayersActivity" />
         <activity android:name=".SelectColorsActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".StartGameActivity" />
         <activity android:name=".BuildSettlementActivity" />
+        <activity android:name=".BuildRoadActivity" />
 
     </application>
 

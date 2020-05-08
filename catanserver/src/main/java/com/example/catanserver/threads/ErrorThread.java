@@ -1,23 +1,23 @@
 package com.example.catanserver.threads;
 
-import java.net.Socket;
+import java.io.ObjectOutputStream;
 
 /**
  * @author Fabian Schaffenrath
- * This Thread doesn't have any logic and is only used to send an error string to the client.
+ * This Thread is only used to send an error string to the client.
  */
 
-public class ErrorThread {
+public class ErrorThread extends Thread{
 
-    private Socket connection;
+    private ObjectOutputStream connectionOutputStream;
     private String errorMessage;
 
-    public ErrorThread(Socket connection, String errorMessage){
-        this.connection = connection;
+    public ErrorThread(ObjectOutputStream connectionOutputStream, String errorMessage){
+        this.connectionOutputStream = connectionOutputStream;
         this.errorMessage = errorMessage;
     }
 
     public void run(){
-        SendToClient.sendErrorMessage(connection,errorMessage);
+        SendToClient.sendErrorMessage(connectionOutputStream,errorMessage);
     }
 }

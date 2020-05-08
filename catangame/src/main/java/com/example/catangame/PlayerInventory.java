@@ -2,9 +2,10 @@ package com.example.catangame;
 
 import com.example.catangame.gameboard.*;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
-public class PlayerInventory {
+public class PlayerInventory implements Serializable {
 
     private final int STARTVALUE = 0;
     private int wood;

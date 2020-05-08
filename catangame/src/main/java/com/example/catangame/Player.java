@@ -1,5 +1,7 @@
 package com.example.catangame;
 
+import java.io.Serializable;
+
 /**
  * @author Christina Senger
  * @author Fabian Schaffenrath (edit)
@@ -8,7 +10,7 @@ package com.example.catangame;
  * seine Farbe und sein Inventory und besitzt entsprechende
  * Getter und Setter.
  */
-public class Player {
+public class Player implements Serializable {
 
     private String displayName;
     private int userId;
