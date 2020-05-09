@@ -20,7 +20,7 @@ import java.util.Set;
 
 public class Server {
 
-    private final static int SERVER_PORT = 10;  // Hamachi
+    private final static int SERVER_PORT = 2020;  // Hamachi
     // private final static int SERVER_PORT = 2020;  // Non-Hamachi
     private static ServerSocket listenerSocket;
     private static Socket caughtConnection;

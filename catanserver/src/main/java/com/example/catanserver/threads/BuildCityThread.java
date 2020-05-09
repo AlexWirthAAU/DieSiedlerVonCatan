@@ -12,8 +12,8 @@ public class BuildCityThread extends GameThread {
     int knotIndex;
     int userID;
 
-    public BuildCityThread(Socket socket, GameSession g, User user, int k) {
-        super(socket, user, g);
+    public BuildCityThread(GameSession g, User user, int k) {
+        super(user, g);
         this.gameSession = g;
         this.knotIndex = k;
         this.userID = user.getUserId();

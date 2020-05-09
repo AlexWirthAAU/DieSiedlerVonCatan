@@ -18,6 +18,7 @@ import com.richpath.RichPathView;
 
 public class UpdateGameboardView {
 
+
     public static void updateView(GameSession gs, RichPathView rpv) {
         Gameboard g = gs.getGameboard();
         RichPathView richPathView = rpv;
@@ -29,12 +30,22 @@ public class UpdateGameboardView {
                 //Log.d("DEBUG", "Color is: "+k.getPlayer().getColor().toString());
                 //Log.d("DEBUG", "Color is: "+k.getPlayer().getColor().hashCode());
                 Colors c = k.getPlayer().getColor();
-                Log.d("DEBUG", c.toString());
                 int color = 0;
-                if (c.toString().equals("GREEN")) {
-                    color = Color.GREEN;
-                } else if (k.getPlayer().getColor().toString().equals("LIGHTBLUE")) {
-                    color = Color.BLUE;
+                switch (c) {
+                    case GREEN:
+                        color = Color.parseColor("#6AE626");
+                        break;
+                    case LIGHTBLUE:
+                        color = Color.parseColor("#07B9FF");
+                        break;
+                    case ORANGE:
+                        color = Color.parseColor("#FF8E07");
+                        break;
+                    case VIOLETT:
+                        color = Color.parseColor("#A30FFF");
+                        break;
+                    default:
+                        break;
                 }
                 richPath.setFillColor(color);
             }
@@ -45,7 +56,25 @@ public class UpdateGameboardView {
         ) {
             RichPath richPath = richPathView.findRichPathByName(e.getId());
             if (e.getPlayer() != null) {
-                richPath.setFillColor(Color.GREEN);
+                Colors c = e.getPlayer().getColor();
+                int color = 0;
+                switch (c) {
+                    case GREEN:
+                        color = Color.parseColor("#6AE626");
+                        break;
+                    case LIGHTBLUE:
+                        color = Color.parseColor("#07B9FF");
+                        break;
+                    case ORANGE:
+                        color = Color.parseColor("#FF8E07");
+                        break;
+                    case VIOLETT:
+                        color = Color.parseColor("#A30FFF");
+                        break;
+                    default:
+                        break;
+                }
+                richPath.setFillColor(color);
             }
 
         }

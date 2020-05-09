@@ -16,8 +16,8 @@ public class ResourceAllocationThread extends GameThread {
     GameSession currentGamesession;
     int diceValue;
 
-    public ResourceAllocationThread(Socket socket, User user, GameSession gameSession, String diceValue) {
-        super(socket, user, gameSession);
+    public ResourceAllocationThread(User user, GameSession gameSession, String diceValue) {
+        super(user, gameSession);
         this.currentGamesession = gameSession;
         this.diceValue = Integer.parseInt(diceValue);
     }

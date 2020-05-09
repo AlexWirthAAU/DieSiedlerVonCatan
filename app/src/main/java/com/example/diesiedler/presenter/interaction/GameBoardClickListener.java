@@ -37,12 +37,8 @@ public class GameBoardClickListener {
                 } else if (pathType.contains("settlement")) {
                     //TODO: What should happen if Knot is clicked:
                     if (activity.equals("BuildSettlement") && richPath.getFillColor() == Color.RED) {
-                        toSend[0] = richPath.getName() + " BuildSettlement";
-                        try {
-                            new BuildSettlementActivity().clicked(toSend[0]);
-                        } catch (ExecutionException | InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        toSend[0] = richPath.getName();
+                        new BuildSettlementActivity().clicked(toSend[0]);
                     } else if (activity.equals("BuildCity")) {
                         toSend[0] = richPath.getName() + " BuildCity";
                         try {
@@ -55,19 +51,11 @@ public class GameBoardClickListener {
                     }
                 } else if (pathType.contains("edge")) {
                     //TODO: What should happen if Edge is clicked:
-                    /*
-                    if (activity.equals("BuildRoad")) {
-                        toSend[0] = richPath.getName() + " BuildRoad";
-                        try {
-                            new BuildRoadActivity().clicked(toSend[0], context);
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
 
-                     */
+                    if (activity.equals("BuildRoad") && richPath.getFillColor() == Color.RED) {
+                        toSend[0] = richPath.getName();
+                        new BuildRoadActivity().clicked(toSend[0]);
+                    }
                 } else if (pathType.contains("background") || pathType.contains("harbour")) {
                     Log.d("DEBUG", "Touched background");
                 }

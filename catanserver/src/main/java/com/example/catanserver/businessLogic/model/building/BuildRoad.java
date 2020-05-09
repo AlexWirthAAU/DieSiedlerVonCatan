@@ -13,9 +13,16 @@ public class BuildRoad {
         Edge road = gameboard.getEdges()[roadIndex];
         Player player = gameSession.getPlayer(userID);
 
+
+        if (player.getInventory().getRoads().size() < 2) {
+            updatePlayerInventoryInit(player, road);
+        } else {
+            updatePlayerInventory(player, road);
+        }
+
         road.setPlayer(player);
         gameSession.addRoad(road);
-        updatePlayerInventory(player, road);
+        gameSession.nextPlayer();
     }
 
     private static void updatePlayerInventory(Player p, Edge e) {
@@ -27,6 +34,14 @@ public class BuildRoad {
         playerInventory.addRoad(e);
         playerInventory.removeWood(1);
         playerInventory.removeClay(1);
+    }
+
+    private static void updatePlayerInventoryInit(Player p, Edge e) {
+        PlayerInventory playerInventory = p.getInventory();
+
+        playerInventory.addRoadKnots(e.getOne());
+        playerInventory.addRoadKnots(e.getTwo());
+        playerInventory.addRoad(e);
     }
 
 }

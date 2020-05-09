@@ -13,7 +13,7 @@ public class Edge implements Serializable {
     public Edge(Knot one, Knot two) {
         this.one = one;
         this.two = two;
-        this.id = "edge_" + one.getRow() + "" + one.getColumn() + "" + two.getRow() + "" + two.getColumn();
+        this.id = "edge_" + one.getRow() + "_" + one.getColumn() + "_" + two.getRow() + "_" + two.getColumn();
         this.player = null;
     }
 

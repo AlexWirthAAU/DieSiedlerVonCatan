@@ -12,8 +12,8 @@ public class BuildSettlementThread extends GameThread {
     int knotIndex;
     int userID;
 
-    public BuildSettlementThread(Socket socket, User user, GameSession g, int k) {
-        super(socket, user, g);
+    public BuildSettlementThread(User user, GameSession g, int k) {
+        super(user, g);
         this.gameSession = g;
         this.knotIndex = k;
         this.userID = user.getUserId();
@@ -22,6 +22,9 @@ public class BuildSettlementThread extends GameThread {
 
     public void run() {
         BuildSettlement.updateGameSession(gameSession, knotIndex, userID);
+        System.out.println("UPDATED GAMESESSION");
+        SendToClient.sendGameSessionBroadcast(gameSession);
+        System.out.println("BROADCASTED GAMESESSION");
     }
 
 }

@@ -80,13 +80,20 @@ public class BuildSettlement {
         Knot toBeSettled = gameboard.getKnots()[knotIndex];
         Player player = gameSession.getPlayer(userID);
 
+
         toBeSettled.setSettled(true);
         toBeSettled.setPlayer(player);
         gameSession.addSettlement(toBeSettled);
-        updatePlayerInventory(player, toBeSettled);
+
+        if (player.getInventory().getSettlements().size() < 2) {
+            updatePlayerInventoryInit(player, toBeSettled);
+        } else {
+            updatePlayerInventoryRegular(player, toBeSettled);
+            gameSession.nextPlayer();
+        }
     }
 
-    private static void updatePlayerInventory(Player p, Knot k) {
+    private static void updatePlayerInventoryRegular(Player p, Knot k) {
         PlayerInventory playerInventory = p.getInventory();
 
         playerInventory.addSettlement(k);
@@ -94,6 +101,13 @@ public class BuildSettlement {
         playerInventory.removeClay(1);
         playerInventory.removeWheat(1);
         playerInventory.removeWool(1);
+        playerInventory.addVictoryPoints(1);
+    }
+
+    private static void updatePlayerInventoryInit(Player p, Knot k) {
+        PlayerInventory playerInventory = p.getInventory();
+
+        playerInventory.addSettlement(k);
         playerInventory.addVictoryPoints(1);
     }
 }

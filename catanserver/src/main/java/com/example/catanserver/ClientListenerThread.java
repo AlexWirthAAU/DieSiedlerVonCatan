@@ -137,6 +137,9 @@ public class ClientListenerThread extends Thread {
                                     if (foundGame != null) {
                                         if (messageSplit.length > 2) {
                                             if (!Server.currentlyThreaded.contains(foundGame.getGameId())) {
+
+                                                System.out.println("MESSAGESPLIT: " + messageSplit[2]);
+
                                                 if (messageSplit[2].equals("COLOR") && messageSplit.length > 3) {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     System.out.println("Starting COLORThread.");
@@ -151,7 +154,27 @@ public class ClientListenerThread extends Thread {
                                                     startThread.start();
                                                 }
 
+
                                                 // TODO: Implement all methods post Game creation here
+
+
+                                                if (messageSplit[2].equals("BUILDSETTLEMENT")) {
+                                                    int knotIndex = Integer.parseInt(messageSplit[3]);
+                                                    Server.currentlyThreaded.add(foundGame.getGameId());
+                                                    System.out.println("Starting BUILDSETTLEMENTThread.");
+                                                    Thread bsThread = new BuildSettlementThread(user, foundGame, knotIndex);
+                                                    bsThread.start();
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
+                                                }
+
+                                                if (messageSplit[2].equals("BUILDROAD")) {
+                                                    int edgeIndex = Integer.parseInt(messageSplit[3]);
+                                                    Server.currentlyThreaded.add(foundGame.getGameId());
+                                                    System.out.println("Starting BUILDROADThread.");
+                                                    Thread brThread = new BuildRoadThread(user, foundGame, edgeIndex);
+                                                    brThread.start();
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
+                                                }
 
                                             }
 

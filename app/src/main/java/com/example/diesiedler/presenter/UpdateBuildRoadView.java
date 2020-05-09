@@ -31,7 +31,7 @@ public class UpdateBuildRoadView {
 
     private static LinkedList<Edge> possibleEdges(GameSession gs) {
         LinkedList<Edge> possibleEdges = new LinkedList<>();
-        Player p = gs.getPlayer(1); //TODO: Update
+        Player p = gs.getPlayer(gs.getCurrPlayer()); //TODO: Update
 
 
         if (p.getInventory().getWood() >= 1 && p.getInventory().getClay() >= 1 || p.getInventory().getRoads().size() < 2) {

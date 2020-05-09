@@ -17,10 +17,9 @@ import com.example.catangame.gameboard.Edge;
 import com.example.catangame.gameboard.Gameboard;
 import com.example.catangame.gameboard.Knot;
 import com.example.catangame.gameboard.Tile;
-import com.example.diesiedler.presenter.GameBoardClickListener;
-import com.example.diesiedler.presenter.PresenterBuild;
 import com.example.diesiedler.presenter.UpdateBuildCityView;
 import com.example.diesiedler.presenter.UpdateGameboardView;
+import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
 import com.richpath.RichPath;
 import com.richpath.RichPathView;
 

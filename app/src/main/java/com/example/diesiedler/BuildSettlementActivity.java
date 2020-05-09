@@ -1,9 +1,27 @@
 package com.example.diesiedler;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.util.Log;
+
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.diesiedler.presenter.GameBoardClickListener;
-import com.example.diesiedler.presenter.PresenterBuild;
+
+import com.example.catangame.Colors;
+import com.example.catangame.GameSession;
+import com.example.catangame.Player;
+import com.example.catangame.gameboard.Edge;
+import com.example.catangame.gameboard.Knot;
+import com.example.diesiedler.presenter.ClientData;
+import com.example.diesiedler.presenter.ServerQueries;
+import com.example.diesiedler.presenter.UpdateBuildSettlementView;
+import com.example.diesiedler.presenter.UpdateGameboardView;
+import com.example.diesiedler.presenter.handler.HandlerOverride;
+import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
+import com.example.diesiedler.threads.NetworkThread;
 import com.richpath.RichPathView;
 
 public class BuildSettlementActivity extends AppCompatActivity {
@@ -15,34 +33,101 @@ public class BuildSettlementActivity extends AppCompatActivity {
      * If not -> User has to click another asset
      */
 
+    private Handler handler = new BuildSettlementHandler(Looper.getMainLooper(), this);
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameboardview);
         RichPathView richPathView = findViewById(R.id.ic_gameboardView);
 
+        Log.d("DEBUG", "This User: " + ClientData.userId + " current Player is: " + ClientData.currentGame.getPlayer(ClientData.currentGame.getCurrPlayer()).getUserId());
 
-        GameSession gs = createGameSession();
-        UpdateGameboardView.updateView(gs, richPathView);
-        UpdateBuildSettlementView.updateView(gs, richPathView);
-        /*int status = UpdateBuildSettlementView.updateView();
+        UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
+        int status = UpdateBuildSettlementView.updateView(ClientData.currentGame, richPathView);
+        ClientData.currentHandler = handler;
 
-        if (statue==0){
-            CANT BUILD MESSAGE
+        if (status == 0) {
+            /**
+             * CANT BUILD MESSAGE
+             */
+
         } else {
-            CHOOSE ONE OF RED KNOTS & SEND KNOT-INDEX TO SERVER
-            THEN LOAD MAIN - ACTIVITY (OVERVIEW)
+            /**
+             * CHOOSE ONE OF RED KNOTS & SEND KNOT-INDEX TO SERVER
+             * THEN LOAD MAIN - ACTIVITY (OVERVIEW)
+             */
+            GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView, this);
+            gameBoardClickListener.clickBoard("BuildSettlement");
         }
-         */
 
-        GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView, this);
-        gameBoardClickListener.clickBoard();
     }
 
     public void clicked(String s) {
-        Thread networkThread = new NetworkThread(ServerQueries.createStringQueryBuild(s));
+        Knot[] knots = ClientData.currentGame.getGameboard().getKnots();
+        int knotIndex = 0;
+        String[] values = s.split("_");
+        int row = Integer.parseInt(values[1]);
+        int column = Integer.parseInt(values[2]);
+        for (int i = 0; i < knots.length; i++) {
+            if (knots[i].getRow() == row && knots[i].getColumn() == column) {
+                knotIndex = i;
+            }
+        }
+        String kIString = Integer.toString(knotIndex);
+
+        Thread networkThread = new NetworkThread(ServerQueries.createStringQueryBuildSettlement(kIString));
         networkThread.start();
     }
+
+    private class BuildSettlementHandler extends HandlerOverride {
+
+        public BuildSettlementHandler(Looper mainLooper, Activity ac) {
+            super(mainLooper, ac);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.arg1 == 4) {
+                GameSession gameSession = ClientData.currentGame;
+                Player currentP = gameSession.getPlayer(gameSession.getCurrPlayer());
+
+                if (currentP.getUserId() == ClientData.userId && gameSession.getPlayer(ClientData.userId).getInventory().getRoads().size() < 2) {
+                    Intent intent = new Intent(activity, BuildRoadActivity.class);
+                    startActivity(intent);
+                    Log.d("DEBUG", "Loaded BuildRoad: " + ClientData.userId + " " + currentP.getUserId());
+                } else {
+                    Intent intent = new Intent(activity, MainActivity.class);
+                    startActivity(intent);
+                    Log.d("DEBUG", "Loaded Main: " + ClientData.userId + " " + currentP.getUserId());
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private GameSession createGameSession() {
         GameSession gameSession = new GameSession();
         Player p = new Player("Alex", 1);
