@@ -5,40 +5,49 @@ import com.example.catangame.Player;
 import com.example.catanserver.Server;
 import com.example.catanserver.User;
 
-import java.net.Socket;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Fabian Schaffenrath
  * This Thread is used to create a game, once all players have been selected.
+ * These players are removed from the currently Searching list.
  *
- * It sends a gameSession object to every client.
+ * It sends a gameSession object to every player and a new list to every user currently searching.
  */
 
 public class CreateThread extends Thread {
 
     private String[] userIds;
-    private Socket connection;
 
-    public CreateThread(Socket connection, String[] userIds){
-        this.connection = connection;
+    public CreateThread(String[] userIds){
         this.userIds = userIds;
     }
 
     public void run(){
-
         GameSession game = new GameSession();
+        Set<User> usersToRemove = new HashSet<>();
+        int foundPlayers = 0;
         for (String userId: userIds) {
             int parsedId = Integer.parseInt(userId);
-            for (User user: Server.currentUsers) {
+            for (User user: Server.currentlySearching) {
                 if(user.getUserId() == parsedId){
-                    Player player = new Player(user.getDisplayName(),parsedId);
-                    user.addGameSession(game);
-                    game.setPlayer(player);
-                    Server.currentlySearching.remove(user);
+                    usersToRemove.add(user);
+                    foundPlayers++;
                 }
             }
         }
-        Server.currentGames.add(game);
-        SendToClient.sendGameSessionBroadcast(connection,game);
+
+        if(foundPlayers > 1) { // TODO: Update later to 2
+            for (User userToRemove : usersToRemove) {
+                Player player = new Player(userToRemove.getDisplayName(),userToRemove.getUserId());
+                userToRemove.addGameSession(game);
+                game.setPlayer(player);
+                Server.currentlySearching.remove(userToRemove);
+            }
+            Server.currentGames.add(game);
+            SendToClient.sendGameSessionBroadcast(game);
+            SendToClient.sendSearchingListBroadcast(Server.currentlySearching);
+        }
     }
 }

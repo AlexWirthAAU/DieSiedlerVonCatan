@@ -1,61 +1,57 @@
 package com.example.diesiedler;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.diesiedler.presenter.Presenter;
-import com.example.diesiedler.presenter.PresenterSetColor;
+import com.example.catangame.Colors;
+import com.example.catangame.Player;
+import com.example.diesiedler.presenter.ClientData;
+import com.example.diesiedler.presenter.handler.HandlerOverride;
+import com.example.diesiedler.presenter.ServerQueries;
+import com.example.diesiedler.threads.NetworkThread;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
  * @author Christina Senger
+ * @author Fabian Schaffenrath (edit)
  * <p>
- * Aktivität in der die Spieler ihre Spielfarbe auswählen können
+ * Aktivität in der die Spieler ihre Spielfarbe auswählen können und das Spiel gestartet wird.
  */
 public class SelectColorsActivity extends AppCompatActivity {
 
-    private ArrayList<String> gameList = new ArrayList<>();
+    private Handler handler = new SelectColorsHandler(Looper.getMainLooper(),this);
     private Button green;
     private Button orange;
     private Button violett;
     private Button lightblue;
-    private String myName;
-    private HashMap<String, String> map = new HashMap<>();
     private List<Button> colors = new ArrayList<>();
-    private static final Logger log = Logger.getLogger(SelectColorsActivity.class.getName());
-    private PresenterSetColor presenterSetColor = new PresenterSetColor();
+    private Map<Colors,Button> colorsMap = new HashMap<>();
+    private static final Logger logger = Logger.getLogger(SelectColorsActivity.class.getName());
 
     /**
-     * Eine Liste mit der GameId an erster an den Spielern mit ihren
-     * Farben wird aus dem Intent geholt und in der Varible gameList
-     * gespeichert. Der Name des aktuellen Users wird als myName geseichert.
-     *
-     * Die Buttons werden aus der ContentView geholt, lokal gespeichert und zu
-     * einer Liste colors hinzugefügt.
-     *
-     * Die GameId und die aktuelle Aktivität werden dem Presenter übergeben.
-     * Dieser warten auf Nachrichten vom Server, dass die Mitspieler Farben
-     * gewählt haben und aktualisiert die View dementsprechend.
-     *
+     * Bei Erstellung werden die Buttons spezifiziert und anschließend in eine Liste gespeichert.
+     * Zusätzlich werden die Buttons zusammen mit einem enum Colors Key in einer Map gespeichert.
+     * Der Handler wird in der ClientData für die jetzige Aktivität angepasst.
      * @param savedInstanceState gespeicherter Status
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_colors);
-
-        gameList = getIntent().getStringArrayListExtra("gameList");
-        myName = getIntent().getStringExtra("myName");
 
         green = findViewById(R.id.green);
         orange = findViewById(R.id.orange);
@@ -67,119 +63,74 @@ public class SelectColorsActivity extends AppCompatActivity {
         colors.add(violett);
         colors.add(lightblue);
 
-        Presenter.checkColors(Integer.parseInt(gameList.get(0)), this);
+        colorsMap.put(Colors.GREEN,green);
+        colorsMap.put(Colors.ORANGE,orange);
+        colorsMap.put(Colors.VIOLETT,violett);
+        colorsMap.put(Colors.LIGHTBLUE,lightblue);
+
+        ClientData.currentHandler = handler;
+
     }
 
     /**
-     * Ist die Farbe des gelickten Button noch frei,
-     * werden alle anderen Farbbuttons für den aktuellen Spieler
-     * unklickbar. Der Username erscheint als Buttontext.
-     * Gleichzeitig wird die Wahl als Map von Farbe und Name an den
-     * Presenter übergeben, der dies an den Server weiterleitet.
-     *
-     * @param view View, um Farbbutton anzusprechen
+     * Wird der grüne Button gedrückt, startet der NetworkThread um eine Farbauswahl an den Server zu schicken.
      */
     public void onGreen(View view) {
 
         if ((green.getText().toString()).isEmpty()) {
-            for (Button btn : colors) {
-
-                btn.setEnabled(false);
-            }
-            green.setText(myName);
-            map.put("green", myName);
-            presenterSetColor.setColor(map);
+            Thread networkThread = new NetworkThread(ServerQueries.createStringQueryColor(Colors.GREEN.name()));
+            networkThread.start();
         }
     }
 
     /**
-     * Ist die Farbe des gelickten Button noch frei,
-     * werden alle anderen Farbbuttons für den aktuellen Spieler
-     * unklickbar. Der Username erscheint als Buttontext.
-     * Gleichzeitig wird die Wahl als Map von Farbe und Name an den
-     * Presenter übergeben, der dies an den Server weiterleitet.
-     *
-     * @param view View, um Farbbutton anzusprechen
+     * Wird der orange Button gedrückt, startet der NetworkThread um eine Farbauswahl an den Server zu schicken.
      */
     public void onOrange(View view) {
 
         if ((orange.getText().toString()).isEmpty()) {
-            for (Button btn : colors) {
-
-                btn.setEnabled(false);
-            }
-            orange.setText(myName);
-            map.put("orange", myName);
-            presenterSetColor.setColor(map);
+            Thread networkThread = new NetworkThread(ServerQueries.createStringQueryColor(Colors.ORANGE.name()));
+            networkThread.start();
         }
     }
 
     /**
-     * Ist die Farbe des gelickten Button noch frei,
-     * werden alle anderen Farbbuttons für den aktuellen Spieler
-     * unklickbar. Der Username erscheint als Buttontext.
-     * Gleichzeitig wird die Wahl als Map von Farbe und Name an den
-     * Presenter übergeben, der dies an den Server weiterleitet.
-     *
-     * @param view View, um Farbbutton anzusprechen
+     * Wird der violette Button gedrückt, startet der NetworkThread um eine Farbauswahl an den Server zu schicken.
      */
     public void onViolett(View view) {
 
         if ((violett.getText().toString()).isEmpty()) {
-            for (Button btn : colors) {
-
-                btn.setEnabled(false);
-            }
-            violett.setText(myName);
-            map.put("violett", myName);
-            presenterSetColor.setColor(map);
+            Thread networkThread = new NetworkThread(ServerQueries.createStringQueryColor(Colors.VIOLETT.name()));
+            networkThread.start();
         }
     }
 
     /**
-     * Ist die Farbe des gelickten Button noch frei,
-     * werden alle anderen Farbbuttons für den aktuellen Spieler
-     * unklickbar. Der Username erscheint als Buttontext.
-     * Gleichzeitig wird die Wahl als Map von Farbe und Name an den
-     * Presenter übergeben, der dies an den Server weiterleitet.
-     *
-     * @param view View, um Farbbutton anzusprechen
+     * Wird der hellblaue Button gedrückt, startet der NetworkThread um eine Farbauswahl an den Server zu schicken.
      */
     public void onLightblue(View view) {
 
         if ((lightblue.getText().toString()).isEmpty()) {
-            for (Button btn : colors) {
-                btn.setEnabled(false);
-            }
-
-            lightblue.setText(myName);
-            map.put("lightblue", myName);
-            presenterSetColor.setColor(map);
+            Thread networkThread = new NetworkThread(ServerQueries.createStringQueryColor(Colors.LIGHTBLUE.name()));
+            networkThread.start();
         }
     }
 
     /**
-     * Haben alle Spieler eine Frbe gewählt, wird das Spiel geladen.
-     * Sonst wird eine Warnung angezeigt. Dies wird überprüft, indem
-     * die Anzahl der aktiven Spieler (aus dem Intent) mit der Anzahl
-     * der nichtleeren Buttons verglichen wird.
+     * Wird der Start Button gedrückt, wird zuerst geprüft, ob jeder Spieler eine Farbe gewählt hat.
+     * Ist dies der Fall, so wird ein NetworkThread gestartet, der das Startrequest an den Server schickt.
+     * Ansonsten wird auf dem Bildschirm eine Fehlermeldung ausgegeben.
      *
      * @param view View, um StartButton anzusprechen
      */
     public void startGame(View view) {
 
-        int selectedColors = 0;
-        boolean ready = false;
+        boolean ready = true;
 
-        for (Button btn : colors) {
-
-            log.log(Level.INFO, "btntext" + btn.getText().toString());
-            if (!btn.getText().toString().isEmpty()) {
-                selectedColors++;
-            }
-
-            if (selectedColors >= 2) {
-                ready = true;
+        for (Player player:ClientData.currentGame.getPlayers()) {
+            if(player.getColor() == null){
+               ready = false;
+               break;
             }
         }
 
@@ -192,19 +143,46 @@ public class SelectColorsActivity extends AppCompatActivity {
             alert1.show();
 
         } else {
-
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("myName", myName);
-            intent.putStringArrayListExtra("gameList", gameList);
-            startActivity(intent);
+            Thread networkThread = new NetworkThread(ServerQueries.createStringQueryStart());
+            networkThread.start();
         }
     }
 
-    /**
-     *
-     * @param view - current View to accesc Reload Button
-     */
-    public void update(View view) {
-        Presenter.checkColors(Integer.parseInt(gameList.get(0)), this);
+    private class SelectColorsHandler extends HandlerOverride{
+
+        public SelectColorsHandler(Looper mainLooper, Activity ac) {
+            super(mainLooper,ac);
+        }
+
+
+        /**
+         * Handler erhält Message vom ServerCommunicationThread. Bei Farbwahl(oder Wechsel) eines Spielers
+         * werden die Buttons neu initialisiert. Bei einem erfolgreichen Start request ist das Spiel gestartet
+         * und die MainActivity aufgerufen.
+         * @param msg msg.arg1 beinhaltet den entsprechenden Parameter zur weiteren Ausführung.
+         *            msg.obj beinhaltet gegebenfalls einen String.
+         */
+        @Override
+        public void handleMessage(Message msg){
+            if(msg.arg1 == 4){  // TODO: Change to enums
+                for (Button button:((SelectColorsActivity)activity).colors) {
+                    button.setText("");
+                    button.setEnabled(true);
+                }
+
+                for (Player player:ClientData.currentGame.getPlayers()) {
+                    Button button = colorsMap.get(player.getColor());
+                    if(button != null) {
+                        button.setText(player.getDisplayName());
+                        button.setEnabled(false);
+                    }
+                }
+            }
+            else if(msg.arg1 == 5 && msg.obj.equals("STARTGAME")){  // TODO: Change to enums
+                Intent intent = new Intent(activity, MainActivity.class);
+                startActivity(intent);
+            }
+        }
+
     }
 }

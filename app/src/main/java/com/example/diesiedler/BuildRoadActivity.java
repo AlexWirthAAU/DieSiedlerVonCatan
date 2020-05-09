@@ -1,22 +1,12 @@
 package com.example.diesiedler;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.catangame.Player;
-import com.example.catangame.gameboard.Edge;
-import com.example.catangame.gameboard.Gameboard;
-import com.example.catangame.gameboard.Knot;
 import com.example.diesiedler.presenter.GameBoardClickListener;
 import com.example.diesiedler.presenter.PresenterBuild;
-import com.richpath.RichPath;
 import com.richpath.RichPathView;
-
-import java.util.concurrent.ExecutionException;
 
 public class BuildRoadActivity extends AppCompatActivity {
 
@@ -26,10 +16,6 @@ public class BuildRoadActivity extends AppCompatActivity {
      * If yes -> this asset will be colored in user's color
      * If not -> User has to click another asset
      */
-
-    Player p = new Player("Test", 1);
-    Gameboard g = new Gameboard();
-    RichPath richPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +34,8 @@ public class BuildRoadActivity extends AppCompatActivity {
             }
         }
 
+    public void clicked(String s) {
+        Thread networkThread = new NetworkThread(ServerQueries.createStringQueryBuild(s));
+        networkThread.start();
     }
-
 }

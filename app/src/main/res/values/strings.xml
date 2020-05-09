@@ -113,6 +113,8 @@
     <string name="mitspieler">Wähle deine Mitspieler</string>
     <string name="startPlay">Spiel Starten</string>
     <string name="select_color">Wähle deine Farbe</string>
+    <string name="searchstart">Suchen</string>
+    <string name="searchstop">Suche beenden</string>
     <string name="reload">Reload</string>
     <string name="costs">Baukosten</string>
     <string name="street">Straße</string>

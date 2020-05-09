@@ -1,25 +1,10 @@
 package com.example.diesiedler;
 
-import android.content.Context;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.catangame.Colors;
-import com.example.catangame.GameSession;
-import com.example.catangame.Player;
-import com.example.catangame.gameboard.Edge;
-import com.example.catangame.gameboard.Gameboard;
-import com.example.catangame.gameboard.Knot;
 import com.example.diesiedler.presenter.GameBoardClickListener;
 import com.example.diesiedler.presenter.PresenterBuild;
-import com.example.diesiedler.presenter.UpdateBuildRoadView;
-import com.example.diesiedler.presenter.UpdateBuildSettlementView;
-import com.example.diesiedler.presenter.UpdateGameboardView;
 import com.richpath.RichPathView;
-
-import java.util.concurrent.ExecutionException;
 
 public class BuildSettlementActivity extends AppCompatActivity {
 
@@ -29,7 +14,6 @@ public class BuildSettlementActivity extends AppCompatActivity {
      * If yes -> this asset will be colored in user's color
      * If not -> User has to click another asset
      */
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +36,13 @@ public class BuildSettlementActivity extends AppCompatActivity {
          */
 
         GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView, this);
-        gameBoardClickListener.clickBoard("BuildSettlement");
+        gameBoardClickListener.clickBoard();
     }
 
-    public void clicked(String s) throws ExecutionException, InterruptedException {
-        //TODO: SEND Knot-Index to Server and load Overview Activity
+    public void clicked(String s) {
+        Thread networkThread = new NetworkThread(ServerQueries.createStringQueryBuild(s));
+        networkThread.start();
     }
-
     private GameSession createGameSession() {
         GameSession gameSession = new GameSession();
         Player p = new Player("Alex", 1);
