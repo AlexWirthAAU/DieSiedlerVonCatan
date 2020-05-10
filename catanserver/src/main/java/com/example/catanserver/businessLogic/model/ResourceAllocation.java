@@ -53,6 +53,7 @@ public class ResourceAllocation {
         ) {
             if (t.getDiceValue() == diceValue && t.isThief() == false) {
                 resourceTiles.add(t);
+                System.out.println("RESOURCE-ALLOCATION: Added Tile: " + t.getId());
             }
         }
         return resourceTiles;
