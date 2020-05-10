@@ -142,6 +142,22 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.6" />
 
+            <Button
+                android:id="@+id/loadOverview"
+                android:layout_width="416dp"
+                android:layout_height="75dp"
+                android:backgroundTint="#A10101"
+                android:gravity="center"
+                android:text="Spielstand anzeigen"
+                android:textColor="#FBC02D"
+                android:textSize="18dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.206" />
+
 
         </LinearLayout>
 
