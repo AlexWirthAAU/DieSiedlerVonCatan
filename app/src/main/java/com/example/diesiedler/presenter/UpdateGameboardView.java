@@ -27,8 +27,6 @@ public class UpdateGameboardView {
         ) {
             RichPath richPath = richPathView.findRichPathByName(k.getId());
             if (k.getPlayer() != null) {
-                //Log.d("DEBUG", "Color is: "+k.getPlayer().getColor().toString());
-                //Log.d("DEBUG", "Color is: "+k.getPlayer().getColor().hashCode());
                 Colors c = k.getPlayer().getColor();
                 int color = 0;
                 switch (c) {

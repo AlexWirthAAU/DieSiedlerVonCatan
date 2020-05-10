@@ -7,12 +7,16 @@ import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catangame.gameboard.Edge;
 import com.example.catangame.gameboard.Knot;
+import com.example.diesiedler.WelcomeActivity;
 import com.richpath.RichPath;
 import com.richpath.RichPathView;
 
 import java.util.LinkedList;
+import java.util.logging.Logger;
+
 
 public class UpdateBuildRoadView {
+
 
     public static int updateView(GameSession gs, RichPathView rpv) {
         LinkedList<Edge> possibleEdges = possibleEdges(gs);
@@ -20,8 +24,8 @@ public class UpdateBuildRoadView {
         if (possibleEdges != null) {
             for (Edge e : possibleEdges
             ) {
-                RichPath knot = rpv.findRichPathByName(e.getId());
-                knot.setFillColor(Color.RED);
+                RichPath edge = rpv.findRichPathByName(e.getId());
+                edge.setFillColor(Color.RED);
             }
             return 1;
         } else {

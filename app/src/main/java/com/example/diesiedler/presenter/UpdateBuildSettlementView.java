@@ -11,11 +11,17 @@ import com.richpath.RichPath;
 import com.richpath.RichPathView;
 
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class UpdateBuildSettlementView {
 
+    private static final Logger logger = Logger.getLogger(UpdateBuildSettlementView.class.getName());
+
     public static int updateView(GameSession gs, RichPathView rpv) {
+        logger.log(Level.INFO, "Called Update Activity");
+
         LinkedList<Knot> possibleKnots = possibleKnots(gs);
 
         if (possibleKnots != null) {
@@ -33,13 +39,16 @@ public class UpdateBuildSettlementView {
 
     private static LinkedList<Knot> possibleKnots(GameSession gs) {
         LinkedList<Knot> possibleKnots = new LinkedList<>();
-        Player currentP = gs.getPlayer(1);
+        Player currentP = gs.getPlayer(gs.getCurrPlayer());
 
         if (currentP.getInventory().getSettlements().size() >= 2 && hasResources(currentP) == false) {
             //Player does not have enough resources to build
+            logger.log(Level.INFO, "Player cant build Settlement");
             return null;
 
+
         } else if (currentP.getInventory().getSettlements().size() < 2) {
+            logger.log(Level.INFO, "Player can build Settlement INIT");
             for (Knot k : gs.getGameboard().getKnots()
             ) {
                 if (k.getPlayer() == null && neighbors(k, gs) == 0) {
@@ -49,6 +58,7 @@ public class UpdateBuildSettlementView {
             return possibleKnots;
 
         } else {
+            logger.log(Level.INFO, "Player can build Settlement");
             for (Knot k : gs.getGameboard().getKnots()
             ) {
                 if (k.getPlayer() == null && currentP.getInventory().getRoadKnots().contains(k) && neighbors(k, gs) == 0) {

@@ -3,27 +3,22 @@ package com.example.catanserver.threads;
 import com.example.catangame.GameSession;
 import com.example.catanserver.User;
 import com.example.catanserver.businessLogic.model.ResourceAllocation;
-
-import java.net.Socket;
+import com.example.catanserver.businessLogic.model.building.BuildCity;
 
 public class ResourceAllocationThread extends GameThread {
 
-    /**
-     * @author Alex Wirth
-     * This Thread handles the allocation of resources, by calling the ResourceAllocation-Service
-     */
-
-    GameSession currentGamesession;
+    GameSession gameSession;
     int diceValue;
 
-    public ResourceAllocationThread(User user, GameSession gameSession, String diceValue) {
-        super(user, gameSession);
-        this.currentGamesession = gameSession;
-        this.diceValue = Integer.parseInt(diceValue);
+
+    public ResourceAllocationThread(User user, GameSession game, int diceValue) {
+        super(user, game);
+        this.gameSession = game;
+        this.diceValue = diceValue;
     }
 
-
     public void run() {
-        ResourceAllocation.updateResources(currentGamesession, diceValue);
+        ResourceAllocation.updateResources(gameSession, diceValue);
+        SendToClient.sendGameSessionBroadcast(gameSession);
     }
 }

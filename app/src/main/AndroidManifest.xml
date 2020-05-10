@@ -26,6 +26,9 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".BuildSettlementActivity" />
         <activity android:name=".BuildRoadActivity" />
+        <activity android:name=".RollDiceActivity" />
+        <activity android:name=".ShowInventoryActivity" />
+        <activity android:name=".ChooseActionActivity" />
 
     </application>
 

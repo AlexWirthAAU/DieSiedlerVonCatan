@@ -9,7 +9,7 @@ import java.util.List;
 
 public class PlayerInventory implements Serializable {
 
-    private final int STARTVALUE = 0;
+    private final int STARTVALUE = 3;
     private int wood;
     private int wool;
     private int wheat;

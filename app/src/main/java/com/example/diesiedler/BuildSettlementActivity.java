@@ -7,12 +7,14 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.catangame.Colors;
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
+import com.example.catangame.PlayerInventory;
 import com.example.catangame.gameboard.Edge;
 import com.example.catangame.gameboard.Knot;
 import com.example.diesiedler.presenter.ClientData;
@@ -34,6 +36,11 @@ public class BuildSettlementActivity extends AppCompatActivity {
      */
 
     private Handler handler = new BuildSettlementHandler(Looper.getMainLooper(), this);
+    private TextView woodCount;
+    private TextView clayCount;
+    private TextView wheatCount;
+    private TextView oreCount;
+    private TextView woolCount;
 
 
     @Override
@@ -45,6 +52,7 @@ public class BuildSettlementActivity extends AppCompatActivity {
         Log.d("DEBUG", "This User: " + ClientData.userId + " current Player is: " + ClientData.currentGame.getPlayer(ClientData.currentGame.getCurrPlayer()).getUserId());
 
         UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
+        updateResources();
         int status = UpdateBuildSettlementView.updateView(ClientData.currentGame, richPathView);
         ClientData.currentHandler = handler;
 
@@ -80,6 +88,22 @@ public class BuildSettlementActivity extends AppCompatActivity {
         Thread networkThread = new NetworkThread(ServerQueries.createStringQueryBuildSettlement(kIString));
         networkThread.start();
     }
+
+    private void updateResources() {
+        PlayerInventory playerInventory = ClientData.currentGame.getPlayer(ClientData.userId).getInventory();
+
+        woodCount = findViewById(R.id.woodCount);
+        woodCount.setText(Integer.toString(playerInventory.getWood()));
+        clayCount = findViewById(R.id.clayCount);
+        clayCount.setText(Integer.toString(playerInventory.getClay()));
+        wheatCount = findViewById(R.id.wheatCount);
+        wheatCount.setText(Integer.toString(playerInventory.getWheat()));
+        oreCount = findViewById(R.id.oreCount);
+        oreCount.setText(Integer.toString(playerInventory.getOre()));
+        woolCount = findViewById(R.id.woolCount);
+        woolCount.setText(Integer.toString(playerInventory.getWool()));
+    }
+
 
     private class BuildSettlementHandler extends HandlerOverride {
 

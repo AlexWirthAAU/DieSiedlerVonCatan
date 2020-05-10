@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
+import com.example.catangame.PlayerInventory;
 import com.example.catangame.gameboard.Edge;
 import com.example.catangame.gameboard.Gameboard;
 import com.example.diesiedler.presenter.ClientData;
@@ -37,6 +39,11 @@ public class BuildRoadActivity extends AppCompatActivity {
      */
 
     private Handler handler = new BuildRoadHandler(Looper.getMainLooper(), this);
+    private TextView woodCount;
+    private TextView clayCount;
+    private TextView wheatCount;
+    private TextView oreCount;
+    private TextView woolCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +51,7 @@ public class BuildRoadActivity extends AppCompatActivity {
         setContentView(R.layout.gameboardview);
         RichPathView richPathView = findViewById(R.id.ic_gameboardView);
         UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
+        updateResources();
         ClientData.currentHandler = handler;
 
         int status = UpdateBuildRoadView.updateView(ClientData.currentGame, richPathView);
@@ -73,6 +81,22 @@ public class BuildRoadActivity extends AppCompatActivity {
         }
          */
     }
+
+    private void updateResources() {
+        PlayerInventory playerInventory = ClientData.currentGame.getPlayer(ClientData.userId).getInventory();
+
+        woodCount = findViewById(R.id.woodCount);
+        woodCount.setText(Integer.toString(playerInventory.getWood()));
+        clayCount = findViewById(R.id.clayCount);
+        clayCount.setText(Integer.toString(playerInventory.getClay()));
+        wheatCount = findViewById(R.id.wheatCount);
+        wheatCount.setText(Integer.toString(playerInventory.getWheat()));
+        oreCount = findViewById(R.id.oreCount);
+        oreCount.setText(Integer.toString(playerInventory.getOre()));
+        woolCount = findViewById(R.id.woolCount);
+        woolCount.setText(Integer.toString(playerInventory.getWool()));
+    }
+
 
 
     public void clicked(String s) {

@@ -138,7 +138,6 @@ public class ClientListenerThread extends Thread {
                                         if (messageSplit.length > 2) {
                                             if (!Server.currentlyThreaded.contains(foundGame.getGameId())) {
 
-                                                System.out.println("MESSAGESPLIT: " + messageSplit[2]);
 
                                                 if (messageSplit[2].equals("COLOR") && messageSplit.length > 3) {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
@@ -173,6 +172,15 @@ public class ClientListenerThread extends Thread {
                                                     System.out.println("Starting BUILDROADThread.");
                                                     Thread brThread = new BuildRoadThread(user, foundGame, edgeIndex);
                                                     brThread.start();
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
+                                                }
+
+                                                if (messageSplit[2].equals("DICEVALUE")) {
+                                                    int diceValue = Integer.parseInt(messageSplit[3]);
+                                                    Server.currentlyThreaded.add(foundGame.getGameId());
+                                                    System.out.println("Starting DICEVALUEThread");
+                                                    Thread rAThread = new ResourceAllocationThread(user, foundGame, diceValue);
+                                                    rAThread.start();
                                                     Server.currentlyThreaded.remove(foundGame.getGameId());
                                                 }
 

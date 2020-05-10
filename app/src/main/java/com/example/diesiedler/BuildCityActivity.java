@@ -1,26 +1,17 @@
 package com.example.diesiedler;
 
-import android.content.Context;
-import android.graphics.Color;
+
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-
-import androidx.annotation.ContentView;
-import androidx.appcompat.app.AlertDialog;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.catangame.Colors;
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
-import com.example.catangame.gameboard.Edge;
-import com.example.catangame.gameboard.Gameboard;
-import com.example.catangame.gameboard.Knot;
-import com.example.catangame.gameboard.Tile;
+import com.example.catangame.PlayerInventory;
+import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.UpdateBuildCityView;
-import com.example.diesiedler.presenter.UpdateGameboardView;
 import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
-import com.richpath.RichPath;
 import com.richpath.RichPathView;
 
 import java.util.concurrent.ExecutionException;
@@ -32,6 +23,12 @@ public class BuildCityActivity extends AppCompatActivity {
      * If yes -> this asset will be colored in user's color
      * If not -> User has to click another asset
      */
+
+    private TextView woodCount;
+    private TextView clayCount;
+    private TextView wheatCount;
+    private TextView oreCount;
+    private TextView woolCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +59,21 @@ public class BuildCityActivity extends AppCompatActivity {
 
     public void clicked(String s) throws ExecutionException, InterruptedException {
         //TODO: SEND Knot - Index to the Server and load overview activity
+    }
+
+    private void updateResources() {
+        PlayerInventory playerInventory = ClientData.currentGame.getPlayer(ClientData.userId).getInventory();
+
+        woodCount = findViewById(R.id.woodCount);
+        woodCount.setText(Integer.toString(playerInventory.getWood()));
+        clayCount = findViewById(R.id.clayCount);
+        clayCount.setText(Integer.toString(playerInventory.getClay()));
+        wheatCount = findViewById(R.id.wheatCount);
+        wheatCount.setText(Integer.toString(playerInventory.getWheat()));
+        oreCount = findViewById(R.id.oreCount);
+        oreCount.setText(Integer.toString(playerInventory.getOre()));
+        woolCount = findViewById(R.id.woolCount);
+        woolCount.setText(Integer.toString(playerInventory.getWool()));
     }
 
 

@@ -67,4 +67,8 @@ public class ServerQueries {
         return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " BUILDCITY " + structure;
     }
 
+    public static String createStringRolledDice(String value) {
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " DICEVALUE " + value;
+    }
+
 }

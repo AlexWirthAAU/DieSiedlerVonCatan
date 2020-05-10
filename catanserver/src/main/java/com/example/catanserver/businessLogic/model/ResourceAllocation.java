@@ -68,6 +68,7 @@ public class ResourceAllocation {
                     p.getInventory().addWood(2);
                 } else {
                     p.getInventory().addWood(1);
+                    System.out.println("Updated Wood");
                 }
             }
         }
@@ -82,6 +83,7 @@ public class ResourceAllocation {
                     p.getInventory().addWool(2);
                 } else {
                     p.getInventory().addWool(1);
+                    System.out.println("Updated Wool");
                 }
             }
         }
@@ -96,9 +98,11 @@ public class ResourceAllocation {
                     p.getInventory().addClay(2);
                 } else {
                     p.getInventory().addClay(1);
+                    System.out.println("Updated Clay");
                 }
             }
         }
+
     }
 
     private static void updateOre(Tile t) {
@@ -110,6 +114,7 @@ public class ResourceAllocation {
                     p.getInventory().addOre(2);
                 } else {
                     p.getInventory().addOre(1);
+                    System.out.println("Updated Ore");
                 }
             }
         }
@@ -124,6 +129,7 @@ public class ResourceAllocation {
                     p.getInventory().addWheat(2);
                 } else {
                     p.getInventory().addWheat(1);
+                    System.out.println("Updated Wheat");
                 }
             }
         }

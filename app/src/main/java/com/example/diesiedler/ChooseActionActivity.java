@@ -1,0 +1,45 @@
+package com.example.diesiedler;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.nio.BufferUnderflowException;
+
+
+public class ChooseActionActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private Button buildSettlement;
+    private Button buildRoad;
+
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_chooseaction);
+
+        buildSettlement = findViewById(R.id.buildSettlement);
+        buildRoad = findViewById(R.id.buildRoad);
+
+        buildSettlement.setOnClickListener(this);
+        buildRoad.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent intent;
+
+        switch (view.getId()) {
+            case R.id.buildSettlement:
+                intent = new Intent(getBaseContext(), BuildSettlementActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.buildRoad:
+                intent = new Intent(getBaseContext(), BuildRoadActivity.class);
+                startActivity(intent);
+                break;
+        }
+    }
+}

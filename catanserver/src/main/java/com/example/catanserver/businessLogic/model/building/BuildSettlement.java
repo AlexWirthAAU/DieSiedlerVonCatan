@@ -28,12 +28,12 @@ public class BuildSettlement {
 
     @Override
     public boolean checkResources() {
-        // cost for settlement: 1 wood, 1 clay, 1 wheat, 1 wool
-        int wood = playerInventory.getWood();
+        // cost for settlement: 1 clay, 1 clay, 1 wheat, 1 wool
+        int clay = playerInventory.getWood();
         int clay = playerInventory.getClay();
         int wheat = playerInventory.getWheat();
         int wool = playerInventory.getWool();
-        if (wood >= 1 && clay >= 1 && wheat >= 1 && wool >= 1) {
+        if (clay >= 1 && clay >= 1 && wheat >= 1 && wool >= 1) {
             enoughResources = true;
         }
         return enoughResources;
