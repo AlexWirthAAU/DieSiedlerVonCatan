@@ -29,6 +29,7 @@ public class BankThread extends GameThread {
 
             String mess = buildMessage();
             exchangeRessources();
+            game.nextPlayer();
             SendToClient.sendTradeMessage(connection, mess);
             SendToClient.sendGameSessionBroadcast(connection, game);
 
