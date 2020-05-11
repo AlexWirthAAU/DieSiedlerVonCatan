@@ -1,14 +1,16 @@
-package com.example.diesiedler;
+package com.example.diesiedler.cards;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class PlayMonopolActivity extends AppCompatActivity {
+import com.example.diesiedler.R;
+
+public class PlayKnightActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_play_monopol);
+        setContentView(R.layout.activity_play_knight);
     }
 }

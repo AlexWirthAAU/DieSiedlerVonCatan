@@ -80,12 +80,12 @@ public class ServerQueries {
         return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " PLAYKNIGHT ";
     }
 
-    public static String createStringQueryPlayMonopolCard() {
-        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " PLAYMONOPOL ";
+    public static String createStringQueryPlayMonopolCard(String res) {
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " PLAYMONOPOL " + res;
     }
 
-    public static String createStringQueryPlayInventionCard() {
-        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " PLAYINVENTION ";
+    public static String createStringQueryPlayInventionCard(String res) {
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " PLAYINVENTION " + res;
     }
 
     public static String createStringQueryPlayBuildStreetCard() {

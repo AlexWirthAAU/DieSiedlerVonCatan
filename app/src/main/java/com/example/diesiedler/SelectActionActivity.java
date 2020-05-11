@@ -14,10 +14,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
+import com.example.diesiedler.cards.PlayCardActivity;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.handler.HandlerOverride;
 import com.example.diesiedler.threads.NetworkThread;
+import com.example.diesiedler.trading.BankChangeActivity;
+import com.example.diesiedler.trading.PortChangeActivity;
+import com.example.diesiedler.trading.TradeActivity;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

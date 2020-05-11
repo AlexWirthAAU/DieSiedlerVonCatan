@@ -1,4 +1,4 @@
-package com.example.diesiedler;
+package com.example.diesiedler.cards;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
+import com.example.diesiedler.R;
 import com.example.diesiedler.presenter.ClientData;
 
 public class PlayCardActivity extends AppCompatActivity {

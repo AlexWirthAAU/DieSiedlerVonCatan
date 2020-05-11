@@ -1,4 +1,4 @@
-package com.example.diesiedler;
+package com.example.diesiedler.trading;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,6 +12,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.catangame.GameSession;
+import com.example.diesiedler.MainActivity;
+import com.example.diesiedler.R;
+import com.example.diesiedler.SelectActionActivity;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.handler.HandlerOverride;
@@ -63,7 +66,7 @@ public class AnswerToTradeActivity extends AppCompatActivity {
 
     private class AnswerToTradeHandler extends HandlerOverride {
 
-        public AnswerToTradeHandler(Looper mainLooper, Activity ac) {
+        AnswerToTradeHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
         }
 

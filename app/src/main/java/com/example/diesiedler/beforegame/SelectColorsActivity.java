@@ -1,4 +1,4 @@
-package com.example.diesiedler;
+package com.example.diesiedler.beforegame;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.catangame.Colors;
 import com.example.catangame.Player;
+import com.example.diesiedler.MainActivity;
+import com.example.diesiedler.R;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.handler.HandlerOverride;
@@ -150,7 +152,7 @@ public class SelectColorsActivity extends AppCompatActivity {
 
     private class SelectColorsHandler extends HandlerOverride {
 
-        public SelectColorsHandler(Looper mainLooper, Activity ac) {
+        SelectColorsHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
         }
 

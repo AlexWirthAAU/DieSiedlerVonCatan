@@ -1,9 +1,10 @@
-package com.example.diesiedler;
+package com.example.diesiedler.building;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.diesiedler.R;
 import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
 import com.example.diesiedler.threads.NetworkThread;

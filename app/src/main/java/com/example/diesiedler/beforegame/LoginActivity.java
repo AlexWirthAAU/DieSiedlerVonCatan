@@ -1,4 +1,4 @@
-package com.example.diesiedler;
+package com.example.diesiedler.beforegame;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.diesiedler.R;
+import com.example.diesiedler.SearchPlayersActivity;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.handler.HandlerOverride;
@@ -60,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private class LoginHandler extends HandlerOverride {
 
-        public LoginHandler(Looper mainLooper, Activity ac) {
+        LoginHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
         }
 

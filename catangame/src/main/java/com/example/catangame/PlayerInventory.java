@@ -26,8 +26,8 @@ public class PlayerInventory implements Serializable {
     private int monopolCard;
 
     private int victoryPoints;
-    public int victoryPointsSettlement = 2;
-    public int victoryPointsCity = 3;
+    private int victoryPointsSettlement = 2;
+    private int victoryPointsCity = 3;
 
     public boolean canTrade;
     public boolean canBankTrade;
@@ -48,7 +48,7 @@ public class PlayerInventory implements Serializable {
     private int[] resValues = new int[5];
     private boolean[] portValues = new boolean[5];
 
-    public PlayerInventory() {
+    PlayerInventory() {
         this.wood = STARTVALUE;
         this.wool = STARTVALUE;
         this.wheat = STARTVALUE;
@@ -156,6 +156,7 @@ public class PlayerInventory implements Serializable {
         checkPlayerOptions();
     }
 
+    // add Cards
     public void addVictoryPoints(int amount) {
         this.victoryPoints += amount;
     }
@@ -188,10 +189,26 @@ public class PlayerInventory implements Serializable {
         checkPlayerOptions();
     }
 
+    public int removeAllWood() {
+        int num = this.wood;
+        this.wood = 0;
+        this.resValues[0] = this.wood;
+        checkPlayerOptions();
+        return num;
+    }
+
     public void removeWool(int amount) {
         this.wool -= amount;
         this.resValues[1] = this.wool;
         checkPlayerOptions();
+    }
+
+    public int removeAllWool() {
+        int num = this.wool;
+        this.wool = 0;
+        this.resValues[1] = this.wool;
+        checkPlayerOptions();
+        return num;
     }
 
     public void removeWheat(int amount) {
@@ -200,10 +217,26 @@ public class PlayerInventory implements Serializable {
         checkPlayerOptions();
     }
 
+    public int removeAllWheat() {
+        int num = this.wheat;
+        this.wheat = 0;
+        this.resValues[2] = this.wheat;
+        checkPlayerOptions();
+        return num;
+    }
+
     public void removeOre(int amount) {
         this.ore -= amount;
         this.resValues[3] = this.ore;
         checkPlayerOptions();
+    }
+
+    public int removeAllOre() {
+        int num = this.ore;
+        this.ore = 0;
+        this.resValues[3] = this.ore;
+        checkPlayerOptions();
+        return num;
     }
 
     public void removeClay(int amount) {
@@ -212,6 +245,15 @@ public class PlayerInventory implements Serializable {
         checkPlayerOptions();
     }
 
+    public int removeAllClay() {
+        int num = this.clay;
+        this.clay = 0;
+        this.resValues[4] = this.clay;
+        checkPlayerOptions();
+        return num;
+    }
+
+    // remove Cards
     public void removeVictoryPoints(int amount) {
         this.victoryPoints -= amount;
     }

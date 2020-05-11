@@ -2,23 +2,18 @@ package com.example.catanserver.threads;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
-import com.example.catangame.devcards.BuildStreetCard;
-import com.example.catangame.devcards.DevCard;
-import com.example.catangame.devcards.InventionCard;
-import com.example.catangame.devcards.KnightCard;
-import com.example.catangame.devcards.MonopolCard;
 import com.example.catanserver.User;
 
 public class PlayInventionThread extends GameThread {
 
     private Player player;
     private StringBuilder message = new StringBuilder();
-    private String cardName;
-    private DevCard card;
+    private String res;
+    private String resName;
 
     public PlayInventionThread(User user, GameSession game, String answerStr) {
         super(user, game);
-        this.cardName = answerStr;
+        this.res = answerStr;
         this.player = game.getPlayer(user.getUserId());
     }
 
@@ -40,69 +35,49 @@ public class PlayInventionThread extends GameThread {
 
     private boolean checkCards() {
 
-        boolean ok = false;
+        return player.getInventory().getInventionCard() > 0;
+    }
 
-        switch (cardName) {
-            case "knight":
-                if (player.getInventory().getKnightCard() >= 1) {
-                    ok = true;
-                    card = new KnightCard();
-                }
+    private void playCard() {
+
+        switch (res) {
+            case "wood":
+                player.getInventory().addWood(2);
+                resName = "Holz";
                 break;
 
-            case "monopol":
-                if (player.getInventory().getMonopolCard() >= 1) {
-                    ok = true;
-                    card = new MonopolCard();
-                }
+            case "wool":
+                resName = "Wolle";
+                player.getInventory().addWool(2);
                 break;
 
-            case "invention":
-                if (player.getInventory().getInventionCard() >= 1) {
-                    ok = true;
-                    card = new InventionCard();
-                }
+            case "wheat":
+                player.getInventory().addWheat(2);
+                resName = "Weizen";
                 break;
 
-            case "buildStreet":
-                if (player.getInventory().getBuildStreetCard() >= 1) {
-                    ok = true;
-                    card = new BuildStreetCard();
-                }
+            case "ore":
+                player.getInventory().addOre(2);
+                resName = "Erz";
+                break;
+
+            case "clay":
+                player.getInventory().addClay(2);
+                resName = "Lehm";
                 break;
 
             default:
                 break;
         }
 
-        return ok;
-    }
-
-    private void playCard() {
-
-        if (card instanceof BuildStreetCard) {
-            player.getInventory().removeBuildStreetCard(1);
-            cardName = "Straßenbaukarte";
-
-        } else if (card instanceof KnightCard) {
-            player.getInventory().removeKnightCard(1);
-            cardName = "Ritterkarte";
-
-        } else if (card instanceof InventionCard) {
-            player.getInventory().removeInventianCard(1);
-            cardName = "Erfindungskarte";
-
-        } else if (card instanceof MonopolCard) {
-            player.getInventory().removeMonopolCard(1);
-            cardName = "Monopolkarte";
-
-        }
+        player.getInventory().removeInventianCard(1);
     }
 
     private String buildMessage() {
 
         message.append("CARDPLAYMESSAGE/");
-        message.append("Du hast eine ").append(cardName).append(" gespielt");
+        message.append("Du hast eine Erfindungskarte gespielt und zwei ");
+        message.append(resName).append(" erhalten");
 
         return message.toString();
     }

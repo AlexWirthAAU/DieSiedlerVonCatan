@@ -1,6 +1,8 @@
 package com.example.diesiedler;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,5 +25,14 @@ public class ShowCostsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_costs);
 
+    }
+
+    /**
+     * @param view View um auf Buttonklick zu reagieren
+     *             Lädt wieder die Activity zur Auswahl der Aktionen.
+     */
+    public void ahead(View view) {
+        Intent intent = new Intent(this, SelectActionActivity.class);
+        startActivity(intent);
     }
 }

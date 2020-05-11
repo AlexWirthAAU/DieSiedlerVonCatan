@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.diesiedler.beforegame.SelectColorsActivity;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.handler.HandlerOverride;
@@ -155,7 +156,7 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
 
     private class SearchPlayersHandler extends HandlerOverride {
 
-        public SearchPlayersHandler(Looper mainLooper, Activity ac) {
+        SearchPlayersHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
         }
 

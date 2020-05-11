@@ -14,6 +14,7 @@ import com.example.catangame.GameSession;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.handler.HandlerOverride;
 import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
+import com.example.diesiedler.trading.AnswerToTradeActivity;
 import com.richpath.RichPathView;
 
 import java.util.logging.Logger;

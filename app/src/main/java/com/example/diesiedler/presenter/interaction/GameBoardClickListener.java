@@ -3,15 +3,15 @@ package com.example.diesiedler.presenter.interaction;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.diesiedler.BuildRoadActivity;
-import com.example.diesiedler.BuildSettlementActivity;
+import com.example.diesiedler.building.BuildRoadActivity;
+import com.example.diesiedler.building.BuildSettlementActivity;
 import com.richpath.RichPath;
 import com.richpath.RichPathView;
 
 public class GameBoardClickListener {
 
-    RichPathView richPathView;
-    Context context;
+    private RichPathView richPathView;
+    private Context context;
 
     public GameBoardClickListener(RichPathView richPathView, Context c) {
         this.richPathView = richPathView;
