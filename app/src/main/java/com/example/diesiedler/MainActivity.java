@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView, this);
         gameBoardClickListener.clickBoard();
 
-        // Nach einem Bank- oder Hafentausch wird die Erfolgsmeldung angezeigt
+        // Nach einem Bank- oder Hafentausch oder Entwicklungskartenkauf wird die Erfolgsmeldung angezeigt
         String tradeMessage = getIntent().getStringExtra("mess");
 
         if (tradeMessage != null) {

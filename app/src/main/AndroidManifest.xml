@@ -13,7 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RollDiceActivity"></activity>
+        <activity android:name=".PlayBuildStreetActivity"></activity>
+        <activity android:name=".PlayMonopolActivity" />
+        <activity android:name=".PlayInventionActivity" />
+        <activity android:name=".PlayKnightActivity" />
+        <activity android:name=".PlayCardActivity" />
+        <activity android:name=".RollDiceActivity" />
         <activity android:name=".PortChangeActivity" />
         <activity android:name=".BankChangeActivity" />
         <activity android:name=".AnswerToTradeActivity" />

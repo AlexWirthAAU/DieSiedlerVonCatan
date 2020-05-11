@@ -3,10 +3,15 @@ package com.example.catanserver;
 import com.example.catangame.GameSession;
 import com.example.catanserver.threads.ApplyThread;
 import com.example.catanserver.threads.BankThread;
+import com.example.catanserver.threads.BuyCardThread;
 import com.example.catanserver.threads.ColorThread;
 import com.example.catanserver.threads.CreateThread;
 import com.example.catanserver.threads.ErrorThread;
 import com.example.catanserver.threads.LoginThread;
+import com.example.catanserver.threads.PlayBuildStreetThread;
+import com.example.catanserver.threads.PlayInventionThread;
+import com.example.catanserver.threads.PlayKnightThread;
+import com.example.catanserver.threads.PlayMonopolThread;
 import com.example.catanserver.threads.PortThread;
 import com.example.catanserver.threads.StartThread;
 import com.example.catanserver.threads.StopThread;
@@ -183,6 +188,36 @@ public class ClientListenerThread extends Thread {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     Thread tradeanswerThread = new TradeAnswerThread(user, foundGame, messageSplit[3]);
                                                     tradeanswerThread.start();
+                                                }
+
+                                                if (messageSplit[2].equals("BUYCARD")) {
+                                                    Server.currentlyThreaded.add(foundGame.getGameId());
+                                                    Thread buyCadThread = new BuyCardThread(user, foundGame);
+                                                    buyCadThread.start();
+                                                }
+
+                                                if (messageSplit[2].equals("PLAYKNIGHT")) {
+                                                    Server.currentlyThreaded.add(foundGame.getGameId());
+                                                    Thread playKnightThread = new PlayKnightThread(user, foundGame, messageSplit[3]);
+                                                    playKnightThread.start();
+                                                }
+
+                                                if (messageSplit[2].equals("PLAYMONOPOL")) {
+                                                    Server.currentlyThreaded.add(foundGame.getGameId());
+                                                    Thread playMonopolThread = new PlayMonopolThread(user, foundGame, messageSplit[3]);
+                                                    playMonopolThread.start();
+                                                }
+
+                                                if (messageSplit[2].equals("PLAYINVENTION")) {
+                                                    Server.currentlyThreaded.add(foundGame.getGameId());
+                                                    Thread playInventionThread = new PlayInventionThread(user, foundGame, messageSplit[3]);
+                                                    playInventionThread.start();
+                                                }
+
+                                                if (messageSplit[2].equals("PLAYBUILDSTREET")) {
+                                                    Server.currentlyThreaded.add(foundGame.getGameId());
+                                                    Thread playBuildStreetThread = new PlayBuildStreetThread(user, foundGame);
+                                                    playBuildStreetThread.start();
                                                 }
 
                                                 // TODO: Implement all methods post Game creation here

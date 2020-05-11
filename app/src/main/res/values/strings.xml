@@ -150,4 +150,11 @@
     <string name="showCosts">Baukosten zeigen</string>
     <string name="searchstart">Suchen</string>
     <string name="searchstop">Suche beenden</string>
+    <string name="buyCard">Karte kaufen</string>
+    <string name="playCard">Karte ausspielen</string>
+    <string name="inventionCard">Erfindungskarte</string>
+    <string name="monopolCard">Monopolkarte</string>
+    <string name="knightCard">Ritterkarte</string>
+    <string name="buildStreetCard">Straßenbaukarte</string>
+    <string name="selectCard">Wähle deine Karte</string>
 </resources>

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SelectActionActivity">
+    tools:context=".PlayCardActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,99 +17,62 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="50dp"
-                android:text="@string/select_action"
+                android:text="@string/selectCard"
                 android:textAlignment="gravity"
                 android:textColor="#FBC02D"
                 android:textSize="35sp"
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/trade"
+                android:id="@+id/knight"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="50dp"
                 android:backgroundTint="#FFA000"
-                android:onClick="trade"
-                android:text="@string/trade"
+                android:onClick="playKnight"
+                android:text="@string/knightCard"
                 android:textColor="#A10101"
                 android:textSize="30sp" />
 
             <Button
-                android:id="@+id/bank"
+                android:id="@+id/buildStreet"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
                 android:backgroundTint="#FFA000"
-                android:onClick="bankChange"
-                android:text="@string/bank"
+                android:onClick="playBuildStreet"
+                android:text="@string/buildStreetCard"
                 android:textColor="#A10101"
                 android:textSize="30sp" />
 
             <Button
-                android:id="@+id/port"
+                android:id="@+id/monopol"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
                 android:backgroundTint="#FFA000"
-                android:onClick="portChange"
-                android:text="@string/port"
+                android:onClick="playMonopol"
+                android:text="@string/monopolCard"
                 android:textColor="#A10101"
                 android:textSize="30sp" />
 
             <Button
-                android:id="@+id/showCosts"
+                android:id="@+id/invention"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
                 android:backgroundTint="#FFA000"
-                android:onClick="showCosts"
-                android:text="@string/showCosts"
-                android:textColor="#A10101"
-                android:textSize="30sp" />
-
-            <Button
-                android:id="@+id/buyCard"
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
-                android:backgroundTint="#FFA000"
-                android:onClick="buyCard"
-                android:text="@string/buyCard"
-                android:textColor="#A10101"
-                android:textSize="30sp" />
-
-            <Button
-                android:id="@+id/playCard"
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
-                android:backgroundTint="#FFA000"
-                android:onClick="playCard"
-                android:text="@string/playCard"
-                android:textColor="#A10101"
-                android:textSize="30sp" />
-
-            <Button
-                android:id="@+id/ahead"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="35dp"
-                android:backgroundTint="#FFA000"
-                android:onClick="ahead"
-                android:text="@string/ahead"
+                android:onClick="playInvention"
+                android:text="@string/inventionCard"
                 android:textColor="#A10101"
                 android:textSize="30sp" />
 

@@ -71,4 +71,24 @@ public class ServerQueries {
     public static String createStringQueryBankChange(String offer) {
         return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " BANK " + offer;
     }
+
+    public static String createStringQueryBuyCard() {
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " BUYCARD ";
+    }
+
+    public static String createStringQueryPlayKnightCard() {
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " PLAYKNIGHT ";
+    }
+
+    public static String createStringQueryPlayMonopolCard() {
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " PLAYMONOPOL ";
+    }
+
+    public static String createStringQueryPlayInventionCard() {
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " PLAYINVENTION ";
+    }
+
+    public static String createStringQueryPlayBuildStreetCard() {
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " PLAYBUILDSTREET ";
+    }
 }

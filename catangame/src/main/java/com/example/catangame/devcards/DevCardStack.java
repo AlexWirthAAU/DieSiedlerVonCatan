@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class DevCardStack {
 
-    private ArrayList<DevCard> stack = new ArrayList<>(28);
+    private ArrayList<DevCard> stack = new ArrayList<>(26);
     private int i = 0;
     private int j = 0;
     private int k = 0;
@@ -27,6 +27,7 @@ public class DevCardStack {
         while (k < 2) {
             this.stack.add(new InventionCard());
             this.stack.add(new MonopolCard());
+            k++;
         }
 
         this.stack.add(new BuildStreetCard());
