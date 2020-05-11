@@ -19,7 +19,7 @@ import java.util.Set;
 
 public class SendToClient {
 
-    public static void sendUserId(User user, int userId) {
+    static void sendUserId(User user, int userId) {
         try {
             sendToClient(user, userId);
         }catch(IOException ex){
@@ -28,7 +28,7 @@ public class SendToClient {
         }
     }
 
-    public static void sendSearchingListBroadcast(Set<User> set) {
+    static void sendSearchingListBroadcast(Set<User> set) {
         List<String> searchingList = createSearchingList(set);
         for (User user : set) {
             try {
@@ -40,7 +40,7 @@ public class SendToClient {
         }
     }
 
-    public static void sendGameStartBroadcast(GameSession game) {
+    static void sendGameStartBroadcast(GameSession game) {
         List<User> userList = createGameUserList(game);
         if (userList.size() == game.getPlayers().size()) {
             for (User user : userList) {
@@ -56,7 +56,7 @@ public class SendToClient {
         }
     }
 
-    public static void sendGameSessionBroadcast(GameSession game) {
+    static void sendGameSessionBroadcast(GameSession game) {
         List<User> userList = createGameUserList(game);
         if (userList.size() == game.getPlayers().size()) {
             for (User user : userList) {
@@ -93,7 +93,7 @@ public class SendToClient {
         }
     }
 
-    public static void sendErrorMessage(ObjectOutputStream connectionOutputStream, String message) {
+    static void sendErrorMessage(ObjectOutputStream connectionOutputStream, String message) {
         try{
             connectionOutputStream.writeObject(message);
             connectionOutputStream.flush();
@@ -152,7 +152,7 @@ public class SendToClient {
      *
      * @param user User to be sent to.
      * @param obj  Object to be sent to the User.
-     * @throws IOException
+     * @throws IOException when theres a Problem with the Stream
      */
     private static void sendToClient(User user, Object obj) throws IOException {
         user.getConnectionOutputStream().reset();

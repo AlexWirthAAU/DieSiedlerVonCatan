@@ -98,6 +98,7 @@ public class TradeAnswerThread extends GameThread {
     }
 
     private void distribute(List<Player> playersToSend, String mess) {
+        game.setTrade(null);
         game.nextPlayer();
         SendToClient.sendTradeMessageBroadcast(playersToSend, mess);
         SendToClient.sendGameSessionBroadcast(game);

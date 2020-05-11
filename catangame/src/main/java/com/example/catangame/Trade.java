@@ -54,112 +54,56 @@ public class Trade implements Serializable {
         return woodGive;
     }
 
-    public void setWoodGive(int woodGive) {
-        this.woodGive = woodGive;
-    }
-
     public int getWoodGet() {
         return woodGet;
-    }
-
-    public void setWoodGet(int woodGet) {
-        this.woodGet = woodGet;
     }
 
     public int getWoolGive() {
         return woolGive;
     }
 
-    public void setWoolGive(int woolGive) {
-        this.woolGive = woolGive;
-    }
-
     public int getWoolGet() {
         return woolGet;
-    }
-
-    public void setWoolGet(int woolGet) {
-        this.woolGet = woolGet;
     }
 
     public int getWheatGive() {
         return wheatGive;
     }
 
-    public void setWheatGive(int wheatGive) {
-        this.wheatGive = wheatGive;
-    }
-
     public int getWheatGet() {
         return wheatGet;
-    }
-
-    public void setWheatGet(int wheatGet) {
-        this.wheatGet = wheatGet;
     }
 
     public int getOreGive() {
         return oreGive;
     }
 
-    public void setOreGive(int oreGive) {
-        this.oreGive = oreGive;
-    }
-
     public int getOreGet() {
         return oreGet;
-    }
-
-    public void setOreGet(int oreGet) {
-        this.oreGet = oreGet;
     }
 
     public int getClayGive() {
         return clayGive;
     }
 
-    public void setClayGive(int clayGive) {
-        this.clayGive = clayGive;
-    }
-
     public int getClayGet() {
         return clayGet;
-    }
-
-    public void setClayGet(int clayGet) {
-        this.clayGet = clayGet;
     }
 
     public Map<String, Integer> getOffer() {
         return offer;
     }
 
-    public void setOffer(Map<String, Integer> offer) {
-        this.offer = offer;
-    }
-
     public Map<String, Integer> getWant() {
         return want;
-    }
-
-    public void setWant(Map<String, Integer> want) {
-        this.want = want;
     }
 
     public Player getCurrPlayer() {
         return currPlayer;
     }
 
-    public void setCurrPlayer(Player currPlayer) {
-        this.currPlayer = currPlayer;
-    }
-
     public List<Player> getPotentialTradingPartners() {
         return potentialTradingPartners;
-    }
-
-    public void setPotentialTradingPartners(List<Player> potentialTradingPartners) {
-        this.potentialTradingPartners = potentialTradingPartners;
     }
 
     public String getMessage() {
@@ -182,16 +126,8 @@ public class Trade implements Serializable {
         return tradingPartner;
     }
 
-    public void setTradingPartner(Player tradingPartner) {
-        this.tradingPartner = tradingPartner;
-    }
-
     public Map<Player, Boolean> getAnswers() {
         return answers;
-    }
-
-    public void setAnswers(Map<Player, Boolean> answers) {
-        this.answers = answers;
     }
 
     public void addAnswers(Player player, Boolean answer) {
@@ -200,10 +136,6 @@ public class Trade implements Serializable {
 
     public List<Player> getAnsweredPlayers() {
         return answeredPlayers;
-    }
-
-    public void setAnsweredPlayers(List<Player> answeredPlayers) {
-        this.answeredPlayers = answeredPlayers;
     }
 
     public void addAnsweredPlayer(Player player) {

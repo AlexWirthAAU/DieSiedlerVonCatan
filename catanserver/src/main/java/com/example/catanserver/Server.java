@@ -24,7 +24,7 @@ public class Server {
     public static final List<User> currentUsers = Collections.synchronizedList(new LinkedList<User>());
     private static ServerSocket listenerSocket;
     private static Socket caughtConnection;
-    protected static final List<Socket> currentConnections = Collections.synchronizedList(new LinkedList<Socket>());
+    static final List<Socket> currentConnections = Collections.synchronizedList(new LinkedList<Socket>());
     public static final List<GameSession> currentGames = Collections.synchronizedList(new LinkedList<GameSession>());
     public static final Set<Integer> currentlyThreaded = Collections.synchronizedSet(new HashSet<Integer>());
     public static final Set<User> currentlySearching = Collections.synchronizedSet(new HashSet<User>());

@@ -14,7 +14,7 @@ abstract class GameThread extends Thread {
     User user;
     GameSession game;
 
-    public GameThread(User user, GameSession game) {
+    GameThread(User user, GameSession game) {
         this.game = game;
         this.user = user;
     }

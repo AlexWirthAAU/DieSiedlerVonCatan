@@ -47,7 +47,7 @@ public class ClientListenerThread extends Thread {
     private ObjectInputStream connectionInputStream;
     private ObjectOutputStream connectionOutputStream;
 
-    public ClientListenerThread(Socket connection) {
+    ClientListenerThread(Socket connection) {
         this.connection = connection;
         Server.currentConnections.add(connection);
     }

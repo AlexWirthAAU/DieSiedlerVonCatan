@@ -59,4 +59,16 @@ public class ServerQueries {
     public static String createStringQueryBuild(String structure) {
         return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " BUILD " + structure;
     }
+
+    public static String createStringQueryTrade(String offer) {
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " TRADE " + offer;
+    }
+
+    public static String createStringQueryPortChange(String offer) {
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " PORT " + offer;
+    }
+
+    public static String createStringQueryBankChange(String offer) {
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " BANK " + offer;
+    }
 }

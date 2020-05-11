@@ -1,6 +1,11 @@
 package com.example.diesiedler;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,6 +14,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
+import com.example.diesiedler.presenter.ClientData;
+import com.example.diesiedler.presenter.ServerQueries;
+import com.example.diesiedler.presenter.handler.HandlerOverride;
+import com.example.diesiedler.threads.NetworkThread;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TradeActivity extends AppCompatActivity {
 
@@ -39,14 +51,17 @@ public class TradeActivity extends AppCompatActivity {
 
     private Player player;
 
+    private static final Logger logger = Logger.getLogger(TradeActivity.class.getName());
+    Handler handler = new TradeHandler(Looper.getMainLooper(), this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trade);
 
-        GameSession game = (GameSession) getIntent().getSerializableExtra("game");
-        player = game.getCurr();
-        String resString = player.getInventory().getAllRessources();
+        player = ClientData.currentGame.getCurr();
+
+        ClientData.currentHandler = handler;
     }
 
     private boolean checkRessources(int value, String res) {
@@ -100,7 +115,9 @@ public class TradeActivity extends AppCompatActivity {
         tradeMap.append("/ClayGet/").append(clayGet);
 
         String toSendTrade = tradeMap.toString();
-        /**TODO: Implement server call: send map to the Server*/
+        logger.log(Level.INFO, "CREATE TRADE");
+        Thread networkThread = new NetworkThread(ServerQueries.createStringQueryTrade(toSendTrade));
+        networkThread.start();
     }
 
     public void plus(View view) {
@@ -269,6 +286,36 @@ public class TradeActivity extends AppCompatActivity {
 
             default:
                 break;
+        }
+    }
+
+    private class TradeHandler extends HandlerOverride {
+
+        public TradeHandler(Looper mainLooper, Activity ac) {
+            super(mainLooper, ac);
+        }
+
+        /**
+         * Wird vom ServerCommunicationThread aufgerufen. Im Falle einer Stringübertragung wird
+         * die Nachricht als String dem Intent übergeben, sollte eine GameSession übertragen
+         * werden, so ist der Handel abgeschlossen und die MainActivity wird aufgerufen.
+         *
+         * @param msg msg.arg1 beinhaltet den entsprechenden Parameter zur weiteren Ausführung
+         */
+        @Override
+        public void handleMessage(Message msg) {
+
+            Intent intent = new Intent(activity, MainActivity.class);
+
+            if (msg.arg1 == 4) {  // TODO: Change to enums
+
+                ClientData.currentGame = (GameSession) msg.obj;
+                startActivity(intent);
+            }
+            if (msg.arg1 == 5) {  // TODO: Change to enums
+
+                intent.putExtra("mess", msg.obj.toString());
+            }
         }
     }
 }

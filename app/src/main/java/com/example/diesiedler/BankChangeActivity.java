@@ -1,6 +1,11 @@
 package com.example.diesiedler;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 
@@ -8,9 +13,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
+import com.example.diesiedler.presenter.ClientData;
+import com.example.diesiedler.presenter.ServerQueries;
+import com.example.diesiedler.presenter.handler.HandlerOverride;
+import com.example.diesiedler.threads.NetworkThread;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BankChangeActivity extends AppCompatActivity {
 
@@ -32,6 +43,9 @@ public class BankChangeActivity extends AppCompatActivity {
 
     StringBuilder res = new StringBuilder();
 
+    private static final Logger logger = Logger.getLogger(BankChangeActivity.class.getName());
+    Handler handler = new BankChangeHandler(Looper.getMainLooper(), this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +63,7 @@ public class BankChangeActivity extends AppCompatActivity {
         getBtns.add(oreGet);
         getBtns.add(clayGet);
 
-        GameSession game = (GameSession) getIntent().getSerializableExtra("game");
+        GameSession game = ClientData.currentGame;
         Player player = game.getCurr();
 
         if (player.getInventory().getWood() < 4) {
@@ -71,6 +85,8 @@ public class BankChangeActivity extends AppCompatActivity {
         if (player.getInventory().getClay() < 4) {
             clayGet.setEnabled(false);
         }
+
+        ClientData.currentHandler = handler;
     }
 
     public void setGive(View view) {
@@ -96,7 +112,39 @@ public class BankChangeActivity extends AppCompatActivity {
     }
 
     public void change(View view) {
-        /** TODO: send String to Server */
         String toSendTrade = res.toString();
+        logger.log(Level.INFO, "CREATE BANK CHANGE");
+        Thread networkThread = new NetworkThread(ServerQueries.createStringQueryBankChange(toSendTrade));
+        networkThread.start();
+    }
+
+    private class BankChangeHandler extends HandlerOverride {
+
+        BankChangeHandler(Looper mainLooper, Activity ac) {
+            super(mainLooper, ac);
+        }
+
+        /**
+         * Wird vom ServerCommunicationThread aufgerufen. Im Falle einer Stringübertragung wird
+         * die Nachricht als String dem Intent übergeben, sollte eine GameSession übertragen
+         * werden, so wurde der Handel durchgeführt und die MainActivity wird aufgerufen.
+         *
+         * @param msg msg.arg1 beinhaltet den entsprechenden Parameter zur weiteren Ausführung
+         */
+        @Override
+        public void handleMessage(Message msg) {
+
+            Intent intent = new Intent(activity, MainActivity.class);
+
+            if (msg.arg1 == 4) {  // TODO: Change to enums
+
+                ClientData.currentGame = (GameSession) msg.obj;
+                startActivity(intent);
+            }
+            if (msg.arg1 == 5) {  // TODO: Change to enums
+
+                intent.putExtra("mess", msg.obj.toString());
+            }
+        }
     }
 }
