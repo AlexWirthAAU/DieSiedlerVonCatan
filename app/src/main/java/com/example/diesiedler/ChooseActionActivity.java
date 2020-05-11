@@ -16,6 +16,11 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
     private Button buildRoad;
     private Button loadMain;
     private Button buildCity;
+    private Button buyDevCard;
+    private Button playdevCard;
+    private Button trade;
+    private Button exchange;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,11 +30,19 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
         buildRoad = findViewById(R.id.buildRoad);
         buildCity = findViewById(R.id.buildCity);
         loadMain = findViewById(R.id.loadOverview);
+        buyDevCard = findViewById(R.id.buyDevCard);
+        playdevCard = findViewById(R.id.setDevCard);
+        trade = findViewById(R.id.trade);
+        exchange = findViewById(R.id.exchange);
 
         buildSettlement.setOnClickListener(this);
         buildRoad.setOnClickListener(this);
         buildCity.setOnClickListener(this);
         loadMain.setOnClickListener(this);
+        buyDevCard.setOnClickListener(this);
+        playdevCard.setOnClickListener(this);
+        trade.setOnClickListener(this);
+        exchange.setOnClickListener(this);
 
     }
 
@@ -53,6 +66,18 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
             case R.id.loadOverview:
                 intent = new Intent(getBaseContext(), MainActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.exchange:
+                //TODO: load exhange activity
+                break;
+            case R.id.trade:
+                //TODO: load trade activity
+                break;
+            case R.id.setDevCard:
+                //TODO: load play devCard activity
+                break;
+            case R.id.buyDevCard:
+                //TODO: load buyDevCard activity
                 break;
         }
     }
