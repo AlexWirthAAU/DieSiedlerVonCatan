@@ -1,10 +1,11 @@
 package com.example.catangame;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Trade {
+public class Trade implements Serializable {
 
     private int woodGive;
     private int woodGet;

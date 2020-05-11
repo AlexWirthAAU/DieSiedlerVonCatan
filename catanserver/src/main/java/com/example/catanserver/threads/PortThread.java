@@ -4,8 +4,6 @@ import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catanserver.User;
 
-import java.net.Socket;
-
 public class PortThread extends GameThread {
 
     private Player currPlayer;
@@ -14,8 +12,8 @@ public class PortThread extends GameThread {
     private String give;
     private String get;
 
-    public PortThread(Socket connection, User user, GameSession game, String tradeStr) {
-        super(connection, user, game);
+    public PortThread(User user, GameSession game, String tradeStr) {
+        super(user, game);
         this.currPlayer = game.getPlayer(user.getUserId());
         this.tradeStr = tradeStr;
     }
@@ -29,11 +27,12 @@ public class PortThread extends GameThread {
             String mess = buildMessage();
             exchangeRessources();
             game.nextPlayer();
-            SendToClient.sendTradeMessage(connection, mess);
-            SendToClient.sendGameSessionBroadcast(connection, game);
+            SendToClient.sendTradeMessage(user, mess);
+            SendToClient.sendGameSessionBroadcast(game);
 
         } else {
-            SendToClient.sendErrorMessage(connection, "Nicht genug Rohstoffe um zu handeln");
+            ErrorThread errThread = new ErrorThread(user.getConnectionOutputStream(), "Nicht genug Rohstoffe um zu handeln");
+            errThread.run();
         }
     }
 

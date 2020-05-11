@@ -5,7 +5,6 @@ import com.example.catangame.Player;
 import com.example.catangame.Trade;
 import com.example.catanserver.User;
 
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +15,8 @@ public class TradeAnswerThread extends GameThread {
     private Player tradingPartner;
     private String answerStr;
 
-    public TradeAnswerThread(Socket connection, User user, GameSession game, String answerStr) {
-        super(connection, user, game);
+    public TradeAnswerThread(User user, GameSession game, String answerStr) {
+        super(user, game);
         this.currPlayer = game.getPlayer(user.getUserId());
         this.answerStr = answerStr;
         this.trade = game.getTrade();
@@ -100,7 +99,7 @@ public class TradeAnswerThread extends GameThread {
 
     private void distribute(List<Player> playersToSend, String mess) {
         game.nextPlayer();
-        SendToClient.sendTradeMessageBroadcast(connection, playersToSend, mess);
-        SendToClient.sendGameSessionBroadcast(connection, game);
+        SendToClient.sendTradeMessageBroadcast(playersToSend, mess);
+        SendToClient.sendGameSessionBroadcast(game);
     }
 }

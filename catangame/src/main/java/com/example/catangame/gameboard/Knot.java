@@ -1,11 +1,12 @@
 package com.example.catangame.gameboard;
 
 
-import com.example.catangame.*;
+import com.example.catangame.Player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Knot {
+public class Knot implements Serializable {
     private int row;                    //Each Knot is identified by row and column
     private int column;
     private String id;

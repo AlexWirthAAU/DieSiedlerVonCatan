@@ -25,24 +25,24 @@ public class Server {
     private static ServerSocket listenerSocket;
     private static Socket caughtConnection;
     protected static final List<Socket> currentConnections = Collections.synchronizedList(new LinkedList<Socket>());
-    protected static final List<GameSession> currentGames = Collections.synchronizedList(new LinkedList<GameSession>());
-    protected static final Set<Integer> currentlyThreaded = Collections.synchronizedSet(new HashSet<Integer>());
-    protected static final Set<User> currentlySearching = Collections.synchronizedSet(new HashSet<User>());
+    public static final List<GameSession> currentGames = Collections.synchronizedList(new LinkedList<GameSession>());
+    public static final Set<Integer> currentlyThreaded = Collections.synchronizedSet(new HashSet<Integer>());
+    public static final Set<User> currentlySearching = Collections.synchronizedSet(new HashSet<User>());
     private static boolean flag = true;
 
     public static void main(String[] args) {
         try {
             listenerSocket = new ServerSocket(SERVER_PORT);
-            System.out.println("Server running on port: " + SERVER_PORT);
-
-            Thread serverAcceptanceThread = new ServerAcceptanceThread();
-            serverAcceptanceThread.start();
+            System.out.println("Server running on port: " + listenerSocket.getInetAddress() + SERVER_PORT);
 
             while (flag) {
                 caughtConnection = listenerSocket.accept();
                 if (caughtConnection != null) {
+                    System.out.println("Remote: " + caughtConnection.getRemoteSocketAddress());
                     System.out.println("Connection to " + caughtConnection.getPort() + "(ListenerThread)");
-                    currentConnections.add(caughtConnection);
+
+                    Thread serverReaderThread = new ClientListenerThread(caughtConnection);
+                    serverReaderThread.start();
                 }
             }
 

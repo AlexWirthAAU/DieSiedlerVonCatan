@@ -2,7 +2,8 @@ package com.example.catanserver;
 
 import com.example.catangame.GameSession;
 
-import java.net.InetAddress;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -19,16 +20,18 @@ public class User {
     private static int userCounter = 0;
     private int userId;
     private String displayName;
-    private InetAddress connectionAddress;
-    private int connectionPort;
+    private Socket connection;
+    private ObjectOutputStream connectionOutputStream;
+    private ObjectInputStream connectionInputStream;
     private List<GameSession> gameSessions;
     private int wins = 0;
 
-    public User(String displayName, Socket connection) {
+    public User(String displayName, Socket connection, ObjectInputStream ois, ObjectOutputStream oos) {
         this.displayName = displayName;
-        this.connectionAddress = connection.getInetAddress();
-        this.connectionPort = connection.getPort();
         this.userId = userCounter++;
+        this.connection = connection;
+        this.connectionInputStream = ois;
+        this.connectionOutputStream = oos;
 
         gameSessions = Collections.synchronizedList(new LinkedList<GameSession>());
     }
@@ -43,22 +46,6 @@ public class User {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
-    }
-
-    public InetAddress getConnectionAddress() {
-        return connectionAddress;
-    }
-
-    public void setConnectionAddress(InetAddress connectionAddress) {
-        this.connectionAddress = connectionAddress;
-    }
-
-    public int getConnectionPort() {
-        return connectionPort;
-    }
-
-    public void setConnectionPort(int connectionPort) {
-        this.connectionPort = connectionPort;
     }
 
     public List<GameSession> getGameSessions() {
@@ -79,5 +66,29 @@ public class User {
 
     public int getWins() {
         return wins;
+    }
+
+    public Socket getConnection() {
+        return connection;
+    }
+
+    public void setConnection(Socket connection) {
+        this.connection = connection;
+    }
+
+    public ObjectOutputStream getConnectionOutputStream() {
+        return connectionOutputStream;
+    }
+
+    public void setConnectionOutputStream(ObjectOutputStream connectionOutputStream) {
+        this.connectionOutputStream = connectionOutputStream;
+    }
+
+    public ObjectInputStream getConnectionInputStream() {
+        return connectionInputStream;
+    }
+
+    public void setConnectionInputStream(ObjectInputStream connectionInputStream) {
+        this.connectionInputStream = connectionInputStream;
     }
 }

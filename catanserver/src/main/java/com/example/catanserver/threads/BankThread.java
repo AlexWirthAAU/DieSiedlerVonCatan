@@ -4,8 +4,6 @@ import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catanserver.User;
 
-import java.net.Socket;
-
 public class BankThread extends GameThread {
 
     private String give;
@@ -15,8 +13,8 @@ public class BankThread extends GameThread {
     private StringBuilder message = new StringBuilder();
     private String tradeStr;
 
-    public BankThread(Socket connection, User user, GameSession game, String tradeStr) {
-        super(connection, user, game);
+    public BankThread(User user, GameSession game, String tradeStr) {
+        super(user, game);
         this.currPlayer = game.getPlayer(user.getUserId());
         this.tradeStr = tradeStr;
     }
@@ -30,11 +28,12 @@ public class BankThread extends GameThread {
             String mess = buildMessage();
             exchangeRessources();
             game.nextPlayer();
-            SendToClient.sendTradeMessage(connection, mess);
-            SendToClient.sendGameSessionBroadcast(connection, game);
+            SendToClient.sendTradeMessage(user, mess);
+            SendToClient.sendGameSessionBroadcast(game);
 
         } else {
-            SendToClient.sendErrorMessage(connection, "Nicht genug Rohstoffe um zu handeln");
+            ErrorThread errThread = new ErrorThread(user.getConnectionOutputStream(), "Nicht genug Rohstoffe um zu handeln");
+            errThread.run();
         }
     }
 
@@ -54,13 +53,13 @@ public class BankThread extends GameThread {
                 invent = currPlayer.getInventory().getWool();
                 break;
             case "Weizen":
-                invent = currPlayer.getInventory().getWool();
+                invent = currPlayer.getInventory().getWheat();
                 break;
             case "Erz":
-                invent = currPlayer.getInventory().getWool();
+                invent = currPlayer.getInventory().getOre();
                 break;
             case "Lehm":
-                invent = currPlayer.getInventory().getWool();
+                invent = currPlayer.getInventory().getClay();
                 break;
             default:
                 break;

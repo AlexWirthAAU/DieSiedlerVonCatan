@@ -148,4 +148,6 @@
     <string name="res">Wähle deine Rohstoffe</string>
     <string name="change">Tauschen</string>
     <string name="showCosts">Baukosten zeigen</string>
+    <string name="searchstart">Suchen</string>
+    <string name="searchstop">Suche beenden</string>
 </resources>

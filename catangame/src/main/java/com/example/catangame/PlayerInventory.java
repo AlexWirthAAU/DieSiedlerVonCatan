@@ -7,9 +7,10 @@ import com.example.catangame.devcards.MonopolCard;
 import com.example.catangame.gameboard.Edge;
 import com.example.catangame.gameboard.Knot;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
-public class PlayerInventory {
+public class PlayerInventory implements Serializable {
 
 
     private final int STARTVALUE = 0;

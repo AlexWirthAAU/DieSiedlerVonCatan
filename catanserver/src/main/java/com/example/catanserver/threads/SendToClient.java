@@ -7,7 +7,6 @@ import com.example.catanserver.User;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -20,45 +19,60 @@ import java.util.Set;
 
 public class SendToClient {
 
-    static void sendUserId(Socket connection, int userId) {
+    public static void sendUserId(User user, int userId) {
         try {
-            sendToClient(connection,userId);
-            connection.close();
+            sendToClient(user, userId);
         }catch(IOException ex){
             System.err.println(ex.getMessage());
             System.err.println("Could not send UserId to Client.");
         }
     }
 
-    static void sendSearchingList(Socket connection, Set<User> set) {
+    public static void sendSearchingListBroadcast(Set<User> set) {
         List<String> searchingList = createSearchingList(set);
-        try{
-            sendToClient(connection,searchingList);
-            connection.close();
-        }catch (IOException ex){
-            System.err.println(ex.getMessage());
-            System.err.println("Could not send List to Client.");
-        }
-    }
-
-    public static void sendSearchingListBroadcast(Socket connection, Set<User> set){ // TODO: Discuss -> Broadcast or timed refreshes? (or both?)
-        List<String> searchingList = createSearchingList(set);
-        for (User user: set) {
-            try{
-                sendToClient(user,searchingList);
-            }catch(IOException ex){
+        for (User user : set) {
+            try {
+                sendToClient(user, searchingList);
+            } catch (IOException ex) {
                 System.err.println(ex.getMessage());
                 System.err.println("Could not send List to Client" + user.getDisplayName() + ".");
             }
         }
-        try{
-            connection.close();
-        }catch (IOException e){
-            e.printStackTrace();
+    }
+
+    public static void sendGameStartBroadcast(GameSession game) {
+        List<User> userList = createGameUserList(game);
+        if (userList.size() == game.getPlayers().size()) {
+            for (User user : userList) {
+                try {
+                    sendToClient(user, "STARTGAME");
+                } catch (IOException ex) {
+                    System.err.println(ex.getMessage());
+                    System.err.println("Could not start GameSession at Client " + user.getDisplayName() + ".");
+                }
+            }
+        } else {
+            // TODO: What happens if a user cant be found? (should not happen)
         }
     }
 
-    static void sendTradeMessageBroadcast(Socket connection, List<Player> toSend, String message) { // TODO: Discuss -> Broadcast or timed refreshes? (or both?)
+    public static void sendGameSessionBroadcast(GameSession game) {
+        List<User> userList = createGameUserList(game);
+        if (userList.size() == game.getPlayers().size()) {
+            for (User user : userList) {
+                try {
+                    sendToClient(user, game);
+                } catch (IOException ex) {
+                    System.err.println(ex.getMessage());
+                    System.err.println("Could not send GameSession to Client " + user.getDisplayName() + ".");
+                }
+            }
+        } else {
+            // TODO: What happens if a user cant be found? (should not happen)
+        }
+    }
+
+    static void sendTradeMessageBroadcast(List<Player> toSend, String message) {
         List<User> userList = createTradeUserList(toSend);
         for (User user : userList) {
             try {
@@ -68,100 +82,50 @@ public class SendToClient {
                 System.err.println("Could not send Message to Client" + user.getDisplayName() + ".");
             }
         }
-        try {
-            connection.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
-    static void sendTradeMessage(Socket connection, String message) { // TODO: Discuss -> Broadcast or timed refreshes? (or both?)
+    static void sendTradeMessage(User user, String message) {
         try {
-            sendToClient(connection, message);
-            connection.close();
+            sendToClient(user, message);
         } catch (IOException ex) {
             System.err.println(ex.getMessage());
             System.err.println("Could not send GameSession to Client.");
         }
     }
 
-    static void sendGameStartBroadcast(Socket connection, GameSession game) {
-        List<User> userList = createGameUserList(game);
-        if(userList.size() == game.getPlayers().size()){
-            for (User user:userList) {
-                try{
-                    sendToClient(user,"STARTGAME");  // TODO: GameId necessary?
-                }catch(IOException ex){
-                    System.err.println(ex.getMessage());
-                    System.err.println("Could not start GameSession at Client " + user.getDisplayName() + ".");
-                }
-            }
-        }
-        else{
-            // TODO: What happens if user cant be found? (should not happen)
-        }
+    public static void sendErrorMessage(ObjectOutputStream connectionOutputStream, String message) {
         try{
-            connection.close();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    public static void sendGameSession(Socket connection, GameSession game){
-        try{
-            sendToClient(connection,game);
-            connection.close();
-        }catch(IOException ex){
-            System.err.println(ex.getMessage());
-            System.err.println("Could not send GameSession to Client.");
-        }
-    }
-
-    static void sendGameSessionBroadcast(Socket connection, GameSession game) {
-        List<User> userList = createGameUserList(game);
-        if(userList.size() == game.getPlayers().size()) {
-            for (User user:userList){
-                try {
-                    sendToClient(user,game);
-                } catch (IOException ex) {
-                    System.err.println(ex.getMessage());
-                    System.err.println("Could not send GameSession to Client " + user.getDisplayName() + ".");
-                }
-            }
-        }
-        else{
-            // TODO: What happens if user cant be found? (should not happen)
-        }
-        try{
-            connection.close();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    static void sendErrorMessage(Socket connection, String message) {
-        try{
-            sendToClient(connection,message);
-        }catch (IOException ex){
+            connectionOutputStream.writeObject(message);
+            connectionOutputStream.flush();
+        } catch (IOException ex) {
             System.err.println(ex.getMessage());
             System.err.println("Could not send error message to Client.");
             System.err.println("Message: " + message);
         }
     }
 
-    private static List<User> createGameUserList(GameSession game){
+    private static List<User> createGameUserList(GameSession game) {
         List<User> list = new ArrayList<>();
-        for (Player player:game.getPlayers()) {
+        for (Player player : game.getPlayers()) {
             User foundUser = null;
-            for (User user:Server.currentUsers) {
-                if(user.getUserId() == player.getUserId()){
+            for (User user : Server.currentUsers) {
+                if (user.getUserId() == player.getUserId()) {
                     foundUser = user;
                     break;
                 }
             }
-            if(foundUser != null){
+            if (foundUser != null) {
                 list.add(foundUser);
             }
+        }
+        return list;
+    }
+
+    private static List<String> createSearchingList(Set<User> users) {
+        List<String> list = new ArrayList<>();
+        for (User user : users) {
+            list.add("" + user.getUserId());
+            list.add(user.getDisplayName());
         }
         return list;
     }
@@ -183,26 +147,16 @@ public class SendToClient {
         return list;
     }
 
-    private static List<String> createSearchingList(Set<User> users){
-        List<String> list = new ArrayList<>();
-        for (User user:users) {
-            list.add(""+user.getUserId());
-            list.add(user.getDisplayName());
-        }
-        return list;
-    }
-
-    private static void sendToClient(User user, Object obj) throws IOException{
-        try (Socket connection = new Socket(user.getConnectionAddress(), user.getConnectionPort())) {
-            ObjectOutputStream connectionOutputStream = new ObjectOutputStream(connection.getOutputStream());
-            connectionOutputStream.writeObject(obj);
-            connectionOutputStream.close();
-        }
-    }
-
-    private static void sendToClient(Socket connection, Object obj) throws IOException{
-        ObjectOutputStream connectionOutputStream = new ObjectOutputStream(connection.getOutputStream());
-        connectionOutputStream.writeObject(obj);
-        connectionOutputStream.close();
+    /**
+     * Sends a new Object to the Client.
+     *
+     * @param user User to be sent to.
+     * @param obj  Object to be sent to the User.
+     * @throws IOException
+     */
+    private static void sendToClient(User user, Object obj) throws IOException {
+        user.getConnectionOutputStream().reset();
+        user.getConnectionOutputStream().writeObject(obj);
+        user.getConnectionOutputStream().flush();
     }
 }

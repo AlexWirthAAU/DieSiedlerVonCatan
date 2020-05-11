@@ -5,7 +5,6 @@ import com.example.catangame.Player;
 import com.example.catangame.Trade;
 import com.example.catanserver.User;
 
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -21,15 +20,15 @@ public class TradeThread extends GameThread {
     private StringBuilder message = new StringBuilder();
     private String tradeStr;
 
-    public TradeThread(Socket connection, User user, GameSession game, String tradeStr) {
-        super(connection, user, game);
+    public TradeThread(User user, GameSession game, String tradeStr) {
+        super(user, game);
         this.currPlayer = game.getPlayer(user.getUserId());
         this.tradeStr = tradeStr;
     }
 
     public void run() {
 
-        setTradeData(tradeStr, game);
+        setTradeData(tradeStr);
 
         if (checkTrade(offer)) {
 
@@ -41,27 +40,24 @@ public class TradeThread extends GameThread {
             distribute(potentialTradingPartners, mess);
 
         } else {
-            SendToClient.sendErrorMessage(connection, "Nicht genug Rohstoffe um zu handeln");
+            ErrorThread errThread = new ErrorThread(user.getConnectionOutputStream(), "Nicht genug Rohstoffe um zu handeln");
+            errThread.run();
         }
     }
 
     private void distribute(List<Player> playersToSend, String mess) {
-        SendToClient.sendTradeMessageBroadcast(connection, playersToSend, mess);
+        SendToClient.sendTradeMessageBroadcast(playersToSend, mess);
     }
 
     private boolean checkTrade(Map<String, Integer> offer) {
 
         if (currPlayer.getInventory().canTrade) {
             return false;
-        } else if (currPlayer.getInventory().getWood() >= offer.get("WoodGive")
+        } else return currPlayer.getInventory().getWood() >= offer.get("WoodGive")
                 && currPlayer.getInventory().getWool() >= offer.get("WoolGive")
                 && currPlayer.getInventory().getWheat() >= offer.get("WheatGive")
                 && currPlayer.getInventory().getOre() >= offer.get("OreGive")
-                && currPlayer.getInventory().getClay() >= offer.get("ClayGive")) {
-
-            return true;
-        }
-        return false;
+                && currPlayer.getInventory().getClay() >= offer.get("ClayGive");
     }
 
     private void checkAndSetTradingPartners(GameSession game, Map<String, Integer> want) {
@@ -84,7 +80,7 @@ public class TradeThread extends GameThread {
         }
     }
 
-    private void setTradeData(String tradeStr, GameSession game) {
+    private void setTradeData(String tradeStr) {
 
         String[] trd = tradeStr.split("/");
         int i = 0;

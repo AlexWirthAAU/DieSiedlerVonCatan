@@ -1,12 +1,13 @@
 package com.example.diesiedler.presenter;
 
+import com.example.catangame.GameSession;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectStreamClass;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -16,7 +17,8 @@ import java.util.List;
  * Die Deserialisierung soll nur durchgeführt werden, wenn das Objekt von einer
  * erlaubten Klasse ist.
  */
-public class SecureObjectStream extends ObjectInputStream {
+public class SecureObjectInputStream extends ObjectInputStream {
+
 
     private List<Class<?>> allowed = new ArrayList<>();
 
@@ -26,11 +28,12 @@ public class SecureObjectStream extends ObjectInputStream {
      * @param inputStream InputStream vom Socket
      * @throws IOException wenn der super-Konstruktor den InputStream nicht lesen kann
      */
-    SecureObjectStream(InputStream inputStream) throws IOException {
+    public SecureObjectInputStream(InputStream inputStream) throws IOException {
         super(inputStream);
+        allowed.add(GameSession.class);
         allowed.add(ArrayList.class);
-        allowed.add(HashMap.class);
         allowed.add(String.class);
+        allowed.add(Number.class);
         allowed.add(Integer.class);
     }
 

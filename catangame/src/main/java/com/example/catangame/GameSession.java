@@ -114,7 +114,7 @@ public class GameSession implements Serializable {
         cities.add(settlement);
     }
 
-    private void nextPlayer(){
+    public void nextPlayer() {
         if (currPlayer == players.size() - 1) {
             currPlayer = 0;
         }

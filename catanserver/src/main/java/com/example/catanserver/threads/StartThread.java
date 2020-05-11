@@ -5,8 +5,6 @@ import com.example.catangame.Player;
 import com.example.catanserver.Server;
 import com.example.catanserver.User;
 
-import java.net.Socket;
-
 /**
  * @author Fabian Schaffenrath
  * This Thread starts the Game for every User.
@@ -16,8 +14,9 @@ import java.net.Socket;
 
 public class StartThread extends GameThread{
 
-    public StartThread(Socket connection, User user, GameSession game) {
-        super(connection, user, game);
+
+    public StartThread(User user, GameSession game) {
+        super(user, game);
     }
 
     public void run(){
@@ -29,7 +28,7 @@ public class StartThread extends GameThread{
             }
         }
         if(allColorsSet){
-            SendToClient.sendGameStartBroadcast(connection,game);
+            SendToClient.sendGameStartBroadcast(game);
         }
         Server.currentlyThreaded.remove(game.getGameId());
     }

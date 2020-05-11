@@ -1,8 +1,10 @@
 package com.example.catangame.gameboard;
 
-import com.example.catangame.*;
+import com.example.catangame.Player;
 
-public class Edge {
+import java.io.Serializable;
+
+public class Edge implements Serializable {
     private String id;              //Each Edge has a Id named: edge_<Knot1_Row><Knot1_Column><Knot2_Row><Knot2_Column>
     private Knot one;               //Each edge is defined as straight between two knots
     private Knot two;

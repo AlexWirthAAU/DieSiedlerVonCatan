@@ -5,13 +5,15 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.catangame.GameSession;
-import com.example.diesiedler.presenter.GameBoardClickListener;
-import com.example.diesiedler.presenter.PresenterBuild;
+import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
 import com.richpath.RichPathView;
+
+import java.util.logging.Logger;
 
 public class MainActivity extends AppCompatActivity {
 
     private GameSession game;
+    private static final Logger logger = Logger.getLogger(MainActivity.class.getName());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clicked(String s) {
-        new PresenterBuild().chooseAssetID(s);
+
     }
 
 }
