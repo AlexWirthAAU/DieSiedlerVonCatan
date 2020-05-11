@@ -20,18 +20,19 @@ public class UpdateBuildCityView {
         if (possibleKnots != null) {
             for (Knot k : possibleKnots
             ) {
-                RichPath knot = rpv.findRichPathByName(k.getId());
-                knot.setFillColor(Color.RED);
+                RichPath knotPath = rpv.findRichPathByName(k.getId());
+                knotPath.setFillColor(Color.RED);
             }
             return 1;
         } else {
+            //not enough resources
             return 0;
         }
     }
 
     private static LinkedList<Knot> possibleKnots(GameSession gs) {
         LinkedList<Knot> possibleKnots = new LinkedList<>();
-        Player p = gs.getPlayer(1); //TODO: Update
+        Player p = gs.getPlayer(ClientData.userId);
 
 
         if (p.getInventory().getWheat() >= 2 && p.getInventory().getOre() >= 3) {
@@ -42,8 +43,9 @@ public class UpdateBuildCityView {
                 }
             }
             return possibleKnots;
+        } else {
+            return null;
         }
-        return null;
     }
 
 }

@@ -175,6 +175,15 @@ public class ClientListenerThread extends Thread {
                                                     Server.currentlyThreaded.remove(foundGame.getGameId());
                                                 }
 
+                                                if (messageSplit[2].equals("BUILDCITY")) {
+                                                    int knotIndex = Integer.parseInt(messageSplit[3]);
+                                                    Server.currentlyThreaded.add(foundGame.getGameId());
+                                                    System.out.println("Starting BUILDCITYThread.");
+                                                    Thread bcThread = new BuildCityThread(foundGame, user, knotIndex);
+                                                    bcThread.start();
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
+                                                }
+
                                                 if (messageSplit[2].equals("DICEVALUE")) {
                                                     int diceValue = Integer.parseInt(messageSplit[3]);
                                                     Server.currentlyThreaded.add(foundGame.getGameId());

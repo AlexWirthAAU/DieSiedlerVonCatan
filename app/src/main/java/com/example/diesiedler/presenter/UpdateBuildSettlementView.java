@@ -25,6 +25,9 @@ public class UpdateBuildSettlementView {
         LinkedList<Knot> possibleKnots = possibleKnots(gs);
 
         if (possibleKnots != null) {
+            if (possibleKnots.size() == 0) {
+                return -1;
+            }
             for (Knot k : possibleKnots
             ) {
                 RichPath knot = rpv.findRichPathByName(k.getId());
@@ -45,7 +48,6 @@ public class UpdateBuildSettlementView {
             //Player does not have enough resources to build
             logger.log(Level.INFO, "Player cant build Settlement");
             return null;
-
 
         } else if (currentP.getInventory().getSettlements().size() < 2) {
             logger.log(Level.INFO, "Player can build Settlement INIT");
@@ -120,7 +122,6 @@ public class UpdateBuildSettlementView {
                 settledNeighbors++;
             }
         }
-        Log.d("DEBUG", "NEIGHBORS: " + settledNeighbors);
         return settledNeighbors;
     }
 

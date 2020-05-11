@@ -26,6 +26,7 @@ public class BuildCity {
         possibleCity.setPlayer(player);
         gameSession.addCity(possibleCity);
         updatePlayerInventory(player, possibleCity);
+        gameSession.nextPlayer();
     }
 
     private static void updatePlayerInventory(Player p, Knot k) {

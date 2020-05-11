@@ -1,22 +1,19 @@
 package com.example.diesiedler;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-
-import com.example.catangame.GameSession;
-import com.example.catangame.Player;
 import com.example.catangame.PlayerInventory;
 import com.example.catangame.gameboard.Edge;
-import com.example.catangame.gameboard.Gameboard;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.UpdateBuildRoadView;
@@ -24,12 +21,11 @@ import com.example.diesiedler.presenter.UpdateGameboardView;
 import com.example.diesiedler.presenter.handler.HandlerOverride;
 import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
 import com.example.diesiedler.threads.NetworkThread;
-import com.richpath.RichPath;
+
 import com.richpath.RichPathView;
 
-import java.io.IOError;
 
-public class BuildRoadActivity extends AppCompatActivity {
+public class BuildRoadActivity extends AppCompatActivity implements View.OnClickListener {
 
     /**
      * This activity should allow the user to click the edge he wants to build on
@@ -39,47 +35,49 @@ public class BuildRoadActivity extends AppCompatActivity {
      */
 
     private Handler handler = new BuildRoadHandler(Looper.getMainLooper(), this);
+    private AlertDialog.Builder alertBuilder;
     private TextView woodCount;
     private TextView clayCount;
     private TextView wheatCount;
     private TextView oreCount;
     private TextView woolCount;
+    private Button devCards;
+    private Button scoreBoard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameboardview);
         RichPathView richPathView = findViewById(R.id.ic_gameboardView);
+
+        devCards = findViewById(R.id.devCards);
+        devCards.setOnClickListener(this);
+        scoreBoard = findViewById(R.id.scoreBoard);
+        scoreBoard.setOnClickListener(this);
+
         UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
         updateResources();
         ClientData.currentHandler = handler;
 
         int status = UpdateBuildRoadView.updateView(ClientData.currentGame, richPathView);
         if (status == 0) {
-            /**
-             * CANT BUILD MESSAGE
-             */
-
+            alertBuilder = new AlertDialog.Builder(this);
+            alertBuilder.setTitle("Du kannst nicht bauen");
+            alertBuilder.setMessage("Du hast nicht genügend Rohstoffe!");
+            alertBuilder.setCancelable(true);
+            alertBuilder.setNeutralButton(android.R.string.ok,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent intent = new Intent(getBaseContext(), ChooseActionActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+            alertBuilder.create();
+            alertBuilder.show();
         } else {
-            /**
-             * CHOOSE ONE OF RED KNOTS & SEND KNOT-INDEX TO SERVER
-             * THEN LOAD MAIN - ACTIVITY (OVERVIEW)
-             */
             GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView, this);
             gameBoardClickListener.clickBoard("BuildRoad");
         }
-
-        /*
-        for (Edge e : g.getEdges()
-        ) {
-            if (p.getInventory().getRoadKnots().contains(e.getOne()) || p.getInventory().getRoadKnots().contains(e.getTwo())) {
-                if (e.getPlayer() == null) {
-                    richPath = richPathView.findRichPathByName(e.getId());
-                    richPath.setFillColor(Color.BLACK);
-                }
-            }
-        }
-         */
     }
 
     private void updateResources() {
@@ -111,6 +109,19 @@ public class BuildRoadActivity extends AppCompatActivity {
 
         Thread networkThread = new NetworkThread(ServerQueries.createStringQueryBuildRoad(eIString));
         networkThread.start();
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent intent;
+        switch (view.getId()) {
+            case R.id.devCards:
+                //TODO: load new activity
+                break;
+            case R.id.scoreBoard:
+                //TODO: load new activity
+                break;
+        }
     }
 
     private class BuildRoadHandler extends HandlerOverride {

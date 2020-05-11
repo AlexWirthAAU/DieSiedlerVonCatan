@@ -67,9 +67,10 @@ public class ResourceAllocation {
             if (p != null) {
                 if (tileKnots[i].hasCity() == true) {
                     p.getInventory().addWood(2);
+                    System.out.println("Updated Wood +2");
                 } else {
                     p.getInventory().addWood(1);
-                    System.out.println("Updated Wood");
+                    System.out.println("Updated Wood +1");
                 }
             }
         }
@@ -82,9 +83,10 @@ public class ResourceAllocation {
             if (p != null) {
                 if (tileKnots[i].hasCity() == true) {
                     p.getInventory().addWool(2);
+                    System.out.println("Updated Wool +2");
                 } else {
                     p.getInventory().addWool(1);
-                    System.out.println("Updated Wool");
+                    System.out.println("Updated Wool +1");
                 }
             }
         }
@@ -97,9 +99,10 @@ public class ResourceAllocation {
             if (p != null) {
                 if (tileKnots[i].hasCity() == true) {
                     p.getInventory().addClay(2);
+                    System.out.println("Updated Clay +2");
                 } else {
                     p.getInventory().addClay(1);
-                    System.out.println("Updated Clay");
+                    System.out.println("Updated Clay +1");
                 }
             }
         }
@@ -113,9 +116,10 @@ public class ResourceAllocation {
             if (p != null) {
                 if (tileKnots[i].hasCity() == true) {
                     p.getInventory().addOre(2);
+                    System.out.println("Updated Ore +2");
                 } else {
                     p.getInventory().addOre(1);
-                    System.out.println("Updated Ore");
+                    System.out.println("Updated Ore +1");
                 }
             }
         }
@@ -128,9 +132,10 @@ public class ResourceAllocation {
             if (p != null) {
                 if (tileKnots[i].hasCity() == true) {
                     p.getInventory().addWheat(2);
+                    System.out.println("Updated Wheat +2");
                 } else {
                     p.getInventory().addWheat(1);
-                    System.out.println("Updated Wheat");
+                    System.out.println("Updated Wheat +1");
                 }
             }
         }

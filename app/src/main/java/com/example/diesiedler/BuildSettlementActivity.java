@@ -1,12 +1,16 @@
 package com.example.diesiedler;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +30,7 @@ import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
 import com.example.diesiedler.threads.NetworkThread;
 import com.richpath.RichPathView;
 
-public class BuildSettlementActivity extends AppCompatActivity {
+public class BuildSettlementActivity extends AppCompatActivity implements View.OnClickListener {
 
     /**
      * This activity should allow the user to click the knot he wants to build on
@@ -41,6 +45,9 @@ public class BuildSettlementActivity extends AppCompatActivity {
     private TextView wheatCount;
     private TextView oreCount;
     private TextView woolCount;
+    private Button devCards;
+    private Button scoreBoard;
+    private AlertDialog.Builder alertBuilder;
 
 
     @Override
@@ -49,23 +56,46 @@ public class BuildSettlementActivity extends AppCompatActivity {
         setContentView(R.layout.gameboardview);
         RichPathView richPathView = findViewById(R.id.ic_gameboardView);
 
-        Log.d("DEBUG", "This User: " + ClientData.userId + " current Player is: " + ClientData.currentGame.getPlayer(ClientData.currentGame.getCurrPlayer()).getUserId());
+        devCards = findViewById(R.id.devCards);
+        devCards.setOnClickListener(this);
+        scoreBoard = findViewById(R.id.scoreBoard);
+        scoreBoard.setOnClickListener(this);
 
         UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
         updateResources();
         int status = UpdateBuildSettlementView.updateView(ClientData.currentGame, richPathView);
         ClientData.currentHandler = handler;
 
-        if (status == 0) {
-            /**
-             * CANT BUILD MESSAGE
-             */
+        if (status == -1) {
+            alertBuilder = new AlertDialog.Builder(this);
+            alertBuilder.setTitle("Du kannst nicht bauen");
+            alertBuilder.setMessage("Keine deiner Straßen führt zu einer bebaubaren Kreuzung!");
+            alertBuilder.setCancelable(true);
+            alertBuilder.setNeutralButton(android.R.string.ok,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent intent = new Intent(getBaseContext(), ChooseActionActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+            alertBuilder.create();
+            alertBuilder.show();
+        } else if (status == 0) {
+            alertBuilder = new AlertDialog.Builder(this);
+            alertBuilder.setTitle("Du kannst nicht bauen");
+            alertBuilder.setMessage("Du hast nicht genügend Rohstoffe!");
+            alertBuilder.setCancelable(true);
+            alertBuilder.setNeutralButton(android.R.string.ok,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent intent = new Intent(getBaseContext(), ChooseActionActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+            alertBuilder.create();
+            alertBuilder.show();
 
-        } else {
-            /**
-             * CHOOSE ONE OF RED KNOTS & SEND KNOT-INDEX TO SERVER
-             * THEN LOAD MAIN - ACTIVITY (OVERVIEW)
-             */
+        } else if (status == 1) {
             GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView, this);
             gameBoardClickListener.clickBoard("BuildSettlement");
         }
@@ -104,6 +134,19 @@ public class BuildSettlementActivity extends AppCompatActivity {
         woolCount.setText(Integer.toString(playerInventory.getWool()));
     }
 
+    @Override
+    public void onClick(View view) {
+        Intent intent;
+        switch (view.getId()) {
+            case R.id.devCards:
+                //TODO: load new activity
+                break;
+            case R.id.scoreBoard:
+                //TODO: load new activity
+                break;
+        }
+    }
+
 
     private class BuildSettlementHandler extends HandlerOverride {
 
@@ -120,11 +163,9 @@ public class BuildSettlementActivity extends AppCompatActivity {
                 if (currentP.getUserId() == ClientData.userId && gameSession.getPlayer(ClientData.userId).getInventory().getRoads().size() < 2) {
                     Intent intent = new Intent(activity, BuildRoadActivity.class);
                     startActivity(intent);
-                    Log.d("DEBUG", "Loaded BuildRoad: " + ClientData.userId + " " + currentP.getUserId());
                 } else {
                     Intent intent = new Intent(activity, MainActivity.class);
                     startActivity(intent);
-                    Log.d("DEBUG", "Loaded Main: " + ClientData.userId + " " + currentP.getUserId());
                 }
             }
         }

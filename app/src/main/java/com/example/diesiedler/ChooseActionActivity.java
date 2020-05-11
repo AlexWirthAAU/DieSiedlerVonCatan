@@ -15,6 +15,7 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
     private Button buildSettlement;
     private Button buildRoad;
     private Button loadMain;
+    private Button buildCity;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,10 +23,12 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
 
         buildSettlement = findViewById(R.id.buildSettlement);
         buildRoad = findViewById(R.id.buildRoad);
+        buildCity = findViewById(R.id.buildCity);
         loadMain = findViewById(R.id.loadOverview);
 
         buildSettlement.setOnClickListener(this);
         buildRoad.setOnClickListener(this);
+        buildCity.setOnClickListener(this);
         loadMain.setOnClickListener(this);
 
     }
@@ -41,6 +44,10 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
                 break;
             case R.id.buildRoad:
                 intent = new Intent(getBaseContext(), BuildRoadActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.buildCity:
+                intent = new Intent(getBaseContext(), BuildCityActivity.class);
                 startActivity(intent);
                 break;
             case R.id.loadOverview:

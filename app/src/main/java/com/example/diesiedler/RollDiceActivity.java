@@ -40,8 +40,6 @@ public class RollDiceActivity extends AppCompatActivity implements SensorEventLi
     private int sum;
     private int statusStarts = 0;
     private int finalSum = 0;
-    boolean valueSent = false;
-    boolean checked = false;
 
     private Handler handler = new RollDiceHandler(Looper.getMainLooper(), this);
 
@@ -85,7 +83,6 @@ public class RollDiceActivity extends AppCompatActivity implements SensorEventLi
         if (Math.abs(acceleration) < 0.1 && statusStarts == 1) {
             //This is where the shaking stops
             finalSum = sum;
-            String sumAsString = Integer.toString(finalSum);
             sensorManager.unregisterListener(this);
             Log.d("DEBUG", "FINAL VALUE IS: " + finalSum);
             //new AlertDialog.Builder(this).setTitle("AUGENSUMME:").setMessage("Du hast " + finalSum + " gewürfelt.").show();

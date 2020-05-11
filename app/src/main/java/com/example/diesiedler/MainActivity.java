@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -21,7 +22,7 @@ import com.richpath.RichPathView;
 
 import java.util.logging.Logger;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     /**
      * Main - Activity: Overview - View -> Gameboard and Inventory
      */
@@ -34,12 +35,21 @@ public class MainActivity extends AppCompatActivity {
     private TextView oreCount;
     private TextView woolCount;
     private TextView currentPlayer;
+    private Button devCards;
+    private Button scoreBoard;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameboardview);
         RichPathView richPathView = findViewById(R.id.ic_gameboardView);
+
+        devCards = findViewById(R.id.devCards);
+        devCards.setOnClickListener(this);
+        scoreBoard = findViewById(R.id.scoreBoard);
+        scoreBoard.setOnClickListener(this);
+
         UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
         updateResources();
 
@@ -65,6 +75,18 @@ public class MainActivity extends AppCompatActivity {
         currentPlayer.setText(currentP.getDisplayName() + " ist gerade am Zug");
     }
 
+    @Override
+    public void onClick(View view) {
+        Intent intent;
+        switch (view.getId()) {
+            case R.id.devCards:
+                //TODO: load new activity
+                break;
+            case R.id.scoreBoard:
+                //TODO: load new activity
+                break;
+        }
+    }
 
 
     private class MainActivityHandler extends HandlerOverride {

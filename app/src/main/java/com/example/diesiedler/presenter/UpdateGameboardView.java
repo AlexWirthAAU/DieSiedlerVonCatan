@@ -1,10 +1,6 @@
 package com.example.diesiedler.presenter;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
-import android.view.View;
-
 import com.example.catangame.Colors;
 import com.example.catangame.GameSession;
 import com.example.catangame.gameboard.Edge;
@@ -25,7 +21,11 @@ public class UpdateGameboardView {
 
         for (Knot k : g.getKnots()
         ) {
-            RichPath richPath = richPathView.findRichPathByName(k.getId());
+            String city = "city_" + k.getRow() + "_" + k.getColumn();
+
+            RichPath knotPath = richPathView.findRichPathByName(k.getId());
+            RichPath cityPath = richPathView.findRichPathByName(city);
+
             if (k.getPlayer() != null) {
                 Colors c = k.getPlayer().getColor();
                 int color = 0;
@@ -45,9 +45,11 @@ public class UpdateGameboardView {
                     default:
                         break;
                 }
-                richPath.setFillColor(color);
+                knotPath.setFillColor(color);
+                if (k.hasCity()) {
+                    cityPath.setFillAlpha(1);
+                }
             }
-
         }
 
         for (Edge e : g.getEdges()

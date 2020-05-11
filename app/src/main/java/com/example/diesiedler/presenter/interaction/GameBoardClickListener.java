@@ -39,15 +39,9 @@ public class GameBoardClickListener {
                     if (activity.equals("BuildSettlement") && richPath.getFillColor() == Color.RED) {
                         toSend[0] = richPath.getName();
                         new BuildSettlementActivity().clicked(toSend[0]);
-                    } else if (activity.equals("BuildCity")) {
-                        toSend[0] = richPath.getName() + " BuildCity";
-                        try {
-                            new BuildCityActivity().clicked(toSend[0]);
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                    } else if (activity.equals("BuildCity") && richPath.getFillColor() == Color.RED) {
+                        toSend[0] = richPath.getName();
+                        new BuildCityActivity().clicked(toSend[0]);
                     }
                 } else if (pathType.contains("edge")) {
                     //TODO: What should happen if Edge is clicked:

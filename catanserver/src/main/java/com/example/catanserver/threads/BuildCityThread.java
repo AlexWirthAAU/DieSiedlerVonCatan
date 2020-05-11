@@ -21,6 +21,7 @@ public class BuildCityThread extends GameThread {
 
     public void run() {
         BuildCity.updateGameSession(gameSession, knotIndex, userID);
+        SendToClient.sendGameSessionBroadcast(gameSession);
     }
 
 }
