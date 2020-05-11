@@ -44,14 +44,26 @@
         android:textSize="30sp" />
 
     <Button
-        android:id="@+id/updateUserButton2"
+        android:id="@+id/searchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="100dp"
         android:backgroundTint="#FFA000"
-        android:onClick="updateList"
-        android:text="@string/reload"
+        android:onClick="startSearching"
+        android:text="@string/searchstart"
+        android:textColor="#A10101"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/stopButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="100dp"
+        android:backgroundTint="#FFA000"
+        android:onClick="stopSearching"
+        android:text="@string/searchstop"
         android:textColor="#A10101"
         android:textSize="30sp" />
 

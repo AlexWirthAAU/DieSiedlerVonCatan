@@ -1,3 +1,4 @@
 rootProject.name='Catan'
 include ':app'
 include ':catanserver'
+include ':catangame'

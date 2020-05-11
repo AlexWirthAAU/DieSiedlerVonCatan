@@ -15,15 +15,21 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".ShowCostsActivity" />
         <activity android:name=".WelcomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".SearchPlayersActivity" />
         <activity android:name=".SelectColorsActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".StartGameActivity" />
-        <activity android:name=".BuildSettlementActivity"></activity>
+        <activity android:name=".BuildSettlementActivity" />
         <activity android:name=".BuildRoadActivity" />
-        <activity android:name=".BuildCityActivity">
-        </activity>
+        <activity android:name=".BuildCityActivity" />
+        <activity android:name=".RollDiceActivity" />
+        <activity android:name=".ShowInventoryActivity" />
+        <activity android:name=".ChooseActionActivity" />
 
     </application>
 
