@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#BD1010"
+    tools:context=".trading.AnswerToTradeActivity">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="328dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:text="@string/tradeAnswer"
+        android:textAlignment="gravity"
+        android:textColor="#FBC02D"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tradeMes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="57dp"
+        android:text="@string/tradeAnswer"
+        android:textAlignment="gravity"
+        android:textColor="#FBC02D"
+        android:textSize="35sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <Button
+        android:id="@+id/accept"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="276dp"
+        android:layout_marginBottom="25dp"
+        android:backgroundTint="#FFA000"
+        android:onClick="accept"
+        android:text="@string/accept"
+        android:textColor="#A10101"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textView4" />
+
+    <Button
+        android:id="@+id/dismiss"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginTop="276dp"
+        android:layout_marginEnd="100dp"
+        android:backgroundTint="#FFA000"
+        android:onClick="dismiss"
+        android:text="@string/dismiss"
+        android:textColor="#A10101"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView4" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".cards.PlayCardActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animationCache="false"
+        android:background="#BD1010">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
+                android:text="@string/selectCard"
+                android:textAlignment="gravity"
+                android:textColor="#FBC02D"
+                android:textSize="35sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/knight"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="playKnight"
+                android:text="@string/knightCard"
+                android:textColor="#A10101"
+                android:textSize="30sp" />
+
+            <Button
+                android:id="@+id/buildStreet"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="playBuildStreet"
+                android:text="@string/buildStreetCard"
+                android:textColor="#A10101"
+                android:textSize="30sp" />
+
+            <Button
+                android:id="@+id/monopol"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="playMonopol"
+                android:text="@string/monopolCard"
+                android:textColor="#A10101"
+                android:textSize="30sp" />
+
+            <Button
+                android:id="@+id/invention"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:backgroundTint="#FFA000"
+                android:onClick="playInvention"
+                android:text="@string/inventionCard"
+                android:textColor="#A10101"
+                android:textSize="30sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

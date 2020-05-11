@@ -1,5 +1,7 @@
 package com.example.catanserver.businessLogic.model.building;
 
+import com.example.catangame.gameboard.Knot;
+
 
 public interface BuildStructure { //todo: should allow generic input: Knot, Edge (for method selectBuildingSite(<T>)
     //instantiate PlayerImpl and Knot as private variables

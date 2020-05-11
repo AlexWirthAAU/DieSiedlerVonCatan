@@ -1,18 +1,26 @@
 package com.example.diesiedler;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.diesiedler.presenter.Presenter;
+import com.example.diesiedler.beforegame.SelectColorsActivity;
+import com.example.diesiedler.presenter.ClientData;
+import com.example.diesiedler.presenter.ServerQueries;
+import com.example.diesiedler.presenter.handler.HandlerOverride;
+import com.example.diesiedler.threads.NetworkThread;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -20,36 +28,26 @@ import java.util.logging.Logger;
 
 /**
  * @author Christina Senger
+ * @author Fabian Schaffenrath (edit)
  * <p>
- * Aktivität enthält eine Recyclerview mit allen aktiven Usern als Items
+ * Aktivität enthält eine Recyclerview mit allen aktiven Usern als Items. Sie kümmert sich um die Such-
+ * An- und Abmeldung, sowie die Spielerstellung.
  */
 public class SearchPlayersActivity extends AppCompatActivity implements SelectableViewHolder.OnItemSelectedListener {
 
+    private static final Logger logger = Logger.getLogger(SearchPlayersActivity.class.getName());
+
     private RecyclerView recyclerView;
     private MyAdapter myAdapter;
-    private List<String> usernames = new ArrayList<>();
-    private String myName;
-    private ArrayList<String> selectedUsers = new ArrayList<>();
-
-    private static final Logger log = Logger.getLogger(SearchPlayersActivity.class.getName());
+    Handler handler = new SearchPlayersHandler(Looper.getMainLooper(), this);
+    private Button searchButton;
+    private Button stopButton;
 
     /**
-     * Eine Liste mit den Namen aller aktiven Usern und Name
-     * des aktuellen Users wird aus dem Intent geholt und
-     * in den Variablen usernames und myName gespeichert.
-     *
-     * Aus allen Usernamen werden SelectableItems erstellt.
-     *
      * Die Recyclerview wird als dem xml geholt und erhält einen
-     * Layoutmanager.
+     * Layoutmanager. Button zur An- und Abmeldung werden spezifiziert.
      *
-     * Es wird eine Instanz der Klasse Myadapter mit der aktuelle
-     * Aktivität, den SelectableItems und true für Multisektion als
-     * Parametern erstellt und der Recyclerview zugeordnet.
-     *
-     * Die Anzahl der aktiven User wird dem Presenter übergeben,
-     * der auf Aktualisierungen vom Server wartet und ggf. die View updated.
-     *
+     * Der Handler wird in der ClientData für die jetzige Aktivität angepasst.
      * @param savedInstanceState gespeicherter Status
      */
     @Override
@@ -57,28 +55,14 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_players);
 
-        Intent intent = getIntent();
-        usernames = intent.getStringArrayListExtra("name");
-        myName = intent.getStringExtra("myName");
-
-        List<SelectableItem> selectableItems = new ArrayList<>();
-
-        for (String str : usernames) {
-            SelectableItem user = new SelectableItem(str, false);
-            selectableItems.add(user);
-        }
-
-        log.log(Level.INFO, usernames.get(0));
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView = this.findViewById(R.id.userlist);
         recyclerView.setLayoutManager(layoutManager);
 
-        myAdapter = new MyAdapter(this, selectableItems, true);
-        recyclerView.setAdapter(myAdapter);
+        searchButton = this.findViewById(R.id.searchButton);
+        stopButton = this.findViewById(R.id.stopButton);
 
-        Presenter.checkForChanges(usernames.size(), myAdapter, myName, this);
-
+        ClientData.currentHandler = handler;
     }
 
     /**
@@ -95,77 +79,117 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
     }
 
     /**
-     * Wird die Aktivität zerstört, wird der Name des aktuellen
-     * Users dem Presenter übergeben, der beim Server das löschen
-     * dieses User aus der Liste der aktuellen User und ein
-     * Update der Userliste für alle anderen Nutzer beantragt.
+     * Wird die Aktivität zerstört, so schickt ein NetworkThread eine
+     * Abmeldung von der Suche zum Server.
      */
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        Presenter.removeMeFromUserList(myName, myAdapter);
+        Thread networkThread = new NetworkThread(ServerQueries.createStringQueryStop());
+        networkThread.start();
+        // TODO: Liste leeren oder nicht?
     }
 
     /**
-     * Überprüft, ob der aktuelle User sich selbst ausgewählt hat.
-     * Sind weniger als 3 oder mehr als 4 User ausgewählt, erscheint
-     * eine Warnung. Wenn nicht, werden alle ausgewählten User in eine
-     * Liste gespeichert. Diese wird dem Presenter übergeben, der am
-     * Server ein neues Spiel beantragt.
-     *
+     * Bei Betätigung des Start Buttons wird erst überprüft, ob zwischen 1 und 3 Mitspieler ausgewählt ist/sind.
+     * Falls ja wird der NetworkThread gestartet, der alle UserIds der Spieler zusammen mit einem Create
+     * request an den Server schickt. Falls nein wird eine Fehlermeldung am Bildschirm ausgegeben.
      * @param view View, um StartButton anzusprechen
      */
-    public void startPlay(View view) throws IOException {
+    public void startPlay(View view) {
 
         int size = myAdapter.getSelectedItems().size();
-        boolean meIn = false;
 
-        for (SelectableItem item : myAdapter.getSelectedItems()) {
-            if (item.getText().equals(myName)) {
-                meIn = true;
-                break;
+        if (size < 1) {
+
+            List<SelectableItem> selectedItems = myAdapter.getSelectedItems();
+            AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+            builder2.setCancelable(true);
+            builder2.setMessage("Du musst mindestends einen Mitspieler auswählen. Momentan ausgewählt: " + selectedItems.size());
+            AlertDialog alert2 = builder2.create();
+            alert2.show();
+
+        } else if (size > 3) {
+
+            List<SelectableItem> selectedItems = myAdapter.getSelectedItems();
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+            builder1.setCancelable(true);
+            builder1.setMessage("Du kannst maximal 3 Mitspieler auswählen. Momentan ausgewählt: " + selectedItems.size());
+            AlertDialog alert1 = builder1.create();
+            alert1.show();
+
+        } else {
+
+            ArrayList<Integer> selectedUserIds = new ArrayList<>();
+            for (SelectableItem item : myAdapter.getSelectedItems()) {
+                selectedUserIds.add(ClientData.searchingUsers.get(item.getText()));
             }
-        }
 
-        if (meIn) {
-
-            if (size < 2) {
-
-                List<SelectableItem> selectedItems = myAdapter.getSelectedItems();
-                AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
-                builder2.setCancelable(true);
-                builder2.setMessage("Du musst 3 oder 4 Mitspieler auswählen. Momentan ausgewählt: " + selectedItems.size());
-                AlertDialog alert2 = builder2.create();
-                alert2.show();
-
-            } else if (size > 4) {
-
-                List<SelectableItem> selectedItems = myAdapter.getSelectedItems();
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-                builder1.setCancelable(true);
-                builder1.setMessage("Du musst 3 oder 4 Mitspieler auswählen. Momentan ausgewählt: " + selectedItems.size());
-                AlertDialog alert1 = builder1.create();
-                alert1.show();
-
-            } else {
-
-                for (SelectableItem item : myAdapter.getSelectedItems()) {
-                    selectedUsers.add(item.getText());
-                }
-
-                log.log(Level.INFO, "startnewactivity");
-                Presenter.setInGame(selectedUsers, myName, this);
-            }
+            logger.log(Level.INFO, "CREATE GAME");
+            Thread networkThread = new NetworkThread(ServerQueries.createStringQueryCreate(selectedUserIds));
+            networkThread.start();
         }
     }
 
     /**
+     * Sendet ein Anmelde request für die Spielersuche an den Server.
      *
-     * @param view View um Reload Button zu erhalten
+     * @param view View, um SearchButton anzusprechen
      */
-    public void updateList(View view) {
 
-        Presenter.checkForChanges(usernames.size(), myAdapter, myName, this);
+    public void startSearching(View view) {
+        Thread networkThread = new NetworkThread(ServerQueries.createStringQueryApply());
+        networkThread.start();
+    }
+
+    /**
+     * Sendet ein Abmelde request für die Spielersuche an den Server und toggled Search & Stop Button.
+     * @param view View, um StopButton anzusprechen
+     */
+
+    public void stopSearching(View view) {
+        Thread networkThread = new NetworkThread(ServerQueries.createStringQueryStop());
+        networkThread.start();
+        searchButton.setVisibility(View.VISIBLE);
+        stopButton.setVisibility(View.GONE);
+    }
+
+    private class SearchPlayersHandler extends HandlerOverride {
+
+        SearchPlayersHandler(Looper mainLooper, Activity ac) {
+            super(mainLooper, ac);
+        }
+
+        /**
+         * Wird vom ServerCommunicationThread aufgerufen. Im Falle einer Listübertragung wird
+         * eine neue Liste für die Mitspieler auswahl erstellt, sollte eine GameSession übertragen
+         * werden, so wurde das Spiel erstellt und die SelectColorActivity wird aufgerufen.
+         *
+         * @param msg msg.arg1 beinhaltet den entsprechenden Parameter zur weiteren Ausführung
+         */
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.arg1 == 3) {  // TODO: Change to enums
+
+                // TODO: Keep chosen players
+
+                searchButton.setVisibility(View.GONE);
+                stopButton.setVisibility(View.VISIBLE);
+
+                List<SelectableItem> selectableItems = new ArrayList<>();
+
+                for (String str : ClientData.searchingUserNames) {
+                    SelectableItem user = new SelectableItem(str, false);
+                    selectableItems.add(user);
+                }
+
+                myAdapter = new MyAdapter((SearchPlayersActivity) activity, selectableItems, true);
+                recyclerView.setAdapter(myAdapter);
+            }
+            if (msg.arg1 == 4) {  // TODO: Change to enums
+                Intent intent = new Intent(activity, SelectColorsActivity.class);
+                startActivity(intent);
+            }
+        }
     }
 }

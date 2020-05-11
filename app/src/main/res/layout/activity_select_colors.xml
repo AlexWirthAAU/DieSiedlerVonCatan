@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#BD1010"
-    tools:context=".SelectColorsActivity">
+    tools:context=".beforegame.SelectColorsActivity">
 
     <TextView
         android:id="@+id/textView4"
@@ -24,8 +24,8 @@
 
     <Button
         android:id="@+id/green"
-        android:layout_width="149dp"
-        android:layout_height="124dp"
+        android:layout_width="129dp"
+        android:layout_height="104dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="200dp"
         android:backgroundTint="#6AE626"
@@ -35,8 +35,8 @@
 
     <Button
         android:id="@+id/violett"
-        android:layout_width="149dp"
-        android:layout_height="124dp"
+        android:layout_width="129dp"
+        android:layout_height="104dp"
         android:layout_marginStart="40dp"
         android:layout_marginBottom="240dp"
         android:backgroundTint="#A30FFF"
@@ -46,8 +46,8 @@
 
     <Button
         android:id="@+id/orange"
-        android:layout_width="149dp"
-        android:layout_height="124dp"
+        android:layout_width="129dp"
+        android:layout_height="104dp"
         android:layout_marginTop="200dp"
         android:layout_marginEnd="40dp"
         android:backgroundTint="#FF8E07"
@@ -59,8 +59,8 @@
 
     <Button
         android:id="@+id/lightblue"
-        android:layout_width="149dp"
-        android:layout_height="124dp"
+        android:layout_width="129dp"
+        android:layout_height="104dp"
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="240dp"
         android:backgroundTint="#07B9FF"
@@ -69,22 +69,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/update"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="120dp"
-        android:backgroundTint="#FFA000"
-        android:onClick="update"
-        android:text="@string/reload"
-        android:textColor="#A10101"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/startPlayButton2"
+        android:id="@+id/startPlayButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
