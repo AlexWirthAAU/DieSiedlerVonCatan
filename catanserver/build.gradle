@@ -1,12 +1,11 @@
-
 apply plugin: 'java-library'
 apply plugin: 'jacoco'
 
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'junit:junit:4.12'
     implementation project(path: ':catangame')
+    testImplementation 'junit:junit:4.12'
 }
 
 jacocoTestReport {

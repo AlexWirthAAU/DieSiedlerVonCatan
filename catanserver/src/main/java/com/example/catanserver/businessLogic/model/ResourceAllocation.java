@@ -67,10 +67,10 @@ public class ResourceAllocation {
             if (p != null) {
                 if (tileKnots[i].hasCity() == true) {
                     p.getInventory().addWood(2);
-                    System.out.println("Updated Wood +2");
+                    System.out.println("Updated Wood +2  for " + p.getDisplayName());
                 } else {
                     p.getInventory().addWood(1);
-                    System.out.println("Updated Wood +1");
+                    System.out.println("Updated Wood +1 for " + p.getDisplayName());
                 }
             }
         }
@@ -83,10 +83,10 @@ public class ResourceAllocation {
             if (p != null) {
                 if (tileKnots[i].hasCity() == true) {
                     p.getInventory().addWool(2);
-                    System.out.println("Updated Wool +2");
+                    System.out.println("Updated Wool +2 for " + p.getDisplayName());
                 } else {
                     p.getInventory().addWool(1);
-                    System.out.println("Updated Wool +1");
+                    System.out.println("Updated Wool +1 for " + p.getDisplayName());
                 }
             }
         }
@@ -99,10 +99,10 @@ public class ResourceAllocation {
             if (p != null) {
                 if (tileKnots[i].hasCity() == true) {
                     p.getInventory().addClay(2);
-                    System.out.println("Updated Clay +2");
+                    System.out.println("Updated Clay +2  for " + p.getDisplayName());
                 } else {
                     p.getInventory().addClay(1);
-                    System.out.println("Updated Clay +1");
+                    System.out.println("Updated Clay +1  for " + p.getDisplayName());
                 }
             }
         }
@@ -116,10 +116,10 @@ public class ResourceAllocation {
             if (p != null) {
                 if (tileKnots[i].hasCity() == true) {
                     p.getInventory().addOre(2);
-                    System.out.println("Updated Ore +2");
+                    System.out.println("Updated Ore +2  for " + p.getDisplayName());
                 } else {
                     p.getInventory().addOre(1);
-                    System.out.println("Updated Ore +1");
+                    System.out.println("Updated Ore +1  for " + p.getDisplayName());
                 }
             }
         }
@@ -132,10 +132,10 @@ public class ResourceAllocation {
             if (p != null) {
                 if (tileKnots[i].hasCity() == true) {
                     p.getInventory().addWheat(2);
-                    System.out.println("Updated Wheat +2");
+                    System.out.println("Updated Wheat +2  for " + p.getDisplayName());
                 } else {
                     p.getInventory().addWheat(1);
-                    System.out.println("Updated Wheat +1");
+                    System.out.println("Updated Wheat +1  for " + p.getDisplayName());
                 }
             }
         }
