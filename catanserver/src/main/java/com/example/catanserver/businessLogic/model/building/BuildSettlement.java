@@ -4,7 +4,6 @@ import com.example.catanserver.businessLogic.model.gameboard.Edge;
 import com.example.catanserver.businessLogic.model.gameboard.Gameboard;
 import com.example.catanserver.businessLogic.model.gameboard.Knot;
 import com.example.catanserver.businessLogic.model.player.PlayerImpl;
-import com.example.catanserver.businessLogic.model.player.PlayerInventory;
 
 public class BuildSettlement implements BuildStructure {
     private boolean enoughResources = false;
