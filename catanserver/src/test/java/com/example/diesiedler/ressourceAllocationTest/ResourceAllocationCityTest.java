@@ -38,30 +38,30 @@ public class ResourceAllocationCityTest {
     @Test
     public void testWoodUpdate() {
         ResourceAllocation.updateResources(gameSession, 11);
-        Assert.assertEquals(2, gameSession.getPlayer(1).getInventory().getWood());
+        Assert.assertEquals(5, gameSession.getPlayer(1).getInventory().getWood());
     }
 
     @Test
     public void testOreUpdate() {
         ResourceAllocation.updateResources(gameSession, 3);
-        Assert.assertEquals(2, gameSession.getPlayer(1).getInventory().getOre());
+        Assert.assertEquals(5, gameSession.getPlayer(1).getInventory().getOre());
     }
 
     @Test
     public void testClayUpdate() {
         ResourceAllocation.updateResources(gameSession, 8);
-        Assert.assertEquals(2, gameSession.getPlayer(1).getInventory().getClay());
+        Assert.assertEquals(5, gameSession.getPlayer(1).getInventory().getClay());
     }
 
     @Test
     public void testWheatUpdate() {
         ResourceAllocation.updateResources(gameSession, 9);
-        Assert.assertEquals(2, gameSession.getPlayer(1).getInventory().getWheat());
+        Assert.assertEquals(5, gameSession.getPlayer(1).getInventory().getWheat());
     }
 
     @Test
     public void testWoolUpdate() {
         ResourceAllocation.updateResources(gameSession, 12);
-        Assert.assertEquals(2, gameSession.getPlayer(1).getInventory().getWool());
+        Assert.assertEquals(5, gameSession.getPlayer(1).getInventory().getWool());
     }
 }

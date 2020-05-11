@@ -56,10 +56,10 @@ public class BuildSettlementTest {
         Assert.assertEquals(0, gameSession.getSettlements().size());
         Assert.assertEquals(0, player.getInventory().getSettlements().size());
 
-        Assert.assertEquals(1, playerInventory.getWood());
-        Assert.assertEquals(1, playerInventory.getWool());
-        Assert.assertEquals(1, playerInventory.getWheat());
-        Assert.assertEquals(1, playerInventory.getClay());
+        Assert.assertEquals(4, playerInventory.getWood());
+        Assert.assertEquals(4, playerInventory.getWool());
+        Assert.assertEquals(4, playerInventory.getWheat());
+        Assert.assertEquals(4, playerInventory.getClay());
     }
 
     private void assertionsAfterBuilding() {
@@ -71,10 +71,10 @@ public class BuildSettlementTest {
         Assert.assertEquals(1, gameSession.getSettlements().size());
         Assert.assertEquals(1, player.getInventory().getSettlements().size());
 
-        Assert.assertEquals(0, playerInventory.getWood());
-        Assert.assertEquals(0, playerInventory.getWool());
-        Assert.assertEquals(0, playerInventory.getWheat());
-        Assert.assertEquals(0, playerInventory.getClay());
+        Assert.assertEquals(4, playerInventory.getWood());
+        Assert.assertEquals(4, playerInventory.getWool());
+        Assert.assertEquals(4, playerInventory.getWheat());
+        Assert.assertEquals(4, playerInventory.getClay());
     }
 
 }
