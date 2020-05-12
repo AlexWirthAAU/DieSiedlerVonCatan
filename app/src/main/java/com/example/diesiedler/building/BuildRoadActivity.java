@@ -11,19 +11,19 @@ import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.catangame.PlayerInventory;
 import com.example.catangame.gameboard.Edge;
+import com.example.diesiedler.ChooseActionActivity;
+import com.example.diesiedler.MainActivity;
+import com.example.diesiedler.R;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.UpdateBuildRoadView;
 import com.example.diesiedler.presenter.UpdateGameboardView;
 import com.example.diesiedler.presenter.handler.HandlerOverride;
-import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
-import com.example.diesiedler.threads.NetworkThread;
-
-import com.example.diesiedler.R;
-import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
 import com.example.diesiedler.threads.NetworkThread;
 import com.richpath.RichPathView;
