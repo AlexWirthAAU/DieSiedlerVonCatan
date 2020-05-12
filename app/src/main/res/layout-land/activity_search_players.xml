@@ -6,7 +6,7 @@
     android:background="#FFFFFF"
     android:backgroundTint="#BD1010"
     android:fitsSystemWindows="true"
-    tools:context=".SearchPlayersActivity">
+    tools:context=".beforegame.SearchPlayersActivity">
 
     <TextView
         android:id="@+id/textView3"

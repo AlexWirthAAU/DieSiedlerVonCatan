@@ -1,4 +1,4 @@
-package com.example.diesiedler;
+package com.example.diesiedler.beforegame;
 
 import android.content.Context;
 import android.util.TypedValue;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.diesiedler.R;
 
 import java.util.ArrayList;
 import java.util.List;

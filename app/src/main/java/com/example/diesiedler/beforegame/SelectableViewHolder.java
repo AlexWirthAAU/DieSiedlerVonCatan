@@ -1,10 +1,12 @@
-package com.example.diesiedler;
+package com.example.diesiedler.beforegame;
 
 import android.graphics.Color;
 import android.view.View;
 import android.widget.CheckedTextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.diesiedler.R;
 
 /**
  * @author Christina Senger

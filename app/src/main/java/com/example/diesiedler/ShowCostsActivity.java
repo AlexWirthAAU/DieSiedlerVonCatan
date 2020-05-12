@@ -32,7 +32,7 @@ public class ShowCostsActivity extends AppCompatActivity {
      *             Lädt wieder die Activity zur Auswahl der Aktionen.
      */
     public void ahead(View view) {
-        Intent intent = new Intent(this, SelectActionActivity.class);
+        Intent intent = new Intent(this, ChooseActionActivity.class);
         startActivity(intent);
     }
 }

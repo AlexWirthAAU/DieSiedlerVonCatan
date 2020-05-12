@@ -12,9 +12,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.catangame.GameSession;
+import com.example.diesiedler.ChooseActionActivity;
 import com.example.diesiedler.MainActivity;
 import com.example.diesiedler.R;
-import com.example.diesiedler.SelectActionActivity;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.handler.HandlerOverride;
@@ -73,7 +73,7 @@ public class AnswerToTradeActivity extends AppCompatActivity {
         /**
          * Wird vom ServerCommunicationThread aufgerufen. Im Falle einer Stringübertragung wird
          * die Nachricht als String dem Intent übergeben, sollte eine GameSession übertragen
-         * werden, so ist der Handel abgeschlossen. Ist man an der Reihe wird die SelectActionActivity
+         * werden, so ist der Handel abgeschlossen. Ist man an der Reihe wird die ChooseActionActivity
          * aufgerufen. Ansonsten wird die MainActivity aufgerufen.
          *
          * @param msg msg.arg1 beinhaltet den entsprechenden Parameter zur weiteren Ausführung
@@ -82,7 +82,7 @@ public class AnswerToTradeActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
 
             Intent intentMain = new Intent(activity, MainActivity.class);
-            Intent intentSelect = new Intent(activity, SelectActionActivity.class);
+            Intent intentSelect = new Intent(activity, ChooseActionActivity.class);
 
             if (msg.arg1 == 4) {  // TODO: Change to enums
 

@@ -103,4 +103,8 @@ public class ServerQueries {
     public static String createStringRolledDice(String value) {
         return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " DICEVALUE " + value;
     }
+
+    public static String createStringQueryNext() {
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " NEXT ";
+    }
 }

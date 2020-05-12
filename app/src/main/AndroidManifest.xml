@@ -11,10 +11,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
         android:screenOrientation="portrait"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".cards.PlayBuildStreetActivity"></activity>
+        <activity android:name=".ShowInventoryActivity"></activity>
+        <activity android:name=".cards.PlayBuildStreetActivity" />
         <activity android:name=".cards.PlayMonopolActivity" />
         <activity android:name=".cards.PlayInventionActivity" />
         <activity android:name=".cards.PlayKnightActivity" />
@@ -24,7 +25,6 @@
         <activity android:name=".trading.BankChangeActivity" />
         <activity android:name=".trading.AnswerToTradeActivity" />
         <activity android:name=".trading.TradeActivity" />
-        <activity android:name=".SelectActionActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".ShowCostsActivity" />
         <activity android:name=".beforegame.WelcomeActivity">
@@ -34,16 +34,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SearchPlayersActivity" />
+        <activity android:name=".beforegame.SearchPlayersActivity" />
         <activity android:name=".beforegame.SelectColorsActivity" />
         <activity android:name=".beforegame.LoginActivity" />
         <activity android:name=".building.BuildSettlementActivity" />
         <activity android:name=".building.BuildRoadActivity" />
-        <activity android:name=".SelectColorsActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".BuildCityActivity" />
-        <activity android:name=".RollDiceActivity" />
-        <activity android:name=".ShowInventoryActivity" />
+        <activity android:name=".building.BuildCityActivity" />
         <activity android:name=".ChooseActionActivity" />
     </application>
 

@@ -1,4 +1,4 @@
-package com.example.diesiedler;
+package com.example.diesiedler.beforegame;
 
 /**
  * @author Christina Senger

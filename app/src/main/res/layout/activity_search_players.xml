@@ -6,7 +6,7 @@
     android:background="#FFFFFF"
     android:backgroundTint="#BD1010"
     android:fitsSystemWindows="true"
-    tools:context=".SearchPlayersActivity">
+    tools:context=".beforegame.SearchPlayersActivity">
 
     <TextView
         android:id="@+id/textView3"
@@ -42,19 +42,6 @@
         android:text="@string/startPlay"
         android:textColor="#A10101"
         android:textSize="30sp" />
-
-    <Button
-        android:id="@+id/stopButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="165dp"
-        android:backgroundTint="#FFA000"
-        android:onClick="stopSearching"
-        android:text="@string/searchstop"
-        android:textColor="#A10101"
-        android:textSize="30sp"
-        android:visibility="visible" />
 
     <Button
         android:id="@+id/searchButton"

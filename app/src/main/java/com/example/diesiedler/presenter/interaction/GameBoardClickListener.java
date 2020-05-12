@@ -4,14 +4,11 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 
-import com.example.diesiedler.BuildCityActivity;
-import com.example.diesiedler.BuildRoadActivity;
-import com.example.diesiedler.BuildSettlementActivity;
-import com.example.diesiedler.presenter.interaction.StandardGesture;
+import com.example.diesiedler.building.BuildCityActivity;
+import com.example.diesiedler.building.BuildRoadActivity;
+import com.example.diesiedler.building.BuildSettlementActivity;
 import com.richpath.RichPath;
 import com.richpath.RichPathView;
-
-import java.util.concurrent.ExecutionException;
 
 public class GameBoardClickListener {
 

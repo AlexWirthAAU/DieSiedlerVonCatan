@@ -1,18 +1,14 @@
 package com.example.diesiedler.presenter;
 
-import android.content.Context;
 import android.graphics.Color;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catangame.gameboard.Edge;
-import com.example.catangame.gameboard.Knot;
-import com.example.diesiedler.WelcomeActivity;
 import com.richpath.RichPath;
 import com.richpath.RichPathView;
 
 import java.util.LinkedList;
-import java.util.logging.Logger;
 
 
 public class UpdateBuildRoadView {

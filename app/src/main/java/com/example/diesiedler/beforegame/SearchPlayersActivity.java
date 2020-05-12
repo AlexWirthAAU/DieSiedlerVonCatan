@@ -1,4 +1,4 @@
-package com.example.diesiedler;
+package com.example.diesiedler.beforegame;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,12 +14,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.diesiedler.beforegame.SelectColorsActivity;
+import com.example.diesiedler.R;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.handler.HandlerOverride;
-
-import com.example.diesiedler.threads.*;
+import com.example.diesiedler.threads.NetworkThread;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -160,7 +159,7 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
 
     private class SearchPlayersHandler extends HandlerOverride {
 
-        public SearchPlayersHandler(Looper mainLooper, Activity ac) {
+        SearchPlayersHandler(Looper mainLooper, Activity ac) {
             super(mainLooper,ac);
         }
 

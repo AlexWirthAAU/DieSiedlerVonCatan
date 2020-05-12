@@ -6,24 +6,21 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.catangame.GameSession;
-import com.example.diesiedler.presenter.ClientData;
-import com.example.diesiedler.presenter.handler.HandlerOverride;
-import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
-import com.example.diesiedler.trading.AnswerToTradeActivity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-
-import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catangame.PlayerInventory;
+import com.example.diesiedler.building.BuildSettlementActivity;
+import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.UpdateGameboardView;
-
+import com.example.diesiedler.presenter.handler.HandlerOverride;
+import com.example.diesiedler.trading.AnswerToTradeActivity;
 import com.richpath.RichPathView;
 
 import java.util.logging.Logger;
@@ -35,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final Logger logger = Logger.getLogger(MainActivity.class.getName());
     private Handler handler = new MainActivityHandler(Looper.getMainLooper(), this);
+
     private TextView woodCount;
     private TextView clayCount;
     private TextView wheatCount;
@@ -45,8 +43,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button scoreBoard;
 
     private GameSession game;
-    private static final Logger logger = Logger.getLogger(MainActivity.class.getName());
-    Handler handler = new MainHandler(Looper.getMainLooper(), this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +50,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.gameboardview);
         RichPathView richPathView = findViewById(R.id.ic_gameboardView);
 
-        GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView, this);
-        gameBoardClickListener.clickBoard();
+        devCards = findViewById(R.id.devCards);
+        devCards.setOnClickListener(this);
+        scoreBoard = findViewById(R.id.scoreBoard);
+        scoreBoard.setOnClickListener(this);
+
+        UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
+        updateResources();
+
+
+        ClientData.currentHandler = handler;
 
         // Nach einem Bank- oder Hafentausch oder Entwicklungskartenkauf wird die Erfolgsmeldung angezeigt
         String tradeMessage = getIntent().getStringExtra("mess");
@@ -69,21 +73,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         game = ClientData.currentGame;
-        ClientData.currentHandler = handler;
-    }
-
-    public void clicked(String s) {
-
-        devCards = findViewById(R.id.devCards);
-        devCards.setOnClickListener(this);
-        scoreBoard = findViewById(R.id.scoreBoard);
-        scoreBoard.setOnClickListener(this);
-
-        UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
-        updateResources();
-
-
-        ClientData.currentHandler = handler;
     }
 
     private void updateResources() {
@@ -169,13 +158,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (msg.arg1 == 4) {  // TODO: Change to enums
 
                 ClientData.currentGame = (GameSession) msg.obj;
-                // TODO: Gameboard Update
 
-                if (game.getCurr().getUserId() == ClientData.userId) {
-                    Intent intent = new Intent(activity, SelectActionActivity.class);
+                GameSession gs = ClientData.currentGame;
+                Player currentPlayer = gs.getPlayer(gs.getCurrPlayer());
+                PlayerInventory playerInventory = currentPlayer.getInventory();
+
+                if (currentPlayer.getUserId() == ClientData.userId && playerInventory.getRoads().size() < 2) {
+                    Intent intent = new Intent(activity, BuildSettlementActivity.class);
+                    startActivity(intent);
+                } else if (currentPlayer.getUserId() == ClientData.userId && playerInventory.getSettlements().size() > 1 && playerInventory.getRoads().size() > 1) {
+                    Intent intent = new Intent(activity, RollDiceActivity.class);
+                    startActivity(intent);
+                } else if (currentPlayer.getUserId() == ClientData.userId) {
+                    Intent intent = new Intent(activity, RollDiceActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(activity, MainActivity.class);
                     startActivity(intent);
                 }
             }
+
+
             if (msg.arg1 == 5) {  // TODO: Change to enums
 
                 Intent intent = new Intent(activity, AnswerToTradeActivity.class);

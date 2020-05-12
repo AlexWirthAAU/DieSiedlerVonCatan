@@ -8,18 +8,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.diesiedler.R;
-import com.example.diesiedler.presenter.ServerQueries;
-import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
-import com.example.diesiedler.threads.NetworkThread;
-import com.richpath.RichPathView;
 
 import com.example.catangame.Colors;
 import com.example.catangame.GameSession;
@@ -27,6 +20,9 @@ import com.example.catangame.Player;
 import com.example.catangame.PlayerInventory;
 import com.example.catangame.gameboard.Edge;
 import com.example.catangame.gameboard.Knot;
+import com.example.diesiedler.ChooseActionActivity;
+import com.example.diesiedler.MainActivity;
+import com.example.diesiedler.R;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.UpdateBuildSettlementView;
