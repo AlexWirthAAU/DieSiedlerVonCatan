@@ -1,9 +1,11 @@
-package com.example.catanserver.threads;
+package com.example.catanserver.threads.trading;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catangame.Trade;
 import com.example.catanserver.User;
+import com.example.catanserver.threads.GameThread;
+import com.example.catanserver.threads.SendToClient;
 
 import java.util.ArrayList;
 import java.util.List;

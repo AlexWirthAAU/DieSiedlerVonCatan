@@ -1,10 +1,10 @@
-package com.example.catanserver.threads;
+package com.example.catanserver.threads.building;
 
 import com.example.catangame.GameSession;
 import com.example.catanserver.User;
 import com.example.catanserver.businessLogic.model.building.BuildCity;
-
-import java.net.Socket;
+import com.example.catanserver.threads.GameThread;
+import com.example.catanserver.threads.SendToClient;
 
 public class BuildCityThread extends GameThread {
 

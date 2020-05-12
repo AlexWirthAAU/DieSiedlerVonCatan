@@ -1,6 +1,7 @@
-package com.example.catanserver.threads;
+package com.example.catanserver.threads.beforegame;
 
 import com.example.catanserver.User;
+import com.example.catanserver.threads.SendToClient;
 
 /**
  * @author Fabian Schaffenrath

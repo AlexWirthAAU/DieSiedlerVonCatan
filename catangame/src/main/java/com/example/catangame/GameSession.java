@@ -2,7 +2,9 @@ package com.example.catangame;
 
 import com.example.catangame.devcards.DevCard;
 import com.example.catangame.devcards.DevCardStack;
-import com.example.catangame.gameboard.*;
+import com.example.catangame.gameboard.Edge;
+import com.example.catangame.gameboard.Gameboard;
+import com.example.catangame.gameboard.Knot;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -99,7 +101,7 @@ public class GameSession implements Serializable {
         return devCards;
     }
 
-    private void addRoad(Edge road){
+    public void addRoad(Edge road) {
         roads.add(road);
     }
 

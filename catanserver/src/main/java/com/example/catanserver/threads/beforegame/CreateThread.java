@@ -1,9 +1,10 @@
-package com.example.catanserver.threads;
+package com.example.catanserver.threads.beforegame;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catanserver.Server;
 import com.example.catanserver.User;
+import com.example.catanserver.threads.SendToClient;
 
 import java.util.HashSet;
 import java.util.Set;

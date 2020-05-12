@@ -1,4 +1,4 @@
-package com.example.catanserver.threads;
+package com.example.catanserver.threads.cards;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
@@ -8,6 +8,9 @@ import com.example.catangame.devcards.InventionCard;
 import com.example.catangame.devcards.KnightCard;
 import com.example.catangame.devcards.MonopolCard;
 import com.example.catanserver.User;
+import com.example.catanserver.threads.ErrorThread;
+import com.example.catanserver.threads.GameThread;
+import com.example.catanserver.threads.SendToClient;
 
 public class PlayBuildStreetThread extends GameThread {
 

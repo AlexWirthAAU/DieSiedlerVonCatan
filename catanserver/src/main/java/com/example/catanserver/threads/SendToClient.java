@@ -18,7 +18,7 @@ import java.util.Set;
 
 public class SendToClient {
 
-    static void sendUserId(User user, int userId) {
+    public static void sendUserId(User user, int userId) {
         try {
             sendToClient(user, userId);
         }catch(IOException ex){
@@ -27,7 +27,7 @@ public class SendToClient {
         }
     }
 
-    static void sendSearchingListBroadcast(Set<User> set) {
+    public static void sendSearchingListBroadcast(Set<User> set) {
         List<String> searchingList = createSearchingList(set);
         for (User user : set) {
             try {
@@ -39,7 +39,7 @@ public class SendToClient {
         }
     }
 
-    static void sendGameStartBroadcast(GameSession game) {
+    public static void sendGameStartBroadcast(GameSession game) {
         List<User> userList = createGameUserList(game);
         if (userList.size() == game.getPlayers().size()) {
             for (User user : userList) {
@@ -55,7 +55,7 @@ public class SendToClient {
         }
     }
 
-    static void sendGameSessionBroadcast(GameSession game) {
+    public static void sendGameSessionBroadcast(GameSession game) {
         List<User> userList = createGameUserList(game);
         if (userList.size() == game.getPlayers().size()) {
             for (User user : userList) {
@@ -71,7 +71,7 @@ public class SendToClient {
         }
     }
 
-    static void sendTradeMessageBroadcast(List<Player> toSend, String message) {
+    public static void sendTradeMessageBroadcast(List<Player> toSend, String message) {
         List<User> userList = createTradeUserList(toSend);
         for (User user : userList) {
             try {
@@ -83,7 +83,7 @@ public class SendToClient {
         }
     }
 
-    static void sendTradeMessage(User user, String message) {
+    public static void sendTradeMessage(User user, String message) {
         try {
             sendToClient(user, message);
         } catch (IOException ex) {
@@ -92,7 +92,7 @@ public class SendToClient {
         }
     }
 
-    static void sendErrorMessage(ObjectOutputStream connectionOutputStream, String message) {
+    public static void sendErrorMessage(ObjectOutputStream connectionOutputStream, String message) {
         try{
             connectionOutputStream.writeObject(message);
             connectionOutputStream.flush();

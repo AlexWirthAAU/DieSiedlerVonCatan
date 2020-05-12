@@ -1,9 +1,12 @@
-package com.example.catanserver.threads;
+package com.example.catanserver.threads.cards;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catangame.devcards.DevCard;
 import com.example.catanserver.User;
+import com.example.catanserver.threads.ErrorThread;
+import com.example.catanserver.threads.GameThread;
+import com.example.catanserver.threads.SendToClient;
 
 public class PlayMonopolThread extends GameThread {
     private Player player;

@@ -1,5 +1,6 @@
 package com.example.catanserver.businessLogic.model.building;
 
+import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catangame.PlayerInventory;
 import com.example.catangame.gameboard.Gameboard;

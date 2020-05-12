@@ -1,10 +1,12 @@
-package com.example.catanserver.threads;
+package com.example.catanserver.threads.beforegame;
 
 import com.example.catangame.Colors;
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catanserver.Server;
 import com.example.catanserver.User;
+import com.example.catanserver.threads.GameThread;
+import com.example.catanserver.threads.SendToClient;
 
 /**
  * @author Fabian Schaffenrath
@@ -13,7 +15,7 @@ import com.example.catanserver.User;
  * It sends an updated gameSession object to every player.
  */
 
-public class ColorThread extends GameThread{
+public class ColorThread extends GameThread {
 
     private String colorString;
 

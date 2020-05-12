@@ -9,12 +9,12 @@ import com.example.catanserver.User;
  * Practically every Thread responsible for actions after the game start should inherit from this.
  */
 
-abstract class GameThread extends Thread {
+public abstract class GameThread extends Thread {
 
-    User user;
-    GameSession game;
+    public User user;
+    public GameSession game;
 
-    GameThread(User user, GameSession game) {
+    public GameThread(User user, GameSession game) {
         this.game = game;
         this.user = user;
     }
