@@ -99,7 +99,7 @@ public class Gameboard implements Serializable {
             tile2Knots[i] = knots[i + 2];
         }
         for (int i = 3; i < 6; i++) {
-            tile2Knots[i] = knots[i + 6];
+            tile2Knots[i] = knots[i + 7];
         }
 
         for (int i = 0; i < 3; i++) {
@@ -113,112 +113,112 @@ public class Gameboard implements Serializable {
             tile4Knots[i] = knots[i + 7];
         }
         for (int i = 3; i < 6; i++) {
-            tile4Knots[i] = knots[i + 13];
+            tile4Knots[i] = knots[i + 14];
         }
 
         for (int i = 0; i < 3; i++) {
             tile5Knots[i] = knots[i + 9];
         }
         for (int i = 3; i < 6; i++) {
-            tile5Knots[i] = knots[i + 15];
+            tile5Knots[i] = knots[i + 16];
         }
 
         for (int i = 0; i < 3; i++) {
             tile6Knots[i] = knots[i + 11];
         }
         for (int i = 3; i < 6; i++) {
-            tile6Knots[i] = knots[i + 17];
+            tile6Knots[i] = knots[i + 18];
         }
 
         for (int i = 0; i < 3; i++) {
             tile7Knots[i] = knots[i + 13];
         }
         for (int i = 3; i < 6; i++) {
-            tile7Knots[i] = knots[i + 19];
+            tile7Knots[i] = knots[i + 20];
         }
 
         for (int i = 0; i < 3; i++) {
-            tile8Knots[i] = knots[i + 15];
+            tile8Knots[i] = knots[i + 16];
         }
         for (int i = 3; i < 6; i++) {
-            tile8Knots[i] = knots[i + 23];
+            tile8Knots[i] = knots[i + 24];
         }
 
         for (int i = 0; i < 3; i++) {
-            tile9Knots[i] = knots[i + 17];
+            tile9Knots[i] = knots[i + 18];
         }
         for (int i = 3; i < 6; i++) {
             tile9Knots[i] = knots[i + 25];
         }
 
         for (int i = 0; i < 3; i++) {
-            tile10Knots[i] = knots[i + 19];
+            tile10Knots[i] = knots[i + 20];
         }
         for (int i = 3; i < 6; i++) {
-            tile10Knots[i] = knots[i + 27];
+            tile10Knots[i] = knots[i + 28];
         }
 
         for (int i = 0; i < 3; i++) {
-            tile11Knots[i] = knots[i + 21];
+            tile11Knots[i] = knots[i + 22];
         }
         for (int i = 3; i < 6; i++) {
-            tile11Knots[1] = knots[i + 29];
+            tile11Knots[1] = knots[i + 30];
         }
 
         for (int i = 0; i < 3; i++) {
-            tile12Knots[i] = knots[i + 23];
+            tile12Knots[i] = knots[i + 24];
         }
         for (int i = 3; i < 6; i++) {
-            tile12Knots[i] = knots[i + 31];
+            tile12Knots[i] = knots[i + 32];
         }
 
         for (int i = 0; i < 3; i++) {
-            tile13Knots[i] = knots[i + 27];
+            tile13Knots[i] = knots[i + 28];
         }
         for (int i = 3; i < 6; i++) {
-            tile13Knots[i] = knots[i + 33];
+            tile13Knots[i] = knots[i + 35];
         }
 
         for (int i = 0; i < 3; i++) {
-            tile14Knots[i] = knots[i + 29];
+            tile14Knots[i] = knots[i + 30];
         }
         for (int i = 3; i < 6; i++) {
-            tile14Knots[i] = knots[i + 35];
+            tile14Knots[i] = knots[i + 36];
         }
 
         for (int i = 0; i < 3; i++) {
-            tile15Knots[i] = knots[i + 31];
+            tile15Knots[i] = knots[i + 32];
         }
         for (int i = 3; i < 6; i++) {
-            tile15Knots[i] = knots[i + 37];
+            tile15Knots[i] = knots[i + 39];
         }
 
         for (int i = 0; i < 3; i++) {
-            tile16Knots[i] = knots[i + 33];
+            tile16Knots[i] = knots[i + 34];
         }
         for (int i = 3; i < 6; i++) {
-            tile16Knots[i] = knots[i + 39];
+            tile16Knots[i] = knots[i + 41];
         }
 
         for (int i = 0; i < 3; i++) {
-            tile17Knots[i] = knots[i + 37];
+            tile17Knots[i] = knots[i + 39];
         }
         for (int i = 3; i < 6; i++) {
-            tile17Knots[i] = knots[i + 41];
+            tile17Knots[i] = knots[i + 44];
         }
 
         for (int i = 0; i < 3; i++) {
-            tile18Knots[i] = knots[i + 39];
+            tile18Knots[i] = knots[i + 41];
         }
         for (int i = 3; i < 6; i++) {
-            tile18Knots[i] = knots[i + 43];
+            tile18Knots[i] = knots[i + 46];
         }
 
         for (int i = 0; i < 3; i++) {
-            tile19Knots[i] = knots[i + 41];
+            tile19Knots[i] = knots[i + 43];
         }
         for (int i = 3; i < 6; i++) {
-            tile19Knots[i] = knots[i + 45];
+            tile19Knots[i] = knots[i + 48];
         }
 
         tiles[0].setKnots(tile1Knots);

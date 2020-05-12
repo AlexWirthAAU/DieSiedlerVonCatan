@@ -4,7 +4,7 @@ import java.io.ObjectOutputStream;
 
 /**
  * @author Fabian Schaffenrath
- * This Thread doesn't have any logic and is only used to send an error string to the client.
+ * This Thread is only used to send an error string to the client.
  */
 
 public class ErrorThread extends Thread {

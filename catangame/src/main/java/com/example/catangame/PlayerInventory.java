@@ -4,16 +4,18 @@ import com.example.catangame.devcards.BuildStreetCard;
 import com.example.catangame.devcards.InventionCard;
 import com.example.catangame.devcards.KnightCard;
 import com.example.catangame.devcards.MonopolCard;
-import com.example.catangame.gameboard.Edge;
-import com.example.catangame.gameboard.Knot;
 
 import java.io.Serializable;
+import com.example.catangame.gameboard.*;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class PlayerInventory implements Serializable {
 
-
-    private final int STARTVALUE = 0;
+    private final int STARTVALUE = 3;
     private int wood;
     private int wool;
     private int wheat;
@@ -86,9 +88,7 @@ public class PlayerInventory implements Serializable {
     // displaying all resources and victory points
     public String getAllSupplies() {
         return "Wood: " + this.wood + "\nWool: " + this.wool + "\nWheat: " + this.wool + "\nOre: " + this.ore
-                + "\nClay: " + this.clay + "\nKnightCard: " + this.knightCard
-                + "\nInventionCard: " + this.inventionCard + "\nBuildStreetCard: " + this.buildStreetCard
-                + "\nMonopolCard: " + this.monopolCard + "\nVictoty points: " + this.victoryPoints;
+                + "\nClay: " + this.clay + "\nVictoty points: " + this.victoryPoints;
     }
 
     public String getAllRessources() {
@@ -258,26 +258,6 @@ public class PlayerInventory implements Serializable {
         this.victoryPoints -= amount;
     }
 
-    public void removeKnightCard(int amount) {
-        this.knightCard -= amount;
-    }
-
-    public void removeBuildStreetCard(int amount) {
-        this.buildStreetCard -= amount;
-    }
-
-    public void removeInventianCard(int amount) {
-        this.inventionCard -= amount;
-    }
-
-    public void removeMonopolCard(int amount) {
-        this.monopolCard -= amount;
-    }
-
-    public void removeVictoryCard(int amount) {
-        this.victoryPoints -= amount;
-    }
-
     //getting the amount of resources
     public int getWood() {
         return wood;
@@ -327,36 +307,14 @@ public class PlayerInventory implements Serializable {
         this.victoryPoints = victoryPoints;
     }
 
-    public int getKnightCard() {
-        return knightCard;
+    /*******/
+
+    public LinkedList<Knot> getRoadKnots() {
+        return roadKnots;
     }
 
-    public void setKnightCard(int knightCard) {
-        this.knightCard = knightCard;
-    }
-
-    public int getBuildStreetCard() {
-        return buildStreetCard;
-    }
-
-    public void setBuildStreetCard(int buildStreetCard) {
-        this.buildStreetCard = buildStreetCard;
-    }
-
-    public int getInventionCard() {
-        return inventionCard;
-    }
-
-    public void setInventionCard(int inventionCard) {
-        this.inventionCard = inventionCard;
-    }
-
-    public int getMonopolCard() {
-        return monopolCard;
-    }
-
-    public void setMonopolCard(int monopolCard) {
-        this.monopolCard = monopolCard;
+    public void addRoadKnots(Knot k) {
+        this.roadKnots.add(k);
     }
 
     public int getSTARTVALUE() {

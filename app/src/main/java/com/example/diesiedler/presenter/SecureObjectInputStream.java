@@ -19,7 +19,6 @@ import java.util.List;
  */
 public class SecureObjectInputStream extends ObjectInputStream {
 
-
     private List<Class<?>> allowed = new ArrayList<>();
 
     /**

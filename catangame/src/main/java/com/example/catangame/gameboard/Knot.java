@@ -2,6 +2,7 @@ package com.example.catangame.gameboard;
 
 
 import com.example.catangame.Player;
+import com.example.catangame.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class Knot implements Serializable {
         this.player = null;
         this.row = row;
         this.column = column;
-        this.id = row + "" + column;
+        this.id = "settlement_" + row + "_" + column;
         this.path = null;
         this.isSettled = false;
         this.hasCity = false;
@@ -28,7 +29,7 @@ public class Knot implements Serializable {
     }
 
     public String toString() {
-        return "Zeile " + this.row + " Spalte " + this.column;        //Only for testing
+        return "settlement_" + row + "_" + column;
     }
 
     public int getRow() {
@@ -84,7 +85,7 @@ public class Knot implements Serializable {
         return isSettled;
     }
 
-    public boolean HasCity() {
+    public boolean hasCity() {
         return hasCity;
     }
 

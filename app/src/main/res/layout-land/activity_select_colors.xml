@@ -69,18 +69,21 @@
         app:layout_constraintStart_toEndOf="@+id/violett" />
 
     <Button
-        android:id="@+id/reload"
+        android:id="@+id/startPlayButton2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginEnd="85dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginStart="243dp"
+        android:layout_marginEnd="244dp"
+        android:layout_marginBottom="36dp"
         android:backgroundTint="#FFA000"
         android:onClick="startGame"
         android:text="@string/startPlay"
         android:textColor="#A10101"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

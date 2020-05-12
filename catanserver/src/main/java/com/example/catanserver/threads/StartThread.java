@@ -14,7 +14,6 @@ import com.example.catanserver.User;
 
 public class StartThread extends GameThread{
 
-
     public StartThread(User user, GameSession game) {
         super(user, game);
     }

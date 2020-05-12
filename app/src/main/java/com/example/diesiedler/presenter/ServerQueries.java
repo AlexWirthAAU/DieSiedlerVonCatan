@@ -56,10 +56,6 @@ public class ServerQueries {
         return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " START";
     }
 
-    public static String createStringQueryBuild(String structure) {
-        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " BUILD " + structure;
-    }
-
     public static String createStringQueryTrade(String offer) {
         return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " TRADE " + offer;
     }
@@ -90,5 +86,21 @@ public class ServerQueries {
 
     public static String createStringQueryPlayBuildStreetCard() {
         return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " PLAYBUILDSTREET ";
+    }
+
+    public static String createStringQueryBuildSettlement(String structure) {
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " BUILDSETTLEMENT " + structure;
+    }
+
+    public static String createStringQueryBuildRoad(String structure) {
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " BUILDROAD " + structure;
+    }
+
+    public static String createStringQueryBuildCity(String structure) {
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " BUILDCITY " + structure;
+    }
+
+    public static String createStringRolledDice(String value) {
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " DICEVALUE " + value;
     }
 }

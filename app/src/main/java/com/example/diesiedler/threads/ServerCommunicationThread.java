@@ -13,9 +13,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static com.example.diesiedler.presenter.ClientData.GET_FROM_SERVER;
-import static com.example.diesiedler.presenter.ClientData.currentGame;
-import static com.example.diesiedler.presenter.ClientData.userId;
+import static com.example.diesiedler.presenter.ClientData.*;
 
 /**
  * @author Fabian Schaffenrath

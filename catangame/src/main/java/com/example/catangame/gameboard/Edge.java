@@ -1,6 +1,7 @@
 package com.example.catangame.gameboard;
 
 import com.example.catangame.Player;
+import com.example.catangame.*;
 
 import java.io.Serializable;
 

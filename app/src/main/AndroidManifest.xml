@@ -39,6 +39,12 @@
         <activity android:name=".beforegame.LoginActivity" />
         <activity android:name=".building.BuildSettlementActivity" />
         <activity android:name=".building.BuildRoadActivity" />
+        <activity android:name=".SelectColorsActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".BuildCityActivity" />
+        <activity android:name=".RollDiceActivity" />
+        <activity android:name=".ShowInventoryActivity" />
+        <activity android:name=".ChooseActionActivity" />
     </application>
 
 </manifest>

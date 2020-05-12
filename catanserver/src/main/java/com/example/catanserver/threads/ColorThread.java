@@ -8,9 +8,9 @@ import com.example.catanserver.User;
 
 /**
  * @author Fabian Schaffenrath
- * This Thread is used to set the chosen color for a player in the gameSession
+ * This Thread is used to set the chosen color for a player in the GameSession.
  *
- * It sends an updated gameSession object to every client.
+ * It sends an updated gameSession object to every player.
  */
 
 public class ColorThread extends GameThread{

@@ -18,7 +18,8 @@ import com.example.diesiedler.beforegame.SelectColorsActivity;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.handler.HandlerOverride;
-import com.example.diesiedler.threads.NetworkThread;
+
+import com.example.diesiedler.threads.*;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -35,13 +36,16 @@ import java.util.logging.Logger;
  */
 public class SearchPlayersActivity extends AppCompatActivity implements SelectableViewHolder.OnItemSelectedListener {
 
-    private static final Logger logger = Logger.getLogger(SearchPlayersActivity.class.getName());
+
+    Handler handler = new SearchPlayersHandler(Looper.getMainLooper(),this);
 
     private RecyclerView recyclerView;
     private MyAdapter myAdapter;
-    Handler handler = new SearchPlayersHandler(Looper.getMainLooper(), this);
+
     private Button searchButton;
     private Button stopButton;
+
+    private static final Logger logger = Logger.getLogger(SearchPlayersActivity.class.getName());
 
     /**
      * Die Recyclerview wird als dem xml geholt und erhält einen
@@ -147,7 +151,7 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
      * @param view View, um StopButton anzusprechen
      */
 
-    public void stopSearching(View view) {
+    public void stopSearching(View view){
         Thread networkThread = new NetworkThread(ServerQueries.createStringQueryStop());
         networkThread.start();
         searchButton.setVisibility(View.VISIBLE);
@@ -156,20 +160,20 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
 
     private class SearchPlayersHandler extends HandlerOverride {
 
-        SearchPlayersHandler(Looper mainLooper, Activity ac) {
-            super(mainLooper, ac);
+        public SearchPlayersHandler(Looper mainLooper, Activity ac) {
+            super(mainLooper,ac);
         }
 
         /**
          * Wird vom ServerCommunicationThread aufgerufen. Im Falle einer Listübertragung wird
          * eine neue Liste für die Mitspieler auswahl erstellt, sollte eine GameSession übertragen
          * werden, so wurde das Spiel erstellt und die SelectColorActivity wird aufgerufen.
-         *
          * @param msg msg.arg1 beinhaltet den entsprechenden Parameter zur weiteren Ausführung
          */
+
         @Override
-        public void handleMessage(Message msg) {
-            if (msg.arg1 == 3) {  // TODO: Change to enums
+        public void handleMessage(Message msg){
+            if(msg.arg1 == 3){  // TODO: Change to enums
 
                 // TODO: Keep chosen players
 
@@ -178,15 +182,15 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
 
                 List<SelectableItem> selectableItems = new ArrayList<>();
 
-                for (String str : ClientData.searchingUserNames) {
+                for (String str:ClientData.searchingUserNames) {
                     SelectableItem user = new SelectableItem(str, false);
                     selectableItems.add(user);
                 }
 
-                myAdapter = new MyAdapter((SearchPlayersActivity) activity, selectableItems, true);
+                myAdapter = new MyAdapter((SearchPlayersActivity)activity, selectableItems, true);
                 recyclerView.setAdapter(myAdapter);
             }
-            if (msg.arg1 == 4) {  // TODO: Change to enums
+            if(msg.arg1 == 4){  // TODO: Change to enums
                 Intent intent = new Intent(activity, SelectColorsActivity.class);
                 startActivity(intent);
             }

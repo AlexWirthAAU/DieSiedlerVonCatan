@@ -1,22 +1,7 @@
 package com.example.catanserver;
 
 import com.example.catangame.GameSession;
-import com.example.catanserver.threads.ApplyThread;
-import com.example.catanserver.threads.BankThread;
-import com.example.catanserver.threads.BuyCardThread;
-import com.example.catanserver.threads.ColorThread;
-import com.example.catanserver.threads.CreateThread;
-import com.example.catanserver.threads.ErrorThread;
-import com.example.catanserver.threads.LoginThread;
-import com.example.catanserver.threads.PlayBuildStreetThread;
-import com.example.catanserver.threads.PlayInventionThread;
-import com.example.catanserver.threads.PlayKnightThread;
-import com.example.catanserver.threads.PlayMonopolThread;
-import com.example.catanserver.threads.PortThread;
-import com.example.catanserver.threads.StartThread;
-import com.example.catanserver.threads.StopThread;
-import com.example.catanserver.threads.TradeAnswerThread;
-import com.example.catanserver.threads.TradeThread;
+import com.example.catanserver.threads.*;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -40,9 +25,7 @@ import java.util.Arrays;
  *      - Game creation "CREATE [userid] [mitspielerid] [mitspielerid](optional) [mitspielerid](optional)"
  */
 
-
 public class ClientListenerThread extends Thread {
-
 
     private User user;
 
@@ -52,7 +35,7 @@ public class ClientListenerThread extends Thread {
     private ObjectInputStream connectionInputStream;
     private ObjectOutputStream connectionOutputStream;
 
-    ClientListenerThread(Socket connection) {
+    public ClientListenerThread(Socket connection){
         this.connection = connection;
         Server.currentConnections.add(connection);
     }
@@ -74,10 +57,10 @@ public class ClientListenerThread extends Thread {
         while (true) {
             try {
                 message = connectionInputStream.readUTF();
-            } catch (EOFException e) {
+            } catch(EOFException e){
                 try {
                     connection.close();
-                } catch (IOException ex) {
+                }catch (IOException ex){
                     ex.printStackTrace();
                 }
                 break;
@@ -92,30 +75,32 @@ public class ClientListenerThread extends Thread {
                     // Login
                     if (messageSplit[0].equals("LOGIN")) {
                         if (messageSplit.length == 2) {
-                            if (user == null) {
+                            if(user == null) {
                                 boolean nameTaken = false;
-                                for (User otherUser : Server.currentUsers) {
-                                    if (otherUser.getDisplayName().equals(messageSplit[1])) {
+                                for (User otherUser:Server.currentUsers) {
+                                    if(otherUser.getDisplayName().equals(messageSplit[1])){
                                         nameTaken = true;
                                         break;
                                     }
                                 }
-                                if (!nameTaken) {
+                                if(!nameTaken) {
                                     user = new User(messageSplit[1], connection, connectionInputStream, connectionOutputStream);
                                     Server.currentUsers.add(user);
                                 }
                             }
-                            if (user != null) {
+                            if(user != null) {
                                 System.out.println("Starting LOGINThread.");
                                 Thread loginThread = new LoginThread(user);
                                 loginThread.start();
-                            } else {
+                            }
+                            else{
                                 System.out.println("Starting ErrorThread [LOGIN]");
                                 Thread errorThread = new ErrorThread(connectionOutputStream, "This name is taken!");
                                 errorThread.start();
                             }
                         }
-                    } else if (user != null) {
+                    }
+                    else if(user != null) {
                         // Apply for searching
                         if (messageSplit[0].equals("APPLY")) {
                             System.out.println("Starting APPLYThread.");
@@ -152,6 +137,8 @@ public class ClientListenerThread extends Thread {
                                     if (foundGame != null) {
                                         if (messageSplit.length > 2) {
                                             if (!Server.currentlyThreaded.contains(foundGame.getGameId())) {
+
+
                                                 if (messageSplit[2].equals("COLOR") && messageSplit.length > 3) {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     System.out.println("Starting COLORThread.");
@@ -222,6 +209,46 @@ public class ClientListenerThread extends Thread {
 
                                                 // TODO: Implement all methods post Game creation here
 
+
+                                                // TODO: Implement all methods post Game creation here
+
+
+                                                if (messageSplit[2].equals("BUILDSETTLEMENT")) {
+                                                    int knotIndex = Integer.parseInt(messageSplit[3]);
+                                                    Server.currentlyThreaded.add(foundGame.getGameId());
+                                                    System.out.println("Starting BUILDSETTLEMENTThread.");
+                                                    Thread bsThread = new BuildSettlementThread(user, foundGame, knotIndex);
+                                                    bsThread.start();
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
+                                                }
+
+                                                if (messageSplit[2].equals("BUILDROAD")) {
+                                                    int edgeIndex = Integer.parseInt(messageSplit[3]);
+                                                    Server.currentlyThreaded.add(foundGame.getGameId());
+                                                    System.out.println("Starting BUILDROADThread.");
+                                                    Thread brThread = new BuildRoadThread(user, foundGame, edgeIndex);
+                                                    brThread.start();
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
+                                                }
+
+                                                if (messageSplit[2].equals("BUILDCITY")) {
+                                                    int knotIndex = Integer.parseInt(messageSplit[3]);
+                                                    Server.currentlyThreaded.add(foundGame.getGameId());
+                                                    System.out.println("Starting BUILDCITYThread.");
+                                                    Thread bcThread = new BuildCityThread(foundGame, user, knotIndex);
+                                                    bcThread.start();
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
+                                                }
+
+                                                if (messageSplit[2].equals("DICEVALUE")) {
+                                                    int diceValue = Integer.parseInt(messageSplit[3]);
+                                                    Server.currentlyThreaded.add(foundGame.getGameId());
+                                                    System.out.println("Starting DICEVALUEThread");
+                                                    Thread rAThread = new ResourceAllocationThread(user, foundGame, diceValue);
+                                                    rAThread.start();
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
+                                                }
+
                                             }
 
                                             /*
@@ -231,15 +258,15 @@ public class ClientListenerThread extends Thread {
                                         }
                                     } else {
                                         // Falsche GameID
-                                        Thread errorThread = new ErrorThread(connectionOutputStream, "Spiel konnte nicht gefunden werden.");
+                                        Thread errorThread = new ErrorThread(connectionOutputStream,"Spiel konnte nicht gefunden werden.");
                                         errorThread.start();
                                     }
                                 } else {
                                     // Falsche UserID
-                                    Thread errorThread = new ErrorThread(connectionOutputStream, "Fehler bei der Benutzeridentifikation.");
+                                    Thread errorThread = new ErrorThread(connectionOutputStream,"Fehler bei der Benutzeridentifikation.");
                                     errorThread.start();
                                 }
-                            } catch (NumberFormatException e) {
+                            }catch(NumberFormatException e){
                                 System.out.println("Integer parsing failed.");
                             }
                         }
@@ -258,8 +285,8 @@ public class ClientListenerThread extends Thread {
             if(index < 0){
                 break;
             }
-            stringList.add(msg.substring(0, index));
-            msg = msg.substring(index + 1);
+            stringList.add(msg.substring(0,index));
+            msg = msg.substring(index+1);
         }
         stringList.add(msg);
         String[] stringArray = new String[stringList.size()];

@@ -7,7 +7,7 @@ import com.example.catanserver.User;
  * @author Fabian Schaffenrath
  * This Thread is used to nominate a player for player selection.
  *
- * It sends a complete list of nominees to the client.
+ * It sends a complete list of nominees to the client and all other searching Users.
  */
 
 public class ApplyThread extends Thread{

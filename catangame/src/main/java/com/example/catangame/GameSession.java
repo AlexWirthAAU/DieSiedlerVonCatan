@@ -2,9 +2,7 @@ package com.example.catangame;
 
 import com.example.catangame.devcards.DevCard;
 import com.example.catangame.devcards.DevCardStack;
-import com.example.catangame.gameboard.Edge;
-import com.example.catangame.gameboard.Gameboard;
-import com.example.catangame.gameboard.Knot;
+import com.example.catangame.gameboard.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -105,11 +103,11 @@ public class GameSession implements Serializable {
         roads.add(road);
     }
 
-    private void addSettlement(Knot settlement){
+    public void addSettlement(Knot settlement) {
         settlements.add(settlement);
     }
 
-    private void addCity(Knot settlement){
+    public void addCity(Knot settlement) {
         settlements.remove(settlement);
         cities.add(settlement);
     }
@@ -124,4 +122,7 @@ public class GameSession implements Serializable {
         curr = players.get(currPlayer);
     }
 
+    public int getCurrPlayer() {
+        return currPlayer;
+    }
 }

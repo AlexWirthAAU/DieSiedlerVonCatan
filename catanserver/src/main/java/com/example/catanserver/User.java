@@ -11,8 +11,8 @@ import java.util.List;
 
 /**
  * @author Fabian Schaffenrath
- * The User class implements everything that is know of a user. If a game is started, the
- * gameSessions list should be updated.
+ * The User class implements everything that is know of a user, including the socket connection and
+ * object streams. If a game is started, the gameSessions list should be updated.
  */
 
 public class User {

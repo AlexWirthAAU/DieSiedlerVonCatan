@@ -13,8 +13,7 @@ import java.util.Set;
 
 /**
  * @author Fabian Schaffenrath
- * This Class handles everything that is related to messages being sent to the client. It also is
- * responsible for closing connections.
+ * This Class handles everything that is related to messages being sent to the client.
  */
 
 public class SendToClient {

@@ -33,7 +33,6 @@ android {
 
 }
 
-
 task jacocoTestReport(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
 
     reports {
@@ -45,13 +44,10 @@ task jacocoTestReport(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
     def debugTree = fileTree(dir: "${buildDir}/intermediates/javac/debug", excludes: fileFilter)
     def mainSrc = "${project.projectDir}/src/main/java"
 
-    sourceDirectories.from = files([mainSrc])
-    classDirectories.from  = files([debugTree])
-    executionData.from = files("${buildDir}/jacoco/testDebugUnitTest.exec")
-
-
+    sourceDirectories = files([mainSrc])
+    classDirectories = files([debugTree])
+    executionData = files("${buildDir}/jacoco/testDebugUnitTest.exec")
 }
-
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])

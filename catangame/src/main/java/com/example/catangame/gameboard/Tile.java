@@ -13,11 +13,15 @@ public class Tile implements Serializable {
 
 
     public Tile(int Tid) {
-        isThief = false;
         id = Tid;
         setDiceValue();
         setResource();
         knots = new Knot[6];
+        if (resource.equals("DESERT")) {
+            isThief = true;
+        } else {
+            isThief = false;
+        }
     }
 
     private void setResource() {
@@ -137,8 +141,6 @@ public class Tile implements Serializable {
                 this.diceValue = 2;
                 break;
             }
-
-
         }
     }
 

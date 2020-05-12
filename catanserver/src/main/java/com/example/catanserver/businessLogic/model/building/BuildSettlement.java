@@ -2,11 +2,21 @@ package com.example.catanserver.businessLogic.model.building;
 
 import com.example.catangame.Player;
 import com.example.catangame.PlayerInventory;
-import com.example.catangame.gameboard.Edge;
 import com.example.catangame.gameboard.Gameboard;
 import com.example.catangame.gameboard.Knot;
 
-public class BuildSettlement implements BuildStructure {
+public class BuildSettlement {
+
+    /**
+     * @author Alex Wirth
+     * <p>
+     * This class' purpose is to update the gamesession object. For this, the gameboard, the gamesession's settlement-list
+     * as well as the player's inventory needs to be updated. The queries to check whether a knot is availabe for building a settlement or not,
+     * will be handled in the app-programm. There it sends the index of the knot in the knot-array of the gameboard so that
+     * the server can update the gamesession object.
+     */
+
+    /*
     private boolean enoughResources = false;
     private Player player;
     PlayerInventory playerInventory;
@@ -17,12 +27,12 @@ public class BuildSettlement implements BuildStructure {
 
     @Override
     public boolean checkResources() {
-        // cost for settlement: 1 wood, 1 clay, 1 wheat, 1 wool
-        int wood = playerInventory.getWood();
+        // cost for settlement: 1 clay, 1 clay, 1 wheat, 1 wool
+        int clay = playerInventory.getWood();
         int clay = playerInventory.getClay();
         int wheat = playerInventory.getWheat();
         int wool = playerInventory.getWool();
-        if (wood >= 1 && clay >= 1 && wheat >= 1 && wool >= 1) {
+        if (clay >= 1 && clay >= 1 && wheat >= 1 && wool >= 1) {
             enoughResources = true;
         }
         return enoughResources;
@@ -34,6 +44,8 @@ public class BuildSettlement implements BuildStructure {
          - if there is a road of the player leading to the chosen place and
          - there is no other settlement or city only one distance (road or possible road) away
          */
+
+    /*
         if (enoughResources && adjacentRoadOfPlayer() && notTooCloseToSettlementOrCity()) {
             updateGameboard();
             updatePlayerInventory();
@@ -61,15 +73,40 @@ public class BuildSettlement implements BuildStructure {
         return true;
     }
 
+    */
+    public static void updateGameSession(GameSession gameSession, int knotIndex, int userID) {
+        Gameboard gameboard = gameSession.getGameboard();
+        Knot toBeSettled = gameboard.getKnots()[knotIndex];
+        Player player = gameSession.getPlayer(userID);
 
 
-    @Override
-    public void updateGameboard() {
-        knot.setPlayer(player);
+        toBeSettled.setSettled(true);
+        toBeSettled.setPlayer(player);
+        gameSession.addSettlement(toBeSettled);
+
+        if (player.getInventory().getSettlements().size() < 2) {
+            updatePlayerInventoryInit(player, toBeSettled);
+        } else {
+            updatePlayerInventoryRegular(player, toBeSettled);
+            gameSession.nextPlayer();
+        }
     }
 
-    @Override
-    public void updatePlayerInventory() {
-        //todo implementation missing
+    private static void updatePlayerInventoryRegular(Player p, Knot k) {
+        PlayerInventory playerInventory = p.getInventory();
+
+        playerInventory.addSettlement(k);
+        playerInventory.removeWood(1);
+        playerInventory.removeClay(1);
+        playerInventory.removeWheat(1);
+        playerInventory.removeWool(1);
+        playerInventory.addVictoryPoints(1);
+    }
+
+    private static void updatePlayerInventoryInit(Player p, Knot k) {
+        PlayerInventory playerInventory = p.getInventory();
+
+        playerInventory.addSettlement(k);
+        playerInventory.addVictoryPoints(1);
     }
 }

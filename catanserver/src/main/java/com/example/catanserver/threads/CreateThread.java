@@ -8,7 +8,6 @@ import com.example.catanserver.User;
 import java.util.HashSet;
 import java.util.Set;
 
-
 /**
  * @author Fabian Schaffenrath
  * This Thread is used to create a game, once all players have been selected.
