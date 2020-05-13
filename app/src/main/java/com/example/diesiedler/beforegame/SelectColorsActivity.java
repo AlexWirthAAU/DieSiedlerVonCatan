@@ -194,7 +194,7 @@ public class SelectColorsActivity extends AppCompatActivity {
 
             } else if (msg.arg1 == 5 && msg.obj.equals("STARTGAME")) {  // TODO: Change to enums
 
-                if (ClientData.currentGame.getPlayer(ClientData.currentGame.getCurrPlayer()).getUserId() == ClientData.userId) {
+                if (ClientData.currentGame.getCurrPlayer() == ClientData.userId) {
                     Intent intent = new Intent(activity, BuildSettlementActivity.class);
                     startActivity(intent);
                 } else {

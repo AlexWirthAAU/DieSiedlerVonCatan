@@ -15,7 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ShowInventoryActivity"></activity>
-        <activity android:name=".cards.PlayBuildStreetActivity" />
         <activity android:name=".cards.PlayMonopolActivity" />
         <activity android:name=".cards.PlayInventionActivity" />
         <activity android:name=".cards.PlayKnightActivity" />

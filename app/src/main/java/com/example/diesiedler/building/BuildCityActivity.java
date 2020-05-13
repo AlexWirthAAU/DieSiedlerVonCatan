@@ -31,25 +31,30 @@ import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
 import com.example.diesiedler.threads.NetworkThread;
 import com.richpath.RichPathView;
 
-
+/**
+ * @author Alex Wirth
+ * <p>
+ * This Activity should allow the User to click the Knot he wants to build on.
+ * The clicked Asset's ID will be sent to the Server (PresenterBuild) where it is checked whether user is allowed to build or not.
+ * If yes, this Asset will be colored in User's Color.
+ * If not, User has to click another Asset.
+ */
 public class BuildCityActivity extends AppCompatActivity implements View.OnClickListener {
-    /**
-     * This activity should allow the user to click the knot he wants to build on
-     * The clicked asset's ID will be sent to the Server (PresenterBuild) where it is checked whether user is allowed to build or not
-     * If yes -> this asset will be colored in user's color
-     * If not -> User has to click another asset
-     */
 
-    private Handler handler = new BuildCityHandler(Looper.getMainLooper(), this);
-    private AlertDialog.Builder alertBuilder;
-    private TextView woodCount;
+    private Handler handler = new BuildCityHandler(Looper.getMainLooper(), this); // Handler
+
+    private AlertDialog.Builder alertBuilder; // AlertBuilder
+
+    private TextView woodCount; // TextViews for number of Ressources
     private TextView clayCount;
     private TextView wheatCount;
     private TextView oreCount;
     private TextView woolCount;
-    private Button devCards;
+
+    private Button devCards; // Buttons to show Score and Inventory
     private Button scoreBoard;
 
+    // TODO: Methoden kommentieren
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

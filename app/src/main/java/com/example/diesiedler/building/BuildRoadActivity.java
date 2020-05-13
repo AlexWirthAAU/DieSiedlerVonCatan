@@ -29,27 +29,33 @@ import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
 import com.example.diesiedler.threads.NetworkThread;
 import com.richpath.RichPathView;
 
-
+/**
+ * @author Alex Wirth
+ * @author Christina Senger (edit)
+ * <p>
+ * This Activity should allow the User to click the Edge he wants to build on.
+ * The clicked Asset's ID will be sent to the Server (PresenterBuild) where it is checked whether user is allowed to build or not.
+ * If yes, this Asset will be colored in User's Color.
+ * If not, User has to click another Asset.
+ */
 public class BuildRoadActivity extends AppCompatActivity implements View.OnClickListener {
 
-    /**
-     * This activity should allow the user to click the edge he wants to build on
-     * The clicked asset's ID will be sent to the Server that (PresenterBuild) where it is checked whether user is allowed to build or not
-     * If yes -> this asset will be colored in user's color
-     * If not -> User has to click another asset
-     */
+    private Handler handler = new BuildRoadHandler(Looper.getMainLooper(), this); // Handler
 
-    private Handler handler = new BuildRoadHandler(Looper.getMainLooper(), this);
-    private AlertDialog.Builder alertBuilder;
-    private TextView woodCount;
+    private AlertDialog.Builder alertBuilder; // AlertBuilder
+
+    private TextView woodCount; // TextViews for number of Ressources
     private TextView clayCount;
     private TextView wheatCount;
     private TextView oreCount;
     private TextView woolCount;
-    private Button devCards;
+
+    private Button devCards; // Buttons to show Score and Inventory
     private Button scoreBoard;
 
-    private String card;
+    private String card; // "CARD" when to Activity is started from the PlayCardActivity
+
+    // TODO: Methoden kommentieren
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,11 +145,25 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
+    /**
+     * @author Alex Wirth
+     * @author Christina Senger (edit)
+     * <p>
+     * Handler for the BuildRoadActivity
+     */
     private class BuildRoadHandler extends HandlerOverride {
         public BuildRoadHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
         }
 
+        /**
+         * When a GameSession is send, it is checked if it is the Players Turn.
+         * If yes, the Activity get loaded once more with card as Extra of  the Intent.
+         * If no, the MainActivit is started.
+         *
+         * @param msg msg.arg1 has the Param for further Actions
+         *            msg.obj has the updated GameSession
+         */
         @Override
         public void handleMessage(Message msg) {
             if (msg.arg1 == 4) {

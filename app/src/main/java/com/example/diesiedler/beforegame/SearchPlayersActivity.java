@@ -72,7 +72,6 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
     @Override
     public void onItemSelected(SelectableItem selectableItem) {
 
-        List<SelectableItem> selectedItems = myAdapter.getSelectedItems();
     }
 
     /**
@@ -88,7 +87,7 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
     }
 
     /**
-     * On Click it is checkd, if there a between 1 and 3 Players selected.
+     * On Click it is checked, if there a between 1 and 3 Players selected.
      * If this is the case, the NetworkThread is started, which sends all UserIds
      * in a Create-Request to the Server and stores them locally. Else a Error-Message is shown.
      *

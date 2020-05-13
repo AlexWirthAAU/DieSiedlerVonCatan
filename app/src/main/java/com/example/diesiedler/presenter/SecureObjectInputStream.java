@@ -13,19 +13,19 @@ import java.util.List;
 /**
  * @author Christina Senger
  * <p>
- * Klasse, um die Deserialisierung von Objecten vom Server sicherer zumachen.
- * Die Deserialisierung soll nur durchgeführt werden, wenn das Objekt von einer
- * erlaubten Klasse ist.
+ * Class to make Deserialisation of Object send from Server more save.
+ * The Deserialisation should only be carried out, when the Object is
+ * an Instance of an allowed Class.
  */
 public class SecureObjectInputStream extends ObjectInputStream {
 
-    private List<Class<?>> allowed = new ArrayList<>();
+    private List<Class<?>> allowed = new ArrayList<>(); // List of allowed Classes
 
     /**
-     * Kostruktor - Liste der erlaubten Klassen wird befüllt
+     * Constructor - List of allowed Classes is filled.
      *
-     * @param inputStream InputStream vom Socket
-     * @throws IOException wenn der super-Konstruktor den InputStream nicht lesen kann
+     * @param inputStream InputStream of the Socket
+     * @throws IOException when the super-Constructor cannot read the Stream
      */
     public SecureObjectInputStream(InputStream inputStream) throws IOException {
         super(inputStream);
@@ -37,14 +37,14 @@ public class SecureObjectInputStream extends ObjectInputStream {
     }
 
     /**
-     * Ist der Klassenname des Objekt in der Liste der erlaubten Klasse,
-     * wird die Klasse aufgelöst und das Objekt kann deserialisiert werden.
-     * Ansonsten wird eine InvalicClassException geworfen.
+     * Is the Classname of the Object part of the List of allowed Classes,
+     * the Class is resolved and the Object can be serialised.
+     * Else an InvalicClassException is thrown.
      *
-     * @param osc Instanz der Klasse ObjectStream
-     * @return Objekt der Klasse Class passend zu osc
-     * @throws IOException bei üblichen IO-Problemen
-     * @throws ClassNotFoundException wenn die Klasse des serialisierten Objekt nicht gefunden werden kann
+     * @param osc Instanc of the Class ObjectStream
+     * @return Object of Class Class, correspondending to osc
+     * @throws IOException on standard IO-Issues
+     * @throws ClassNotFoundException when the Class of the deseralised Object cannot be found
      *
      */
     @Override
