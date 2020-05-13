@@ -1,8 +1,9 @@
 package com.example.catangame.devcards;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class DevCardStack {
+public class DevCardStack implements Serializable {
 
     private ArrayList<DevCard> stack = new ArrayList<>(26);
     private int i = 0;

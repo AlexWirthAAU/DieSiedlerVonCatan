@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
 
     private static final Logger logger = Logger.getLogger(MainActivity.class.getName());
-    private Handler handler = new MainActivityHandler(Looper.getMainLooper(), this);
+    private Handler handler = new MainHandler(Looper.getMainLooper(), this);
 
     private TextView woodCount;
     private TextView clayCount;
@@ -106,38 +106,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
-    private class MainActivityHandler extends HandlerOverride {
-
-        public MainActivityHandler(Looper mainLooper, Activity ac) {
-            super(mainLooper, ac);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.arg1 == 4) {
-                GameSession gs = ClientData.currentGame;
-                Player currentPlayer = gs.getPlayer(gs.getCurrPlayer());
-                PlayerInventory playerInventory = currentPlayer.getInventory();
-
-
-                if (currentPlayer.getUserId() == ClientData.userId && playerInventory.getRoads().size() < 2) {
-                    Intent intent = new Intent(activity, BuildSettlementActivity.class);
-                    startActivity(intent);
-                } else if (currentPlayer.getUserId() == ClientData.userId && playerInventory.getSettlements().size() > 1 && playerInventory.getRoads().size() > 1) {
-                    Intent intent = new Intent(activity, RollDiceActivity.class);
-                    startActivity(intent);
-                } else if (currentPlayer.getUserId() == ClientData.userId) {
-                    Intent intent = new Intent(activity, RollDiceActivity.class);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(activity, MainActivity.class);
-                    startActivity(intent);
-                }
-            }
-        }
-    }
-
     private class MainHandler extends HandlerOverride {
 
         MainHandler(Looper mainLooper, Activity ac) {
@@ -177,7 +145,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     startActivity(intent);
                 }
             }
-
 
             if (msg.arg1 == 5) {  // TODO: Change to enums
 

@@ -28,6 +28,7 @@ public class BankThread extends GameThread {
 
         if (checkTrade()) {
 
+            System.out.println("checked");
             String mess = buildMessage();
             exchangeRessources();
             game.nextPlayer();
@@ -77,6 +78,7 @@ public class BankThread extends GameThread {
 
         give = trd[0];
         get = trd[1];
+        System.out.println(give + " give " + get + " get");
     }
 
     private String buildMessage() {
@@ -84,6 +86,7 @@ public class BankThread extends GameThread {
         message.append("BANKTRADEMESSAGE/");
         message.append("Du hast erfolgreich 4 ").append(give).append(" gegen 1 ").append(get).append(" getauscht");
 
+        System.out.println(message.toString());
         return message.toString();
     }
 
@@ -128,5 +131,8 @@ public class BankThread extends GameThread {
             default:
                 break;
         }
+
+        System.out.println("4 " + give + " gegen 1 " + get);
+        System.out.println(currPlayer.getInventory().getAllRessources());
     }
 }

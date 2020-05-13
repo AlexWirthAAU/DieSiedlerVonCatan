@@ -2,7 +2,6 @@ package com.example.catangame.gameboard;
 
 
 import com.example.catangame.Player;
-import com.example.catangame.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,7 +14,12 @@ public class Knot implements Serializable {
     private boolean isSettled;
     private boolean hasCity;
     private Player player;          //TODO: When a player builds a settlement, he owns this knot
-    private boolean isHarbourKnot;      //States whether a Knot has a harbour or not
+    private boolean isHarbourKnot;  //States whether a Knot has a harbour or not
+    private boolean isWoodPort;
+    private boolean isWoolPort;
+    private boolean isWheatPort;
+    private boolean isOrePort;
+    private boolean isClayPort;
 
     public Knot(int row, int column) {
         this.player = null;
@@ -48,27 +52,44 @@ public class Knot implements Serializable {
         switch (this.id) {
             case "15":
             case "16":
-            case "18":
-            case "19":
             case "22":
             case "23":
-            case "210":
-            case "310":
-            case "410":
-            case "411":
-            case "63":
             case "65":
             case "66":
+                this.isHarbourKnot = true;
+                this.isOrePort = true;
+                break;
+            case "18":
+            case "19":
+            case "31":
+            case "41":
+                this.isHarbourKnot = true;
+                this.isWheatPort = true;
+                break;
+            case "210":
+            case "310":
+                this.isHarbourKnot = true;
+                this.isWoolPort = true;
+                break;
+            case "410":
+            case "411":
+            case "53":
+            case "63":
+                this.isHarbourKnot = true;
+                this.isClayPort = true;
+                break;
             case "68":
             case "69":
-            case "53":
-            case "41":
-            case "31": {
                 this.isHarbourKnot = true;
+                this.isWoodPort = true;
                 break;
-            }
             default: {
                 this.isHarbourKnot = false;
+                this.isOrePort = false;
+                this.isClayPort = false;
+                this.isWheatPort = false;
+                this.isWoodPort = false;
+                this.isWoolPort = false;
             }
         }
     }
@@ -91,6 +112,26 @@ public class Knot implements Serializable {
 
     public boolean isHarbourKnot() {
         return isHarbourKnot;
+    }
+
+    public boolean isWoodPort() {
+        return isWoodPort;
+    }
+
+    public boolean isWoolPort() {
+        return isWoolPort;
+    }
+
+    public boolean isWheatPort() {
+        return isWheatPort;
+    }
+
+    public boolean isOrePort() {
+        return isOrePort;
+    }
+
+    public boolean isClayPort() {
+        return isClayPort;
     }
 
     public Player getPlayer() {

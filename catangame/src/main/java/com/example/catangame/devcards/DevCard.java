@@ -1,4 +1,6 @@
 package com.example.catangame.devcards;
 
-public interface DevCard {
+import java.io.Serializable;
+
+public interface DevCard extends Serializable {
 }

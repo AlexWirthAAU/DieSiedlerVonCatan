@@ -17,7 +17,6 @@ import java.util.Set;
  * a personal listener Thread for every user.
  * It implements all used Lists/Sets needed as static, reachable from every class.
  */
-
 public class Server {
 
     private final static int SERVER_PORT = 2020;

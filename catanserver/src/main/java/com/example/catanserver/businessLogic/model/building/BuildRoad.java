@@ -3,8 +3,11 @@ package com.example.catanserver.businessLogic.model.building;
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catangame.PlayerInventory;
+import com.example.catangame.devcards.BuildStreetCard;
 import com.example.catangame.gameboard.Edge;
 import com.example.catangame.gameboard.Gameboard;
+
+import java.util.LinkedList;
 
 public class BuildRoad {
 
@@ -23,6 +26,24 @@ public class BuildRoad {
         road.setPlayer(player);
         gameSession.addRoad(road);
         gameSession.nextPlayer();
+    }
+
+    public static void buildRoadWithCard(GameSession gameSession, int roadIndex, int userID) {
+        Gameboard gameboard = gameSession.getGameboard();
+        Edge road = gameboard.getEdges()[roadIndex];
+        Player player = gameSession.getPlayer(userID);
+        LinkedList<BuildStreetCard> list = player.getInventory().getBuildStreetCardLinkedList();
+
+        updatePlayerInventoryInit(player, road);
+
+        road.setPlayer(player);
+        gameSession.addRoad(road);
+        list.get(list.size()).removeCounter();
+
+        if (list.get(list.size()).getCounter() == 0) {
+            list.remove(list.size());
+            gameSession.nextPlayer();
+        }
     }
 
     private static void updatePlayerInventory(Player p, Edge e) {

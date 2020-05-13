@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.catangame.GameSession;
 import com.example.catangame.PlayerInventory;
 import com.example.catangame.gameboard.Edge;
 import com.example.diesiedler.ChooseActionActivity;
@@ -48,6 +49,8 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
     private Button devCards;
     private Button scoreBoard;
 
+    private String card;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,11 +62,13 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
         scoreBoard = findViewById(R.id.scoreBoard);
         scoreBoard.setOnClickListener(this);
 
+        card = getIntent().getStringExtra("card");
+
         UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
         updateResources();
         ClientData.currentHandler = handler;
 
-        int status = UpdateBuildRoadView.updateView(ClientData.currentGame, richPathView);
+        int status = UpdateBuildRoadView.updateView(ClientData.currentGame, richPathView, card);
         if (status == 0) {
             alertBuilder = new AlertDialog.Builder(this);
             alertBuilder.setTitle("Du kannst nicht bauen");
@@ -111,7 +116,13 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
         }
         String eIString = Integer.toString(edgeIndex);
 
-        Thread networkThread = new NetworkThread(ServerQueries.createStringQueryBuildRoad(eIString));
+        Thread networkThread;
+
+        if (card != null) {
+            networkThread = new NetworkThread(ServerQueries.createStringQueryPlayBuildStreetCard(eIString));
+        } else {
+            networkThread = new NetworkThread(ServerQueries.createStringQueryBuildRoad(eIString));
+        }
         networkThread.start();
     }
 
@@ -136,8 +147,19 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
         @Override
         public void handleMessage(Message msg) {
             if (msg.arg1 == 4) {
-                Intent intent = new Intent(activity, MainActivity.class);
-                startActivity(intent);
+
+                ClientData.currentGame = (GameSession) msg.obj;
+
+                if (ClientData.currentGame.getCurrPlayer() == ClientData.userId) {
+
+                    Intent intent = new Intent(activity, BuildRoadActivity.class);
+                    intent.putExtra("card", "CARD");
+                    startActivity(intent);
+
+                } else {
+                    Intent intent = new Intent(activity, MainActivity.class);
+                    startActivity(intent);
+                }
             }
         }
 

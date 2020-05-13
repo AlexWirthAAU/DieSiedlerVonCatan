@@ -14,7 +14,6 @@ import com.example.catanserver.threads.building.BuildCityThread;
 import com.example.catanserver.threads.building.BuildRoadThread;
 import com.example.catanserver.threads.building.BuildSettlementThread;
 import com.example.catanserver.threads.cards.BuyCardThread;
-import com.example.catanserver.threads.cards.PlayBuildStreetThread;
 import com.example.catanserver.threads.cards.PlayInventionThread;
 import com.example.catanserver.threads.cards.PlayKnightThread;
 import com.example.catanserver.threads.cards.PlayMonopolThread;
@@ -222,9 +221,11 @@ public class ClientListenerThread extends Thread {
                                                 }
 
                                                 if (messageSplit[2].equals("PLAYBUILDSTREET")) {
+                                                    int edgeIndex = Integer.parseInt(messageSplit[3]);
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
-                                                    Thread playBuildStreetThread = new PlayBuildStreetThread(user, foundGame);
-                                                    playBuildStreetThread.start();
+                                                    System.out.println("Starting BUILDROADThread.");
+                                                    Thread brThread = new BuildRoadThread(user, foundGame, edgeIndex, "CARD");
+                                                    brThread.start();
                                                 }
 
                                                 if (messageSplit[2].equals("NEXT")) {
@@ -249,7 +250,7 @@ public class ClientListenerThread extends Thread {
                                                     int edgeIndex = Integer.parseInt(messageSplit[3]);
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     System.out.println("Starting BUILDROADThread.");
-                                                    Thread brThread = new BuildRoadThread(user, foundGame, edgeIndex);
+                                                    Thread brThread = new BuildRoadThread(user, foundGame, edgeIndex, " ");
                                                     brThread.start();
                                                     Server.currentlyThreaded.remove(foundGame.getGameId());
                                                 }

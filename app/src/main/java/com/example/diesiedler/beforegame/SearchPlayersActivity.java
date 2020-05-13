@@ -19,7 +19,6 @@ import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.handler.HandlerOverride;
 import com.example.diesiedler.threads.NetworkThread;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,28 +29,25 @@ import java.util.logging.Logger;
  * @author Christina Senger
  * @author Fabian Schaffenrath (edit)
  * <p>
- * Aktivität enthält eine Recyclerview mit allen aktiven Usern als Items. Sie kümmert sich um die Such-
- * An- und Abmeldung, sowie die Spielerstellung.
+ * Activity which holds a Recyclerview with all active Users as Items.
+ * Sie kümmert sich um die Such-An- und Abmeldung, sowie die Spielerstellung.
  */
 public class SearchPlayersActivity extends AppCompatActivity implements SelectableViewHolder.OnItemSelectedListener {
 
-
-    Handler handler = new SearchPlayersHandler(Looper.getMainLooper(),this);
-
-    private RecyclerView recyclerView;
-    private MyAdapter myAdapter;
-
-    private Button searchButton;
-    private Button stopButton;
-
-    private static final Logger logger = Logger.getLogger(SearchPlayersActivity.class.getName());
+    private static final Logger logger = Logger.getLogger(SearchPlayersActivity.class.getName()); // Logger
+    Handler handler = new SearchPlayersHandler(Looper.getMainLooper(), this); // Handler
+    private RecyclerView recyclerView; // Recyclerview with all active Users as Items
+    private MyAdapter myAdapter; // Adapter-Class for the Recyclerview
+    private Button searchButton; // Button to start seraching for Players
+    private Button stopButton; // Button to stop seraching for Players
 
     /**
-     * Die Recyclerview wird als dem xml geholt und erhält einen
-     * Layoutmanager. Button zur An- und Abmeldung werden spezifiziert.
+     * The Recyclerview is loaded from the xml and gets a Layoutmanager.
+     * The Buttons to start and stop searching are specified.
      *
-     * Der Handler wird in der ClientData für die jetzige Aktivität angepasst.
-     * @param savedInstanceState gespeicherter Status
+     * The Handler in ClientData is set for the current Activity
+     *
+     * @param savedInstanceState saved State
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,21 +65,19 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
     }
 
     /**
-     * Methode dient zum Test der Recyclerview
+     * Debug-Method for the Recyclerview
      *
-     * @param selectableItem das zuletzt augewählte Item
+     * @param selectableItem last selected Item
      */
     @Override
     public void onItemSelected(SelectableItem selectableItem) {
 
         List<SelectableItem> selectedItems = myAdapter.getSelectedItems();
-        Snackbar.make(recyclerView, "Selected item is " + selectableItem.getText() +
-                ", Totally  selectem item count is " + selectedItems.size(), Snackbar.LENGTH_LONG).show();
     }
 
     /**
-     * Wird die Aktivität zerstört, so schickt ein NetworkThread eine
-     * Abmeldung von der Suche zum Server.
+     * When the Actity is destroyed, the NetworkThread sends the
+     * Logout from the Search to the Server.
      */
     @Override
     protected void onDestroy() {
@@ -94,10 +88,11 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
     }
 
     /**
-     * Bei Betätigung des Start Buttons wird erst überprüft, ob zwischen 1 und 3 Mitspieler ausgewählt ist/sind.
-     * Falls ja wird der NetworkThread gestartet, der alle UserIds der Spieler zusammen mit einem Create
-     * request an den Server schickt. Falls nein wird eine Fehlermeldung am Bildschirm ausgegeben.
-     * @param view View, um StartButton anzusprechen
+     * On Click it is checkd, if there a between 1 and 3 Players selected.
+     * If this is the case, the NetworkThread is started, which sends all UserIds
+     * in a Create-Request to the Server and stores them locally. Else a Error-Message is shown.
+     *
+     * @param view View, to access StartButton
      */
     public void startPlay(View view) {
 
@@ -135,21 +130,20 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
     }
 
     /**
-     * Sendet ein Anmelde request für die Spielersuche an den Server.
+     * Sends a Login-Request for the Search to the Server.
      *
-     * @param view View, um SearchButton anzusprechen
+     * @param view View, to access the SearchButton
      */
-
     public void startSearching(View view) {
         Thread networkThread = new NetworkThread(ServerQueries.createStringQueryApply());
         networkThread.start();
     }
 
     /**
-     * Sendet ein Abmelde request für die Spielersuche an den Server und toggled Search & Stop Button.
-     * @param view View, um StopButton anzusprechen
+     * Sends a Logout-Request for the Search to the Server und toggles Search & Stop Button.
+     *
+     * @param view View, to access StopButton
      */
-
     public void stopSearching(View view){
         Thread networkThread = new NetworkThread(ServerQueries.createStringQueryStop());
         networkThread.start();
@@ -157,6 +151,11 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
         stopButton.setVisibility(View.GONE);
     }
 
+    /**
+     * @author Fabian Schaffenrath (edit)
+     * <p>
+     * Handler for the SearchPlayersActivity
+     */
     private class SearchPlayersHandler extends HandlerOverride {
 
         SearchPlayersHandler(Looper mainLooper, Activity ac) {
@@ -164,10 +163,11 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
         }
 
         /**
-         * Wird vom ServerCommunicationThread aufgerufen. Im Falle einer Listübertragung wird
-         * eine neue Liste für die Mitspieler auswahl erstellt, sollte eine GameSession übertragen
-         * werden, so wurde das Spiel erstellt und die SelectColorActivity wird aufgerufen.
-         * @param msg msg.arg1 beinhaltet den entsprechenden Parameter zur weiteren Ausführung
+         * Called from ServerCommunicationThread. When a List was send,
+         * a new List for Player-Selection is created. When a GameSession
+         * was send, a Game was created and the SelectColorActivity is started.
+         *
+         * @param msg msg.arg1 gets the Param for further actions
          */
 
         @Override
@@ -189,6 +189,7 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
                 myAdapter = new MyAdapter((SearchPlayersActivity)activity, selectableItems, true);
                 recyclerView.setAdapter(myAdapter);
             }
+
             if(msg.arg1 == 4){  // TODO: Change to enums
                 Intent intent = new Intent(activity, SelectColorsActivity.class);
                 startActivity(intent);

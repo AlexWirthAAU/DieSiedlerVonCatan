@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.diesiedler.R;
+import com.example.diesiedler.building.BuildRoadActivity;
 import com.example.diesiedler.presenter.ClientData;
 
 public class PlayCardActivity extends AppCompatActivity {
@@ -63,7 +64,8 @@ public class PlayCardActivity extends AppCompatActivity {
     }
 
     public void playBuildStreet(View view) {
-        Intent intent = new Intent(this, PlayBuildStreetActivity.class);
+        Intent intent = new Intent(this, BuildRoadActivity.class);
+        intent.putExtra("card", "CARD");
         startActivity(intent);
     }
 }

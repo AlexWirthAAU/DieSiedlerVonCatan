@@ -25,6 +25,7 @@ public class PlayerInventory implements Serializable {
     private int inventionCard;
     private int monopolCard;
     public boolean hasPorts;
+    private int cards;
 
     private int victoryPoints;
     private int victoryPointsSettlement = 2;
@@ -33,22 +34,26 @@ public class PlayerInventory implements Serializable {
     public boolean canTrade;
     public boolean canBankTrade;
     public boolean canPortTrade;
+
     private boolean woodport;
     private boolean woolport;
     private boolean wheatport;
     private boolean oreport;
     private boolean clayport;
-    private int cards;
+    private LinkedList<BuildStreetCard> buildStreetCardLinkedList = new LinkedList<>();
 
     private LinkedList<Knot> cities = new LinkedList<>();
     private LinkedList<Knot> settlements = new LinkedList<>();
     private LinkedList<Edge> roads = new LinkedList<>();
+
     private LinkedList<KnightCard> knightCards = new LinkedList<>();
     private LinkedList<BuildStreetCard> buildStreetCards = new LinkedList<>();
     private LinkedList<InventionCard> inventionCards = new LinkedList<>();
     private LinkedList<MonopolCard> monopolCards = new LinkedList<>();
+
     private int[] resValues = new int[5];
     private boolean[] portValues = new boolean[5];
+
     //Stores Knots, where the Player could add his next road
     private LinkedList<Knot> roadKnots = new LinkedList<>();
 
@@ -102,36 +107,6 @@ public class PlayerInventory implements Serializable {
                 + "\nClay: " + this.clay;
     }
 
-    // adding structures
-    public void addRoad(Edge roadEdge){
-        this.roads.add(roadEdge);
-    }
-
-    public void addSettlement(Knot settlementKnot){
-        this.settlements.add(settlementKnot);
-        this.victoryPoints += this.victoryPointsSettlement;
-    }
-
-    public void addCity(Knot cityKnot){
-        this.cities.add(cityKnot);
-        this.victoryPoints += this.victoryPointsCity;
-    }
-
-    // removing structures
-    public void removeRoad(Edge roadEdge){
-        this.roads.remove(roadEdge);
-    }
-
-    public void removeSettlement(Knot settlementKnot){
-        this.settlements.remove(settlementKnot);
-        this.victoryPoints -= this.victoryPointsSettlement;
-    }
-
-    public void removeCity(Knot cityKnot){
-        this.cities.remove(cityKnot);
-        this.victoryPoints -= this.victoryPointsCity;
-    }
-
     // adding resources
     public void addWood(int amount) {
         this.wood += amount;
@@ -162,93 +137,6 @@ public class PlayerInventory implements Serializable {
         this.resValues[4] = this.clay;
         checkPlayerOptions();
     }
-
-    // add Cards
-    public void addVictoryPoints(int amount) {
-        this.victoryPoints += amount;
-    }
-
-    public void addKnightCard(int amount) {
-        this.knightCard += amount;
-        this.cards += amount;
-    }
-
-    public void addBuildStreetCard(int amount) {
-        this.buildStreetCard += amount;
-        this.cards += amount;
-    }
-
-    public void addInventianCard(int amount) {
-        this.inventionCard += amount;
-        this.cards += amount;
-    }
-
-    public void addMonopolCard(int amount) {
-        this.monopolCard += amount;
-        this.cards += amount;
-    }
-
-    public void addVictoryCard() {
-        this.victoryPoints++;
-    }
-
-    public int getKnightCard() {
-        return knightCard;
-    }
-
-    public void setKnightCard(int knightCard) {
-        this.knightCard = knightCard;
-    }
-
-    public int getBuildStreetCard() {
-        return buildStreetCard;
-    }
-
-    public void setBuildStreetCard(int buildStreetCard) {
-        this.buildStreetCard = buildStreetCard;
-    }
-
-    public int getInventionCard() {
-        return inventionCard;
-    }
-
-    public void setInventionCard(int inventionCard) {
-        this.inventionCard = inventionCard;
-    }
-
-    public int getMonopolCard() {
-        return monopolCard;
-    }
-
-    public void setMonopolCard(int monopolCard) {
-        this.monopolCard = monopolCard;
-    }
-
-    public int getCards() {
-        return this.cards;
-    }
-
-    // remove cards
-    public void removeKnightCard(int amount) {
-        this.knightCard -= amount;
-        this.cards -= amount;
-    }
-
-    public void removeBuildStreetCard(int amount) {
-        this.buildStreetCard -= amount;
-        this.cards -= amount;
-    }
-
-    public void removeInventianCard(int amount) {
-        this.inventionCard -= amount;
-        this.cards -= amount;
-    }
-
-    public void removeMonopolCard(int amount) {
-        this.monopolCard -= amount;
-        this.cards -= amount;
-    }
-
 
     // removing resources
     public void removeWood(int amount) {
@@ -321,10 +209,95 @@ public class PlayerInventory implements Serializable {
         return num;
     }
 
-    // remove Cards
+    // adding structures
+    public void addRoad(Edge roadEdge) {
+        this.roads.add(roadEdge);
+    }
+
+    public void addSettlement(Knot settlementKnot) {
+        this.settlements.add(settlementKnot);
+        this.victoryPoints += this.victoryPointsSettlement;
+    }
+
+    public void addCity(Knot cityKnot) {
+        this.cities.add(cityKnot);
+        this.victoryPoints += this.victoryPointsCity;
+    }
+
+    public void addRoadKnots(Knot k) {
+        this.roadKnots.add(k);
+    }
+
+
+    // removing structures
+    public void removeRoad(Edge roadEdge) {
+        this.roads.remove(roadEdge);
+    }
+
+    public void removeSettlement(Knot settlementKnot) {
+        this.settlements.remove(settlementKnot);
+        this.victoryPoints -= this.victoryPointsSettlement;
+    }
+
+    public void removeCity(Knot cityKnot) {
+        this.cities.remove(cityKnot);
+        this.victoryPoints -= this.victoryPointsCity;
+    }
+
+    // add Cards
+    public void addVictoryPoints(int amount) {
+        this.victoryPoints += amount;
+    }
+
+    public void addKnightCard(int amount) {
+        this.knightCard += amount;
+        this.cards += amount;
+    }
+
+    public void addBuildStreetCard(int amount) {
+        this.buildStreetCard += amount;
+        this.cards += amount;
+    }
+
+    public void addInventianCard(int amount) {
+        this.inventionCard += amount;
+        this.cards += amount;
+    }
+
+    public void addMonopolCard(int amount) {
+        this.monopolCard += amount;
+        this.cards += amount;
+    }
+
+    public void addVictoryCard() {
+        this.victoryPoints++;
+    }
+
     public void removeVictoryPoints(int amount) {
         this.victoryPoints -= amount;
     }
+
+    // remove cards
+    public void removeKnightCard(int amount) {
+        this.knightCard -= amount;
+        this.cards -= amount;
+    }
+
+    public void removeBuildStreetCard(int amount) {
+        this.buildStreetCard -= amount;
+        this.cards -= amount;
+    }
+
+    public void removeInventianCard(int amount) {
+        this.inventionCard -= amount;
+        this.cards -= amount;
+    }
+
+    public void removeMonopolCard(int amount) {
+        this.monopolCard -= amount;
+        this.cards -= amount;
+    }
+
 
     //getting the amount of resources
     public int getWood() {
@@ -375,11 +348,58 @@ public class PlayerInventory implements Serializable {
         this.victoryPoints = victoryPoints;
     }
 
-    /*******/
+
+    // Get and Set Cards
+    public int getKnightCard() {
+        return knightCard;
+    }
+
+    public void setKnightCard(int knightCard) {
+        this.knightCard = knightCard;
+    }
+
+    public int getBuildStreetCard() {
+        return buildStreetCard;
+    }
+
+    public void setBuildStreetCard(int buildStreetCard) {
+        this.buildStreetCard = buildStreetCard;
+    }
+
+    public int getInventionCard() {
+        return inventionCard;
+    }
+
+    public void setInventionCard(int inventionCard) {
+        this.inventionCard = inventionCard;
+    }
+
+    public int getMonopolCard() {
+        return monopolCard;
+    }
+
+    public void setMonopolCard(int monopolCard) {
+        this.monopolCard = monopolCard;
+    }
+
+    public int getCards() {
+        return this.cards;
+    }
+
+    public LinkedList<BuildStreetCard> getBuildStreetCardLinkedList() {
+        return buildStreetCardLinkedList;
+    }
+
+    public void setBuildStreetCardLinkedList(LinkedList<BuildStreetCard> buildStreetCardLinkedList) {
+        this.buildStreetCardLinkedList = buildStreetCardLinkedList;
+    }
+
     public int getSTARTVALUE() {
         return STARTVALUE;
     }
 
+
+    //Get and Set Ports
     public boolean isWoodport() {
         return woodport;
     }
@@ -420,6 +440,25 @@ public class PlayerInventory implements Serializable {
         this.clayport = clayport;
     }
 
+
+    //Get Structures
+    public LinkedList getSettlements() {
+        return this.settlements;
+    }
+
+    public Collection getRoads() {
+        return this.roads;
+    }
+
+    public LinkedList<Knot> getRoadKnots() {
+        return roadKnots;
+    }
+
+    public LinkedList<Knot> getCities() {
+        return cities;
+    }
+
+
     private void checkPlayerOptions() {
         for (Integer i : resValues) {
 
@@ -441,25 +480,5 @@ public class PlayerInventory implements Serializable {
                 canTrade = true;
             }
         }
-    }
-
-    public LinkedList getSettlements() {
-        return this.settlements;
-    }
-
-    public Collection getRoads() {
-        return this.roads;
-    }
-
-    public LinkedList<Knot> getRoadKnots() {
-        return roadKnots;
-    }
-
-    public void addRoadKnots(Knot k) {
-        this.roadKnots.add(k);
-    }
-
-    public LinkedList<Knot> getCities() {
-        return cities;
     }
 }

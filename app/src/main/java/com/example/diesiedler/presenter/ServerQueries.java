@@ -84,8 +84,8 @@ public class ServerQueries {
         return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " PLAYINVENTION " + res;
     }
 
-    public static String createStringQueryPlayBuildStreetCard() {
-        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " PLAYBUILDSTREET ";
+    public static String createStringQueryPlayBuildStreetCard(String structure) {
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " PLAYBUILDSTREET " + structure;
     }
 
     public static String createStringQueryBuildSettlement(String structure) {

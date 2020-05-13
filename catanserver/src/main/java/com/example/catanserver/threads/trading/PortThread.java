@@ -27,6 +27,7 @@ public class PortThread extends GameThread {
 
         if (checkTrade()) {
 
+            System.out.println("checked");
             String mess = buildMessage();
             exchangeRessources();
             game.nextPlayer();
@@ -76,13 +77,14 @@ public class PortThread extends GameThread {
 
         give = trd[0];
         get = trd[1];
+        System.out.println(give + " give " + get + " get");
     }
 
     private String buildMessage() {
 
         message.append("PORTTRADEMESSAGE/");
         message.append("Du hast erfolgreich 3 ").append(give).append(" gegen 1 ").append(get).append(" getauscht");
-
+        System.out.println(message.toString());
         return message.toString();
     }
 
@@ -127,5 +129,8 @@ public class PortThread extends GameThread {
             default:
                 break;
         }
+
+        System.out.println("3 " + give + " gegen 1 " + get);
+        System.out.println(currPlayer.getInventory().getAllRessources());
     }
 }

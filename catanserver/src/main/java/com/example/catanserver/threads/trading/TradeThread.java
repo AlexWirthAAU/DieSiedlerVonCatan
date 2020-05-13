@@ -35,6 +35,7 @@ public class TradeThread extends GameThread {
 
         if (checkTrade(offer)) {
 
+            System.out.println("checked");
             checkAndSetTradingPartners(game, want);
             String mess = buildMessage();
             this.trade = new Trade(offer, want, currPlayer, potentialTradingPartners, mess, game);
@@ -81,6 +82,7 @@ public class TradeThread extends GameThread {
                 }
             }
         }
+        System.out.println("trading partners" + potentialTradingPartners);
     }
 
     private void setTradeData(String tradeStr) {
@@ -102,6 +104,8 @@ public class TradeThread extends GameThread {
             want.put(trd[i], num);
             i += 2;
         }
+
+        System.out.println("offer " + offer + " want " + want);
     }
 
         private String buildMessage () {
@@ -123,6 +127,7 @@ public class TradeThread extends GameThread {
                 }
             }
 
+            System.out.println(message.toString());
             return message.toString();
         }
     }

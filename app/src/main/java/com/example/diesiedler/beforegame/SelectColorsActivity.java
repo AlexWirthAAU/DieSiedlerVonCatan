@@ -16,6 +16,7 @@ import com.example.catangame.Colors;
 import com.example.catangame.Player;
 import com.example.diesiedler.MainActivity;
 import com.example.diesiedler.R;
+import com.example.diesiedler.building.BuildSettlementActivity;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.handler.HandlerOverride;
@@ -31,24 +32,29 @@ import java.util.logging.Logger;
  * @author Christina Senger
  * @author Fabian Schaffenrath (edit)
  * <p>
- * Aktivität in der die Spieler ihre Spielfarbe auswählen können und das Spiel gestartet wird.
+ * Activity where the Users can select their Colors and Start the Game.
  */
 public class SelectColorsActivity extends AppCompatActivity {
 
-    private static final Logger logger = Logger.getLogger(SelectColorsActivity.class.getName());
-    private Button green;
+    private static final Logger logger = Logger.getLogger(SelectColorsActivity.class.getName()); // Logger
+
+    private Button green; // Color-Buttons
     private Button orange;
     private Button violett;
     private Button lightblue;
-    private List<Button> colors = new ArrayList<>();
-    private Handler handler = new SelectColorsHandler(Looper.getMainLooper(), this);
+
+    private List<Button> colors = new ArrayList<>(); // List of all Color-Buttons
+
+    private Handler handler = new SelectColorsHandler(Looper.getMainLooper(), this); // Handler
+
     private Map<Colors, Button> colorsMap = new HashMap<>();
 
     /**
-     * Bei Erstellung werden die Buttons spezifiziert und anschließend in eine Liste gespeichert.
-     * Zusätzlich werden die Buttons zusammen mit einem enum Colors Key in einer Map gespeichert.
-     * Der Handler wird in der ClientData für die jetzige Aktivität angepasst.
-     * @param savedInstanceState gespeicherter Status
+     * On Create the Color-Buttons are specified and saved in a List.
+     * Furthermore they are saved in with a Color-Enum as Key in a Map.
+     * The Handler in ClientData is set for the current Activity
+     *
+     * @param savedInstanceState saved State
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +81,7 @@ public class SelectColorsActivity extends AppCompatActivity {
     }
 
     /**
-     * Wird der grüne Button gedrückt, startet der NetworkThread um eine Farbauswahl an den Server zu schicken.
+     * When the green Button is clicked, the NetworkThread is started to send a Color-Selection to the Server.
      */
     public void onGreen(View view) {
 
@@ -86,7 +92,7 @@ public class SelectColorsActivity extends AppCompatActivity {
     }
 
     /**
-     * Wird der orange Button gedrückt, startet der NetworkThread um eine Farbauswahl an den Server zu schicken.
+     * When the orange Button is clicked, the NetworkThread is started to send a Color-Selection to the Server.
      */
     public void onOrange(View view) {
 
@@ -97,7 +103,7 @@ public class SelectColorsActivity extends AppCompatActivity {
     }
 
     /**
-     * Wird der violette Button gedrückt, startet der NetworkThread um eine Farbauswahl an den Server zu schicken.
+     * When the violett Button is clicked, the NetworkThread is started to send a Color-Selection to the Server.
      */
     public void onViolett(View view) {
 
@@ -108,7 +114,7 @@ public class SelectColorsActivity extends AppCompatActivity {
     }
 
     /**
-     * Wird der hellblaue Button gedrückt, startet der NetworkThread um eine Farbauswahl an den Server zu schicken.
+     * When the lightblue Button is clicked, the NetworkThread is started to send a Color-Selection to the Server.
      */
     public void onLightblue(View view) {
 
@@ -119,11 +125,11 @@ public class SelectColorsActivity extends AppCompatActivity {
     }
 
     /**
-     * Wird der Start Button gedrückt, wird zuerst geprüft, ob jeder Spieler eine Farbe gewählt hat.
-     * Ist dies der Fall, so wird ein NetworkThread gestartet, der das Startrequest an den Server schickt.
-     * Ansonsten wird auf dem Bildschirm eine Fehlermeldung ausgegeben.
+     * When the StartButton is clicked, it is checked, if all Players have selected their Colors.
+     * If this is the case, the NetworkThread is started, which sends a Startrequest to the Server.
+     * Else an Error-Message is shown.
      *
-     * @param view View, um StartButton anzusprechen
+     * @param view View, to access the StartButton
      */
     public void startGame(View view) {
 
@@ -150,23 +156,28 @@ public class SelectColorsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * @author Fabian Schaffenrath (edit)
+     * <p>
+     * Handler for the SelectColorsActivity
+     */
     private class SelectColorsHandler extends HandlerOverride {
 
         SelectColorsHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
         }
 
-
         /**
-         * Handler erhält Message vom ServerCommunicationThread. Bei Farbwahl(oder Wechsel) eines Spielers
-         * werden die Buttons neu initialisiert. Bei einem erfolgreichen Start request ist das Spiel gestartet
-         * und die MainActivity aufgerufen.
+         * Handler gets a Message from ServerCommunicationThread. On Color-Select(or Change),
+         * the Buttons get initialised once more. On successful Start-Request, a Game is
+         * started and the MainActivity (If its the Players Turn, the BuildRoadActivity) is started.
          *
-         * @param msg msg.arg1 beinhaltet den entsprechenden Parameter zur weiteren Ausführung.
-         *            msg.obj beinhaltet gegebenfalls einen String.
+         * @param msg msg.arg1 has the Param for further actions
+         *            msg.obj when msg.arg1 is 5, it holds a String
          */
         @Override
         public void handleMessage(Message msg) {
+
             if (msg.arg1 == 4) {  // TODO: Change to enums
                 for (Button button : ((SelectColorsActivity) activity).colors) {
                     button.setText("");
@@ -180,9 +191,16 @@ public class SelectColorsActivity extends AppCompatActivity {
                         button.setEnabled(false);
                     }
                 }
+
             } else if (msg.arg1 == 5 && msg.obj.equals("STARTGAME")) {  // TODO: Change to enums
-                Intent intent = new Intent(activity, MainActivity.class);
-                startActivity(intent);
+
+                if (ClientData.currentGame.getPlayer(ClientData.currentGame.getCurrPlayer()).getUserId() == ClientData.userId) {
+                    Intent intent = new Intent(activity, BuildSettlementActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(activity, MainActivity.class);
+                    startActivity(intent);
+                }
             }
         }
 

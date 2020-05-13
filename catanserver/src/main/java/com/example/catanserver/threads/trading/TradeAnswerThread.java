@@ -33,6 +33,8 @@ public class TradeAnswerThread extends GameThread {
             trade.addAnswers(currPlayer, false);
         }
 
+        System.out.println(trade.getAnsweredPlayers() + " " + trade.getAnswers());
+
         if (trade.getAnsweredPlayers().size() == trade.getPotentialTradingPartners().size()) {
 
             for (Player p : trade.getAnsweredPlayers()) {
@@ -68,11 +70,14 @@ public class TradeAnswerThread extends GameThread {
 
             exchangeRessources();
             trade.setAnswerMessage("TRADEANSWER/Handel zwischen " + trade.getCurrPlayer().getDisplayName() + " und " + trade.getTradingPartner().getDisplayName() + " durchgeführt");
+            System.out.println(trade.getAnswerMessage());
             distribute(toSend, "TRADEANSWER/Handel zwischen " + trade.getCurrPlayer().getDisplayName() + " und " + trade.getTradingPartner().getDisplayName() + " durchgeführt");
         }
     }
 
     private void exchangeRessources() {
+
+        System.out.println(currPlayer.getInventory().getAllRessources() + " curr " + tradingPartner.getInventory().getAllRessources());
 
         currPlayer.getInventory().addWood(trade.getWoodGet());
         currPlayer.getInventory().addWool(trade.getWoolGet());
@@ -97,6 +102,8 @@ public class TradeAnswerThread extends GameThread {
         tradingPartner.getInventory().removeWheat(trade.getWheatGet());
         tradingPartner.getInventory().removeOre(trade.getOreGet());
         tradingPartner.getInventory().removeClay(trade.getClayGet());
+
+        System.out.println(currPlayer.getInventory().getAllRessources() + " curr " + tradingPartner.getInventory().getAllRessources());
     }
 
     private void distribute(List<Player> playersToSend, String mess) {

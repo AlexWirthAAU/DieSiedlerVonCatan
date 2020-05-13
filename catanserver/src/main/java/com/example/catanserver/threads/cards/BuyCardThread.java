@@ -33,6 +33,7 @@ public class BuyCardThread extends GameThread {
 
         if (checkStack()) {
 
+            System.out.println("checked");
             buyCard();
             String mess = buildMessage();
             game.nextPlayer();
@@ -61,33 +62,42 @@ public class BuyCardThread extends GameThread {
         player.getInventory().removeWheat(1);
         player.getInventory().removeOre(1);
 
+        System.out.println(devCardStack.size());
+
         if (devCardStack.size() > 23) {
             card = devCardStack.remove(0);
+            System.out.println("first");
         } else {
             Random rand = new Random();
             card = devCardStack.remove(rand.nextInt(devCardStack.size()));
+            System.out.println("random");
         }
 
         if (card instanceof BuildStreetCard) {
             player.getInventory().addBuildStreetCard(1);
             cardName = "Straßenbaukarte";
+            System.out.println(cardName);
 
         } else if (card instanceof KnightCard) {
             player.getInventory().addKnightCard(1);
             cardName = "Ritterkarte";
+            System.out.println(cardName);
 
         } else if (card instanceof InventionCard) {
             player.getInventory().addInventianCard(1);
             cardName = "Erfindungskarte";
+            System.out.println(cardName);
 
         } else if (card instanceof MonopolCard) {
             player.getInventory().addMonopolCard(1);
             cardName = "Monopolkarte";
+            System.out.println(cardName);
 
         } else if (card instanceof VictoryPointCard) {
             player.getInventory().addVictoryCard();
             player.getInventory().addVictoryPoints(1);
             cardName = "Siegpunktkarte";
+            System.out.println(cardName);
         }
     }
 
@@ -99,7 +109,7 @@ public class BuyCardThread extends GameThread {
         if (cardName.equals("Siegpunktkarte")) {
             message.append(" und einen Siegpunkt erhalten");
         }
-
+        System.out.println(message.toString());
         return message.toString();
     }
 }
