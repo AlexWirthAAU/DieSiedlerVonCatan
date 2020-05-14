@@ -6,6 +6,7 @@ import com.example.catangame.PlayerInventory;
 import com.example.catangame.gameboard.Gameboard;
 import com.example.catangame.gameboard.Knot;
 
+// TODO: Methoden kommentieren
 public class BuildSettlement {
 
     /**

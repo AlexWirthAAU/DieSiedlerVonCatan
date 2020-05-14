@@ -13,22 +13,26 @@ import java.util.Set;
 
 /**
  * @author Fabian Schaffenrath
+ *
  * This is the Main Thread of the Server. It is listening to all Requests and starts
  * a personal listener Thread for every user.
  * It implements all used Lists/Sets needed as static, reachable from every class.
  */
 public class Server {
 
-    private final static int SERVER_PORT = 2020;
-    public static final List<User> currentUsers = Collections.synchronizedList(new LinkedList<User>());
-    private static ServerSocket listenerSocket;
-    private static Socket caughtConnection;
-    static final List<Socket> currentConnections = Collections.synchronizedList(new LinkedList<Socket>());
-    public static final List<GameSession> currentGames = Collections.synchronizedList(new LinkedList<GameSession>());
-    public static final Set<Integer> currentlyThreaded = Collections.synchronizedSet(new HashSet<Integer>());
-    public static final Set<User> currentlySearching = Collections.synchronizedSet(new HashSet<User>());
-    private static boolean flag = true;
+    public static final List<User> currentUsers = Collections.synchronizedList(new LinkedList<User>()); // List of all Users that are currently active
+    public static final List<Socket> currentConnections = Collections.synchronizedList(new LinkedList<Socket>()); // List of all Connections that are currently active
+    public static final List<GameSession> currentGames = Collections.synchronizedList(new LinkedList<GameSession>()); // List of all Games that are currently active
+    public static final Set<Integer> currentlyThreaded = Collections.synchronizedSet(new HashSet<Integer>()); // Set of all Games (GameId) in which Players are currently making a Network Call
+    public static final Set<User> currentlySearching = Collections.synchronizedSet(new HashSet<User>()); // Set of all Users that are currently searching for Opponents
+    private final static int SERVER_PORT = 2020; // Port the Server listens to
+    private static ServerSocket listenerSocket; // ServerSocket
+    private static Socket caughtConnection; // Client Socket
 
+    /**
+     * The ServerSocket is started and waits for Clients to accept.
+     * When a Client is connected, a ClientListenerThread for this Connection is started.
+     */
     public static void main(String[] args) {
         try {
             listenerSocket = new ServerSocket(SERVER_PORT);

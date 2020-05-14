@@ -10,13 +10,26 @@ import com.example.catanserver.threads.SendToClient;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Christina Senger
+ * <p>
+ * This Thread handles the Answers of the Players to the current active Trade.
+ */
 public class TradeAnswerThread extends GameThread {
 
-    private Trade trade;
-    private Player currPlayer;
-    private Player tradingPartner;
+    private Trade trade; // Trade which was answered to
+    private Player currPlayer; // current Player
+    private Player tradingPartner; // Trading-Partner
+
     private String answerStr;
 
+    /**
+     * Constructor - Gets the current Player from the Game und sets the Trade-Offer.
+     *
+     * {@inheritDoc}
+     *
+     * @param answerStr Answer --> accept or dismiss
+     */
     public TradeAnswerThread(User user, GameSession game, String answerStr) {
         super(user, game);
         this.currPlayer = game.getPlayer(user.getUserId());
@@ -24,6 +37,12 @@ public class TradeAnswerThread extends GameThread {
         this.trade = game.getTrade();
     }
 
+    /**
+     * When there is a Answer, the Player is added to the List of the
+     * answered Players and his Answer is added as Boolean to the Answers-Map.
+     * When all Players have answered, the first one which answered with
+     * accepted is set as Trading-Partner.
+     */
     public void run() {
         if (answerStr.equals("accepted")) {
             trade.addAnsweredPlayer(currPlayer);
@@ -48,6 +67,15 @@ public class TradeAnswerThread extends GameThread {
         }
     }
 
+    /**
+     * When no Trading-Partner could be found, the current Player and all potential
+     * Trading-Partners are added to the List of Player, to which a Message should be send.
+     * The Answer-Message is set and distributed to all Player in the List.
+     *
+     * Else, the current Player and the Player who first answered with accept are added
+     * to the to the List of Player, to which a Message should be send.
+     * The Ressources are exchanged, the Answer-Message is set and distributed to all Player in the List.
+     */
     private void setAnswerList() {
 
         List<Player> toSend = new ArrayList<>();
@@ -75,6 +103,12 @@ public class TradeAnswerThread extends GameThread {
         }
     }
 
+    /**
+     * The offered Ressources are removed from the current Players Inventory
+     * and added to the Trading Partners Inventory.
+     * The desired Ressources are added to the current Players Inventory
+     * and removed from the Trading Partners Inventory.
+     */
     private void exchangeRessources() {
 
         System.out.println(currPlayer.getInventory().getAllRessources() + " curr " + tradingPartner.getInventory().getAllRessources());
@@ -106,6 +140,12 @@ public class TradeAnswerThread extends GameThread {
         System.out.println(currPlayer.getInventory().getAllRessources() + " curr " + tradingPartner.getInventory().getAllRessources());
     }
 
+    /**
+     * Send the Trade-Message to all potential Trading-Partner.
+     *
+     * @param playersToSend List of Player, to which to Message should be sent
+     * @param mess Message to send
+     */
     private void distribute(List<Player> playersToSend, String mess) {
         game.setTrade(null);
         game.nextPlayer();

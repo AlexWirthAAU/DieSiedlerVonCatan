@@ -11,21 +11,35 @@ import java.util.List;
 
 /**
  * @author Fabian Schaffenrath
+ * @author Christina Senger (Documentation)
+ *
  * The User class implements everything that is know of a user, including the socket connection and
  * object streams. If a game is started, the gameSessions list should be updated.
  */
-
 public class User {
 
-    private static int userCounter = 0;
-    private int userId;
+    private static int userCounter = 0; // consecutive Id
+
+    private int userId; // the Users/Players Id
     private String displayName;
+
     private Socket connection;
     private ObjectOutputStream connectionOutputStream;
     private ObjectInputStream connectionInputStream;
-    private List<GameSession> gameSessions;
-    private int wins = 0;
 
+    private List<GameSession> gameSessions; // the Users GameSessions
+    private int wins = 0; // the Users Wins
+
+    /**
+     * It set the displayName with the given Name and the Connection Data with the
+     * give Data from Thread. The UserId is set as the next of userCounter.
+     * The User gets an empty List, where all his Games can be stored.
+     *
+     * @param displayName the Users/Players Name
+     * @param connection  the Users Connection Socket
+     * @param ois         the Sockets ObjectInputStream
+     * @param oos         the Socket ObjectOutputStream
+     */
     public User(String displayName, Socket connection, ObjectInputStream ois, ObjectOutputStream oos) {
         this.displayName = displayName;
         this.userId = userCounter++;
@@ -36,6 +50,7 @@ public class User {
         gameSessions = Collections.synchronizedList(new LinkedList<GameSession>());
     }
 
+    // Getter
     public int getUserId() {
         return userId;
     }
@@ -44,34 +59,11 @@ public class User {
         return displayName;
     }
 
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
-    public List<GameSession> getGameSessions() {
-        return gameSessions;
-    }
-
-    public void addGameSession(GameSession game){
-        gameSessions.add(game);
-    }
-
-    public void removeGameSession(GameSession game){
-        gameSessions.remove(game);
-    }
-
-    public void addWin(){
-        wins++;
-    }
-
-    public int getWins() {
-        return wins;
-    }
-
     public Socket getConnection() {
         return connection;
     }
 
+    // Setters
     public void setConnection(Socket connection) {
         this.connection = connection;
     }
@@ -80,15 +72,35 @@ public class User {
         return connectionOutputStream;
     }
 
-    public void setConnectionOutputStream(ObjectOutputStream connectionOutputStream) {
-        this.connectionOutputStream = connectionOutputStream;
+    public List<GameSession> getGameSessions() {
+        return gameSessions;
+    }
+
+    public int getWins() {
+        return wins;
     }
 
     public ObjectInputStream getConnectionInputStream() {
         return connectionInputStream;
     }
 
+    public void setConnectionOutputStream(ObjectOutputStream connectionOutputStream) {
+        this.connectionOutputStream = connectionOutputStream;
+    }
+
     public void setConnectionInputStream(ObjectInputStream connectionInputStream) {
         this.connectionInputStream = connectionInputStream;
+    }
+
+    public void addWin() {
+        wins++;
+    }
+
+    public void addGameSession(GameSession game) {
+        gameSessions.add(game);
+    }
+
+    public void removeGameSession(GameSession game) {
+        gameSessions.remove(game);
     }
 }

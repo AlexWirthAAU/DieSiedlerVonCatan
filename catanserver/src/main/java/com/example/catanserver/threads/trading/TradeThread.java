@@ -14,21 +14,37 @@ import java.util.Map;
 
 public class TradeThread extends GameThread {
 
-    private List<Player> potentialTradingPartners = new ArrayList<>();
+    private List<Player> potentialTradingPartners = new ArrayList<>(); // List of all potential Trading-Partner (have enough Ressources)
 
-    private Map<String, Integer> offer;
-    private Map<String, Integer> want;
-    private Trade trade;
-    private Player currPlayer;
-    private StringBuilder message = new StringBuilder();
-    private String tradeStr;
+    private Map<String, Integer> offer; // Map of the offered Ressources
+    private Map<String, Integer> want; // Map of the desired Ressources
 
+    private Trade trade; // Representation of a Trade
+
+    private Player currPlayer; // current Player
+    private StringBuilder message = new StringBuilder(); // Message which should be sent to the Player
+    private String tradeStr; // Trade-Offer
+
+    /**
+     * Constructor - Gets the current Player from the Game und sets the Trade-Offer.
+     * <p>
+     * {@inheritDoc}
+     *
+     * @param tradeStr Trade-Offer --> first are offered, second are desired Ressources and their Amount, splitted by /
+     */
     public TradeThread(User user, GameSession game, String tradeStr) {
         super(user, game);
         this.currPlayer = game.getPlayer(user.getUserId());
         this.tradeStr = tradeStr;
     }
 
+    /**
+     * Sets the Trade. When the Player can trade, the Opponents are checked
+     * for potential Trading-Partners. A Message is built. A new Trade is
+     * created with all those Data and set as Trade of the Game. The Message
+     * is distributed to all potential Trading-Partners. Else, an Error-Thread
+     * is created.
+     */
     public void run() {
 
         setTradeData(tradeStr);
@@ -49,10 +65,21 @@ public class TradeThread extends GameThread {
         }
     }
 
+    /**
+     * Send the Trade-Message to all potential Trading-Partner.
+     *
+     * @param playersToSend List of Player, to which to Message should be sent
+     * @param mess Message to send
+     */
     private void distribute(List<Player> playersToSend, String mess) {
         SendToClient.sendTradeMessageBroadcast(playersToSend, mess);
     }
 
+    /**
+     * @param offer Map with the offer Ressources
+     * @return true, when the Player <code>canTrade</code> and has
+     * at least the number of offered Ressources, else false.
+     */
     private boolean checkTrade(Map<String, Integer> offer) {
 
         if (currPlayer.getInventory().canTrade) {
@@ -64,6 +91,14 @@ public class TradeThread extends GameThread {
                 && currPlayer.getInventory().getClay() >= offer.get("ClayGive");
     }
 
+    /**
+     * It iterates through all Players in the Game. When the Player is not
+     * the current Player and has the desired Ressources, he is added to
+     * the List of potential Trading-Partners.
+     *
+     * @param game current Game
+     * @param want Map with the desired Ressources
+     */
     private void checkAndSetTradingPartners(GameSession game, Map<String, Integer> want) {
 
         List<Player> players = game.getPlayers();
@@ -85,6 +120,14 @@ public class TradeThread extends GameThread {
         System.out.println("trading partners" + potentialTradingPartners);
     }
 
+    /**
+     * The Trade-Offer is splitted by /. The first Elements
+     * are the offered, the second are the desired Ressources.
+     * It adds those to Maps with the Name as Key and the Number
+     * as Value.
+     *
+     * @param tradeStr Trade-Offer sent from Client
+     */
     private void setTradeData(String tradeStr) {
 
         String[] trd = tradeStr.split("/");
@@ -108,26 +151,32 @@ public class TradeThread extends GameThread {
         System.out.println("offer " + offer + " want " + want);
     }
 
-        private String buildMessage () {
+    /**
+     * Creates a Message, specific to the Name and Amount
+     * of the Ressources and appends it to a StringBuilder.
+     *
+     * @return the StringBuilder as a String
+     */
+    private String buildMessage () {
 
-            message.append("TRADEMESSAGE/");
-            message.append(currPlayer.getDisplayName()).append("bietet ");
+        message.append("TRADEMESSAGE/");
+        message.append(currPlayer.getDisplayName()).append("bietet ");
 
-            for (Map.Entry<String, Integer> entry : offer.entrySet()) {
-                if (entry.getValue() > 0) {
-                    message.append(entry.getValue()).append(" ").append(entry.getKey()).append(" ");
-                }
+        for (Map.Entry<String, Integer> entry : offer.entrySet()) {
+            if (entry.getValue() > 0) {
+                message.append(entry.getValue()).append(" ").append(entry.getKey()).append(" ");
             }
-
-            message.append(" und möchte dafür ");
-
-            for (Map.Entry<String, Integer> entry : want.entrySet()) {
-                if (entry.getValue() > 0) {
-                    message.append(entry.getValue()).append(" ").append(entry.getKey()).append(" ");
-                }
-            }
-
-            System.out.println(message.toString());
-            return message.toString();
         }
+
+        message.append(" und möchte dafür ");
+
+        for (Map.Entry<String, Integer> entry : want.entrySet()) {
+            if (entry.getValue() > 0) {
+                message.append(entry.getValue()).append(" ").append(entry.getKey()).append(" ");
+            }
+        }
+
+        System.out.println(message.toString());
+        return message.toString();
+    }
     }

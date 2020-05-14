@@ -16,19 +16,37 @@ import com.example.catanserver.threads.SendToClient;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * @author Christina Senger
+ * <p>
+ * This Thread handles the Buy of a DevCard.
+ */
 public class BuyCardThread extends GameThread {
 
     private List<DevCard> devCardStack;
     private Player player;
-    private StringBuilder message = new StringBuilder();
-    private String cardName;
 
+    private StringBuilder message = new StringBuilder(); // Message which is send to the User
+    private String cardName; // the Name of the bought Card
+
+    /**
+     * Constructor - Gets the DevCard-Stack from the Game
+     * and the current Player.
+     *
+     * {@inheritDoc}
+     */
     public BuyCardThread(User user, GameSession game) {
         super(user, game);
         this.devCardStack = game.getDevCards();
         this.player = game.getPlayer(user.getUserId());
     }
 
+    /**
+     * When the Player can buy a Card, his Inventory and the
+     * GameSession are updated. A Message is built and send to
+     * the User. The new GameSession is send broadcast. Else an
+     * Error-Thread is started.
+     */
     public void run() {
 
         if (checkStack()) {
@@ -46,6 +64,9 @@ public class BuyCardThread extends GameThread {
         }
     }
 
+    /**
+     * @return true, when there are DevCards left and the Player has enough Ressources to buy on, else fales
+     */
     private boolean checkStack() {
 
         return (player.getInventory().getWool() < 1
@@ -54,6 +75,12 @@ public class BuyCardThread extends GameThread {
                 || game.getDevCards().size() == 0);
     }
 
+    /**
+     * The Ressources are from the Players Inventory.
+     * When the Stack is greate than 23 (first 3 Cards), the first
+     * Card is bought, else a random Card is bought. The Card is
+     * removed from the Stack, added to the Players Inventory and its Name is stored.
+     */
     private void buyCard() {
 
         DevCard card;
@@ -101,6 +128,12 @@ public class BuyCardThread extends GameThread {
         }
     }
 
+    /**
+     * Creates a Message, specific to the Type of the bought Card,
+     * and appends it to a StringBuilder.
+     *
+     * @return the StringBuilder as a String
+     */
     private String buildMessage() {
 
         message.append("CARDBUYMESSAGE/");
