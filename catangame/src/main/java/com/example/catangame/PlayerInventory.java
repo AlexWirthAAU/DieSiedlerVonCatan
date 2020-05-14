@@ -1,9 +1,7 @@
 package com.example.catangame;
 
 import com.example.catangame.devcards.BuildStreetCard;
-import com.example.catangame.devcards.InventionCard;
 import com.example.catangame.devcards.KnightCard;
-import com.example.catangame.devcards.MonopolCard;
 import com.example.catangame.gameboard.Edge;
 import com.example.catangame.gameboard.Knot;
 
@@ -11,52 +9,53 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;
 
+/**
+ * @author Christina Senger
+ * @author Fabian Schaffenrath
+ * @author Alex Wirth
+ * <p>
+ * Representation of a Players Inventory
+ */
 public class PlayerInventory implements Serializable {
 
-    private final int STARTVALUE = 3;
-    private int wood;
+    private final int STARTVALUE = 3; // Every Player has 3 of every Ressource on Game-Start
+    private final int victoryPointsSettlement = 2; // Victory Points for Building
     private int wool;
     private int wheat;
     private int ore;
     private int clay;
-
-    private int knightCard;
+    private final int victoryPointsCity = 3;
     private int buildStreetCard;
     private int inventionCard;
     private int monopolCard;
-    public boolean hasPorts;
     private int cards;
-
-    private int victoryPoints;
-    private int victoryPointsSettlement = 2;
-    private int victoryPointsCity = 3;
-
-    public boolean canTrade;
+    public boolean canTrade; // states whether a Player can Trade
+    public boolean hasPorts; // states whether a Player has (specific) Ports
+    private int wood; // Values of Ressources
+    private int knightCard; // Values of Cards
     public boolean canBankTrade;
     public boolean canPortTrade;
-
+    private int victoryPoints; // Victory Points
     private boolean woodport;
     private boolean woolport;
     private boolean wheatport;
     private boolean oreport;
     private boolean clayport;
-    private LinkedList<BuildStreetCard> buildStreetCardLinkedList = new LinkedList<>();
-
-    private LinkedList<Knot> cities = new LinkedList<>();
+    private LinkedList<Knot> cities = new LinkedList<>(); // List of Players Structures
     private LinkedList<Knot> settlements = new LinkedList<>();
     private LinkedList<Edge> roads = new LinkedList<>();
 
-    private LinkedList<KnightCard> knightCards = new LinkedList<>();
-    private LinkedList<BuildStreetCard> buildStreetCards = new LinkedList<>();
-    private LinkedList<InventionCard> inventionCards = new LinkedList<>();
-    private LinkedList<MonopolCard> monopolCards = new LinkedList<>();
+    private LinkedList<Knot> roadKnots = new LinkedList<>(); // stores Knots, where the Player could add his next Road
 
-    private int[] resValues = new int[5];
-    private boolean[] portValues = new boolean[5];
+    private LinkedList<KnightCard> knightCards = new LinkedList<>(); // List of Players Cards
+    private LinkedList<BuildStreetCard> buildStreetCardLinkedList = new LinkedList<>();
 
-    //Stores Knots, where the Player could add his next road
-    private LinkedList<Knot> roadKnots = new LinkedList<>();
+    private int[] resValues = new int[5]; // Array of Ressource-Values
+    private boolean[] portValues = new boolean[5]; // Array of Port-Values
 
+    /**
+     * Constructor - Set Values 0 or false
+     */
     PlayerInventory() {
         this.wood = STARTVALUE;
         this.wool = STARTVALUE;
@@ -94,7 +93,9 @@ public class PlayerInventory implements Serializable {
     }
 
 
-    // displaying all resources and victory points
+    /**
+     * @return A String displaying all Resources, Cards and Victory Points
+     */
     public String getAllSupplies() {
         return "Wood: " + this.wood + "\nWool: " + this.wool + "\nWheat: " + this.wool + "\nOre: " + this.ore
                 + "\nClay: " + this.clay + "\nVictoty points: " + this.victoryPoints + "\nKnightCard: " + this.knightCard
@@ -102,12 +103,15 @@ public class PlayerInventory implements Serializable {
                 + "\nMonopolCard: " + this.monopolCard + "\nVictoty points: " + this.victoryPoints;
     }
 
+    /**
+     * @return A String displaying all Resources
+     */
     public String getAllRessources() {
         return "Wood: " + this.wood + "\nWool: " + this.wool + "\nWheat: " + this.wool + "\nOre: " + this.ore
                 + "\nClay: " + this.clay;
     }
 
-    // adding resources
+    // adding Resources
     public void addWood(int amount) {
         this.wood += amount;
         this.resValues[0] = this.wood;
@@ -138,7 +142,7 @@ public class PlayerInventory implements Serializable {
         checkPlayerOptions();
     }
 
-    // removing resources
+    // removing Resources
     public void removeWood(int amount) {
         this.wood -= amount;
         this.resValues[0] = this.wood;
@@ -209,7 +213,7 @@ public class PlayerInventory implements Serializable {
         return num;
     }
 
-    // adding structures
+    // adding Structures
     public void addRoad(Edge roadEdge) {
         this.roads.add(roadEdge);
     }
@@ -229,7 +233,7 @@ public class PlayerInventory implements Serializable {
     }
 
 
-    // removing structures
+    // removing Structures
     public void removeRoad(Edge roadEdge) {
         this.roads.remove(roadEdge);
     }
@@ -244,11 +248,18 @@ public class PlayerInventory implements Serializable {
         this.victoryPoints -= this.victoryPointsCity;
     }
 
-    // add Cards
+
+    // add and remove Victory Points
     public void addVictoryPoints(int amount) {
         this.victoryPoints += amount;
     }
 
+    public void removeVictoryPoints(int amount) {
+        this.victoryPoints -= amount;
+    }
+
+
+    // add Cards
     public void addKnightCard(int amount) {
         this.knightCard += amount;
         this.cards += amount;
@@ -273,10 +284,6 @@ public class PlayerInventory implements Serializable {
         this.victoryPoints++;
     }
 
-    public void removeVictoryPoints(int amount) {
-        this.victoryPoints -= amount;
-    }
-
     // remove cards
     public void removeKnightCard(int amount) {
         this.knightCard -= amount;
@@ -299,7 +306,7 @@ public class PlayerInventory implements Serializable {
     }
 
 
-    //getting the amount of resources
+    // Get and Set Amount of Resources
     public int getWood() {
         return wood;
     }
@@ -340,6 +347,7 @@ public class PlayerInventory implements Serializable {
         this.clay = clay;
     }
 
+    // Get and Set Victory Points
     public int getVictoryPoints() {
         return victoryPoints;
     }
@@ -392,10 +400,6 @@ public class PlayerInventory implements Serializable {
 
     public void setBuildStreetCardLinkedList(LinkedList<BuildStreetCard> buildStreetCardLinkedList) {
         this.buildStreetCardLinkedList = buildStreetCardLinkedList;
-    }
-
-    public int getSTARTVALUE() {
-        return STARTVALUE;
     }
 
 

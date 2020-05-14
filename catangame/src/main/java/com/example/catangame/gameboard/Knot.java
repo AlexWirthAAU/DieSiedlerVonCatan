@@ -6,21 +6,37 @@ import com.example.catangame.Player;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * @author Alex Wirth
+ * @author Christina Senger (edit)
+ */
 public class Knot implements Serializable {
-    private int row;                    //Each Knot is identified by row and column
+
+    private int row;
     private int column;
-    private String id;
-    private ArrayList<Knot> path;       //As soon as a knots Player != null -> path = new ArrayList and push the knot in this list (beginning of a path)
-    private boolean isSettled;
-    private boolean hasCity;
-    private Player player;          //TODO: When a player builds a settlement, he owns this knot
-    private boolean isHarbourKnot;  //States whether a Knot has a harbour or not
-    private boolean isWoodPort;
+    private String id; // Each Knot is identified by Row and Column
+
+    private ArrayList<Knot> path; // As soon as a Knots Player != null -> path = new ArrayList and push the Knot in this List (beginning of a Path)
+
+    private boolean isSettled; // States whether a Knot is settled
+    private boolean hasCity; // States whether a Knot has a City
+
+    private Player player; //TODO: When a player builds a settlement, he owns this knot
+
+    private boolean isHarbourKnot;  // States whether a Knot has a Harbour or not
+    private boolean isWoodPort; // States whether a Knot has a specific Harbour
     private boolean isWoolPort;
     private boolean isWheatPort;
     private boolean isOrePort;
     private boolean isClayPort;
 
+    /**
+     * Constructor - creates ID, sets other Values null
+     * and check whether it is a Harbou-Knot
+     *
+     * @param row    Row of the Knot
+     * @param column Column of the Knot
+     */
     public Knot(int row, int column) {
         this.player = null;
         this.row = row;
@@ -32,22 +48,60 @@ public class Knot implements Serializable {
         setIsHarbourKnot();
     }
 
+    /**
+     * @return String Representation of a Settlement with Row and Column
+     */
     public String toString() {
         return "settlement_" + row + "_" + column;
     }
 
+    // Setter
+    public void setPath(ArrayList<Knot> path) {
+        this.path = path;
+    }
+
+    public void setHasCity(boolean hasCity) {
+        this.hasCity = hasCity;
+    }
+
+    // Getter
     public int getRow() {
         return row;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public boolean isSettled() {
+        return isSettled;
     }
 
     public int getColumn() {
         return column;
     }
 
+    public void setSettled(boolean settled) {
+        isSettled = settled;
+    }
+
     public ArrayList<Knot> getPath() {
         return path;
     }
 
+    public boolean hasCity() {
+        return hasCity;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    // Set Ports
     private void setIsHarbourKnot() {
         switch (this.id) {
             case "15":
@@ -94,22 +148,7 @@ public class Knot implements Serializable {
         }
     }
 
-    public boolean getIsHarbourKnot() {
-        return this.isHarbourKnot;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public boolean isSettled() {
-        return isSettled;
-    }
-
-    public boolean hasCity() {
-        return hasCity;
-    }
-
+    // Get Ports
     public boolean isHarbourKnot() {
         return isHarbourKnot;
     }
@@ -132,26 +171,6 @@ public class Knot implements Serializable {
 
     public boolean isClayPort() {
         return isClayPort;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPath(ArrayList<Knot> path) {
-        this.path = path;
-    }
-
-    public void setSettled(boolean settled) {
-        isSettled = settled;
-    }
-
-    public void setHasCity(boolean hasCity) {
-        this.hasCity = hasCity;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
     }
 }
 

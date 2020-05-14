@@ -1,9 +1,10 @@
 package com.example.catangame.gameboard;
 
-
 import java.io.Serializable;
 
+// TODO: kommenieren
 public class Gameboard implements Serializable {
+
     private Tile[] tiles = new Tile[19];        //Gameboard is always compound of 19 hexagons
     private Knot[] knots = new Knot[54];        //Gameboard is always compound of 54 knots
     private Edge[] edges = new Edge[72];         //Gameboard is always compound of 72 edges
@@ -291,6 +292,7 @@ public class Gameboard implements Serializable {
         }
     }
 
+    // Get Arrays of all Gameboard-Elements
     public Tile[] getTiles() {
         return tiles;
     }
