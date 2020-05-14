@@ -10,21 +10,28 @@ import java.util.logging.Logger;
 
 /**
  * @author Fabian Schaffenrath
- * Der StartServerCommunicationThread wird nur einmal in der Welcome Activity aufgerufen, um die Server
- * Verbindung herzustellen. Dabei initialisiert er bereits sowohl ObjectIn- als auch ObjectOutputStream.
+ *
+ * The StartServerCommunicationThread is only started once in the Welcome Activity
+ * to create the Server-Connection and initialise the ObjectIn- and ObjectOutputStream.
  */
 public class StartServerCommunicationThread extends Thread {
 
-    private static final Logger logger = Logger.getLogger(StartServerCommunicationThread.class.getName());
+    private static final Logger logger = Logger.getLogger(StartServerCommunicationThread.class.getName()); // Logger
+
     private Handler handler;
 
+    /**
+     * Constructor - sets the Handler
+     *
+     * @param handler for the StartServerCommunicationThread
+     */
     public StartServerCommunicationThread(Handler handler) {
         this.handler = handler;
     }
 
     /**
-     * Initialisiert die Server Verbindung und schickt seinem Handler anschließend eine Meldung, falls
-     * erfolgreich.
+     * Initialises the Server-Connection and send a Message
+     * to the Handler when it was successful.
      */
     public void run() {
         ClientData.initializeServerConnection();

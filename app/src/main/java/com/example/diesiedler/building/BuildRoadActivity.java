@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.catangame.GameSession;
 import com.example.catangame.PlayerInventory;
 import com.example.catangame.gameboard.Edge;
 import com.example.diesiedler.ChooseActionActivity;
@@ -167,8 +166,6 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
         @Override
         public void handleMessage(Message msg) {
             if (msg.arg1 == 4) {
-
-                ClientData.currentGame = (GameSession) msg.obj;
 
                 if (ClientData.currentGame.getCurrPlayer() == ClientData.userId) {
 

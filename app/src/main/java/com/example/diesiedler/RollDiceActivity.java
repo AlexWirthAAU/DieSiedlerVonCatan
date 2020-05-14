@@ -1,25 +1,22 @@
 package com.example.diesiedler;
 
 
-import android.content.Context;
-
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-
 import android.os.Build;
 import android.os.Bundle;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
-
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,33 +29,39 @@ import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.handler.HandlerOverride;
 import com.example.diesiedler.threads.NetworkThread;
 
+/**
+ * @author Alex Wirth
+ * <p>
+ * Player is able to shake dive to generate some random value between 2-12.
+ * The value will then be sent to the Server where the ressources are allocated depending on the value.
+ * If value 7 is diced, the player can re-place the thief, which will be handled by an extra activity.
+ */
 public class RollDiceActivity extends AppCompatActivity implements SensorEventListener {
 
-    /**
-     * @author Alex Wirth
-     * Player is able to shake dive to generate some random value between 2-12
-     * The value will then be sent to the Server where the ressources are allocated depending on the value.
-     * If value 7 is diced, the player can re-place the thief, which will be handled by an extra activity
-     */
-
-    private SensorManager sensorManager;
+    // TODO: Methoden kommmentieren
+    private SensorManager sensorManager; // Senors
     private Sensor accelerometer;
+
     private final int SHAKE_THRESHOLD = 8;
     private int sum;
     private int statusStarts = 0;
     private int finalSum = 0;
 
-    private Handler handler = new RollDiceHandler(Looper.getMainLooper(), this);
+    private Handler handler = new RollDiceHandler(Looper.getMainLooper(), this); // Handler
 
+    /**
+     * Sets Sensors, the Handler and lets the Device Vibrate.
+     *
+     * @param savedInstanceState saved State
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dice_shaker);
 
-        // Vibrationsbenachrichtigung
         Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+            v.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
         } else {
             //deprecated in API 26
             v.vibrate(200);
@@ -66,6 +69,7 @@ public class RollDiceActivity extends AppCompatActivity implements SensorEventLi
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
         ClientData.currentHandler = handler;
     }
 

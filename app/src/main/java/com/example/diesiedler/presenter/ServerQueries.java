@@ -17,7 +17,7 @@ public class ServerQueries {
     private static final Logger logger = Logger.getLogger(ServerQueries.class.getName()); // Logger
 
     /**
-     * Sends a precast Request to the Server.
+     * Sends a precast String-Request to the Server and flushes the Stream.
      *
      * @param query to send Request
      */

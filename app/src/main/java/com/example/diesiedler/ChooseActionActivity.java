@@ -233,7 +233,6 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
 
             if (msg.arg1 == 4) {  // TODO: Change to enums
 
-                ClientData.currentGame = (GameSession) msg.obj;
                 startActivity(intent);
             }
 

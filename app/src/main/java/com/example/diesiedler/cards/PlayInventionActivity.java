@@ -10,7 +10,6 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.catangame.GameSession;
 import com.example.diesiedler.MainActivity;
 import com.example.diesiedler.R;
 import com.example.diesiedler.presenter.ClientData;
@@ -132,7 +131,6 @@ public class PlayInventionActivity extends AppCompatActivity {
 
             if (msg.arg1 == 4) {  // TODO: Change to enums
 
-                ClientData.currentGame = (GameSession) msg.obj;
                 startActivity(intent);
             }
             if (msg.arg1 == 5) {  // TODO: Change to enums
