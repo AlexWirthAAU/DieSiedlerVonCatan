@@ -1,6 +1,7 @@
 package com.example.catanserver.threads.building;
 
 import com.example.catangame.GameSession;
+import com.example.catanserver.Server;
 import com.example.catanserver.User;
 import com.example.catanserver.businessLogic.model.building.BuildRoad;
 import com.example.catanserver.threads.GameThread;
@@ -46,5 +47,6 @@ public class BuildRoadThread extends GameThread {
             BuildRoad.updateGameSession(gameSession, edgeIndex, userID);
         }
         SendToClient.sendGameSessionBroadcast(gameSession);
+        Server.currentlyThreaded.remove(gameSession.getGameId());
     }
 }

@@ -1,6 +1,7 @@
 package com.example.catanserver.threads;
 
 import com.example.catangame.GameSession;
+import com.example.catanserver.Server;
 import com.example.catanserver.User;
 import com.example.catanserver.businessLogic.model.ResourceAllocation;
 
@@ -20,5 +21,6 @@ public class ResourceAllocationThread extends GameThread {
     public void run() {
         ResourceAllocation.updateResources(gameSession, diceValue);
         SendToClient.sendGameSessionBroadcast(gameSession);
+        Server.currentlyThreaded.remove(gameSession.getGameId());
     }
 }

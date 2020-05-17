@@ -1,6 +1,7 @@
 package com.example.catanserver.threads.building;
 
 import com.example.catangame.GameSession;
+import com.example.catanserver.Server;
 import com.example.catanserver.User;
 import com.example.catanserver.businessLogic.model.building.BuildCity;
 import com.example.catanserver.threads.GameThread;
@@ -23,6 +24,7 @@ public class BuildCityThread extends GameThread {
     public void run() {
         BuildCity.updateGameSession(gameSession, knotIndex, userID);
         SendToClient.sendGameSessionBroadcast(gameSession);
+        Server.currentlyThreaded.remove(gameSession.getGameId());
     }
 
 }

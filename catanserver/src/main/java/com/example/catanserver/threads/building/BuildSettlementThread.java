@@ -1,6 +1,7 @@
 package com.example.catanserver.threads.building;
 
 import com.example.catangame.GameSession;
+import com.example.catanserver.Server;
 import com.example.catanserver.User;
 import com.example.catanserver.businessLogic.model.building.BuildSettlement;
 import com.example.catanserver.threads.GameThread;
@@ -26,6 +27,7 @@ public class BuildSettlementThread extends GameThread {
         System.out.println("UPDATED GAMESESSION");
         SendToClient.sendGameSessionBroadcast(gameSession);
         System.out.println("BROADCASTED GAMESESSION");
+        Server.currentlyThreaded.remove(gameSession.getGameId());
     }
 
 }
