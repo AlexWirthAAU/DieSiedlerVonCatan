@@ -49,5 +49,4 @@ public class Server {
             System.err.println("Server could not be started!");
         }
     }
-
 }

@@ -16,6 +16,7 @@ import com.example.catangame.Colors;
 import com.example.catangame.Player;
 import com.example.diesiedler.MainActivity;
 import com.example.diesiedler.R;
+import com.example.diesiedler.building.BuildSettlementActivity;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.handler.HandlerOverride;
@@ -181,10 +182,14 @@ public class SelectColorsActivity extends AppCompatActivity {
                     }
                 }
             } else if (msg.arg1 == 5 && msg.obj.equals("STARTGAME")) {  // TODO: Change to enums
-                Intent intent = new Intent(activity, MainActivity.class);
-                startActivity(intent);
+                if (ClientData.currentGame.getPlayer(ClientData.currentGame.getCurrPlayer()).getUserId() == ClientData.userId) {
+                    Intent intent = new Intent(activity, BuildSettlementActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(activity, MainActivity.class);
+                    startActivity(intent);
+                }
             }
         }
-
     }
 }
