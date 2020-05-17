@@ -3,7 +3,7 @@ package com.example.diesiedler.beforegame;
 /**
  * @author Christina Senger
  * <p>
- * Model-Klasse für die auszuwählenden Elemente einer Recycerview
+ * Model-Class for the selectable Elements of the Recycerview
  */
 public class SelectableItem {
 
@@ -11,27 +11,26 @@ public class SelectableItem {
     private String text;
 
     /**
-     * Konstruktor
+     * Constructor
      *
-     * @param text Textinhalt des Items
-     * @param isSelected Item ausgewählt?
+     * @param text Text of the Item
+     * @param isSelected Item selected?
      */
     SelectableItem(String text, boolean isSelected) {
         this.isSelected = isSelected;
         this.text = text;
     }
 
-    // Getter isSelected
+    // Getter Setter isSelected
     boolean isSelected() {
         return isSelected;
     }
 
-    // Setter isSelected
     void setSelected(boolean selected) {
         isSelected = selected;
     }
 
-    // Getter text
+    // Getter Text
     String getText() {
         return this.text;
     }
@@ -41,10 +40,10 @@ public class SelectableItem {
      * obj der Klasse SelectableItem gleich dem Text der aktuellen
      * Instanz ist.
      *
-     * @param obj Referenz des zu vergleichenden Objekt
-     * @return true, wenn obj nicht null, Instanz der Klasse
-     * Selectableitem und dessen Text gleiche jenem von der
-     * aktuellen Instanz. Sonst false.
+     * @param obj Reference of the Object to compare
+     * @return true, when obj is not null, Instance of the class
+     * Selectableitem and its Text is equal to that from the
+     * actual Instance. Else false.
      */
     @Override
     public boolean equals(Object obj) {

@@ -25,25 +25,34 @@ import com.richpath.RichPathView;
 
 import java.util.logging.Logger;
 
+/**
+ * @author Alex Wirth
+ * @author Christina Senger (edit)
+ * <p>
+ * Overview of Gameboard and Inventory
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    /**
-     * Main - Activity: Overview - View -> Gameboard and Inventory
-     */
 
-    private static final Logger logger = Logger.getLogger(MainActivity.class.getName());
-    private Handler handler = new MainActivityHandler(Looper.getMainLooper(), this);
+    private static final Logger logger = Logger.getLogger(MainActivity.class.getName()); // Logger
+    private Handler handler = new MainHandler(Looper.getMainLooper(), this); // Handler
 
-    private TextView woodCount;
+    private TextView woodCount; // Number of Ressources
     private TextView clayCount;
     private TextView wheatCount;
     private TextView oreCount;
     private TextView woolCount;
-    private TextView currentPlayer;
-    private Button devCards;
+
+    private TextView currentPlayer; // View of the current Player
+
+    private Button devCards; // Button to show Score and DevCards
     private Button scoreBoard;
 
-    private GameSession game;
-
+    /**
+     * Loads actual Gameboard and Ressources. Sets Handler.
+     * If the Intent has an Extra, a Alert-Message with its Test is shown.
+     *
+     * @param savedInstanceState saved State
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,10 +67,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
         updateResources();
 
-
         ClientData.currentHandler = handler;
 
-        // Nach einem Bank- oder Hafentausch oder Entwicklungskartenkauf wird die Erfolgsmeldung angezeigt
         String tradeMessage = getIntent().getStringExtra("mess");
 
         if (tradeMessage != null) {
@@ -71,8 +78,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             AlertDialog alert1 = builder1.create();
             alert1.show();
         }
-
-        game = ClientData.currentGame;
     }
 
     private void updateResources() {
@@ -106,38 +111,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
-    private class MainActivityHandler extends HandlerOverride {
-
-        public MainActivityHandler(Looper mainLooper, Activity ac) {
-            super(mainLooper, ac);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.arg1 == 4) {
-                GameSession gs = ClientData.currentGame;
-                Player currentPlayer = gs.getPlayer(gs.getCurrPlayer());
-                PlayerInventory playerInventory = currentPlayer.getInventory();
-
-
-                if (currentPlayer.getUserId() == ClientData.userId && playerInventory.getRoads().size() < 2) {
-                    Intent intent = new Intent(activity, BuildSettlementActivity.class);
-                    startActivity(intent);
-                } else if (currentPlayer.getUserId() == ClientData.userId && playerInventory.getSettlements().size() > 1 && playerInventory.getRoads().size() > 1) {
-                    Intent intent = new Intent(activity, RollDiceActivity.class);
-                    startActivity(intent);
-                } else if (currentPlayer.getUserId() == ClientData.userId) {
-                    Intent intent = new Intent(activity, RollDiceActivity.class);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(activity, MainActivity.class);
-                    startActivity(intent);
-                }
-            }
-        }
-    }
-
+    /**
+     * @author Alex Wirth
+     * @author Christina Senger (edit)
+     *
+     * Handler for the MainActivity
+     */
     private class MainHandler extends HandlerOverride {
 
         MainHandler(Looper mainLooper, Activity ac) {
@@ -145,19 +124,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         /**
-         * Wird vom ServerCommunicationThread aufgerufen. Im Falle einer Stringübertragung wird
-         * die Nachricht dem Intent als Extra übergeben und die AnswerToTradeActivity wird gestartet
-         * sollte eine GameSession übertragen werden, so wird überprüft, ob man an der Reihe ist
-         * und ggf. die SelectActionActivity wird aufgerufen.
+         * Calles from ServerCommunicationThread. When a String is send, it is set as
+         * Extra of the Intent and the AnswerToTradeActivity is started.
+         * If a GameSession was send, it is checked, if its your Turn.
+         * If not, the MainActivity is started.
+         * If yes, to correspondending Activity is started.
          *
-         * @param msg msg.arg1 beinhaltet den entsprechenden Parameter zur weiteren Ausführung
+         * @param msg msg.arg1 has the Param for further Actions
+         *            msg.obj holds a Object send from Server
          */
         @Override
         public void handleMessage(Message msg) {
 
             if (msg.arg1 == 4) {  // TODO: Change to enums
-
-                ClientData.currentGame = (GameSession) msg.obj;
 
                 GameSession gs = ClientData.currentGame;
                 Player currentPlayer = gs.getPlayer(gs.getCurrPlayer());
@@ -177,7 +156,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     startActivity(intent);
                 }
             }
-
 
             if (msg.arg1 == 5) {  // TODO: Change to enums
 

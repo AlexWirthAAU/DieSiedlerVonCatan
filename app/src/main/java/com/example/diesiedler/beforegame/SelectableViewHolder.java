@@ -11,23 +11,23 @@ import com.example.diesiedler.R;
 /**
  * @author Christina Senger
  * <p>
- * Repräsentation eines auswählbaren Behälters für SelectableItems
+ * Representation of a selectable Holder for SelectableItems
  */
 class SelectableViewHolder extends RecyclerView.ViewHolder {
 
     static final int MULTI_SELECTION = 2;
     static final int SINGLE_SELECTION = 1;
-    CheckedTextView textView;
-    SelectableItem myItem;
+    CheckedTextView textView; // TextView of the HolderView of an SelectableItem
+    SelectableItem myItem; // Representation of an SelectableItem
     private OnItemSelectedListener itemSelectedListener;
 
 
     /**
-     * Konstruktor - Setzt für die View einen OnClickListener und ruft dessen
-     * onItemSelected-Methode auf.
+     * Constructor - Sets an OnClickListener for the View
+     * and calls its onItemSelected-Methode.
      *
-     * @param view Repräsentation für HolderView eines Items
-     * @param listener Instanz von Myadapter
+     * @param view Representation of the HolderView of one Item
+     * @param listener Instance of MyAdapter-Class
      */
     SelectableViewHolder(View view, OnItemSelectedListener listener) {
 
@@ -52,10 +52,10 @@ class SelectableViewHolder extends RecyclerView.ViewHolder {
     }
 
     /**
-     * Wird ein Item ausgewählt, wird der Hintegrund dessen View gelb
-     * eingefärbt. In der Checkbox wird ein Haken gesetzt.
+     * When an Item is selected, to Background of its View
+     * is painted yellow. The Checkbox is checked.
      *
-     * @param value true wenn Item ausgewählt wurde, sonst false
+     * @param value true when Item is selected, else false
      */
     void setChecked(boolean value) {
 
@@ -70,8 +70,8 @@ class SelectableViewHolder extends RecyclerView.ViewHolder {
     }
 
     /**
-     * Interface für den OnItemSelectedListener enthält eine Methode, um auf die
-     * Auswahl eines SelectedItems zu reagieren.
+     * Interface for the OnItemSelectedListener has a Methode, to
+     * react on the Selection of a SelectedItem.
      */
     public interface OnItemSelectedListener {
         void onItemSelected(SelectableItem item); }

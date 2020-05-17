@@ -25,29 +25,36 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * @author Christina Senger
+ * <p>
+ * Activity to setup a 4:1 Trade with the Bank.
+ */
 public class BankChangeActivity extends AppCompatActivity {
 
-    Button woodGive = findViewById(R.id.woodGive);
+    private static final Logger logger = Logger.getLogger(BankChangeActivity.class.getName()); // Logger
     Button woolGive = findViewById(R.id.woolGive);
     Button wheatGive = findViewById(R.id.wheatGive);
     Button oreGive = findViewById(R.id.oreGive);
     Button clayGive = findViewById(R.id.clayGive);
-
-    List<Button> giveBtns = new ArrayList<>();
-
-    Button woodGet = findViewById(R.id.woodGet);
+    Button woodGive = findViewById(R.id.woodGive); // Buttons for Ressources, the Player wants to give
+    List<Button> giveBtns = new ArrayList<>(); // List of all Give-Buttons
     Button woolGet = findViewById(R.id.woolGet);
     Button wheatGet = findViewById(R.id.wheatGet);
     Button oreGet = findViewById(R.id.oreGet);
     Button clayGet = findViewById(R.id.clayGet);
+    Button woodGet = findViewById(R.id.woodGet); // Buttons for Ressources, the Player wants to get
+    List<Button> getBtns = new ArrayList<>(); // List of all Get-Buttons
+    StringBuilder res = new StringBuilder(); // StringBuilder for the Trade-Offer
+    Handler handler = new BankChangeHandler(Looper.getMainLooper(), this); // Handler
 
-    List<Button> getBtns = new ArrayList<>();
-
-    StringBuilder res = new StringBuilder();
-
-    private static final Logger logger = Logger.getLogger(BankChangeActivity.class.getName());
-    Handler handler = new BankChangeHandler(Looper.getMainLooper(), this);
-
+    /**
+     * Adds all Buttons to their List and enables them, when the
+     * Player has less than 4 of the correspondending Ressource.
+     * Specifies the Handler in ClientData for the current Activity.
+     *
+     * @param savedInstanceState saved State
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +98,12 @@ public class BankChangeActivity extends AppCompatActivity {
         ClientData.currentHandler = handler;
     }
 
+    /**
+     * When a Give-Button was clicked, all other Get-Buttons are enabled
+     * and the Ressource is appended to the StringBuilder (Text).
+     *
+     * @param view View to access the Buttons
+     */
     public void setGive(View view) {
 
         for (Button btn : giveBtns) {
@@ -102,6 +115,12 @@ public class BankChangeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * When a Get-Button was clicked, all other Give-Buttons are enabled
+     * and the desired Ressource is appended to the StringBuilder (Text).
+     *
+     * @param view View to access the Buttons
+     */
     public void setGet(View view) {
 
         for (Button btn : getBtns) {
@@ -113,6 +132,12 @@ public class BankChangeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * When the Trade-Button was clicked, a NetworkThread is started
+     * which sends the Trade-Offer as a String with a Divider to the Server.
+     *
+     * @param view View to access the Trade-Button
+     */
     public void change(View view) {
         String toSendTrade = res.toString();
         logger.log(Level.INFO, "CREATE BANK CHANGE");
@@ -120,6 +145,11 @@ public class BankChangeActivity extends AppCompatActivity {
         networkThread.start();
     }
 
+    /**
+     * @author Christina Senger
+     *
+     * Handler for the BankChangeActivity
+     */
     private class BankChangeHandler extends HandlerOverride {
 
         BankChangeHandler(Looper mainLooper, Activity ac) {
@@ -127,11 +157,12 @@ public class BankChangeActivity extends AppCompatActivity {
         }
 
         /**
-         * Wird vom ServerCommunicationThread aufgerufen. Im Falle einer Stringübertragung wird
-         * die Nachricht als String dem Intent übergeben, sollte eine GameSession übertragen
-         * werden, so wurde der Handel durchgeführt und die MainActivity wird aufgerufen.
+         * Called from ServerCommunicationThread. When a String was send, it is set
+         * as Extra of the Intent. When a GameSession was send, the Trade was
+         * carried out and the MainActivity is started.
          *
-         * @param msg msg.arg1 beinhaltet den entsprechenden Parameter zur weiteren Ausführung
+         * @param msg msg.arg1 has the Param for further Actions
+         *            msg.obj holds the Object send from the Server
          */
         @Override
         public void handleMessage(Message msg) {
@@ -140,7 +171,6 @@ public class BankChangeActivity extends AppCompatActivity {
 
             if (msg.arg1 == 4) {  // TODO: Change to enums
 
-                ClientData.currentGame = (GameSession) msg.obj;
                 startActivity(intent);
             }
             if (msg.arg1 == 5) {  // TODO: Change to enums

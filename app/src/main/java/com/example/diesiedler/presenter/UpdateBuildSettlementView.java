@@ -1,8 +1,6 @@
 package com.example.diesiedler.presenter;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
@@ -14,7 +12,7 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+// TODO: komentieren
 public class UpdateBuildSettlementView {
 
     private static final Logger logger = Logger.getLogger(UpdateBuildSettlementView.class.getName());

@@ -13,19 +13,22 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static com.example.diesiedler.presenter.ClientData.*;
+import static com.example.diesiedler.presenter.ClientData.GET_FROM_SERVER;
+import static com.example.diesiedler.presenter.ClientData.currentGame;
+import static com.example.diesiedler.presenter.ClientData.userId;
 
 /**
  * @author Fabian Schaffenrath
- * Dieser Thread kümmert sich um alle Meldungen, die der Client vom Server bekommt. Dabei verarbeitet er diese
- * je nach Objectart und spricht anschließend den derzeitigen Handler an.
+ *
+ * This Thread cares about all Messages, the Client recieves from Server.
+ * Depending on the Object-Type he makes Actions and starts the current Handler.
  */
 public class ServerCommunicationThread extends Thread {
 
-    private static final Logger logger = Logger.getLogger(ServerCommunicationThread.class.getName());
+    private static final Logger logger = Logger.getLogger(ServerCommunicationThread.class.getName()); // Logger
 
     /**
-     * Wartet auf Input vom Server. Sobald dieser auftritt, werden die Daten abgespeichert und der
+     * Waites on Input from Server. Sobald dieser auftritt, werden die Daten abgespeichert und der
      * derzeitige Handler mit einer Message angesprochen.
      * <p>
      * msg.arg1 Codes: TODO: Change to enums
@@ -37,21 +40,22 @@ public class ServerCommunicationThread extends Thread {
      * 4 GameSession returned
      * 5 String returned (obj contains string)
      */
-
     public void run() {
         try {
             Object read;
             while (true) {
                 logger.log(Level.INFO, "Waiting");
                 read = GET_FROM_SERVER.readObject();
-                if (read instanceof GameSession) {  // Neue GameSession State
+                if (read instanceof GameSession) {
+                    // New GameSession State
                     logger.log(Level.INFO, "Got GameSession.");
                     currentGame = (GameSession) read;
                     Message msg = Message.obtain();
                     msg.arg1 = 4;
                     ClientData.currentHandler.sendMessage(msg);
-                } else if (read instanceof ArrayList) {  // Userlist
-                    // Erstelle Username Set und Id,Username Tupel für die SearchPlayersActivity
+                } else if (read instanceof ArrayList) {
+                    // Userlist
+                    // Create Username Set and Id,Username Map for the SearchPlayersActivity
                     logger.log(Level.INFO, "Got Userlist.");
                     ArrayList<String> searchingUsers = (ArrayList<String>) read;
                     Map<String, Integer> searchingUsersMap = new HashMap<>();
@@ -68,13 +72,15 @@ public class ServerCommunicationThread extends Thread {
                     Message msg = Message.obtain();
                     msg.arg1 = 3;
                     ClientData.currentHandler.sendMessage(msg);
-                } else if (read instanceof String) {  // Spezifische Calls oder Fehlermeldungen
+                } else if (read instanceof String) {
+                    // Specific Calls or Error-Messages
                     logger.log(Level.INFO, "Got String.");
                     Message msg = Message.obtain();
                     msg.arg1 = 5;
                     msg.obj = read;
                     ClientData.currentHandler.sendMessage(msg);
-                } else {  // UserId nach erfolgreichem Login
+                } else {
+                    // UserId after successful Login
                     logger.log(Level.INFO, "Got Integer.");
                     ClientData.userId = (int) read;
                     Message msg = Message.obtain();

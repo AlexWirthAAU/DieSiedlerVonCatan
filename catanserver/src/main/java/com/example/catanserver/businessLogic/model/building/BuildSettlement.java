@@ -6,6 +6,7 @@ import com.example.catangame.PlayerInventory;
 import com.example.catangame.gameboard.Gameboard;
 import com.example.catangame.gameboard.Knot;
 
+// TODO: Methoden kommentieren
 public class BuildSettlement {
 
     /**
@@ -102,6 +103,10 @@ public class BuildSettlement {
         playerInventory.removeWheat(1);
         playerInventory.removeWool(1);
         playerInventory.addVictoryPoints(1);
+
+        if (k.isHarbourKnot()) {
+            updatePorts(p, k);
+        }
     }
 
     private static void updatePlayerInventoryInit(Player p, Knot k) {
@@ -109,5 +114,25 @@ public class BuildSettlement {
 
         playerInventory.addSettlement(k);
         playerInventory.addVictoryPoints(1);
+
+        if (k.isHarbourKnot()) {
+            updatePorts(p, k);
+        }
+    }
+
+    private static void updatePorts(Player player, Knot knot) {
+        PlayerInventory playerInventory = player.getInventory();
+
+        if (knot.isWoodPort()) {
+            playerInventory.setWoodport(true);
+        } else if (knot.isWoolPort()) {
+            playerInventory.setWoolport(true);
+        } else if (knot.isWheatPort()) {
+            playerInventory.setWheatport(true);
+        } else if (knot.isOrePort()) {
+            playerInventory.setOreport(true);
+        } else if (knot.isClayPort()) {
+            playerInventory.setClayport(true);
+        }
     }
 }

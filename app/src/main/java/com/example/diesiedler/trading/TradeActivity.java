@@ -12,7 +12,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.diesiedler.MainActivity;
 import com.example.diesiedler.R;
@@ -24,10 +23,15 @@ import com.example.diesiedler.threads.NetworkThread;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * @author Christina Senger
+ * <p>
+ * Activity where the Player can set his Trade-Offer for the Opponents.
+ */
 public class TradeActivity extends AppCompatActivity {
 
-    private final int STARTVALUE = 0;
-    private int woodGive = STARTVALUE;
+    private static final Logger logger = Logger.getLogger(TradeActivity.class.getName()); // Logger
+    private final int STARTVALUE = 0; // Startvalue for desired and offered Ressources
     private int woodGet = STARTVALUE;
     private int woolGive = STARTVALUE;
     private int woolGet = STARTVALUE;
@@ -37,10 +41,8 @@ public class TradeActivity extends AppCompatActivity {
     private int oreGet = STARTVALUE;
     private int clayGive = STARTVALUE;
     private int clayGet = STARTVALUE;
-
-    private StringBuilder tradeMap = new StringBuilder();
-
-    private TextView countWoodGive = findViewById(R.id.countWoodGive);
+    Handler handler = new TradeHandler(Looper.getMainLooper(), this); // Handler
+    private int woodGive = STARTVALUE; // Values of desired and offered Ressources
     private TextView countWoodGet = findViewById(R.id.countWoodGet);
     private TextView countWoolGive = findViewById(R.id.countWoolGive);
     private TextView countWoolGet = findViewById(R.id.countWoolGet);
@@ -50,12 +52,15 @@ public class TradeActivity extends AppCompatActivity {
     private TextView countOreGet = findViewById(R.id.countOreGet);
     private TextView countClayGive = findViewById(R.id.countClayGive);
     private TextView countClayGet = findViewById(R.id.countClayGet);
+    private StringBuilder tradeMap = new StringBuilder(); // StringBuilder in which the Trade-Offer is stored
+    private TextView countWoodGive = findViewById(R.id.countWoodGive); // Ressource-Buttons
+    private Player player; // current Player
 
-    private Player player;
-
-    private static final Logger logger = Logger.getLogger(TradeActivity.class.getName());
-    Handler handler = new TradeHandler(Looper.getMainLooper(), this);
-
+    /**
+     * Specifies the Handler in ClientData for the current Activity.
+     *
+     * @param savedInstanceState saved State
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +71,14 @@ public class TradeActivity extends AppCompatActivity {
         ClientData.currentHandler = handler;
     }
 
+    /**
+     * Checks of the Player has more of one Ressource than the actual
+     * Value of that to give, so that the Value can be increased.
+     *
+     * @param value current Value of a Ressource to give
+     * @param res Name of the Ressource
+     * @return true, when the Player has more of this Ressource, else false
+     */
     private boolean checkRessources(int value, String res) {
 
         int availableRes = -1;
@@ -93,6 +106,12 @@ public class TradeActivity extends AppCompatActivity {
         return availableRes > value;
     }
 
+    /**
+     * Shows an Alert-Message with the Info, that the Player
+     * has not enough of a specific Ressource.
+     *
+     * @param res The Ressource the Player has not enough of as String
+     */
     private void alert(String res) {
 
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
@@ -102,6 +121,14 @@ public class TradeActivity extends AppCompatActivity {
         alert1.show();
     }
 
+    /**
+     * When the Trade-Button is clicked, all Values are added
+     * to the Trade-StringBuilder with their Names+Dividers.
+     * The NetworkThread is started, which send the Trade as a
+     * String to the Server.
+     *
+     * @param view View to access the Trade-Button
+     */
     public void trade(View view) {
 
         tradeMap.append("WoodGive/").append(woodGive);
@@ -122,6 +149,13 @@ public class TradeActivity extends AppCompatActivity {
         networkThread.start();
     }
 
+    /**
+     * When a Plus-Button is clicked, and the Check was successful,
+     * the Ressource-Value is increased and the TextView is updated.
+     * Else, an Alert-Message is shown, that the Player doesnt have enough Ressources.
+     *
+     * @param view View to access the Plus-Buttons
+     */
     public void plus(View view) {
 
         switch (view.getId()) {
@@ -206,6 +240,12 @@ public class TradeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * When a Minus-Button is clicked, the Ressource-Value is reduced
+     * and the TextView is updated. When the Value already is 0, nothing happens.
+     *
+     * @param view View to access the Minus-Buttons
+     */
     public void minus(View view) {
 
         switch (view.getId()) {
@@ -291,6 +331,11 @@ public class TradeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * @author Christina Senger
+     *
+     * Handler for the TradeActivity
+     */
     private class TradeHandler extends HandlerOverride {
 
         TradeHandler(Looper mainLooper, Activity ac) {
@@ -298,11 +343,12 @@ public class TradeActivity extends AppCompatActivity {
         }
 
         /**
-         * Wird vom ServerCommunicationThread aufgerufen. Im Falle einer Stringübertragung wird
-         * die Nachricht als String dem Intent übergeben, sollte eine GameSession übertragen
-         * werden, so ist der Handel abgeschlossen und die MainActivity wird aufgerufen.
+         * Called from ServerCommunicationThread. When a String was send, it is set
+         * as Extra of the Intent. When a GameSession was send, the Trade was
+         * carried out and the MainActivity is started.
          *
-         * @param msg msg.arg1 beinhaltet den entsprechenden Parameter zur weiteren Ausführung
+         * @param msg msg.arg1 has the Param for further Actions
+         *            msg.obj holds the Object send from the Server
          */
         @Override
         public void handleMessage(Message msg) {
@@ -311,7 +357,6 @@ public class TradeActivity extends AppCompatActivity {
 
             if (msg.arg1 == 4) {  // TODO: Change to enums
 
-                ClientData.currentGame = (GameSession) msg.obj;
                 startActivity(intent);
             }
             if (msg.arg1 == 5) {  // TODO: Change to enums

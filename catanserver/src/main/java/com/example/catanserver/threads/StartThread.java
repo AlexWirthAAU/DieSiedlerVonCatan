@@ -7,17 +7,24 @@ import com.example.catanserver.User;
 
 /**
  * @author Fabian Schaffenrath
- * This Thread starts the Game for every User.
+ * @author Christina Senger (Documentation)
  *
- * It sends a static string to every user who is part of the GameSession.
+ * This Thread starts the Game for every User.
  */
-
 public class StartThread extends GameThread{
 
+    /**
+     * {@inheritDoc}
+     */
     public StartThread(User user, GameSession game) {
         super(user, game);
     }
 
+    /**
+     * When all Players have selected their Colors, it sends a
+     * GameSession Object to every user who is part of this Game (broadcast)
+     * and removes the Game from currentlyThreaded.
+     */
     public void run(){
         boolean allColorsSet = true;
         for (Player player:game.getPlayers()) {

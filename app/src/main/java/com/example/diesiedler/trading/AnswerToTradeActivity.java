@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.catangame.GameSession;
 import com.example.diesiedler.ChooseActionActivity;
 import com.example.diesiedler.MainActivity;
 import com.example.diesiedler.R;
@@ -23,24 +22,32 @@ import com.example.diesiedler.threads.NetworkThread;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-//Geladen, wenn eine Trade Message vom Server kommt
-
 /**
- * TODO: Implement server answer
+ * @author Christina Senger
+ *
+ * This Activity is loaded, when the MainActivity is on and the
+ * Server sends a Trade-Offer. The Player can here accept or
+ * dismiss the offer.
  */
 public class AnswerToTradeActivity extends AppCompatActivity {
 
-    private GameSession game;
-    private static final Logger logger = Logger.getLogger(AnswerToTradeActivity.class.getName());
-    Handler handler = new AnswerToTradeHandler(Looper.getMainLooper(), this);
-    private String toSendAnswer;
+    private static final Logger logger = Logger.getLogger(AnswerToTradeActivity.class.getName()); // Loogger
 
+    Handler handler = new AnswerToTradeHandler(Looper.getMainLooper(), this); // Handler
+
+    private String toSendAnswer; // Holder for Answer-String
+
+    /**
+     * Gets the Trade-Offer from the Intent and show it in the Textview.
+     * Specifies the Handler in the Client Data for the current Activity.
+     *
+     * @param savedInstanceState saved State
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer_to_trade);
 
-        game = ClientData.currentGame;
         String tradeMessage = getIntent().getStringExtra("mess");
         TextView tradeMes = findViewById(R.id.tradeMes);
         tradeMes.setText(tradeMessage);
@@ -48,6 +55,12 @@ public class AnswerToTradeActivity extends AppCompatActivity {
         ClientData.currentHandler = handler;
     }
 
+    /**
+     * When the Player dismisses the Offer, the NetworkThread is started,
+     * which sends the Answer-String to the Server.
+     *
+     * @param view
+     */
     public void dismiss(View view) {
 
         toSendAnswer = "dismissed";
@@ -56,6 +69,12 @@ public class AnswerToTradeActivity extends AppCompatActivity {
         networkThread.start();
     }
 
+    /**
+     * When the Player accepts the Offer, the NetworkThread is started,
+     * which sends the Answer-String to the Server.
+     *
+     * @param view
+     */
     public void accept(View view) {
 
         toSendAnswer = "accepted";
@@ -64,6 +83,11 @@ public class AnswerToTradeActivity extends AppCompatActivity {
         networkThread.start();
     }
 
+    /**
+     * @author Christina Senger
+     * <p>
+     * Handler for the AnswerToTradeActivity
+     */
     private class AnswerToTradeHandler extends HandlerOverride {
 
         AnswerToTradeHandler(Looper mainLooper, Activity ac) {
@@ -71,12 +95,14 @@ public class AnswerToTradeActivity extends AppCompatActivity {
         }
 
         /**
-         * Wird vom ServerCommunicationThread aufgerufen. Im Falle einer Stringübertragung wird
-         * die Nachricht als String dem Intent übergeben, sollte eine GameSession übertragen
-         * werden, so ist der Handel abgeschlossen. Ist man an der Reihe wird die ChooseActionActivity
-         * aufgerufen. Ansonsten wird die MainActivity aufgerufen.
+         * Called from ServerCommunicationThread. When a String was send, it is set
+         * as Extra of the Intent. When a GameSession was send, the Trade was
+         * carried out. It is checked, whether it is the Players Turn.
+         * If yes, the ChooseActionActivity is started.
+         * If not, the MainActivity is started.
          *
-         * @param msg msg.arg1 beinhaltet den entsprechenden Parameter zur weiteren Ausführung
+         * @param msg msg.arg1 has the Param for further Actions
+         *            msg.obj holds the Object send from the Server
          */
         @Override
         public void handleMessage(Message msg) {
@@ -85,8 +111,6 @@ public class AnswerToTradeActivity extends AppCompatActivity {
             Intent intentSelect = new Intent(activity, ChooseActionActivity.class);
 
             if (msg.arg1 == 4) {  // TODO: Change to enums
-
-                ClientData.currentGame = (GameSession) msg.obj;
 
                 if (ClientData.currentGame.getCurr().getUserId() == ClientData.userId) {
                     startActivity(intentSelect);

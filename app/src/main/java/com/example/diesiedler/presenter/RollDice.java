@@ -4,12 +4,11 @@ import android.app.Activity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.example.diesiedler.R;
-
 
 import java.util.Random;
 
+// TODO: kommentieren
 public class RollDice {
 
     private ImageView diceOne;
