@@ -38,7 +38,7 @@ public class UpdateBuildSettlementView {
     }
 
 
-    private static LinkedList<Knot> possibleKnots(GameSession gs) {
+    public static LinkedList<Knot> possibleKnots(GameSession gs) {
         LinkedList<Knot> possibleKnots = new LinkedList<>();
         Player currentP = gs.getPlayer(gs.getCurrPlayer());
 

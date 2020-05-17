@@ -29,9 +29,9 @@ public class UpdateBuildRoadView {
         }
     }
 
-    private static LinkedList<Edge> possibleEdges(GameSession gs, String card) {
+    public static LinkedList<Edge> possibleEdges(GameSession gs, String card) {
         LinkedList<Edge> possibleEdges = new LinkedList<>();
-        Player p = gs.getPlayer(gs.getCurrPlayer()); //TODO: Update
+        Player p = gs.getPlayer(gs.getCurrPlayer());
 
 
         if (p.getInventory().getWood() >= 1 && p.getInventory().getClay() >= 1 || p.getInventory().getRoads().size() < 2 || card != null) {
@@ -45,5 +45,4 @@ public class UpdateBuildRoadView {
         }
         return null;
     }
-
 }

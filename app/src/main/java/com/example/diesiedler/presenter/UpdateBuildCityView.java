@@ -29,9 +29,9 @@ public class UpdateBuildCityView {
         }
     }
 
-    private static LinkedList<Knot> possibleKnots(GameSession gs) {
+    public static LinkedList<Knot> possibleKnots(GameSession gs) {
         LinkedList<Knot> possibleKnots = new LinkedList<>();
-        Player p = gs.getPlayer(ClientData.userId);
+        Player p = gs.getPlayer(gs.getCurrPlayer());
 
 
         if (p.getInventory().getWheat() >= 2 && p.getInventory().getOre() >= 3) {
