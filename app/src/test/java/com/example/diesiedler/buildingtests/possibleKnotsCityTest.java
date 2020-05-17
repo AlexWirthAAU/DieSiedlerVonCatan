@@ -63,6 +63,8 @@ public class possibleKnotsCityTest {
         settlement.setPlayer(player);
         settlement2.setPlayer(new Player("Test2", 1));
         playerInventory.addSettlement(settlement);
+        playerInventory.addWheat(3);
+        playerInventory.addOre(3);
         gameSession.addSettlement(settlement);
         gameSession.addSettlement(settlement2);
 

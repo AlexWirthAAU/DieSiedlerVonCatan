@@ -55,8 +55,9 @@ public class BuildCityTest {
         Assert.assertEquals(0, gameSession.getCities().size());
         Assert.assertEquals(0, player.getInventory().getCities().size());
 
-        Assert.assertEquals(5, playerInventory.getWheat());
-        Assert.assertEquals(6, playerInventory.getOre());
+        Assert.assertEquals(3, playerInventory.getWheat());
+        Assert.assertEquals(4, playerInventory.getOre());
+        Assert.assertEquals(0, playerInventory.getVictoryPoints());
     }
 
     private void afterBuilding() {
@@ -67,8 +68,9 @@ public class BuildCityTest {
         Assert.assertEquals(1, gameSession.getCities().size());
         Assert.assertEquals(1, player.getInventory().getCities().size());
 
-        Assert.assertEquals(3, playerInventory.getWheat());
-        Assert.assertEquals(3, playerInventory.getOre());
+        Assert.assertEquals(1, playerInventory.getWheat());
+        Assert.assertEquals(1, playerInventory.getOre());
+        Assert.assertEquals(3, playerInventory.getVictoryPoints());
     }
 
 }

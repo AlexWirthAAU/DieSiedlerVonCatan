@@ -18,64 +18,6 @@ public class BuildSettlement {
      * the server can update the gamesession object.
      */
 
-    /*
-    private boolean enoughResources = false;
-    private Player player;
-    PlayerInventory playerInventory;
-    //Gameboard gameboard = new Gameboard();
-    private Knot knot;
-
-    private static final String TAG = "BuildSettlement"; //for logging
-
-    @Override
-    public boolean checkResources() {
-        // cost for settlement: 1 clay, 1 clay, 1 wheat, 1 wool
-        int clay = playerInventory.getWood();
-        int clay = playerInventory.getClay();
-        int wheat = playerInventory.getWheat();
-        int wool = playerInventory.getWool();
-        if (clay >= 1 && clay >= 1 && wheat >= 1 && wool >= 1) {
-            enoughResources = true;
-        }
-        return enoughResources;
-    }
-
-    @Override
-    public void selectBuildingSite() {
-        /* settlement can only be built:
-         - if there is a road of the player leading to the chosen place and
-         - there is no other settlement or city only one distance (road or possible road) away
-         */
-
-    /*
-        if (enoughResources && adjacentRoadOfPlayer() && notTooCloseToSettlementOrCity()) {
-            updateGameboard();
-            updatePlayerInventory();
-        }
-    }
-
-    private boolean adjacentRoadOfPlayer() {
-        boolean isAdjacentRoad = false;
-        Gameboard gameboard = new Gameboard();
-        Edge[] edges = gameboard.getEdges();
-        for(Edge edge : edges) {
-            if (edge.getOne().equals(knot) || edge.getTwo().equals(knot)){
-                if (edge.getPlayer().equals(knot.getPlayer())) { //todo: getPlayer() instead of getUser() ?
-                    isAdjacentRoad = true;
-                    //Log.d(TAG, "Edge: " + edge + ", Knot: " + knot); //todo: why doesn't Log.d work?
-                    break;
-                }
-            }
-        }
-        return isAdjacentRoad;
-    }
-
-    private boolean notTooCloseToSettlementOrCity() {
-        //todo implementation missing
-        return true;
-    }
-
-    */
     public static void updateGameSession(GameSession gameSession, int knotIndex, int userID) {
         Gameboard gameboard = gameSession.getGameboard();
         Knot toBeSettled = gameboard.getKnots()[knotIndex];
@@ -102,7 +44,6 @@ public class BuildSettlement {
         playerInventory.removeClay(1);
         playerInventory.removeWheat(1);
         playerInventory.removeWool(1);
-        playerInventory.addVictoryPoints(1);
 
         if (k.isHarbourKnot()) {
             updatePorts(p, k);
@@ -113,7 +54,6 @@ public class BuildSettlement {
         PlayerInventory playerInventory = p.getInventory();
 
         playerInventory.addSettlement(k);
-        playerInventory.addVictoryPoints(1);
 
         if (k.isHarbourKnot()) {
             updatePorts(p, k);

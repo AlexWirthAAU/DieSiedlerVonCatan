@@ -15,6 +15,7 @@ public class Knot implements Serializable {
     private int row;
     private int column;
     private String id; // Each Knot is identified by Row and Column
+    private String idFigures;
 
     private ArrayList<Knot> path; // As soon as a Knots Player != null -> path = new ArrayList and push the Knot in this List (beginning of a Path)
 
@@ -45,6 +46,7 @@ public class Knot implements Serializable {
         this.path = null;
         this.isSettled = false;
         this.hasCity = false;
+        this.idFigures = row + "" + column;
         setIsHarbourKnot();
     }
 
@@ -103,7 +105,7 @@ public class Knot implements Serializable {
 
     // Set Ports
     private void setIsHarbourKnot() {
-        switch (this.id) {
+        switch (this.idFigures) {
             case "15":
             case "16":
             case "22":
