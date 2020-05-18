@@ -32,29 +32,29 @@ import com.richpath.RichPathView;
  * @author Alex Wirth
  * @author Christina Senger (edit)
  * <p>
- * This Activity should allow the User to click the Edge he wants to build on.
- * The clicked Asset's ID will be sent to the Server (PresenterBuild) where it is checked whether user is allowed to build or not.
- * If yes, this Asset will be colored in User's Color.
- * If not, User has to click another Asset.
+ * This Activity should allow the user to click the edge he wants to build a road on. The edges that he can possibly build a road on, are highlighted in red.
+ * The clicked asset's ID will be sent to the server where the gamesession will be updated.
+ * Also, the view of this activity shows the player's resources.
+ * If there is no edge where the player can build a city, he will be informed about that and lead to the ChooseAction-Activity.
  */
 public class BuildRoadActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Handler handler = new BuildRoadHandler(Looper.getMainLooper(), this); // Handler
-
     private AlertDialog.Builder alertBuilder; // AlertBuilder
 
-    private TextView woodCount; // TextViews for number of Ressources
+    // TextViews for number of resources
+    private TextView woodCount;
     private TextView clayCount;
     private TextView wheatCount;
     private TextView oreCount;
     private TextView woolCount;
 
-    private Button devCards; // Buttons to show Score and Inventory
+    // Buttons to show score and inventory
+    private Button devCards;
     private Button scoreBoard;
 
-    private String card; // "CARD" when to Activity is started from the PlayCardActivity
-
-    // TODO: Methoden kommentieren
+    //"CARD" when to Activity is started from the PlayCardActivity
+    private String card;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +94,9 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
+    /**
+     * This method is responsible for refreshing the player's resources.
+     */
     private void updateResources() {
         PlayerInventory playerInventory = ClientData.currentGame.getPlayer(ClientData.userId).getInventory();
 
@@ -110,7 +113,12 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
     }
 
 
-
+    /**
+     * After having clicked an edge, the edge' index will be send to the server by starting a new Network-Thread.
+     * The method is called in "GameBoardClickListener".
+     *
+     * @param s
+     */
     public void clicked(String s) {
         Edge[] edges = ClientData.currentGame.getGameboard().getEdges();
         int edgeIndex = 0;
@@ -131,6 +139,11 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
         networkThread.start();
     }
 
+    /**
+     * The View has to buttons that can be clicked.
+     * "devCards" will lead the player to an overview of his card-inventory where he can see all his dev-cards
+     * "scoreBoard" will load an overview of the current victory points of each player. This activity will also be used for cheating.
+     */
     @Override
     public void onClick(View view) {
         Intent intent;

@@ -6,7 +6,6 @@ import com.example.catangame.PlayerInventory;
 import com.example.catangame.gameboard.Gameboard;
 import com.example.catangame.gameboard.Knot;
 
-// TODO: Methoden kommentieren
 public class BuildCity {
 
     /**
@@ -30,6 +29,12 @@ public class BuildCity {
         gameSession.nextPlayer();
     }
 
+    /**
+     * Reduces the players amount of resources and adds a city to the inventory
+     *
+     * @param p
+     * @param k
+     */
     private static void updatePlayerInventory(Player p, Knot k) {
         PlayerInventory playerInventory = p.getInventory();
 

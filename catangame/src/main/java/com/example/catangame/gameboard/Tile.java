@@ -16,7 +16,6 @@ public class Tile implements Serializable {
 
     /**
      * Constructor - Sets the Start-Values
-     *
      * @param Tid gives each Tile a id
      */
     public Tile(int Tid) {

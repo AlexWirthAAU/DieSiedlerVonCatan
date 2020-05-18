@@ -9,7 +9,6 @@ import com.example.catangame.gameboard.Gameboard;
 
 import java.util.LinkedList;
 
-// TODO: Methoden kommentieren
 
 /**
  * @author Alex Wirth
@@ -23,6 +22,10 @@ public class BuildRoad {
         Player player = gameSession.getPlayer(userID);
 
 
+        /**
+         * If the player has less than two roads, the resources are not affected, as the first two roads can be built for free.
+         * If its a regular built, the resources need to be reduced.
+         */
         if (player.getInventory().getRoads().size() < 2) {
             updatePlayerInventoryInit(player, road);
         } else {

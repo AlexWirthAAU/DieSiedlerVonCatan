@@ -12,11 +12,24 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-// TODO: komentieren
+/**
+ * @author Alex Wirth
+ * The purpose of this class, is to update the view that is loaded when a player chooses to build a settlement. The gameboard-view is refreshed, highlighting the
+ * knots on which the player may build a settlement on.
+ */
 public class UpdateBuildSettlementView {
 
     private static final Logger logger = Logger.getLogger(UpdateBuildSettlementView.class.getName());
 
+    /**
+     * The delivered list contains all knots a player can possibly settle. These knots are highlighted in red.
+     *
+     * @param gs
+     * @param rpv
+     * @return: -1 -> player cant build, because there is no road that leads to a knot that can be settled.
+     * 0 -> player cant build, because he does not have have enough resources.
+     * 1 -> player can build. Possible knots are highlighted.
+     */
     public static int updateView(GameSession gs, RichPathView rpv) {
         logger.log(Level.INFO, "Called Update Activity");
 
@@ -43,11 +56,16 @@ public class UpdateBuildSettlementView {
         Player currentP = gs.getPlayer(gs.getCurrPlayer());
 
         if (currentP.getInventory().getSettlements().size() >= 2 && hasResources(currentP) == false) {
-            //Player does not have enough resources to build
+            /**
+             * Player does not have enough resources to build
+             */
             logger.log(Level.INFO, "Player cant build Settlement");
             return null;
 
         } else if (currentP.getInventory().getSettlements().size() < 2) {
+            /**
+             * Case for the first two turns, where each player can build to settlements for free
+             */
             logger.log(Level.INFO, "Player can build Settlement INIT");
             for (Knot k : gs.getGameboard().getKnots()
             ) {
@@ -58,6 +76,10 @@ public class UpdateBuildSettlementView {
             return possibleKnots;
 
         } else {
+            /**
+             * Player has enough resources.
+             * Though the list can still be empty because player has no roads that lead to a available knot.
+             */
             logger.log(Level.INFO, "Player can build Settlement");
             for (Knot k : gs.getGameboard().getKnots()
             ) {
@@ -79,6 +101,12 @@ public class UpdateBuildSettlementView {
         return hasResources;
     }
 
+    /**
+     * Checks if a knot has neighboor-knots that are alreddy settled -> if yes, the knot cant be settled anymore.
+     * @param k
+     * @param gs
+     * @return: number of neighboors for a knot -> if > 0 the knot cant be settled
+     */
     private static int neighbors(Knot k, GameSession gs) {
         LinkedList<Knot> neighbor = new LinkedList<>();
         int row = k.getRow();

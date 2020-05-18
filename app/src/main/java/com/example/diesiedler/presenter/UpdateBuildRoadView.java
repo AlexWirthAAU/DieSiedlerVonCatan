@@ -10,10 +10,22 @@ import com.richpath.RichPathView;
 
 import java.util.LinkedList;
 
-// TODO: komentieren
+/**
+ * @author Alex Wirth
+ * The purpose of this class, is to update the view that is loaded when a player chooses to build a road. The gameboard is refreshed, highlighting the
+ * edges on which the player may build a road on.
+ */
+
 public class UpdateBuildRoadView {
 
-
+    /**
+     * The delivered list contains all edges a player can possibly build a road on. These edges are highlighted in red.
+     *
+     * @param gs
+     * @param rpv
+     * @param card
+     * @return: 0 -> Player does not have enough resources | 1 -> player can build road
+     */
     public static int updateView(GameSession gs, RichPathView rpv, String card) {
         LinkedList<Edge> possibleEdges = possibleEdges(gs, card);
 
@@ -34,9 +46,16 @@ public class UpdateBuildRoadView {
         Player p = gs.getPlayer(gs.getCurrPlayer());
 
 
+        /**
+         * Checks if the player has enough resources.
+         * If the total amount of roads he has, it means it is still the beginning of the game and the player can build for free.
+         */
         if (p.getInventory().getWood() >= 1 && p.getInventory().getClay() >= 1 || p.getInventory().getRoads().size() < 2 || card != null) {
             for (Edge e : gs.getGameboard().getEdges()
             ) {
+                /**
+                 * A road can either be built next to a settlement or at the end of a road he already owns.
+                 */
                 if (e.getPlayer() == null && (p.getInventory().getSettlements().contains(e.getOne()) || p.getInventory().getSettlements().contains(e.getTwo()) || p.getInventory().getRoadKnots().contains(e.getOne()) || p.getInventory().getRoadKnots().contains(e.getTwo()))) {
                     possibleEdges.add(e);
                 }

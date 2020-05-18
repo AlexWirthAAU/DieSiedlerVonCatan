@@ -34,27 +34,27 @@ import com.richpath.RichPathView;
 /**
  * @author Alex Wirth
  * <p>
- * This Activity should allow the User to click the Knot he wants to build on.
- * The clicked Asset's ID will be sent to the Server (PresenterBuild) where it is checked whether user is allowed to build or not.
- * If yes, this Asset will be colored in User's Color.
- * If not, User has to click another Asset.
+ * This Activity should allow the user to click the knot he wants to build a city on. The knots that are possible to have a city, are highlighted in red.
+ * The clicked asset's ID will be sent to the server where the gamesession will be updated.
+ * Also, the view of this activity shows the player's resources.
+ * If there is no knot where the player can build a city, he will be informed about that and lead to the ChooseAction-Activity.
  */
 public class BuildCityActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Handler handler = new BuildCityHandler(Looper.getMainLooper(), this); // Handler
-
     private AlertDialog.Builder alertBuilder; // AlertBuilder
 
-    private TextView woodCount; // TextViews for number of Ressources
+    // TextViews for number of resources
+    private TextView woodCount;
     private TextView clayCount;
     private TextView wheatCount;
     private TextView oreCount;
     private TextView woolCount;
 
-    private Button devCards; // Buttons to show Score and Inventory
+    // Buttons to show score and inventory:
+    private Button devCards;
     private Button scoreBoard;
 
-    // TODO: Methoden kommentieren
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,13 +85,18 @@ public class BuildCityActivity extends AppCompatActivity implements View.OnClick
                     });
             alertBuilder.create();
             alertBuilder.show();
-
         } else {
             GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView, this);
             gameBoardClickListener.clickBoard("BuildCity");
         }
     }
 
+    /**
+     * After having clicked a knot, the knots index will be send to the server by starting a new Network-Thread.
+     * The method is called in "GameBoardClickListener".
+     *
+     * @param s
+     */
     public void clicked(String s) {
         Knot[] knots = ClientData.currentGame.getGameboard().getKnots();
         int knotIndex = 0;
@@ -109,6 +114,9 @@ public class BuildCityActivity extends AppCompatActivity implements View.OnClick
         networkThread.start();
     }
 
+    /**
+     * This method is responsible for refreshing the player's resources.
+     */
     private void updateResources() {
         PlayerInventory playerInventory = ClientData.currentGame.getPlayer(ClientData.userId).getInventory();
 
@@ -124,6 +132,11 @@ public class BuildCityActivity extends AppCompatActivity implements View.OnClick
         woolCount.setText(Integer.toString(playerInventory.getWool()));
     }
 
+    /**
+     * The View has to buttons that can be clicked.
+     * "devCards" will lead the player to an overview of his card-inventory where he can see all his dev-cards
+     * "scoreBoard" will load an overview of the current victory points of each player. This activity will also be used for cheating.
+     */
     @Override
     public void onClick(View view) {
         Intent intent;
@@ -137,6 +150,11 @@ public class BuildCityActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
+
+    /**
+     * Handler is responsible for reacting to the new gamesession object received by the server.
+     * If it is not the player's turn, the main activity will be loaded.
+     */
     private class BuildCityHandler extends HandlerOverride {
 
         public BuildCityHandler(Looper mainLooper, Activity ac) {

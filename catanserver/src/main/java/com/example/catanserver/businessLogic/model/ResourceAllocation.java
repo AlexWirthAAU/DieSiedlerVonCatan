@@ -7,7 +7,6 @@ import com.example.catangame.gameboard.Tile;
 
 import java.util.ArrayList;
 import java.util.List;
-// TODO: Methoden kommentieren
 
 /**
  * @author Alex Wirth
@@ -23,6 +22,9 @@ public class ResourceAllocation {
 
         List<Tile> affectedTiles = affectedTiles(game, diceValue);
 
+        /**
+         * Each tile with the dice value is checked for the resource-type it is.
+         */
         for (Tile t : affectedTiles
         ) {
             String resource = t.getResource();
@@ -46,6 +48,13 @@ public class ResourceAllocation {
         }
     }
 
+    /**
+     * Adds each tile that has the dice-value on it to a list.
+     *
+     * @param game
+     * @param diceValue
+     * @return
+     */
     private static List<Tile> affectedTiles(GameSession game, int diceValue) {
         List<Tile> resourceTiles = new ArrayList<>();
 
@@ -59,6 +68,11 @@ public class ResourceAllocation {
         return resourceTiles;
     }
 
+
+    /**
+     * The following methods increase the inventory's resources of each player that has a settlement/city on a tile.
+     * @param t
+     */
 
     private static void updateWood(Tile t) {
         Knot[] tileKnots = t.getKnots();

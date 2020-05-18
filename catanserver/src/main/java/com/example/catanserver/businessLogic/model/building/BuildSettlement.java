@@ -6,7 +6,6 @@ import com.example.catangame.PlayerInventory;
 import com.example.catangame.gameboard.Gameboard;
 import com.example.catangame.gameboard.Knot;
 
-// TODO: Methoden kommentieren
 public class BuildSettlement {
 
     /**
@@ -28,6 +27,10 @@ public class BuildSettlement {
         toBeSettled.setPlayer(player);
         gameSession.addSettlement(toBeSettled);
 
+        /**
+         * If the player has less than two settlements, the resources are not affected, as the first two settlements can be built for free.
+         * If its a regular built, the resources need to be reduced.
+         */
         if (player.getInventory().getSettlements().size() < 2) {
             updatePlayerInventoryInit(player, toBeSettled);
         } else {

@@ -8,7 +8,11 @@ import com.example.diesiedler.R;
 
 import java.util.Random;
 
-// TODO: kommentieren
+/**
+ * @Author Alex Wirth
+ * This class is handling the dicing action. When the phone is shaken in the RollDiceActivity, a random number between 1-6 for each dice is determined. Depending on the number, the
+ * imageviews of the two dices will be refreshed. The total of the two dices will be transmitted to the RollDiceActivity where the further game action is handled.
+ */
 public class RollDice {
 
     private ImageView diceOne;
@@ -28,6 +32,13 @@ public class RollDice {
         figure.setText("Gewürfelte Zahl");
     }
 
+    /**
+     * Two random ints are determined by the help of the Random class.
+     * Depending on the randoms, the imageviews of the dices are updated.
+     * The text right below the two dices will be updated, showing the player which number he rolled.
+     *
+     * @return = total of dice-values -> called in "RollDiceActivity"
+     */
     public int rollDice() {
         random1 = setRandom1();
         random2 = setRandom2();
