@@ -62,7 +62,7 @@ public class PortThread extends GameThread {
 
         boolean invent = false;
 
-        if (currPlayer.getInventory().canPortTrade) {
+        if (!currPlayer.getInventory().canPortTrade || !currPlayer.getInventory().hasPorts) {
             return false;
         }
 

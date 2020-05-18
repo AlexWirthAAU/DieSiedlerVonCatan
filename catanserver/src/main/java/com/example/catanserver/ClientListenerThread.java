@@ -242,6 +242,7 @@ public class ClientListenerThread extends Thread {
                                                 // A new BuyCardThread is started with the User and the GameId as Data.
                                                 if (messageSplit[2].equals("BUYCARD")) {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
+                                                    System.out.println("Starting BUYCARDThread.");
                                                     Thread buyCadThread = new BuyCardThread(user, foundGame);
                                                     buyCadThread.start();
                                                 }

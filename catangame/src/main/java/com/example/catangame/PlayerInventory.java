@@ -89,7 +89,7 @@ public class PlayerInventory implements Serializable {
 
         this.canBankTrade = false;
         this.canPortTrade = false;
-        this.canTrade = false;
+        this.canTrade = true;
     }
 
 
@@ -463,25 +463,29 @@ public class PlayerInventory implements Serializable {
     }
 
 
-    private void checkPlayerOptions() {
+    public void checkPlayerOptions() {
         for (Integer i : resValues) {
 
             if (i >= 4) {
                 canTrade = true;
                 canBankTrade = true;
+                System.out.println("can Bank Trade");
+            }
+
+            if ((isWoodport() || isWoolport() || isWheatport() || isOreport() || isClayport())) {
+                hasPorts = true;
+                System.out.println("has Ports");
             }
 
             if (i >= 3) {
                 canTrade = true;
                 canPortTrade = true;
-            }
-
-            if ((isWoodport() || isWoolport() || isWheatport() || isOreport() || isClayport())) {
-                hasPorts = true;
+                System.out.println("can Port Trade");
             }
 
             if (i >= 1) {
                 canTrade = true;
+                System.out.println("can Trade");
             }
         }
     }

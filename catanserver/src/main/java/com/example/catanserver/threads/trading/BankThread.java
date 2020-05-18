@@ -63,7 +63,7 @@ public class BankThread extends GameThread {
      */
     private boolean checkTrade() {
 
-        if (currPlayer.getInventory().canBankTrade) {
+        if (!currPlayer.getInventory().canBankTrade) {
             return false;
         }
 

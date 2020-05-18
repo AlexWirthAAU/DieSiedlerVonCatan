@@ -59,20 +59,24 @@ public class BuyCardThread extends GameThread {
             SendToClient.sendGameSessionBroadcast(game);
 
         } else {
+            System.out.println("error");
             ErrorThread errThread = new ErrorThread(user.getConnectionOutputStream(), "Nicht genug Rohstoffe um Karten zu kaufen");
             errThread.run();
         }
     }
 
     /**
-     * @return true, when there are DevCards left and the Player has enough Ressources to buy on, else fales
+     * @return true, when there are DevCards left and the Player has enough Ressources to buy on, else false
      */
     private boolean checkStack() {
+        System.out.println(player.getDisplayName() + " has" + player.getInventory().getWool()
+                + " Wolle " + player.getInventory().getOre() + " Erz " + player.getInventory().getWheat() + " Weizen "
+                + " und es gibt " + game.getDevCards().size() + " Karten");
 
-        return (player.getInventory().getWool() < 1
-                || player.getInventory().getOre() < 1
-                || player.getInventory().getWheat() < 1
-                || game.getDevCards().size() == 0);
+        return (player.getInventory().getWool() != 0
+                && player.getInventory().getOre() != 0
+                && player.getInventory().getWheat() != 0
+                && game.getDevCards().size() != 0);
     }
 
     /**

@@ -32,7 +32,7 @@ public class TradeActivity extends AppCompatActivity {
 
     private static final Logger logger = Logger.getLogger(TradeActivity.class.getName()); // Logger
     private final int STARTVALUE = 0; // Startvalue for desired and offered Ressources
-    private int woodGet = STARTVALUE;
+    TextView countWoodGive;
     private int woolGive = STARTVALUE;
     private int woolGet = STARTVALUE;
     private int wheatGive = STARTVALUE;
@@ -41,19 +41,21 @@ public class TradeActivity extends AppCompatActivity {
     private int oreGet = STARTVALUE;
     private int clayGive = STARTVALUE;
     private int clayGet = STARTVALUE;
+    TextView countWoodGet;
+
     Handler handler = new TradeHandler(Looper.getMainLooper(), this); // Handler
-    private int woodGive = STARTVALUE; // Values of desired and offered Ressources
-    private TextView countWoodGet = findViewById(R.id.countWoodGet);
-    private TextView countWoolGive = findViewById(R.id.countWoolGive);
-    private TextView countWoolGet = findViewById(R.id.countWoolGet);
-    private TextView countWheatGive = findViewById(R.id.countWheatGive);
-    private TextView countWheatGet = findViewById(R.id.countWheatGet);
-    private TextView countOreGive = findViewById(R.id.countOreGive);
-    private TextView countOreGet = findViewById(R.id.countOreGet);
-    private TextView countClayGive = findViewById(R.id.countClayGive);
-    private TextView countClayGet = findViewById(R.id.countClayGet);
+    TextView countWoolGive;
+    TextView countWoolGet;
+    TextView countWheatGive;
+    TextView countWheatGet;
+    TextView countOreGive;
+    TextView countOreGet;
+    TextView countClayGive;
+    TextView countClayGet;
+    private int woodGet = STARTVALUE; // Values of desired and offered Ressources
+    private int woodGive = STARTVALUE;
+
     private StringBuilder tradeMap = new StringBuilder(); // StringBuilder in which the Trade-Offer is stored
-    private TextView countWoodGive = findViewById(R.id.countWoodGive); // Ressource-Buttons
     private Player player; // current Player
 
     /**
@@ -65,6 +67,17 @@ public class TradeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trade);
+
+        countWoodGive = findViewById(R.id.countWoodGive);
+        countWoodGet = findViewById(R.id.countWoodGet);
+        countWoolGive = findViewById(R.id.countWoolGive);
+        countWoolGet = findViewById(R.id.countWoolGet);
+        countWheatGive = findViewById(R.id.countWheatGive);
+        countWheatGet = findViewById(R.id.countWheatGet);
+        countOreGive = findViewById(R.id.countOreGive);
+        countOreGet = findViewById(R.id.countOreGet);
+        countClayGive = findViewById(R.id.countClayGive);
+        countClayGet = findViewById(R.id.countClayGet);
 
         player = ClientData.currentGame.getCurr();
 

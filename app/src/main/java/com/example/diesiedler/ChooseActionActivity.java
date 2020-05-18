@@ -145,9 +145,9 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
                 if (player.getInventory().canPortTrade && player.getInventory().hasPorts) {
                     intent = new Intent(getBaseContext(), PortChangeActivity.class);
                     startActivity(intent);
-                } else if (player.getInventory().canPortTrade) {
+                } else if (!player.getInventory().canPortTrade && player.getInventory().hasPorts) {
                     alert("Nicht genug Rohstoffe um zu tauschen");
-                } else if (player.getInventory().hasPorts) {
+                } else if (player.getInventory().canPortTrade && !player.getInventory().hasPorts) {
                     alert("Du hast keine Häfen");
                 } else {
                     alert("Nicht genug Rohstoffe und keine Häfen um zu tauschen");
@@ -170,13 +170,14 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
                 }
                 break;
             case R.id.buyDevCard:
-                if (player.getInventory().getCards() > 0 && game.getDevCards().size() > 0) {
+                boolean res = player.getInventory().getWool() > 0 && player.getInventory().getWheat() > 0 && player.getInventory().getOre() > 0;
+                if (res && game.getDevCards().size() > 0) {
                     logger.log(Level.INFO, "BUY CARD");
                     Thread networkThread = new NetworkThread(ServerQueries.createStringQueryBuyCard());
                     networkThread.start();
-                } else if (player.getInventory().getCards() > 0) {
+                } else if (!res && game.getDevCards().size() > 0) {
                     alert("Nicht genug Rohstoffe um Entwicklungskarten zu kaufen");
-                } else if (game.getDevCards().size() > 0) {
+                } else if (game.getDevCards().size() == 0 && res) {
                     alert("Es gibt keine Entwicklungskarten mehr");
                 } else {
                     alert("Du hast nicht genug Rohstoffe und es gibt auch keine Entwicklungskarten mehr");
@@ -238,6 +239,7 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
 
             if (msg.arg1 == 5) {  // TODO: Change to enums
 
+                System.out.println(msg.obj.toString());
                 intent.putExtra("mess", msg.obj.toString());
             }
         }
