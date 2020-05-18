@@ -63,7 +63,7 @@ public class BuildRoadTest {
 
     @Test
     public void buildWithDevCard() {
-        //TODO: test for building roads with a devCard
+        //TODO: test for building roads with a devcard
     }
 
     private void assertionsBeforeInitBuilding() {

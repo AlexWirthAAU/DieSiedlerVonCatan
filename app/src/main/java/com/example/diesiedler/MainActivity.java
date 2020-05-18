@@ -8,6 +8,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -41,10 +42,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView wheatCount;
     private TextView oreCount;
     private TextView woolCount;
+    private TextView devCardCount;
 
     private TextView currentPlayer; // View of the current Player
 
-    private Button devCards; // Button to show Score and DevCards
+    private ImageView devCards; // Button to show Score and DevCards
     private Button scoreBoard;
 
     /**
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.gameboardview);
         RichPathView richPathView = findViewById(R.id.ic_gameboardView);
 
-        devCards = findViewById(R.id.devCards);
+        devCards = findViewById(R.id.devCard);
         devCards.setOnClickListener(this);
         scoreBoard = findViewById(R.id.scoreBoard);
         scoreBoard.setOnClickListener(this);
@@ -96,13 +98,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         woolCount.setText(Integer.toString(playerInventory.getWool()));
         currentPlayer = findViewById(R.id.currentPlayer);
         currentPlayer.setText(currentP.getDisplayName() + " ist gerade am Zug");
+        devCardCount = findViewById(R.id.devCardCount);
+        devCardCount.setText(Integer.toString(playerInventory.getCards()));
+
     }
 
     @Override
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
-            case R.id.devCards:
+            case R.id.devCard:
                 //TODO: load new activity
                 break;
             case R.id.scoreBoard:

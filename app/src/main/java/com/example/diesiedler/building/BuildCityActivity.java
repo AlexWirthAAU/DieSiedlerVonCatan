@@ -11,6 +11,8 @@ import android.os.Looper;
 import android.os.Message;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,9 +52,10 @@ public class BuildCityActivity extends AppCompatActivity implements View.OnClick
     private TextView wheatCount;
     private TextView oreCount;
     private TextView woolCount;
+    private TextView devCardCount;
 
     // Buttons to show score and inventory:
-    private Button devCards;
+    private ImageView devCards;
     private Button scoreBoard;
 
     @Override
@@ -61,7 +64,7 @@ public class BuildCityActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.gameboardview);
         RichPathView richPathView = findViewById(R.id.ic_gameboardView);
 
-        devCards = findViewById(R.id.devCards);
+        devCards = findViewById(R.id.devCard);
         devCards.setOnClickListener(this);
         scoreBoard = findViewById(R.id.scoreBoard);
         scoreBoard.setOnClickListener(this);
@@ -130,6 +133,8 @@ public class BuildCityActivity extends AppCompatActivity implements View.OnClick
         oreCount.setText(Integer.toString(playerInventory.getOre()));
         woolCount = findViewById(R.id.woolCount);
         woolCount.setText(Integer.toString(playerInventory.getWool()));
+        devCardCount = findViewById(R.id.devCardCount);
+        devCardCount.setText(Integer.toString(playerInventory.getCards()));
     }
 
     /**
@@ -141,7 +146,7 @@ public class BuildCityActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
-            case R.id.devCards:
+            case R.id.devCard:
                 //TODO: load new activity
                 break;
             case R.id.scoreBoard:
