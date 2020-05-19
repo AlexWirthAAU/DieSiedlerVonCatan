@@ -1,27 +1,11 @@
 package com.example.catanserver;
 
 import com.example.catangame.GameSession;
-import com.example.catanserver.threads.ErrorThread;
-import com.example.catanserver.threads.NextThread;
-import com.example.catanserver.threads.ResourceAllocationThread;
-import com.example.catanserver.threads.StartThread;
-import com.example.catanserver.threads.StopThread;
-import com.example.catanserver.threads.beforegame.ApplyThread;
-import com.example.catanserver.threads.beforegame.ColorThread;
-import com.example.catanserver.threads.beforegame.CreateThread;
-import com.example.catanserver.threads.beforegame.LoginThread;
-import com.example.catanserver.threads.building.BuildCityThread;
-import com.example.catanserver.threads.building.BuildRoadThread;
-import com.example.catanserver.threads.building.BuildSettlementThread;
-import com.example.catanserver.threads.cards.BuyCardThread;
-import com.example.catanserver.threads.cards.PlayBuildStreetThread;
-import com.example.catanserver.threads.cards.PlayInventionThread;
-import com.example.catanserver.threads.cards.PlayKnightThread;
-import com.example.catanserver.threads.cards.PlayMonopolThread;
-import com.example.catanserver.threads.trading.BankThread;
-import com.example.catanserver.threads.trading.PortThread;
-import com.example.catanserver.threads.trading.TradeAnswerThread;
-import com.example.catanserver.threads.trading.TradeThread;
+import com.example.catanserver.threads.*;
+import com.example.catanserver.threads.beforegame.*;
+import com.example.catanserver.threads.building.*;
+import com.example.catanserver.threads.cards.*;
+import com.example.catanserver.threads.trading.*;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -270,6 +254,13 @@ public class ClientListenerThread extends Thread {
                                                     Thread rAThread = new ResourceAllocationThread(user, foundGame, diceValue);
                                                     rAThread.start();
                                                     Server.currentlyThreaded.remove(foundGame.getGameId());
+                                                }
+
+                                                if(messageSplit[2].equals("THIEF") && messageSplit.length > 3){
+                                                    Server.currentlyThreaded.add(foundGame.getGameId());
+                                                    System.out.println("Starting ThiefThread");
+                                                    Thread thiefThread = new ThiefThread(user, foundGame, messageSplit[3]);
+                                                    thiefThread.start();
                                                 }
 
                                             }

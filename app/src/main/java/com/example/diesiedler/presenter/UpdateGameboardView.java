@@ -82,8 +82,11 @@ public class UpdateGameboardView {
         for (Tile t : g.getTiles()
         ) {
             RichPath richPath = richPathView.findRichPathByName("thief_" + t.getId());
-            if (t.isThief() == true) {
+            if (t.isThief()) {
                 richPath.setFillAlpha(1);
+            }
+            else{
+                richPath.setFillAlpha(0);
             }
         }
     }
