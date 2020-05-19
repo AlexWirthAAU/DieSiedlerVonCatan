@@ -324,7 +324,7 @@ public class ClientListenerThread extends Thread {
                                                 }
 
                                                 // Dicing
-                                                // A new RessourceAllocationThread is started with the User, the GameId
+                                                // A new ResourceAllocationThread is started with the User, the GameId
                                                 // and the diced Value as Data.
                                                 if (messageSplit[2].equals("DICEVALUE")) {
                                                     int diceValue = Integer.parseInt(messageSplit[3]);
