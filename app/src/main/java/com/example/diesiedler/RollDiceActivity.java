@@ -115,7 +115,6 @@ public class RollDiceActivity extends AppCompatActivity implements SensorEventLi
             Log.d("DEBUG", "FINAL VALUE IS: " + finalSum);
             //new AlertDialog.Builder(this).setTitle("AUGENSUMME:").setMessage("Du hast " + finalSum + " gewürfelt.").show();
 
-
             AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
             builder1.setTitle("Würfelwert");
             builder1.setMessage("Du hast " + finalSum + " gewürfelt!");
@@ -125,7 +124,8 @@ public class RollDiceActivity extends AppCompatActivity implements SensorEventLi
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
                             if (finalSum == 7) {
-                                //TODO: call activity to replace Thief
+                                Intent intent = new Intent(RollDiceActivity.this, ThiefActivity.class);
+                                startActivity(intent);
                             } else {
                                 Thread networkThread = new NetworkThread(ServerQueries.createStringRolledDice(Integer.toString(finalSum)));
                                 networkThread.start();

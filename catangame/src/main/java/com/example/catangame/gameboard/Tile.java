@@ -95,6 +95,36 @@ public class Tile implements Serializable {
 
     }
 
+
+    public int getId() {
+        return id;
+    }
+
+    public String getResource() {
+        return resource;
+    }
+
+    public boolean isThief() {
+        return isThief;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setThief(boolean thief) {
+        this.isThief = thief;
+    }
+
+    public void setKnots(Knot[] knots) {
+        this.knots = knots;
+    }
+
+    public Knot[] getKnots() {
+        return knots;
+    }
+
+
     private void setDiceValue() {
         switch (this.id) {
             case 1:

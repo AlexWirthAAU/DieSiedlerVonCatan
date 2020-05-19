@@ -2,6 +2,7 @@ package com.example.catangame.devcards;
 
 import java.io.Serializable;
 
+
 /**
  * @author Christina Senger
  * <p>

@@ -7,5 +7,5 @@ import java.io.Serializable;
  * <p>
  * Representation of a InventionCard - used only for Generics and Typechecking
  */
-public class InventionCard implements DevCard, Serializable {
+ public class InventionCard implements DevCard, Serializable {
 }

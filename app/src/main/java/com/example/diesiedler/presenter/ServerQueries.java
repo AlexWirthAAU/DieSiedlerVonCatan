@@ -228,4 +228,8 @@ public class ServerQueries {
     public static String createStringQueryNext() {
         return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " NEXT";
     }
+
+    public static String createStringQueryMoveThief(String id){
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " THIEF " + id;
+    }
 }
