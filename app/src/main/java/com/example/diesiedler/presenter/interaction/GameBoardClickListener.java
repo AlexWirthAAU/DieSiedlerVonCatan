@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 
+import com.example.diesiedler.ThiefActivity;
 import com.example.diesiedler.building.BuildCityActivity;
 import com.example.diesiedler.building.BuildRoadActivity;
 import com.example.diesiedler.building.BuildSettlementActivity;
@@ -29,6 +30,10 @@ public class GameBoardClickListener {
                 String pathType = getPathType(richPath);
                 if (pathType.contains("tile")) {
                     //TODO: What should happen if Tile is clicked:
+                    if(activity.equals("MoveThief")){
+                        toSend[0] = richPath.getName();
+                        new ThiefActivity().clicked(toSend[0]);
+                    }
                     toSend[0] = richPath.getName();
 
                 } else if (pathType.contains("settlement")) {

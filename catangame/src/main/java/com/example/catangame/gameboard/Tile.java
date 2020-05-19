@@ -79,7 +79,7 @@ public class Tile implements Serializable {
     }
 
     public void setThief(boolean thief) {
-        this.isThief = true;
+        this.isThief = thief;
     }
 
     public void setKnots(Knot[] knots) {

@@ -1,4 +1,6 @@
 package com.example.catangame.devcards;
 
-public class KnightCard implements DevCard {
+import java.io.Serializable;
+
+public class KnightCard implements DevCard, Serializable {
 }

@@ -120,7 +120,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Player currentPlayer = gs.getPlayer(gs.getCurrPlayer());
                 PlayerInventory playerInventory = currentPlayer.getInventory();
 
-
                 if (currentPlayer.getUserId() == ClientData.userId && playerInventory.getRoads().size() < 2) {
                     Intent intent = new Intent(activity, BuildSettlementActivity.class);
                     startActivity(intent);
