@@ -21,7 +21,7 @@ public class TradeThread extends GameThread {
     private Map<String, Integer> want = new HashMap<>(); // Map of the desired Ressources
 
     private Trade trade; // Representation of a Trade
-    private GameSession game; // current Game
+    private GameSession gs; // current Game
 
     private Player currPlayer; // current Player
     private StringBuilder message = new StringBuilder(); // Message which should be sent to the Player
@@ -37,7 +37,7 @@ public class TradeThread extends GameThread {
     public TradeThread(User user, GameSession game, String tradeStr) {
         super(user, game);
         this.currPlayer = game.getPlayer(user.getUserId());
-        this.game = game;
+        this.gs = game;
         this.tradeStr = tradeStr;
     }
 
@@ -57,9 +57,9 @@ public class TradeThread extends GameThread {
             System.out.println("checked");
             checkAndSetTradingPartners(game, want);
             String mess = buildMessage();
-            this.trade = new Trade(offer, want, currPlayer, potentialTradingPartners, mess, game);
-            this.game.setTrade(this.trade);
-            this.game.setIsTradeOn(true);
+            this.trade = new Trade(offer, want, currPlayer, potentialTradingPartners, mess, gs);
+            this.gs.setTrade(this.trade);
+            this.gs.setIsTradeOn(true);
 
             distribute(potentialTradingPartners, mess);
 
@@ -76,7 +76,7 @@ public class TradeThread extends GameThread {
      * @param mess Message to send
      */
     private void distribute(List<Player> playersToSend, String mess) {
-        SendToClient.sendTradeMessageBroadcast(playersToSend, mess, this.game);
+        SendToClient.sendTradeMessageBroadcast(playersToSend, mess, this.gs);
     }
 
     /**
