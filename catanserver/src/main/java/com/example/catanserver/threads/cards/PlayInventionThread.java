@@ -7,23 +7,42 @@ import com.example.catanserver.threads.ErrorThread;
 import com.example.catanserver.threads.GameThread;
 import com.example.catanserver.threads.SendToClient;
 
+/**
+ * @author Christina Senger
+ * <p>
+ * When playing an Invention Card, the Player get 2 of a Ressource his choice.
+ */
 public class PlayInventionThread extends GameThread {
 
-    private Player player;
-    private StringBuilder message = new StringBuilder();
-    private String res;
-    private String resName;
+    private Player player; // current Player
+    private StringBuilder message = new StringBuilder(); // Message send to the User
 
-    public PlayInventionThread(User user, GameSession game, String answerStr) {
+    private String res;
+    private String resName; // Name of the Ressource (german)
+
+    /**
+     * Contructor - The Name of the Ressource and the Player is set.
+     * <p>
+     * {@inheritDoc}
+     *
+     * @param res Name of the Ressource (english, lowercase)
+     */
+    public PlayInventionThread(User user, GameSession game, String res) {
         super(user, game);
-        this.res = answerStr;
+        this.res = res;
         this.player = game.getPlayer(user.getUserId());
     }
 
+    /**
+     * When the Player can play the Card, his Inventory and the
+     * GameSession are updated. A Message is built and send to
+     * the User. The new GameSession is send broadcast. Else an
+     * Error-Thread is started.
+     */
     public void run() {
 
         if (checkCards()) {
-
+            System.out.println("checked");
             playCard();
             String mess = buildMessage();
             game.nextPlayer();
@@ -36,13 +55,22 @@ public class PlayInventionThread extends GameThread {
         }
     }
 
+    /**
+     * @return true, when the Player has an Invention Card, else false
+     */
     private boolean checkCards() {
 
-        return player.getInventory().getInventionCard() > 0;
+        return player.getInventory().getInventionCard() != 0;
     }
 
+    /**
+     * Depending on the Name of the desired Ressource, the Value of
+     * the Ressource is increases by 2. The Invention Card is
+     * removed from the Players Inventory.
+     */
     private void playCard() {
 
+        System.out.println(player.getInventory().getAllSupplies());
         switch (res) {
             case "wood":
                 player.getInventory().addWood(2);
@@ -74,14 +102,21 @@ public class PlayInventionThread extends GameThread {
         }
 
         player.getInventory().removeInventianCard(1);
+        System.out.println(player.getInventory().getAllSupplies() + " after");
     }
 
+    /**
+     * Creates a Message, specific to the Name of the desired Ressource,
+     * and appends it to a StringBuilder.
+     *
+     * @return the StringBuilder as a String
+     */
     private String buildMessage() {
 
-        message.append("CARDPLAYMESSAGE/");
         message.append("Du hast eine Erfindungskarte gespielt und zwei ");
         message.append(resName).append(" erhalten");
 
+        System.out.println(message.toString());
         return message.toString();
     }
 }

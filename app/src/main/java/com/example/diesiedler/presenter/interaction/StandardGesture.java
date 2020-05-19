@@ -9,6 +9,7 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.WindowManager;
 
+// TODO: kommentieren
 public class StandardGesture implements View.OnTouchListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, ScaleGestureDetector.OnScaleGestureListener {
 
     private View view;

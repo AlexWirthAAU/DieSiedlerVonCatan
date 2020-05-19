@@ -4,14 +4,21 @@ package com.example.catangame.gameboard;
 import java.io.Serializable;
 
 public class Tile implements Serializable {
+
+    private int id;
+    private String resource; // Each Tile has a certain Resource (Wood, Clay,...)
+    private int diceValue; // each Tile needs to have a certain Value between 2-12
+
+    private Knot[] knots; //Each Tile has a Set of 6 adjoining knots (needed to check which Settlement gets Resources after rolling the Dice
+
     //Each backgroundTile has a red dot as thief -> thief.setFillAlpha(1)
-    private boolean isThief;                    //to notate that the Thief is on this certain Tile
-    private int id;                             //gives each Tile a id
-    private int diceValue;                      //each Tile needs to have a certain value between 2-12
-    private String resource;                    //Each Tile has a certain resource (Wood, Clay,...)
-    private Knot[] knots;                       //Each Tile has a set of 6 adjoining knots (needed to check which settlement gets resources after rolling the dice
+    private boolean isThief; // to notate that the Thief is on this certain Tile
 
-
+    /**
+     * Constructor - Sets the Start-Values
+     *
+     * @param Tid gives each Tile a id
+     */
     public Tile(int Tid) {
         id = Tid;
         setDiceValue();
@@ -22,6 +29,32 @@ public class Tile implements Serializable {
         } else {
             isThief = false;
         }
+    }
+
+    // Getter
+    public int getId() {
+        return id;
+    }
+
+    // Setter
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getResource() {
+        return resource;
+    }
+
+    public int getDiceValue() {
+        return diceValue;
+    }
+
+    public Knot[] getKnots() {
+        return knots;
+    }
+
+    public void setKnots(Knot[] knots) {
+        this.knots = knots;
     }
 
     private void setResource() {
@@ -62,6 +95,7 @@ public class Tile implements Serializable {
 
     }
 
+
     public int getId() {
         return id;
     }
@@ -89,6 +123,7 @@ public class Tile implements Serializable {
     public Knot[] getKnots() {
         return knots;
     }
+
 
     private void setDiceValue() {
         switch (this.id) {
@@ -144,8 +179,12 @@ public class Tile implements Serializable {
         }
     }
 
-    public int getDiceValue() {
-        return diceValue;
+    public boolean isThief() {
+        return isThief;
+    }
+
+    public void setThief(boolean thief) {
+        this.isThief = true;
     }
 }
 

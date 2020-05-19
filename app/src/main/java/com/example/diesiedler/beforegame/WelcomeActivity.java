@@ -23,14 +23,15 @@ import java.util.logging.Logger;
  * @author Christina Senger
  * @author Fabian Schaffenrath (edit)
  * <p>
- * Startaktivität, die zum Spielen einlädt und die Serververbindung startet.
+ * Startactivity, which invites to play and startes the Server-Connection.
  */
 public class WelcomeActivity extends AppCompatActivity {
-    private static final Logger logger = Logger.getLogger(WelcomeActivity.class.getName());
-    private Handler handler;
+
+    private static final Logger logger = Logger.getLogger(WelcomeActivity.class.getName()); // Logger
+    private Handler handler; // Handler
 
     /**
-     * {@inheritDoc}
+     * The Handler in ClientData is set for the current Activity
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,16 +42,28 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     /**
-     * Wird auf den Button mit dem Text "Entdecke die Welt von Catan geklickt,
-     * wird der Thread zur Serververbindung ausgeführt.
+     * Going back is not possible here.
+     */
+    @Override
+    public void onBackPressed() {
+    }
+
+    /**
+     * When the Button with the Text "Entdecke die Welt von Catan" is clicked,
+     * the Thread with the Server-Connection is started.
      *
-     *  @param view View, um den Button anzusprechen
+     *  @param view View, to access the Button
      */
     public void discover(View view) {
         Thread startServerCommunicationThread = new StartServerCommunicationThread(handler);
         startServerCommunicationThread.start();
     }
 
+    /**
+     * @author Fabian Schaffenrath (edit)
+     * <p>
+     * Handler for the WelcomeActivity
+     */
     private class WelcomeHandler extends HandlerOverride {
 
         WelcomeHandler(Looper mainLooper, Activity ac) {
@@ -58,10 +71,10 @@ public class WelcomeActivity extends AppCompatActivity {
         }
 
         /**
-         * Handler erhält Message vom StartServerCommunicationThread. Bei erfolgreichem
-         * Verbindungsaufbau wird der Listener Thread gestartet und die Login Activität aufgerufen.
+         * Handler gets a Message from StartServerCommunicationThread. On successful Connection,
+         * the ListenerThread and the LoginActivity is started.
          *
-         * @param msg msg.arg1 beinhaltet den entsprechenden Parameter zur weiteren Ausführung
+         * @param msg msg.arg1 has the Param for further actions
          */
         @Override
         public void handleMessage(Message msg) {

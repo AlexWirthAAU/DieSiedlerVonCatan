@@ -11,20 +11,26 @@ import java.util.Set;
 
 /**
  * @author Fabian Schaffenrath
- * This Thread is used to create a game, once all players have been selected.
- * These players are removed from the currently Searching list.
+ * @author Christina Senger (Documentation)
  *
- * It sends a gameSession object to every player and a new list to every user currently searching.
+ * This Thread is used to create a game, once all players have been selected.
  */
-
 public class CreateThread extends Thread {
 
     private String[] userIds;
 
+    /**
+     * @param userIds Ids of all Users in the Game
+     */
     public CreateThread(String[] userIds) {
         this.userIds = userIds;
     }
 
+    /**
+     * It makes from all Users in the List Players and adds them to new Game.
+     * These Players are removed from the currently Searching list.
+     * It sends a GameSession to every player and a new List to every User currently searching.
+     */
     public void run(){
         GameSession game = new GameSession();
         Set<User> usersToRemove = new HashSet<>();

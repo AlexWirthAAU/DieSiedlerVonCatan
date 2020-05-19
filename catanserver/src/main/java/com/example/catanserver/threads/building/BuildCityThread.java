@@ -6,6 +6,7 @@ import com.example.catanserver.businessLogic.model.building.BuildCity;
 import com.example.catanserver.threads.GameThread;
 import com.example.catanserver.threads.SendToClient;
 
+// TODO: kommentieren
 public class BuildCityThread extends GameThread {
 
     GameSession gameSession;

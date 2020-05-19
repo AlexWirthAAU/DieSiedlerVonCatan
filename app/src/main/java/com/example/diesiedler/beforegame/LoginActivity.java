@@ -24,17 +24,17 @@ import java.util.logging.Logger;
  * @author Christina Senger
  * @author Fabian Schaffenrath (edit)
  * <p>
- * Aktivität in welcher der User seinen Username eingeben kann.
+ * Activity where the User can put in his Username
  */
 public class LoginActivity extends AppCompatActivity {
 
     private static final Logger logger = Logger.getLogger(LoginActivity.class.getName());
 
-    private EditText displayName; // Eingabetextfeld für den Username
-    public Handler loginHandler = new LoginHandler(Looper.getMainLooper(), this);
+    public Handler loginHandler = new LoginHandler(Looper.getMainLooper(), this); // Handler
+    private EditText displayName; // Input Field for the Username
 
     /**
-     * Der Handler wird in der ClientData für die jetzige Aktivität angepasst.
+     * The Handler in ClientData is set for the current Activity
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +46,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * Klickt der User den Button, so wird der NetworkThread gestartet,
-     * der den eingegebenen Namen an den Server schickt.
+     * When the User clicks the Button, the NetworkThread is started,
+     * which sends the Name to the Server.
      *
-     * @param view View, um aus Textfeld zu lesen
+     * @param view View, to read from TextField
      */
     public void setName(View view) {
 
@@ -59,6 +59,18 @@ public class LoginActivity extends AppCompatActivity {
         networkThread.start();
     }
 
+    /**
+     * Going back is not possible here.
+     */
+    @Override
+    public void onBackPressed() {
+    }
+
+    /**
+     * @author Fabian Schaffenrath (edit)
+     * <p>
+     * Handler for the LoginActivity
+     */
     private class LoginHandler extends HandlerOverride {
 
         LoginHandler(Looper mainLooper, Activity ac) {
@@ -66,9 +78,9 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         /**
-         * Übernimmt das starten der SearchPlayers Aktivität bei erfolgreicher Ausführung.
+         * When the Login was succesfull the SearchPlayersActivity is started
          *
-         * @param msg msg.arg1 beinhaltet den entsprechenden Parameter zur weiteren Ausführung
+         * @param msg msg.arg1 has the Param for further Actions
          */
         @Override
         public void handleMessage(Message msg) {

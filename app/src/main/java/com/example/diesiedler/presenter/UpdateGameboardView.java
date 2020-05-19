@@ -1,6 +1,7 @@
 package com.example.diesiedler.presenter;
 
 import android.graphics.Color;
+
 import com.example.catangame.Colors;
 import com.example.catangame.GameSession;
 import com.example.catangame.gameboard.Edge;
@@ -11,7 +12,7 @@ import com.richpath.RichPath;
 import com.richpath.RichPathView;
 
 //TODO: Handle Colors!
-
+// TODO: komentieren
 public class UpdateGameboardView {
 
 

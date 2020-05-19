@@ -29,25 +29,37 @@ import com.example.diesiedler.trading.TradeActivity;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+/**
+ * @author Christina Senger
+ * @author Alex Wirth
+ * <p>
+ * Activity in which the Player can choose his Action.
+ */
 public class ChooseActionActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button buildSettlement;
+    private static final Logger logger = Logger.getLogger(MainActivity.class.getName()); // Logger
     private Button buildRoad;
     private Button loadMain;
     private Button buildCity;
     private Button buyDevCard;
     private Button playdevCard;
     private Button trade;
-    private static final Logger logger = Logger.getLogger(MainActivity.class.getName());
-    Handler handler = new ChooseActionHandler(Looper.getMainLooper(), this);
     private Button exchangeBank;
     private Button exchangePort;
     private Button showCosts;
     private Button ahead;
-    private Player player;
+    Handler handler = new ChooseActionHandler(Looper.getMainLooper(), this); // Hanlder
+    private Button buildSettlement; // Action-Buttons
+    private Player player; // current Player and Game
     private GameSession game;
 
+    /**
+     * Buttons are specified and an OnClickListener is registered.
+     * If the Intent has an Extra, a Alert-Message with its Test is shown.
+     * The current Handler is set for the current Activity.
+     *
+     * @param savedInstanceState saved State
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chooseaction);
@@ -76,7 +88,6 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
         showCosts.setOnClickListener(this);
         ahead.setOnClickListener(this);
 
-        // Nach einem Handel wird die Erfolgsmeldung angezeigt
         String tradeMessage = getIntent().getStringExtra("mess");
 
         if (tradeMessage != null) {
@@ -88,11 +99,19 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
         }
 
         ClientData.currentHandler = handler;
-        player = ClientData.currentGame.getCurr();
-        game = ClientData.currentGame;
 
+        player = ClientData.currentGame.getPlayer(ClientData.userId);
+        game = ClientData.currentGame;
     }
 
+    /**
+     * Depending on what Button is clicked, the correspondending Activity is loaded.
+     * When a Player cannot make a specific Action, an Error-Alert is shown.
+     * When the Player wants to buy a DevCard, a NetworkThread is started, which
+     * sends a BuyCard-Request to the Server.
+     *
+     * @param view View of the clicked Button
+     */
     @Override
     public void onClick(View view) {
         Intent intent;
@@ -126,9 +145,9 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
                 if (player.getInventory().canPortTrade && player.getInventory().hasPorts) {
                     intent = new Intent(getBaseContext(), PortChangeActivity.class);
                     startActivity(intent);
-                } else if (player.getInventory().canPortTrade) {
+                } else if (!player.getInventory().canPortTrade && player.getInventory().hasPorts) {
                     alert("Nicht genug Rohstoffe um zu tauschen");
-                } else if (player.getInventory().hasPorts) {
+                } else if (player.getInventory().canPortTrade && !player.getInventory().hasPorts) {
                     alert("Du hast keine Häfen");
                 } else {
                     alert("Nicht genug Rohstoffe und keine Häfen um zu tauschen");
@@ -151,13 +170,14 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
                 }
                 break;
             case R.id.buyDevCard:
-                if (player.getInventory().getCards() > 0 && game.getDevCards().size() > 0) {
+                boolean res = player.getInventory().getWool() > 0 && player.getInventory().getWheat() > 0 && player.getInventory().getOre() > 0;
+                if (res && game.getDevCards().size() > 0) {
                     logger.log(Level.INFO, "BUY CARD");
                     Thread networkThread = new NetworkThread(ServerQueries.createStringQueryBuyCard());
                     networkThread.start();
-                } else if (player.getInventory().getCards() > 0) {
+                } else if (!res && game.getDevCards().size() > 0) {
                     alert("Nicht genug Rohstoffe um Entwicklungskarten zu kaufen");
-                } else if (game.getDevCards().size() > 0) {
+                } else if (game.getDevCards().size() == 0 && res) {
                     alert("Es gibt keine Entwicklungskarten mehr");
                 } else {
                     alert("Du hast nicht genug Rohstoffe und es gibt auch keine Entwicklungskarten mehr");
@@ -175,6 +195,11 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
+    /**
+     * Makes an Alert-Message which the given String
+     *
+     * @param mes Message which should be shown
+     */
     private void alert(String mes) {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         builder1.setCancelable(true);
@@ -183,18 +208,25 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
         alert1.show();
     }
 
+    /**
+     * @author Christina Senger
+     *
+     * Handler for the ChooseActionActivity
+     */
     private class ChooseActionHandler extends HandlerOverride {
 
+        String mess;
         ChooseActionHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
         }
 
         /**
-         * Wird vom ServerCommunicationThread aufgerufen. Im Falle einer Stringübertragung wird
-         * die Nachricht als String dem Intent übergeben, sollte eine GameSession übertragen
-         * werden, so wurde der Kauf der Karte durchgeführt und die MainActivity wird aufgerufen.
+         * Called from ServerCommunicationThread. When a String is send,
+         * it is set as Extra of the Intent. If a GameSession was send,
+         * a card was bought and the MainActivity is loaded.
          *
-         * @param msg msg.arg1 beinhaltet den entsprechenden Parameter zur weiteren Ausführung
+         * @param msg msg.arg1 has the Param for further Actions
+         *            msg.obj holds an Object send from Server
          */
         @Override
         public void handleMessage(Message msg) {
@@ -203,13 +235,14 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
 
             if (msg.arg1 == 4) {  // TODO: Change to enums
 
-                ClientData.currentGame = (GameSession) msg.obj;
+                intent.putExtra("mess", mess);
+                System.out.println(mess + " objstart");
                 startActivity(intent);
             }
 
             if (msg.arg1 == 5) {  // TODO: Change to enums
 
-                intent.putExtra("mess", msg.obj.toString());
+                mess = msg.obj.toString();
             }
         }
     }

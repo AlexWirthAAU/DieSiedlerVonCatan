@@ -15,24 +15,30 @@ import java.util.List;
  * @author Christina Senger
  * @author Fabian Schaffenrath (edit)
  * <p>
- * Ein Game kennt seine GameId, das Gameboard inklusive
- * Roads, Settlements und Cities, sowie die zugehörigen Spieler
- * und enthält entsprechende Getter und Setter.
+ * Represantation of a GameSession
  */
 public class GameSession implements Serializable {
 
-    private static int gameCounter = 0; //fortlaufende Id
-    private List<Player> players = new ArrayList<>(4);
-    private int gameId;
-    private Gameboard gameboard;
-    private LinkedList<Edge> roads;
+    public static Trade currTrade; // current active Trade
+    private static int gameCounter = 0; // consecutive ID
+    private int gameId; // GameID
+    private List<Player> players = new ArrayList<>(4); // List of all Players in the Game (max. 4)
+    private Gameboard gameboard; // Gameboard
     private LinkedList<Knot> settlements;
     private LinkedList<Knot> cities;
-    private int currPlayer;
+    private LinkedList<Edge> roads; // Lists of Structures
     private Player curr;
-    private ArrayList<DevCard> devCards;
-    public static Trade currTrade;
+    private int currPlayer; // current Player and his index
+    private ArrayList<DevCard> devCards; // List of DevCards
+    private String message; // optional Message to alert after an Action
+    private boolean isCardBuild; // states whether a BuildRoad is started playing a Card
+    private boolean isTradeOn; // states whether a Trade is active
 
+    /**
+     * Constructor - Gives the Game the next ID from GameCounter,
+     * initialises empty Lists and give the Game a new DevCard-Stack.
+     * The current Player (on Turn) is the one which started the Game.
+     */
     public GameSession() {
 
         this.gameId = ++gameCounter;
@@ -44,6 +50,7 @@ public class GameSession implements Serializable {
         this.devCards = new DevCardStack().getDevCardStack();
     }
 
+    // Getter
     public int getGameId() {
         return gameId;
     }
@@ -52,6 +59,12 @@ public class GameSession implements Serializable {
         return this.players;
     }
 
+    /**
+     * Get a Player by its ID
+     *
+     * @param userId the Players ID
+     * @return the Player with the userId, null if no Player is found
+     */
     public Player getPlayer(int userId){
         for (Player player:players) {
             if(player.getUserId() == userId){
@@ -61,18 +74,7 @@ public class GameSession implements Serializable {
         return null;
     }
 
-    public void setPlayers(List<Player> players) {
-        this.players = players;
-    }
-
-    public void setPlayer(Player player) {
-        this.players.add(player);
-    }
-
-    public Player getCurr() {
-        return players.get(currPlayer);
-    }
-
+    // Getters
     public Gameboard getGameboard() {
         return gameboard;
     }
@@ -89,20 +91,36 @@ public class GameSession implements Serializable {
         return cities;
     }
 
-    public Trade getTrade() {
-        return this.currTrade;
+    public Player getCurr() {
+        return players.get(currPlayer);
     }
 
-    public void setTrade(Trade trade) {
-        this.currTrade = trade;
+    public int getCurrPlayer() {
+        return currPlayer;
     }
 
     public ArrayList<DevCard> getDevCards() {
         return devCards;
     }
 
-    public void addRoad(Edge road) {
-        roads.add(road);
+    public Trade getTrade() {
+        return this.currTrade;
+    }
+
+    public String getMessage() {
+        return this.message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public boolean isCardBuild() {
+        return this.isCardBuild;
+    }
+
+    public void setCardBuild(boolean isCardBuild) {
+        this.isCardBuild = isCardBuild;
     }
 
     public void addSettlement(Knot settlement) {
@@ -114,17 +132,41 @@ public class GameSession implements Serializable {
         cities.add(settlement);
     }
 
+    // Setters
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
+    public void setPlayer(Player player) {
+        this.players.add(player);
+    }
+
+    public boolean isTradeOn() {
+        return this.isTradeOn;
+    }
+
+    // add Structures
+    public void addRoad(Edge road) {
+        roads.add(road);
+    }
+
+    public void setTrade(Trade trade) {
+        this.currTrade = trade;
+    }
+
+    public void setIsTradeOn(boolean isTradeOn) {
+        this.isTradeOn = isTradeOn;
+    }
+
+    /**
+     * Make the next Player in the Row the current Player
+     */
     public void nextPlayer() {
         if (currPlayer == players.size() - 1) {
             currPlayer = 0;
-        }
-        else{
+        } else{
             currPlayer++;
         }
         curr = players.get(currPlayer);
-    }
-
-    public int getCurrPlayer() {
-        return currPlayer;
     }
 }

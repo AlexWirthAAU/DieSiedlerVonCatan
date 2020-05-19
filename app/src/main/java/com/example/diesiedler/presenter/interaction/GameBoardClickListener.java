@@ -11,6 +11,7 @@ import com.example.diesiedler.building.BuildSettlementActivity;
 import com.richpath.RichPath;
 import com.richpath.RichPathView;
 
+// TODO: kommentieren
 public class GameBoardClickListener {
 
     private RichPathView richPathView;

@@ -4,17 +4,26 @@ import com.example.diesiedler.presenter.ServerQueries;
 
 /**
  * @author Fabian Schaffenrath
- * Der NetworkThread übernimmt alle Anfragen, die an den Server geschickt werden. Dabei bekommt er
- * bereits einen fertigen request String und schickt diesen nur an den Server.
+ *
+ * The NetworkThread manages all Server-Requests. Dabei bekommt er
+ * Therefore, he gets a precast String and sends it to the Server.
  */
 public class NetworkThread extends Thread {
 
     private String query;
 
+    /**
+     * Constructor - Sets the given precast Query as Quer to send.
+     *
+     * @param query precast Query
+     */
     public NetworkThread(String query) {
         this.query = query;
     }
 
+    /**
+     * Executes sendStringQuery-Method of ServerQueries-Class with the Query.
+     */
     public void run() {
         ServerQueries.sendStringQuery(query);
     }

@@ -2,21 +2,41 @@ package com.example.catangame.gameboard;
 
 
 import com.example.catangame.Player;
-import com.example.catangame.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * @author Alex Wirth
+ * @author Christina Senger (edit)
+ */
 public class Knot implements Serializable {
-    private int row;                    //Each Knot is identified by row and column
-    private int column;
-    private String id;
-    private ArrayList<Knot> path;       //As soon as a knots Player != null -> path = new ArrayList and push the knot in this list (beginning of a path)
-    private boolean isSettled;
-    private boolean hasCity;
-    private Player player;          //TODO: When a player builds a settlement, he owns this knot
-    private boolean isHarbourKnot;      //States whether a Knot has a harbour or not
 
+    private int row;
+    private int column;
+    private String id; // Each Knot is identified by Row and Column
+
+    private ArrayList<Knot> path; // As soon as a Knots Player != null -> path = new ArrayList and push the Knot in this List (beginning of a Path)
+
+    private boolean isSettled; // States whether a Knot is settled
+    private boolean hasCity; // States whether a Knot has a City
+
+    private Player player; //TODO: When a player builds a settlement, he owns this knot
+
+    private boolean isHarbourKnot;  // States whether a Knot has a Harbour or not
+    private boolean isWoodPort; // States whether a Knot has a specific Harbour
+    private boolean isWoolPort;
+    private boolean isWheatPort;
+    private boolean isOrePort;
+    private boolean isClayPort;
+
+    /**
+     * Constructor - creates ID, sets other Values null
+     * and check whether it is a Harbou-Knot
+     *
+     * @param row    Row of the Knot
+     * @param column Column of the Knot
+     */
     public Knot(int row, int column) {
         this.player = null;
         this.row = row;
@@ -25,56 +45,28 @@ public class Knot implements Serializable {
         this.path = null;
         this.isSettled = false;
         this.hasCity = false;
-        setIsHarbourKnot();
+        setIsHarbourKnot(this.id);
     }
 
+    /**
+     * @return String Representation of a Settlement with Row and Column
+     */
     public String toString() {
         return "settlement_" + row + "_" + column;
     }
 
+    // Setter
+    public void setPath(ArrayList<Knot> path) {
+        this.path = path;
+    }
+
+    public void setHasCity(boolean hasCity) {
+        this.hasCity = hasCity;
+    }
+
+    // Getter
     public int getRow() {
         return row;
-    }
-
-    public int getColumn() {
-        return column;
-    }
-
-    public ArrayList<Knot> getPath() {
-        return path;
-    }
-
-    private void setIsHarbourKnot() {
-        switch (this.id) {
-            case "15":
-            case "16":
-            case "18":
-            case "19":
-            case "22":
-            case "23":
-            case "210":
-            case "310":
-            case "410":
-            case "411":
-            case "63":
-            case "65":
-            case "66":
-            case "68":
-            case "69":
-            case "53":
-            case "41":
-            case "31": {
-                this.isHarbourKnot = true;
-                break;
-            }
-            default: {
-                this.isHarbourKnot = false;
-            }
-        }
-    }
-
-    public boolean getIsHarbourKnot() {
-        return this.isHarbourKnot;
     }
 
     public String getId() {
@@ -85,32 +77,100 @@ public class Knot implements Serializable {
         return isSettled;
     }
 
-    public boolean hasCity() {
-        return hasCity;
-    }
-
-    public boolean isHarbourKnot() {
-        return isHarbourKnot;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPath(ArrayList<Knot> path) {
-        this.path = path;
+    public int getColumn() {
+        return column;
     }
 
     public void setSettled(boolean settled) {
         isSettled = settled;
     }
 
-    public void setHasCity(boolean hasCity) {
-        this.hasCity = hasCity;
+    public ArrayList<Knot> getPath() {
+        return path;
+    }
+
+    public boolean hasCity() {
+        return hasCity;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    // Set Ports
+    private void setIsHarbourKnot(String id) {
+        switch (id) {
+            case "settlement_1_5":
+            case "settlement_1_6":
+            case "settlement_2_2":
+            case "settlement_2_3":
+            case "settlement_6_5":
+            case "settlement_6_6":
+                this.isHarbourKnot = true;
+                this.isOrePort = true;
+                break;
+            case "settlement_1_8":
+            case "settlement_1_9":
+            case "settlement_3_1":
+            case "settlement_4_1":
+                this.isHarbourKnot = true;
+                this.isWheatPort = true;
+                break;
+            case "settlement_2_10":
+            case "settlement_3_10":
+                this.isHarbourKnot = true;
+                this.isWoolPort = true;
+                break;
+            case "settlement_4_10":
+            case "settlement_4_11":
+            case "settlement_5_3":
+            case "settlement_6_3":
+                this.isHarbourKnot = true;
+                this.isClayPort = true;
+                break;
+            case "settlement_6_8":
+            case "settlement_6_9":
+                this.isHarbourKnot = true;
+                this.isWoodPort = true;
+                break;
+            default: {
+                this.isHarbourKnot = false;
+                this.isOrePort = false;
+                this.isClayPort = false;
+                this.isWheatPort = false;
+                this.isWoodPort = false;
+                this.isWoolPort = false;
+            }
+        }
+    }
+
+    // Get Ports
+    public boolean isHarbourKnot() {
+        return isHarbourKnot;
+    }
+
+    public boolean isWoodPort() {
+        return isWoodPort;
+    }
+
+    public boolean isWoolPort() {
+        return isWoolPort;
+    }
+
+    public boolean isWheatPort() {
+        return isWheatPort;
+    }
+
+    public boolean isOrePort() {
+        return isOrePort;
+    }
+
+    public boolean isClayPort() {
+        return isClayPort;
     }
 }
 

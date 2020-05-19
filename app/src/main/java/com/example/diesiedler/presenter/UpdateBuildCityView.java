@@ -1,8 +1,6 @@
 package com.example.diesiedler.presenter;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
@@ -12,6 +10,7 @@ import com.richpath.RichPathView;
 
 import java.util.LinkedList;
 
+// TODO: komentieren
 public class UpdateBuildCityView {
 
     public static int updateView(GameSession gs, RichPathView rpv) {

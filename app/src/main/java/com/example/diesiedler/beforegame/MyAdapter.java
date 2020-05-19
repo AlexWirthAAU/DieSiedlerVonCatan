@@ -17,8 +17,8 @@ import java.util.List;
 /**
  * @author Christina Senger
  * <p>
- * Adapterklasse, um die Items in der Recyclerview zu verwalten
- * und auf Änderungen zu reagieren.
+ * Adapterclass, to manage the Items in the Recyclerview
+ * and react on Changes.
  */
 public class MyAdapter extends RecyclerView.Adapter implements SelectableViewHolder.OnItemSelectedListener {
 
@@ -27,11 +27,11 @@ public class MyAdapter extends RecyclerView.Adapter implements SelectableViewHol
     private boolean isMultiSelectionEnabled;
 
     /**
-     * Konstruktor - fügt alle übergebenen SelectableItems zu lokalen Liste myValues hinzu
+     * Constructor - adds all Selectable Items to the local List myValues
      *
-     * @param listener OnItemSelectListener der Klasse SelecableViewHolder
-     * @param data Liste aller Items (aktiven User)
-     * @param isMultiSelectionEnabled kann man mehrere Elemente auswählen? hier: true
+     * @param listener OnItemSelectListener for the Class SelecableViewHolder
+     * @param data Liste of all Items (active User)
+     * @param isMultiSelectionEnabled can one select multiple Elements? here: true
      */
     MyAdapter(SelectableViewHolder.OnItemSelectedListener listener, List<SelectableItem> data, boolean isMultiSelectionEnabled) {
 
@@ -43,11 +43,11 @@ public class MyAdapter extends RecyclerView.Adapter implements SelectableViewHol
     }
 
     /**
-     * Erstellt aus der neuen Liste SelectableItems. Löscht alle Werte aus
-     * myValues (bisherige SelectableItems) und fügt alle neuen Items hinzu.
-     * Benachrichtigt den Adapter, dass sich die Daten geändert haben.
+     * Make all Items in the new List SelectableItems. Deletes all values from
+     * myValues (curr SelectableItems) and adds all new Items.
+     * Notifies to Adapter, that Items have changed.
      *
-     * @param newUsernames Neue Liste der aktiven Nutzer
+     * @param newUsernames new List of active Users
      */
     public void update(List<String> newUsernames) {
 
@@ -60,12 +60,13 @@ public class MyAdapter extends RecyclerView.Adapter implements SelectableViewHol
     }
 
     /**
-     * Methode wird aufgerufen, wenn die Recycerview ein neuen Viewholder braucht.
-     * Dieser wird mittels inflate ins Elternelement eingefügt  und benutzt, um SelectableItems anzuzeigen.
+     * Gets called, when the Recycerview needs a new Viewholder.
+     * With inflate, it is put in the Parent-Element and is used,
+     * to show a SelectableItem.
      *
-     * @param parent Übergeordnetes View-Element
-     * @param viewType der Typ der neuen View
-     * @return neue View (SelectableViewHolder) der ein Item enthalten kann
+     * @param parent Parent-View-Element
+     * @param viewType Type of the new View
+     * @return new View (SelectableViewHolder) which can hold an Item
      */
     @NonNull
     @Override
@@ -78,13 +79,13 @@ public class MyAdapter extends RecyclerView.Adapter implements SelectableViewHol
     }
 
     /**
-     * Der Text des Items an der angegebenen Position wird als Text
-     * der TextView des Holder festgelegt.
-     * Je nachdem on Mulit-Selektion erlaubt ist, wird das Aussehen der
-     * Checkbox festgelegt.
+     * The Text of the Item on the <code>position</code> is set as
+     * Text of the TextView of the Holder.
+     * Depending on if Multiselection is enabled, to Design of the
+     * Checkbox is set.
      *
-     * @param viewHolder der zu aktualisierende ViewHolder
-     * @param position die Position des Items in der Recyclerview
+     * @param viewHolder ViewHolder which has to be updated
+     * @param position Position of the in the Recyclerview
      */
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
@@ -114,7 +115,7 @@ public class MyAdapter extends RecyclerView.Adapter implements SelectableViewHol
     }
 
     /**
-     * @return die Anzahl der auszuwählenden Elemente
+     * @return number of the selected Elements
      */
     @Override
     public int getItemCount() {
@@ -122,7 +123,7 @@ public class MyAdapter extends RecyclerView.Adapter implements SelectableViewHol
     }
 
     /**
-     * @return eine Liste aller ausgewählten Items
+     * @return a List of all selected Elements
      */
     List<SelectableItem> getSelectedItems() {
 
@@ -140,8 +141,8 @@ public class MyAdapter extends RecyclerView.Adapter implements SelectableViewHol
 
     /**
      *
-     * @param position Position des gewählten Element
-     * @return MULTI_SELECTION, wenn die Auswahl mehrerer Elemente erlaubt ist, sonst SINGLE_SELECTION
+     * @param position Position of the selected Elements
+     * @return MULTI_SELECTION, when Selection of multiple Elements is enabled, else SINGLE_SELECTION
      */
     @Override
     public int getItemViewType(int position) {
@@ -154,10 +155,10 @@ public class MyAdapter extends RecyclerView.Adapter implements SelectableViewHol
     }
 
     /**
-     * Wählt Item aus oder ab, je nachdem, ob es bereits zuvor gewählt war.
-     * Benachrichtigt den Adapter, dass sich die Daten geändert haben.
+     * Selects or disselcts an Item, depending on if it already was selected.
+     * Notifies the Adapter, that the Data has changed.
      *
-     * @param item zuletzt ausgewähltes Item
+     * @param item last selected Item
      */
     @Override
     public void onItemSelected(SelectableItem item) {
@@ -175,7 +176,6 @@ public class MyAdapter extends RecyclerView.Adapter implements SelectableViewHol
             }
             notifyDataSetChanged();
         }
-        listener.onItemSelected(item);
     }
 }
 

@@ -1,13 +1,19 @@
 package com.example.catangame;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Christina Senger
+ * <p>
+ * Representation of a Trade
+ */
 public class Trade implements Serializable {
 
-    private int woodGive;
+    private int woodGive; // Values of d´desired and offered Ressources
     private int woodGet;
     private int woolGive;
     private int woolGet;
@@ -20,27 +26,41 @@ public class Trade implements Serializable {
 
     private Map<String, Integer> offer;
     private Map<String, Integer> want;
+
     private Player currPlayer;
     private List<Player> potentialTradingPartners;
     private String message;
     private GameSession game;
 
-    private Player tradingPartner;
-    private Map<Player, Boolean> answers = new HashMap<>();
-    private List<Player> answeredPlayers;
-    private String answerMessage;
+    private Player tradingPartner; // Player which first acceted the Trade
+    private Map<Player, Boolean> answers = new HashMap<>(); // Map of all Answers
+    private List<Player> answeredPlayers = new ArrayList<>(); // List of all Player, that have answered
+    private String answerMessage; // Message to send after the Trade
 
+    /**
+     * Constructor - creates Trade with Data from Thread
+     *
+     * @param offer Map of offerd Ressources
+     * @param want Map of desired Ressources
+     * @param currPlayer current Player
+     * @param potentialTradingPartners List of all Player with enough Ressources
+     * @param mess Trade-Message
+     * @param game current Game
+     */
     public Trade(Map<String, Integer> offer, Map<String, Integer> want, Player currPlayer, List<Player> potentialTradingPartners, String mess, GameSession game) {
-        this.woodGive = offer.get("WoodGive");
-        this.woodGet = want.get("WoodGet");
-        this.woolGive = offer.get("WoolGive");
-        this.woolGet = want.get("WoolGet");
-        this.wheatGive = offer.get("WheatGive");
-        this.wheatGet = want.get("WheatGet");
-        this.oreGive = offer.get("OreGive");
-        this.oreGet = want.get("OreGet");
-        this.clayGive = offer.get("ClayGive");
-        this.clayGet = want.get("ClayGet");
+
+        this.woodGive = offer.get("Holz");
+        this.woodGet = want.get("Holz");
+        this.woolGive = offer.get("Wolle");
+        this.woolGet = want.get("Wolle");
+        this.wheatGive = offer.get("Weizen");
+        this.wheatGet = want.get("Weizen");
+        this.oreGive = offer.get("Erz");
+        this.oreGet = want.get("Erz");
+        this.clayGive = offer.get("Lehm");
+        this.clayGet = want.get("Lehm");
+
+        System.out.println(String.valueOf(woodGive) + String.valueOf(woolGive) + String.valueOf(wheatGive) + String.valueOf(oreGive) + String.valueOf(clayGive) + String.valueOf(woodGet) + String.valueOf(woolGet) + String.valueOf(wheatGet) + String.valueOf(oreGet) + String.valueOf(clayGet));
 
         this.offer = offer;
         this.want = want;
@@ -50,6 +70,7 @@ public class Trade implements Serializable {
         this.game = game;
     }
 
+    // Get Ressources
     public int getWoodGive() {
         return woodGive;
     }
@@ -90,6 +111,7 @@ public class Trade implements Serializable {
         return clayGet;
     }
 
+    // More Getter
     public Map<String, Integer> getOffer() {
         return offer;
     }
@@ -110,16 +132,8 @@ public class Trade implements Serializable {
         return message;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
     public GameSession getGame() {
         return game;
-    }
-
-    public void setGame(GameSession game) {
-        this.game = game;
     }
 
     public Player getTradingPartner() {
@@ -130,20 +144,29 @@ public class Trade implements Serializable {
         return answers;
     }
 
-    public void addAnswers(Player player, Boolean answer) {
-        this.answers.put(player, answer);
-    }
-
     public List<Player> getAnsweredPlayers() {
         return answeredPlayers;
     }
 
-    public void addAnsweredPlayer(Player player) {
-        this.answeredPlayers.add(player);
-    }
-
     public String getAnswerMessage() {
         return answerMessage;
+    }
+
+    // Setter
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setGame(GameSession game) {
+        this.game = game;
+    }
+
+    public void addAnswers(Player player, Boolean answer) {
+        this.answers.put(player, answer);
+    }
+
+    public void addAnsweredPlayer(Player player) {
+        this.answeredPlayers.add(player);
     }
 
     public void setAnswerMessage(String answerMessage) {

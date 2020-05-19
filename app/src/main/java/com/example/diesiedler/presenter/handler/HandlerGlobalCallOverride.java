@@ -6,8 +6,9 @@ import android.os.Message;
 
 /**
  * @author Fabian Schaffenrath
- * Dieser Handler implementiert eine handleMessage Methode, die nachdem Spielstart von mehreren Aktivitäten
- * aufgerufen werden sollte. (Beispiel: Trade Anfrage; vielleicht auch Entlarven der Schummelfunktion)
+ *
+ * The Handler has a handleMessage Method, which is calles from different Activities
+ * after a Game has been started.
  */
 public class HandlerGlobalCallOverride extends HandlerOverride {
 
@@ -16,11 +17,10 @@ public class HandlerGlobalCallOverride extends HandlerOverride {
     }
 
     /**
-     * Waiting for implementation
-     * Call with super(msg) in childrens handleMessage method.
+     * Waiting for implementation --> Call with super(msg) in childrens handleMessage method.
      *
-     * @param msg msg.arg1 beinhaltet den entsprechenden Parameter zur weiteren Ausführung
-     *            Gegebenfalls befindet sich in msg.obj ein zusätzlicher Parameter;
+     * @param msg msg.arg1 has the Param for further Actions
+     *            msg.obj can hold an Object, which has been send
      */
     @Override
     public void handleMessage(Message msg) {

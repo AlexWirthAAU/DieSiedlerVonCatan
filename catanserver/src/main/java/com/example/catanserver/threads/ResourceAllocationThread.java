@@ -3,8 +3,8 @@ package com.example.catanserver.threads;
 import com.example.catangame.GameSession;
 import com.example.catanserver.User;
 import com.example.catanserver.businessLogic.model.ResourceAllocation;
-import com.example.catanserver.businessLogic.model.building.BuildCity;
 
+// TODO: kommentieren
 public class ResourceAllocationThread extends GameThread {
 
     GameSession gameSession;

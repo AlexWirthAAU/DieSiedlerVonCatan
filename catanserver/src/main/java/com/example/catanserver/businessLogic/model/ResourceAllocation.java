@@ -7,7 +7,7 @@ import com.example.catangame.gameboard.Tile;
 
 import java.util.ArrayList;
 import java.util.List;
-
+// TODO: Methoden kommentieren
 
 /**
  * @author Alex Wirth
@@ -42,6 +42,9 @@ public class ResourceAllocation {
                 case "WHEAT":
                     updateWheat(t);
                     break;
+            }
+            for (Player p : game.getPlayers()) {
+                p.getInventory().checkPlayerOptions();
             }
         }
     }

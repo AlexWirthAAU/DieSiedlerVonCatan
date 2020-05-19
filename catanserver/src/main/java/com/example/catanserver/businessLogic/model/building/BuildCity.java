@@ -6,6 +6,7 @@ import com.example.catangame.PlayerInventory;
 import com.example.catangame.gameboard.Gameboard;
 import com.example.catangame.gameboard.Knot;
 
+// TODO: Methoden kommentieren
 public class BuildCity {
 
     /**
@@ -35,7 +36,6 @@ public class BuildCity {
         playerInventory.addCity(k);
         playerInventory.removeWheat(2);
         playerInventory.removeOre(3);
-        playerInventory.addVictoryPoints(2);
     }
 
 }

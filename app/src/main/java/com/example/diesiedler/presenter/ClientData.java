@@ -13,8 +13,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Die ClientData Klasse enthält alle Daten, die sowohl zur Spielabwicklung als auch zur Serverkommunikation
- * benötigt werden.
+ * @author Fabian Schaffenrath
+ *
+ * Holds all Data for Server-Communication and Game-Flow
  */
 public class ClientData {
 
@@ -22,20 +23,27 @@ public class ClientData {
     private static final String HOST = "192.168.0.23"; // Christina
     //private static final int PORT = 10;  // Hamachi
     private static final int PORT = 2020; // Non-Hamachi
-    private static final Logger logger = Logger.getLogger(ClientData.class.getName());
-    public static Socket SERVER;
+
+    private static final Logger logger = Logger.getLogger(ClientData.class.getName()); // Logger
+
+    public static Socket SERVER; // Socket and Streams
     public static ObjectInputStream GET_FROM_SERVER;
     public static ObjectOutputStream SEND_TO_SERVER;
-    public static int userId = 0;
-    public static String userDisplayName;
-    public static Set<String> searchingUserNames;
-    public static Map<String, Integer> searchingUsers;
-    public static GameSession currentGame;
-    public static Thread SERVER_COMMUNICATION_THREAD;
-    public static Handler currentHandler;
+
+    public static int userId = 0; // this Users ID
+    public static String userDisplayName; // this Users Name
+
+    public static Set<String> searchingUserNames; // as Set of all Users, that a currently Searching for Opponents
+    public static Map<String, Integer> searchingUsers; // all currently searching Users and their ID
+
+    public static GameSession currentGame; // the current active Game
+
+    public static Thread SERVER_COMMUNICATION_THREAD; // Thread, which is set in WelcomeActivity
+
+    public static Handler currentHandler; // Handler, which is set for every Activity in their onCreate-Method
 
     /**
-     * Initializiert und speichert die Serververbindung.
+     * Initializes and saves the Server-Connection.
      */
     public static void initializeServerConnection() {
         try {
@@ -58,6 +66,9 @@ public class ClientData {
         }
     }
 
+    /**
+     * Closes the Socket.
+     */
     public static void closeServerConnection() {
         try {
             SERVER.close();

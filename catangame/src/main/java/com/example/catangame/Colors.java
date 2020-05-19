@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * @author Christina Senger
  * <p>
- * enum aller verfügbaren Farben
+ * Enum of all availabler Colors
  */
 public enum Colors implements Serializable {
     ORANGE,
