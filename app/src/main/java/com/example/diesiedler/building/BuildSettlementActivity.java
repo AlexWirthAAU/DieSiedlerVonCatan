@@ -71,42 +71,11 @@ public class BuildSettlementActivity extends AppCompatActivity implements View.O
 
         UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
         updateResources();
-        int status = UpdateBuildSettlementView.updateView(ClientData.currentGame, richPathView);
+        UpdateBuildSettlementView.updateView(ClientData.currentGame, richPathView);
         ClientData.currentHandler = handler;
 
-        if (status == -1) {
-            alertBuilder = new AlertDialog.Builder(this);
-            alertBuilder.setTitle("Du kannst nicht bauen");
-            alertBuilder.setMessage("Keine deiner Straßen führt zu einer bebaubaren Kreuzung!");
-            alertBuilder.setCancelable(true);
-            alertBuilder.setNeutralButton(android.R.string.ok,
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            Intent intent = new Intent(getBaseContext(), ChooseActionActivity.class);
-                            startActivity(intent);
-                        }
-                    });
-            alertBuilder.create();
-            alertBuilder.show();
-        } else if (status == 0) {
-            alertBuilder = new AlertDialog.Builder(this);
-            alertBuilder.setTitle("Du kannst nicht bauen");
-            alertBuilder.setMessage("Du hast nicht genügend Rohstoffe!");
-            alertBuilder.setCancelable(true);
-            alertBuilder.setNeutralButton(android.R.string.ok,
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            Intent intent = new Intent(getBaseContext(), ChooseActionActivity.class);
-                            startActivity(intent);
-                        }
-                    });
-            alertBuilder.create();
-            alertBuilder.show();
-        } else if (status == 1) {
-            GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView, this);
-            gameBoardClickListener.clickBoard("BuildSettlement");
-        }
-
+        GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView, this);
+        gameBoardClickListener.clickBoard("BuildSettlement");
     }
 
     /**

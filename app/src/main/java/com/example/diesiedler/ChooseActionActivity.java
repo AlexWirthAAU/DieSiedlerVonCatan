@@ -1,6 +1,7 @@
 package com.example.diesiedler;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,11 +21,16 @@ import com.example.diesiedler.building.BuildSettlementActivity;
 import com.example.diesiedler.cards.PlayCardActivity;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
+import com.example.diesiedler.presenter.UpdateBuildCityView;
+import com.example.diesiedler.presenter.UpdateBuildRoadView;
+import com.example.diesiedler.presenter.UpdateBuildSettlementView;
 import com.example.diesiedler.presenter.handler.HandlerOverride;
+import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
 import com.example.diesiedler.threads.NetworkThread;
 import com.example.diesiedler.trading.BankChangeActivity;
 import com.example.diesiedler.trading.PortChangeActivity;
 import com.example.diesiedler.trading.TradeActivity;
+import com.richpath.RichPathView;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -115,19 +121,38 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View view) {
         Intent intent;
+        int status;
 
         switch (view.getId()) {
             case R.id.buildSettlement:
-                intent = new Intent(getBaseContext(), BuildSettlementActivity.class);
-                startActivity(intent);
+                status = UpdateBuildSettlementView.status(ClientData.currentGame);
+                logger.log(Level.INFO, "Status is: " + status);
+                if (status == -1) {
+                    alert("Du kannst nicht bauen. Keine deiner Straßen führt zu einer bebaubaren Kreuzung!");
+                } else if (status == 0) {
+                    alert("Du kannst nicht bauen. Du hast nicht genügend Rohstoffe!");
+                } else {
+                    intent = new Intent(getBaseContext(), BuildSettlementActivity.class);
+                    startActivity(intent);
+                }
                 break;
             case R.id.buildRoad:
-                intent = new Intent(getBaseContext(), BuildRoadActivity.class);
-                startActivity(intent);
+                status = UpdateBuildRoadView.status(ClientData.currentGame, null);
+                if (status == 0) {
+                    alert("Du kannst nicht bauen. Du hast nicht genügend Rohstoffe!");
+                } else {
+                    intent = new Intent(getBaseContext(), BuildRoadActivity.class);
+                    startActivity(intent);
+                }
                 break;
             case R.id.buildCity:
-                intent = new Intent(getBaseContext(), BuildCityActivity.class);
-                startActivity(intent);
+                status = UpdateBuildCityView.status(ClientData.currentGame);
+                if (status == 0) {
+                    alert("Du kannst nicht bauen. Du hast nicht genügend Rohstoffe!");
+                } else {
+                    intent = new Intent(getBaseContext(), BuildCityActivity.class);
+                    startActivity(intent);
+                }
                 break;
             case R.id.loadOverview:
                 intent = new Intent(getBaseContext(), MainActivity.class);

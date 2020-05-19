@@ -16,14 +16,13 @@ import java.util.LinkedList;
 public class possibleKnotsSettlementTest {
 
     GameSession gameSession;
-    LinkedList<Knot> possibleKnots;
+    int status;
     Player player;
     PlayerInventory playerInventory;
 
     @Before
     public void setUp() {
         this.gameSession = new GameSession();
-        this.possibleKnots = new LinkedList<>();
         this.player = new Player("Test", 0);
         this.playerInventory = player.getInventory();
 
@@ -33,21 +32,12 @@ public class possibleKnotsSettlementTest {
     @After
     public void tearDown() {
         this.gameSession = null;
-        this.possibleKnots = null;
         this.player = null;
     }
 
     @Test
-    public void initialChoiceTest() {
-        gameSession.getGameboard().getKnots()[0].setPlayer(new Player("Test2", 1));
-        possibleKnots = UpdateBuildSettlementView.possibleKnots(gameSession);
-
-        Assert.assertEquals(51, possibleKnots.size());
-    }
-
-    @Test
     public void notEnoughResourcesTest() {
-        Assert.assertEquals(0, possibleKnots.size());
+        Assert.assertEquals(1, UpdateBuildSettlementView.status(gameSession));
 
         playerInventory.setWood(0);
         playerInventory.setClay(0);
@@ -56,9 +46,9 @@ public class possibleKnotsSettlementTest {
         playerInventory.addSettlement(gameSession.getGameboard().getKnots()[0]);
         playerInventory.addSettlement(gameSession.getGameboard().getKnots()[10]);
 
-        possibleKnots = UpdateBuildSettlementView.possibleKnots(gameSession);
+        status = UpdateBuildSettlementView.status(gameSession);
 
-        Assert.assertEquals(null, possibleKnots);
+        Assert.assertEquals(0, status);
     }
 
     @Test
@@ -72,9 +62,19 @@ public class possibleKnotsSettlementTest {
         playerInventory.addSettlement(gameSession.getGameboard().getKnots()[30]);
         playerInventory.addSettlement(gameSession.getGameboard().getKnots()[10]);
 
-        possibleKnots = UpdateBuildSettlementView.possibleKnots(gameSession);
+        status = UpdateBuildSettlementView.status(gameSession);
 
-        Assert.assertEquals(1, possibleKnots.size());
+        Assert.assertEquals(1, status);
+    }
+
+    @Test
+    public void enoughResNoKnot() {
+        playerInventory.addSettlement(gameSession.getGameboard().getKnots()[0]);
+        playerInventory.addSettlement(gameSession.getGameboard().getKnots()[10]);
+
+        status = UpdateBuildSettlementView.status(gameSession);
+
+        Assert.assertEquals(-1, status);
     }
 
 

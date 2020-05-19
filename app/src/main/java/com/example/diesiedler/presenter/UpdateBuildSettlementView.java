@@ -30,28 +30,23 @@ public class UpdateBuildSettlementView {
      * 0 -> player cant build, because he does not have have enough resources.
      * 1 -> player can build. Possible knots are highlighted.
      */
-    public static int updateView(GameSession gs, RichPathView rpv) {
+    public static void updateView(GameSession gs, RichPathView rpv) {
         logger.log(Level.INFO, "Called Update Activity");
 
         LinkedList<Knot> possibleKnots = possibleKnots(gs);
+        int status = status(gs);
 
-        if (possibleKnots != null) {
-            if (possibleKnots.size() == 0) {
-                return -1;
-            }
+        if (status == 1) {
             for (Knot k : possibleKnots
             ) {
                 RichPath knot = rpv.findRichPathByName(k.getId());
                 knot.setFillColor(Color.RED);
             }
-            return 1;
-        } else {
-            return 0;
         }
     }
 
 
-    public static LinkedList<Knot> possibleKnots(GameSession gs) {
+    private static LinkedList possibleKnots(GameSession gs) {
         LinkedList<Knot> possibleKnots = new LinkedList<>();
         Player currentP = gs.getPlayer(gs.getCurrPlayer());
 
@@ -61,7 +56,6 @@ public class UpdateBuildSettlementView {
              */
             logger.log(Level.INFO, "Player cant build Settlement");
             return null;
-
         } else if (currentP.getInventory().getSettlements().size() < 2) {
             /**
              * Case for the first two turns, where each player can build to settlements for free
@@ -73,8 +67,6 @@ public class UpdateBuildSettlementView {
                     possibleKnots.add(k);
                 }
             }
-            return possibleKnots;
-
         } else {
             /**
              * Player has enough resources.
@@ -88,7 +80,6 @@ public class UpdateBuildSettlementView {
                 }
             }
         }
-
         return possibleKnots;
     }
 
@@ -99,6 +90,18 @@ public class UpdateBuildSettlementView {
             hasResources = true;
         }
         return hasResources;
+    }
+
+    public static int status(GameSession gs) {
+        LinkedList<Knot> possibleKnots = possibleKnots(gs);
+
+        if (possibleKnots == null) {
+            return 0;
+        } else if (possibleKnots.size() == 0) {
+            return -1;
+        } else {
+            return 1;
+        }
     }
 
     /**

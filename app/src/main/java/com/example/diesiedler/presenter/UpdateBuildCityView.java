@@ -24,19 +24,16 @@ public class UpdateBuildCityView {
      * @param rpv
      * @return: 0 -> player does not have enough resources | 1 -> player can build
      */
-    public static int updateView(GameSession gs, RichPathView rpv) {
+    public static void updateView(GameSession gs, RichPathView rpv) {
         LinkedList<Knot> possibleKnots = possibleKnots(gs);
+        int status = status(gs);
 
-        if (possibleKnots != null) {
+        if (status == 1) {
             for (Knot k : possibleKnots
             ) {
-                RichPath knotPath = rpv.findRichPathByName(k.getId());
-                knotPath.setFillColor(Color.RED);
+                RichPath knot = rpv.findRichPathByName(k.getId());
+                knot.setFillColor(Color.RED);
             }
-            return 1;
-        } else {
-            //not enough resources
-            return 0;
         }
     }
 
@@ -46,7 +43,7 @@ public class UpdateBuildCityView {
      * @param gs
      * @return -> list of possible knots to build on
      */
-    public static LinkedList<Knot> possibleKnots(GameSession gs) {
+    private static LinkedList<Knot> possibleKnots(GameSession gs) {
         LinkedList<Knot> possibleKnots = new LinkedList<>();
         Player p = gs.getPlayer(gs.getCurrPlayer());
 
@@ -61,6 +58,16 @@ public class UpdateBuildCityView {
             return possibleKnots;
         } else {
             return null;
+        }
+    }
+
+    public static int status(GameSession gs) {
+        LinkedList<Knot> possibleKnots = possibleKnots(gs);
+
+        if (possibleKnots == null) {
+            return 0;
+        } else {
+            return 1;
         }
     }
 

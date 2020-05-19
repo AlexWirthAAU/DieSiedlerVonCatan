@@ -55,6 +55,7 @@ public class possibleEdgesRoadTest {
     public void initialRoadBuild() {
         posssibleEdges = UpdateBuildRoadView.possibleEdges(gameSession, null);
         Assert.assertEquals(3, posssibleEdges.size());
+        Assert.assertEquals(1, UpdateBuildRoadView.status(gameSession, null));
     }
 
     @Test
@@ -68,15 +69,18 @@ public class possibleEdgesRoadTest {
         playerInventory.setClay(0);
         posssibleEdges = UpdateBuildRoadView.possibleEdges(gameSession, null);
         Assert.assertEquals(null, posssibleEdges);
+        Assert.assertEquals(0, UpdateBuildRoadView.status(gameSession, null));
 
         playerInventory.setClay(10);
         posssibleEdges = UpdateBuildRoadView.possibleEdges(gameSession, null);
         Assert.assertEquals(null, posssibleEdges);
+        Assert.assertEquals(0, UpdateBuildRoadView.status(gameSession, null));
 
         playerInventory.setClay(0);
         playerInventory.setWood(10);
         posssibleEdges = UpdateBuildRoadView.possibleEdges(gameSession, null);
         Assert.assertEquals(null, posssibleEdges);
+        Assert.assertEquals(0, UpdateBuildRoadView.status(gameSession, null));
     }
 
     @Test
@@ -86,6 +90,7 @@ public class possibleEdgesRoadTest {
 
         posssibleEdges = UpdateBuildRoadView.possibleEdges(gameSession, "card");
         Assert.assertEquals(3, posssibleEdges.size());
+        Assert.assertEquals(1, UpdateBuildRoadView.status(gameSession, "card"));
     }
 
     @Test
@@ -96,5 +101,6 @@ public class possibleEdgesRoadTest {
         posssibleEdges = UpdateBuildRoadView.possibleEdges(gameSession, "Card");
 
         Assert.assertEquals(3, posssibleEdges.size());
+        Assert.assertEquals(1, UpdateBuildRoadView.status(gameSession, "card"));
     }
 }

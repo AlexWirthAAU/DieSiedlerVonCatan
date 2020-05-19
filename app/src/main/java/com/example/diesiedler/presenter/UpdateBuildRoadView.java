@@ -64,4 +64,14 @@ public class UpdateBuildRoadView {
         }
         return null;
     }
+
+    public static int status(GameSession gs, String card) {
+        LinkedList<Edge> possibleEdges = possibleEdges(gs, card);
+
+        if (possibleEdges == null) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
 }

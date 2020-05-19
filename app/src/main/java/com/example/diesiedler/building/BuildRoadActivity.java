@@ -74,26 +74,10 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
         UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
         updateResources();
         ClientData.currentHandler = handler;
+        UpdateBuildRoadView.updateView(ClientData.currentGame, richPathView, card);
 
-        int status = UpdateBuildRoadView.updateView(ClientData.currentGame, richPathView, card);
-        if (status == 0) {
-            alertBuilder = new AlertDialog.Builder(this);
-            alertBuilder.setTitle("Du kannst nicht bauen");
-            alertBuilder.setMessage("Du hast nicht genügend Rohstoffe!");
-            alertBuilder.setCancelable(true);
-            alertBuilder.setNeutralButton(android.R.string.ok,
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            Intent intent = new Intent(getBaseContext(), ChooseActionActivity.class);
-                            startActivity(intent);
-                        }
-                    });
-            alertBuilder.create();
-            alertBuilder.show();
-        } else {
-            GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView, this);
-            gameBoardClickListener.clickBoard("BuildRoad");
-        }
+        GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView, this);
+        gameBoardClickListener.clickBoard("BuildRoad");
     }
 
     /**

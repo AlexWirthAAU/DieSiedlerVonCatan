@@ -16,14 +16,13 @@ import java.util.LinkedList;
 public class possibleKnotsCityTest {
 
     GameSession gameSession;
-    LinkedList<Knot> possibleKnots;
+    int status;
     Player player;
     PlayerInventory playerInventory;
 
     @Before
     public void setUp() {
         this.gameSession = new GameSession();
-        this.possibleKnots = new LinkedList<>();
         this.player = new Player("Test", 0);
         this.playerInventory = player.getInventory();
 
@@ -33,27 +32,24 @@ public class possibleKnotsCityTest {
     @After
     public void tearDown() {
         this.gameSession = null;
-        this.possibleKnots = null;
         this.player = null;
     }
 
     @Test
     public void notEnoughResources() {
-        Assert.assertEquals(0, possibleKnots.size());
-
         playerInventory.setWheat(0);
         playerInventory.setOre(0);
-        possibleKnots = UpdateBuildCityView.possibleKnots(gameSession);
-        Assert.assertEquals(null, possibleKnots);
+        status = UpdateBuildCityView.status(gameSession);
+        Assert.assertEquals(0, status);
 
         playerInventory.setOre(10);
-        possibleKnots = UpdateBuildCityView.possibleKnots(gameSession);
-        Assert.assertEquals(null, possibleKnots);
+        status = UpdateBuildCityView.status(gameSession);
+        Assert.assertEquals(0, status);
 
         playerInventory.setWheat(10);
         playerInventory.setOre(0);
-        possibleKnots = UpdateBuildCityView.possibleKnots(gameSession);
-        Assert.assertEquals(null, possibleKnots);
+        status = UpdateBuildCityView.status(gameSession);
+        Assert.assertEquals(0, status);
     }
 
     @Test
@@ -68,9 +64,9 @@ public class possibleKnotsCityTest {
         gameSession.addSettlement(settlement);
         gameSession.addSettlement(settlement2);
 
-        possibleKnots = UpdateBuildCityView.possibleKnots(gameSession);
+        status = UpdateBuildCityView.status(gameSession);
 
-        Assert.assertEquals(1, possibleKnots.size());
+        Assert.assertEquals(1, status);
     }
 
 }
