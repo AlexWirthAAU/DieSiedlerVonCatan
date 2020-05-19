@@ -33,17 +33,7 @@ import java.util.logging.Logger;
 public class BankChangeActivity extends AppCompatActivity {
 
     private static final Logger logger = Logger.getLogger(BankChangeActivity.class.getName()); // Logger
-    Button woolGive = findViewById(R.id.woolGive);
-    Button wheatGive = findViewById(R.id.wheatGive);
-    Button oreGive = findViewById(R.id.oreGive);
-    Button clayGive = findViewById(R.id.clayGive);
-    Button woodGive = findViewById(R.id.woodGive); // Buttons for Ressources, the Player wants to give
     List<Button> giveBtns = new ArrayList<>(); // List of all Give-Buttons
-    Button woolGet = findViewById(R.id.woolGet);
-    Button wheatGet = findViewById(R.id.wheatGet);
-    Button oreGet = findViewById(R.id.oreGet);
-    Button clayGet = findViewById(R.id.clayGet);
-    Button woodGet = findViewById(R.id.woodGet); // Buttons for Ressources, the Player wants to get
     List<Button> getBtns = new ArrayList<>(); // List of all Get-Buttons
     StringBuilder res = new StringBuilder(); // StringBuilder for the Trade-Offer
     Handler handler = new BankChangeHandler(Looper.getMainLooper(), this); // Handler
@@ -59,6 +49,18 @@ public class BankChangeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bank_change);
+
+        Button woolGive = findViewById(R.id.woolGive);
+        Button wheatGive = findViewById(R.id.wheatGive);
+        Button oreGive = findViewById(R.id.oreGive);
+        Button clayGive = findViewById(R.id.clayGive);
+        Button woodGive = findViewById(R.id.woodGive);
+
+        Button woolGet = findViewById(R.id.woolGet);
+        Button wheatGet = findViewById(R.id.wheatGet);
+        Button oreGet = findViewById(R.id.oreGet);
+        Button clayGet = findViewById(R.id.clayGet);
+        Button woodGet = findViewById(R.id.woodGet);
 
         giveBtns.add(woodGive);
         giveBtns.add(woolGive);

@@ -45,6 +45,9 @@ public class ResourceAllocation {
                     updateWheat(t);
                     break;
             }
+            for (Player p : game.getPlayers()) {
+                p.getInventory().checkPlayerOptions();
+            }
         }
     }
 

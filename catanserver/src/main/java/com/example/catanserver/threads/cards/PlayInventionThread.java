@@ -42,7 +42,7 @@ public class PlayInventionThread extends GameThread {
     public void run() {
 
         if (checkCards()) {
-
+            System.out.println("checked");
             playCard();
             String mess = buildMessage();
             game.nextPlayer();
@@ -60,7 +60,7 @@ public class PlayInventionThread extends GameThread {
      */
     private boolean checkCards() {
 
-        return player.getInventory().getInventionCard() > 0;
+        return player.getInventory().getInventionCard() != 0;
     }
 
     /**
@@ -70,6 +70,7 @@ public class PlayInventionThread extends GameThread {
      */
     private void playCard() {
 
+        System.out.println(player.getInventory().getAllSupplies());
         switch (res) {
             case "wood":
                 player.getInventory().addWood(2);
@@ -101,6 +102,7 @@ public class PlayInventionThread extends GameThread {
         }
 
         player.getInventory().removeInventianCard(1);
+        System.out.println(player.getInventory().getAllSupplies() + " after");
     }
 
     /**
@@ -115,6 +117,7 @@ public class PlayInventionThread extends GameThread {
         message.append("Du hast eine Erfindungskarte gespielt und zwei ");
         message.append(resName).append(" erhalten");
 
+        System.out.println(message.toString());
         return message.toString();
     }
 }

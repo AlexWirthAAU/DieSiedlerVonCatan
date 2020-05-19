@@ -39,7 +39,7 @@ public class PlayMonopolThread extends GameThread {
     public void run() {
 
         if (checkCards()) {
-
+            System.out.println("checked");
             playCard();
             String mess = buildMessage();
             game.nextPlayer();
@@ -57,7 +57,7 @@ public class PlayMonopolThread extends GameThread {
      */
     private boolean checkCards() {
 
-        return player.getInventory().getMonopolCard() > 0;
+        return player.getInventory().getMonopolCard() != 0;
     }
 
     /**
@@ -66,7 +66,7 @@ public class PlayMonopolThread extends GameThread {
      * current Players Inventory. The Monopol Card is removed.
      */
     private void playCard() {
-
+        System.out.println(player.getInventory().getAllSupplies());
         switch (res) {
             case "wood":
                 for (Player p : game.getPlayers()) {
@@ -113,6 +113,7 @@ public class PlayMonopolThread extends GameThread {
         }
 
         player.getInventory().removeMonopolCard(1);
+        System.out.println(player.getInventory().getAllSupplies() + " after");
     }
 
     /**
@@ -126,7 +127,7 @@ public class PlayMonopolThread extends GameThread {
         message.append("CARDPLAYMESSAGE/");
         message.append("Du hast eine Monopolkarte gespielt und ");
         message.append(number).append(" ").append(resName).append(" erhalten");
-
+        System.out.println(message.toString());
         return message.toString();
     }
 }

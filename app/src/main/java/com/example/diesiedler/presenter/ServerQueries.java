@@ -128,7 +128,7 @@ public class ServerQueries {
      * @return Query with Identifier
      */
     public static String createStringQueryBuyCard() {
-        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " BUYCARD ";
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " BUYCARD";
     }
 
     /**
@@ -137,7 +137,7 @@ public class ServerQueries {
      * @return Query with Identifier
      */
     public static String createStringQueryPlayKnightCard() {
-        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " PLAYKNIGHT ";
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " PLAYKNIGHT";
     }
 
     /**
@@ -216,6 +216,6 @@ public class ServerQueries {
      * @return Query with Identifier
      */
     public static String createStringQueryNext() {
-        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " NEXT ";
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " NEXT";
     }
 }

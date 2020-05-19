@@ -19,11 +19,6 @@ import com.example.diesiedler.presenter.ClientData;
  */
 public class PlayCardActivity extends AppCompatActivity {
 
-    Button knightBtn = findViewById(R.id.knight); // Card-Buttons
-    Button monopolBtn = findViewById(R.id.monopol);
-    Button inventionBtn = findViewById(R.id.invention);
-    Button buildStreetBtn = findViewById(R.id.buildStreet);
-
     /**
      * When the Players has none of same Cards, the Buttons are set disabled.
      *
@@ -33,6 +28,11 @@ public class PlayCardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_card);
+
+        Button knightBtn = findViewById(R.id.knight); // Card-Buttons
+        Button monopolBtn = findViewById(R.id.monopol);
+        Button inventionBtn = findViewById(R.id.invention);
+        Button buildStreetBtn = findViewById(R.id.buildStreet);
 
         Player player = ClientData.currentGame.getCurr();
 

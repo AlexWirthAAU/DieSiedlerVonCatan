@@ -82,7 +82,7 @@ public class TradeThread extends GameThread {
      */
     private boolean checkTrade(Map<String, Integer> offer) {
 
-        if (currPlayer.getInventory().canTrade) {
+        if (!currPlayer.getInventory().canTrade) {
             return false;
         } else return currPlayer.getInventory().getWood() >= offer.get("WoodGive")
                 && currPlayer.getInventory().getWool() >= offer.get("WoolGive")
