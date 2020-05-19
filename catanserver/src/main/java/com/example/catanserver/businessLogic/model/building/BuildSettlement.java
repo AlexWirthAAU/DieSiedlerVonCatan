@@ -102,7 +102,6 @@ public class BuildSettlement {
         playerInventory.removeClay(1);
         playerInventory.removeWheat(1);
         playerInventory.removeWool(1);
-        playerInventory.addVictoryPoints(1);
 
         if (k.isHarbourKnot()) {
             updatePorts(p, k);
@@ -113,7 +112,6 @@ public class BuildSettlement {
         PlayerInventory playerInventory = p.getInventory();
 
         playerInventory.addSettlement(k);
-        playerInventory.addVictoryPoints(1);
 
         if (k.isHarbourKnot()) {
             updatePorts(p, k);
@@ -122,6 +120,8 @@ public class BuildSettlement {
 
     private static void updatePorts(Player player, Knot knot) {
         PlayerInventory playerInventory = player.getInventory();
+
+        playerInventory.setHasPorts(true);
 
         if (knot.isWoodPort()) {
             playerInventory.setWoodport(true);
@@ -134,5 +134,8 @@ public class BuildSettlement {
         } else if (knot.isClayPort()) {
             playerInventory.setClayport(true);
         }
+
+        playerInventory.checkPlayerOptions();
+        System.out.println("UPDATE PORTS");
     }
 }

@@ -100,7 +100,7 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
 
         ClientData.currentHandler = handler;
 
-        player = ClientData.currentGame.getCurr();
+        player = ClientData.currentGame.getPlayer(ClientData.userId);
         game = ClientData.currentGame;
     }
 
@@ -215,6 +215,7 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
      */
     private class ChooseActionHandler extends HandlerOverride {
 
+        String mess;
         ChooseActionHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
         }
@@ -234,13 +235,14 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
 
             if (msg.arg1 == 4) {  // TODO: Change to enums
 
+                intent.putExtra("mess", mess);
+                System.out.println(mess + " objstart");
                 startActivity(intent);
             }
 
             if (msg.arg1 == 5) {  // TODO: Change to enums
 
-                System.out.println(msg.obj.toString());
-                intent.putExtra("mess", msg.obj.toString());
+                mess = msg.obj.toString();
             }
         }
     }

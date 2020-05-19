@@ -70,7 +70,9 @@ public class PlayMonopolThread extends GameThread {
         switch (res) {
             case "wood":
                 for (Player p : game.getPlayers()) {
-                    number += p.getInventory().removeAllWood();
+                    if (p.getUserId() != player.getUserId()) {
+                        number += p.getInventory().removeAllWood();
+                    }
                 }
                 player.getInventory().addWood(number);
                 resName = "Holz";
@@ -78,7 +80,9 @@ public class PlayMonopolThread extends GameThread {
 
             case "wool":
                 for (Player p : game.getPlayers()) {
-                    number += p.getInventory().removeAllWool();
+                    if (p.getUserId() != player.getUserId()) {
+                        number += p.getInventory().removeAllWool();
+                    }
                 }
                 resName = "Wolle";
                 player.getInventory().addWool(number);
@@ -86,7 +90,9 @@ public class PlayMonopolThread extends GameThread {
 
             case "wheat":
                 for (Player p : game.getPlayers()) {
-                    number += p.getInventory().removeAllWheat();
+                    if (p.getUserId() != player.getUserId()) {
+                        number += p.getInventory().removeAllWheat();
+                    }
                 }
                 player.getInventory().addWheat(number);
                 resName = "Weizen";
@@ -94,7 +100,9 @@ public class PlayMonopolThread extends GameThread {
 
             case "ore":
                 for (Player p : game.getPlayers()) {
-                    number += p.getInventory().removeAllOre();
+                    if (p.getUserId() != player.getUserId()) {
+                        number += p.getInventory().removeAllOre();
+                    }
                 }
                 player.getInventory().addOre(number);
                 resName = "Erz";
@@ -102,7 +110,9 @@ public class PlayMonopolThread extends GameThread {
 
             case "clay":
                 for (Player p : game.getPlayers()) {
-                    number += p.getInventory().removeAllClay();
+                    if (p.getUserId() != player.getUserId()) {
+                        number += p.getInventory().removeAllClay();
+                    }
                 }
                 player.getInventory().addClay(number);
                 resName = "Lehm";
@@ -124,7 +134,6 @@ public class PlayMonopolThread extends GameThread {
      */
     private String buildMessage() {
 
-        message.append("CARDPLAYMESSAGE/");
         message.append("Du hast eine Monopolkarte gespielt und ");
         message.append(number).append(" ").append(resName).append(" erhalten");
         System.out.println(message.toString());

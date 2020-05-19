@@ -52,7 +52,7 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
     private Button devCards; // Buttons to show Score and Inventory
     private Button scoreBoard;
 
-    private String card; // "CARD" when to Activity is started from the PlayCardActivity
+    private static String card; // "CARD" when to Activity is started from the PlayCardActivity
 
     // TODO: Methoden kommentieren
 
@@ -68,6 +68,12 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
         scoreBoard.setOnClickListener(this);
 
         card = getIntent().getStringExtra("card");
+
+        if (card != null) {
+            System.out.println(card + " cardin");
+        }
+
+        System.out.println(card + " card");
 
         UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
         updateResources();
@@ -124,6 +130,7 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
         Thread networkThread;
 
         if (card != null) {
+            System.out.println(card + " in thread");
             networkThread = new NetworkThread(ServerQueries.createStringQueryPlayBuildStreetCard(eIString));
         } else {
             networkThread = new NetworkThread(ServerQueries.createStringQueryBuildRoad(eIString));

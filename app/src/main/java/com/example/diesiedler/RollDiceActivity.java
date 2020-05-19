@@ -73,6 +73,13 @@ public class RollDiceActivity extends AppCompatActivity implements SensorEventLi
         ClientData.currentHandler = handler;
     }
 
+    /**
+     * Going back is not possible here.
+     */
+    @Override
+    public void onBackPressed() {
+    }
+
 
     @Override
     protected void onResume() {

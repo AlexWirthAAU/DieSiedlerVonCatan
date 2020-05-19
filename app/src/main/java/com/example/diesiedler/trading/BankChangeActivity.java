@@ -11,8 +11,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.catangame.GameSession;
-import com.example.catangame.Player;
+import com.example.catangame.PlayerInventory;
 import com.example.diesiedler.MainActivity;
 import com.example.diesiedler.R;
 import com.example.diesiedler.presenter.ClientData;
@@ -74,26 +73,25 @@ public class BankChangeActivity extends AppCompatActivity {
         getBtns.add(oreGet);
         getBtns.add(clayGet);
 
-        GameSession game = ClientData.currentGame;
-        Player player = game.getCurr();
+        PlayerInventory playerInventory = ClientData.currentGame.getPlayer(ClientData.userId).getInventory();
 
-        if (player.getInventory().getWood() < 4) {
+        if (playerInventory.getWood() < 4) {
             woodGive.setEnabled(false);
         }
 
-        if (player.getInventory().getWool() < 4) {
+        if (playerInventory.getWool() < 4) {
             woolGive.setEnabled(false);
         }
 
-        if (player.getInventory().getWheat() < 4) {
+        if (playerInventory.getWheat() < 4) {
             wheatGive.setEnabled(false);
         }
 
-        if (player.getInventory().getOre() < 4) {
+        if (playerInventory.getOre() < 4) {
             oreGive.setEnabled(false);
         }
 
-        if (player.getInventory().getClay() < 4) {
+        if (playerInventory.getClay() < 4) {
             clayGet.setEnabled(false);
         }
 
@@ -154,6 +152,8 @@ public class BankChangeActivity extends AppCompatActivity {
      */
     private class BankChangeHandler extends HandlerOverride {
 
+        private String mess;
+
         BankChangeHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
         }
@@ -173,11 +173,13 @@ public class BankChangeActivity extends AppCompatActivity {
 
             if (msg.arg1 == 4) {  // TODO: Change to enums
 
+                intent.putExtra("mess", mess);
+                System.out.println(mess + " objstart");
                 startActivity(intent);
             }
             if (msg.arg1 == 5) {  // TODO: Change to enums
 
-                intent.putExtra("mess", msg.obj.toString());
+                mess = msg.obj.toString();
             }
         }
     }

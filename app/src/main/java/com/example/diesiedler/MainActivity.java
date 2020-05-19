@@ -69,8 +69,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         ClientData.currentHandler = handler;
 
-        String tradeMessage = getIntent().getStringExtra("mess");
+        String intentMess = getIntent().getStringExtra("mess");
 
+        if (intentMess != null) {
+            System.out.println(intentMess + " inentmessinMainin");
+            alert(intentMess);
+        }
+
+        System.out.println(intentMess + " inentmessinMainout");
+    }
+
+    /**
+     * Going back is not possible here.
+     */
+    @Override
+    public void onBackPressed() {
+    }
+
+    private void alert(String tradeMessage) {
         if (tradeMessage != null) {
             AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
             builder1.setCancelable(true);
@@ -119,6 +135,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private class MainHandler extends HandlerOverride {
 
+        private String mess;
+
         MainHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
         }
@@ -151,6 +169,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else if (currentPlayer.getUserId() == ClientData.userId) {
                     Intent intent = new Intent(activity, RollDiceActivity.class);
                     startActivity(intent);
+                } else if (currentPlayer.getUserId() != ClientData.userId && gs.isTradeOn()) {
+                    Intent intent = new Intent(activity, AnswerToTradeActivity.class);
+                    intent.putExtra("mess", mess);
+                    startActivity(intent);
                 } else {
                     Intent intent = new Intent(activity, MainActivity.class);
                     startActivity(intent);
@@ -159,9 +181,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             if (msg.arg1 == 5) {  // TODO: Change to enums
 
-                Intent intent = new Intent(activity, AnswerToTradeActivity.class);
-                intent.putExtra("mess", msg.obj.toString());
-                startActivity(intent);
+                mess = msg.obj.toString();
+                System.out.println(mess + " objstart");
             }
         }
     }

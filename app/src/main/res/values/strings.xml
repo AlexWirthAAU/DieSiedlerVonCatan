@@ -161,4 +161,5 @@
     <string name="buildCity">Stadt bauen</string>
     <string name="buildSettlement">Siedlung bauen</string>
     <string name="showScore">Spielstand anzeigen</string>
+    <string name="getRes">Rohstoffe holen</string>
 </resources>

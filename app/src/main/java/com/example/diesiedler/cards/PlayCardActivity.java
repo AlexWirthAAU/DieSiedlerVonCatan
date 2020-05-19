@@ -34,7 +34,7 @@ public class PlayCardActivity extends AppCompatActivity {
         Button inventionBtn = findViewById(R.id.invention);
         Button buildStreetBtn = findViewById(R.id.buildStreet);
 
-        Player player = ClientData.currentGame.getCurr();
+        Player player = ClientData.currentGame.getPlayer(ClientData.userId);
 
         if (player.getInventory().getKnightCard() < 1) {
             knightBtn.setEnabled(false);

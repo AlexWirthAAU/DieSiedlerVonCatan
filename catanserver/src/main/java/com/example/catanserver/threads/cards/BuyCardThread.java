@@ -88,6 +88,7 @@ public class BuyCardThread extends GameThread {
     private void buyCard() {
 
         DevCard card;
+        System.out.println(player.getInventory().getAllSupplies());
 
         player.getInventory().removeWool(1);
         player.getInventory().removeWheat(1);
@@ -106,7 +107,7 @@ public class BuyCardThread extends GameThread {
 
         if (card instanceof BuildStreetCard) {
             player.getInventory().addBuildStreetCard(1);
-            cardName = "Straßenbaukarte";
+            cardName = "Strassenbaukarte";
             System.out.println(cardName);
 
         } else if (card instanceof KnightCard) {
@@ -126,10 +127,10 @@ public class BuyCardThread extends GameThread {
 
         } else if (card instanceof VictoryPointCard) {
             player.getInventory().addVictoryCard();
-            player.getInventory().addVictoryPoints(1);
             cardName = "Siegpunktkarte";
             System.out.println(cardName);
         }
+        System.out.println(player.getInventory().getAllSupplies());
     }
 
     /**
@@ -140,7 +141,6 @@ public class BuyCardThread extends GameThread {
      */
     private String buildMessage() {
 
-        message.append("CARDBUYMESSAGE/");
         message.append("Du hast eine ").append(cardName).append(" gekauft");
 
         if (cardName.equals("Siegpunktkarte")) {

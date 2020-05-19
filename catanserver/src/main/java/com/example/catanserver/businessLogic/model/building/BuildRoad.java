@@ -57,10 +57,9 @@ public class BuildRoad {
         road.setPlayer(player);
         gameSession.addRoad(road);
 
-        list.get(list.size()).removeCounter();
+        list.get(0).removeCounter();
 
-        if (list.get(list.size()).getCounter() == 0) {
-            list.remove(list.size());
+        if (list.get(0).getCounter() == 0) {
             player.getInventory().removeBuildStreetCard(1);
             gameSession.nextPlayer();
         }

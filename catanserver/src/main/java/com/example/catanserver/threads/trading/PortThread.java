@@ -63,10 +63,11 @@ public class PortThread extends GameThread {
         boolean invent = false;
 
         if (!currPlayer.getInventory().canPortTrade || !currPlayer.getInventory().hasPorts) {
+            System.out.println("firstcheck");
             return false;
         }
 
-        switch (give) {
+        switch (get) {
             case "Holz":
                 invent = currPlayer.getInventory().isWoodport();
                 break;
@@ -75,6 +76,7 @@ public class PortThread extends GameThread {
                 break;
             case "Weizen":
                 invent = currPlayer.getInventory().isWheatport();
+                System.out.println("portcheck");
                 break;
             case "Erz":
                 invent = currPlayer.getInventory().isOreport();
@@ -112,7 +114,6 @@ public class PortThread extends GameThread {
      */
     private String buildMessage() {
 
-        message.append("PORTTRADEMESSAGE/");
         message.append("Du hast erfolgreich 3 ").append(give).append(" gegen 1 ").append(get).append(" getauscht");
         System.out.println(message.toString());
         return message.toString();

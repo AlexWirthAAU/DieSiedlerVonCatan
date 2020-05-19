@@ -36,7 +36,6 @@ public class BuildCity {
         playerInventory.addCity(k);
         playerInventory.removeWheat(2);
         playerInventory.removeOre(3);
-        playerInventory.addVictoryPoints(2);
     }
 
 }
