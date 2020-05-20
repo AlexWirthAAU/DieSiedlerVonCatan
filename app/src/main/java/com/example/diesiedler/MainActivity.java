@@ -83,11 +83,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * Going back is not possible here.
-     */
+     * TODO: When choosing action i call this activity to give an overview -> i have to go back then to choose what todo
     @Override
     public void onBackPressed() {
     }
-
+     */
     private void alert(String tradeMessage) {
         if (tradeMessage != null) {
             AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
