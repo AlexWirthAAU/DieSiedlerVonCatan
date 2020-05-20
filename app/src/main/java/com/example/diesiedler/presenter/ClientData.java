@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 public class ClientData {
 
     //private static final String HOST ="25.64.65.87";  // Fabian
-    private static final String HOST = "192.168.0.23"; // Christina
+    private static final String HOST = "10.0.0.152"; // Christina
     //private static final int PORT = 10;  // Hamachi
     private static final int PORT = 2020; // Non-Hamachi
 
