@@ -25,7 +25,7 @@ import com.example.diesiedler.presenter.UpdateBuildCityView;
 import com.example.diesiedler.presenter.UpdateBuildRoadView;
 import com.example.diesiedler.presenter.UpdateBuildSettlementView;
 import com.example.diesiedler.presenter.handler.HandlerOverride;
-import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
+
 import com.example.diesiedler.threads.NetworkThread;
 import com.example.diesiedler.trading.BankChangeActivity;
 import com.example.diesiedler.trading.PortChangeActivity;

@@ -12,21 +12,35 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <activity android:name=".ThiefActivity"></activity>
+        <activity android:name=".ShowInventoryActivity" />
+
+        <activity android:name=".cards.PlayMonopolActivity" />
+        <activity android:name=".cards.PlayInventionActivity" />
+        <activity android:name=".cards.PlayKnightActivity" />
+        <activity android:name=".cards.PlayCardActivity" />
+        <activity android:name=".RollDiceActivity" />
+        <activity android:name=".trading.PortChangeActivity" />
+        <activity android:name=".trading.BankChangeActivity" />
+        <activity android:name=".trading.AnswerToTradeActivity" />
+        <activity android:name=".trading.TradeActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".ShowCostsActivity" />
-        <activity android:name=".WelcomeActivity">
+        <activity android:name=".beforegame.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SearchPlayersActivity" />
-        <activity android:name=".SelectColorsActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".StartGameActivity" />
-        <activity android:name=".BuildSettlementActivity" />
-
+        <activity android:name=".beforegame.SearchPlayersActivity" />
+        <activity android:name=".beforegame.SelectColorsActivity" />
+        <activity android:name=".beforegame.LoginActivity" />
+        <activity android:name=".building.BuildSettlementActivity" />
+        <activity android:name=".building.BuildRoadActivity" />
+        <activity android:name=".building.BuildCityActivity" />
+        <activity android:name=".ChooseActionActivity" />
     </application>
 
 </manifest>
