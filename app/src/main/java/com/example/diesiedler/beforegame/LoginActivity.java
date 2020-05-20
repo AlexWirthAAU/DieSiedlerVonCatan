@@ -60,6 +60,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
+     * Going back is not possible here.
+     */
+    @Override
+    public void onBackPressed() {
+    }
+
+    /**
      * @author Fabian Schaffenrath (edit)
      * <p>
      * Handler for the LoginActivity

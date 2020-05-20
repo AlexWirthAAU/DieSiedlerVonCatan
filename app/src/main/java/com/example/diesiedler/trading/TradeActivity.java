@@ -32,7 +32,9 @@ public class TradeActivity extends AppCompatActivity {
 
     private static final Logger logger = Logger.getLogger(TradeActivity.class.getName()); // Logger
     private final int STARTVALUE = 0; // Startvalue for desired and offered Ressources
+
     TextView countWoodGive;
+    TextView countWoodGet;
     private int woolGive = STARTVALUE;
     private int woolGet = STARTVALUE;
     private int wheatGive = STARTVALUE;
@@ -41,9 +43,10 @@ public class TradeActivity extends AppCompatActivity {
     private int oreGet = STARTVALUE;
     private int clayGive = STARTVALUE;
     private int clayGet = STARTVALUE;
-    TextView countWoodGet;
 
     Handler handler = new TradeHandler(Looper.getMainLooper(), this); // Handler
+    private int woodGet = STARTVALUE; // Values of desired and offered Ressources
+    private int woodGive = STARTVALUE;
     TextView countWoolGive;
     TextView countWoolGet;
     TextView countWheatGive;
@@ -52,8 +55,6 @@ public class TradeActivity extends AppCompatActivity {
     TextView countOreGet;
     TextView countClayGive;
     TextView countClayGet;
-    private int woodGet = STARTVALUE; // Values of desired and offered Ressources
-    private int woodGive = STARTVALUE;
 
     private StringBuilder tradeMap = new StringBuilder(); // StringBuilder in which the Trade-Offer is stored
     private Player player; // current Player
@@ -79,7 +80,7 @@ public class TradeActivity extends AppCompatActivity {
         countClayGive = findViewById(R.id.countClayGive);
         countClayGet = findViewById(R.id.countClayGet);
 
-        player = ClientData.currentGame.getCurr();
+        player = ClientData.currentGame.getPlayer(ClientData.userId);
 
         ClientData.currentHandler = handler;
     }
@@ -144,17 +145,17 @@ public class TradeActivity extends AppCompatActivity {
      */
     public void trade(View view) {
 
-        tradeMap.append("WoodGive/").append(woodGive);
-        tradeMap.append("/WoolGive/").append(woolGive);
-        tradeMap.append("/WheatGive/").append(wheatGive);
-        tradeMap.append("/OreGive/").append(oreGive);
-        tradeMap.append("/ClayGive/").append(clayGive);
+        tradeMap.append("Holz/").append(woodGive);
+        tradeMap.append("/Wolle/").append(woolGive);
+        tradeMap.append("/Weizen/").append(wheatGive);
+        tradeMap.append("/Erz/").append(oreGive);
+        tradeMap.append("/Lehm/").append(clayGive);
         tradeMap.append("/splitter/").append(-1);
-        tradeMap.append("/WoodGet/").append(woodGet);
-        tradeMap.append("/WoolGet/").append(woolGet);
-        tradeMap.append("/WheatGet/").append(wheatGet);
-        tradeMap.append("/OreGet/").append(oreGet);
-        tradeMap.append("/ClayGet/").append(clayGet);
+        tradeMap.append("/Holz/").append(woodGet);
+        tradeMap.append("/Wolle/").append(woolGet);
+        tradeMap.append("/Weizen/").append(wheatGet);
+        tradeMap.append("/Erz/").append(oreGet);
+        tradeMap.append("/Lehm/").append(clayGet);
 
         String toSendTrade = tradeMap.toString();
         logger.log(Level.INFO, "CREATE TRADE");
@@ -176,7 +177,7 @@ public class TradeActivity extends AppCompatActivity {
             case R.id.plusWoodGive:
                 if (checkRessources(woodGive, "Wood")) {
                     woodGive += 1;
-                    countWoodGive.setText(woodGive);
+                    countWoodGive.setText(String.valueOf(woodGive));
                 } else {
                     alert("Holz");
                 }
@@ -185,7 +186,7 @@ public class TradeActivity extends AppCompatActivity {
             case R.id.plusWoolGive:
                 if (checkRessources(woolGive, "Wool")) {
                     woolGive += 1;
-                    countWoolGive.setText(woolGive);
+                    countWoolGive.setText(String.valueOf(woolGive));
                 } else {
                     alert("Wolle");
                 }
@@ -194,7 +195,7 @@ public class TradeActivity extends AppCompatActivity {
             case R.id.plusWheatGive:
                 if (checkRessources(wheatGive, "Wheat")) {
                     wheatGive += 1;
-                    countWheatGive.setText(wheatGive);
+                    countWheatGive.setText(String.valueOf(wheatGive));
                 } else {
                     alert("Weizen");
                 }
@@ -203,9 +204,18 @@ public class TradeActivity extends AppCompatActivity {
             case R.id.plusOreGive:
                 if (checkRessources(oreGive, "Ore")) {
                     oreGive += 1;
-                    countOreGive.setText(oreGive);
+                    countOreGive.setText(String.valueOf(oreGive));
                 } else {
                     alert("Erz");
+                }
+                break;
+
+            case R.id.plusClayGive:
+                if (checkRessources(clayGive, "Clay")) {
+                    clayGive += 1;
+                    countClayGive.setText(String.valueOf(clayGive));
+                } else {
+                    alert("Lehm");
                 }
                 break;
             default:
@@ -214,38 +224,29 @@ public class TradeActivity extends AppCompatActivity {
 
         switch (view.getId()) {
 
-            case R.id.plusClayGive:
-                if (checkRessources(clayGive, "Clay")) {
-                    clayGive += 1;
-                    countClayGive.setText(clayGive);
-                } else {
-                    alert("Lehm");
-                }
-                break;
-
             case R.id.plusWoodGet:
                 woodGet += 1;
-                countWoodGet.setText(woodGet);
+                countWoodGet.setText(String.valueOf(woodGet));
                 break;
 
             case R.id.plusWoolGet:
                 woolGet += 1;
-                countWoolGet.setText(woolGet);
+                countWoolGet.setText(String.valueOf(woolGet));
                 break;
 
             case R.id.plusWheatGet:
                 wheatGet += 1;
-                countWheatGet.setText(wheatGet);
+                countWheatGet.setText(String.valueOf(wheatGet));
                 break;
 
             case R.id.plusOreGet:
                 oreGet += 1;
-                countOreGet.setText(oreGet);
+                countOreGet.setText(String.valueOf(oreGet));
                 break;
 
             case R.id.plusClayGet:
                 clayGet += 1;
-                countClayGet.setText(clayGet);
+                countClayGet.setText(String.valueOf(clayGet));
                 break;
 
             default:
@@ -266,35 +267,35 @@ public class TradeActivity extends AppCompatActivity {
             case R.id.minusWoodGive:
                 if (woodGive >= 1) {
                     woodGive -= 1;
-                    countWoodGive.setText(woodGive);
+                    countWoodGive.setText(String.valueOf(woodGive));
                 }
                 break;
 
             case R.id.minusWoolGive:
                 if (woolGive >= 1) {
                     woolGive -= 1;
-                    countWoolGive.setText(woolGive);
+                    countWoolGive.setText(String.valueOf(woolGive));
                 }
                 break;
 
             case R.id.minusWheatGive:
                 if (wheatGive >= 1) {
                     wheatGive -= 1;
-                    countWheatGive.setText(wheatGive);
+                    countWheatGive.setText(String.valueOf(wheatGive));
                 }
                 break;
 
             case R.id.minusOreGive:
                 if (oreGive >= 1) {
                     oreGive -= 1;
-                    countOreGive.setText(oreGive);
+                    countOreGive.setText(String.valueOf(oreGive));
                 }
                 break;
 
             case R.id.minusClayGive:
                 if (clayGive >= 1) {
                     clayGive -= 1;
-                    countClayGive.setText(clayGive);
+                    countClayGive.setText(String.valueOf(clayGive));
                 }
                 break;
 
@@ -307,35 +308,35 @@ public class TradeActivity extends AppCompatActivity {
             case R.id.minusWoodGet:
                 if (woodGet >= 1) {
                     woodGet -= 1;
-                    countWoodGet.setText(woodGet);
+                    countWoodGet.setText(String.valueOf(woodGet));
                 }
                 break;
 
             case R.id.minusWoolGet:
                 if (woolGet >= 1) {
                     woolGet -= 1;
-                    countWoolGet.setText(woolGet);
+                    countWoolGet.setText(String.valueOf(woolGet));
                 }
                 break;
 
             case R.id.minusWheatGet:
                 if (wheatGet >= 1) {
                     wheatGet -= 1;
-                    countWheatGet.setText(wheatGet);
+                    countWheatGet.setText(String.valueOf(wheatGet));
                 }
                 break;
 
             case R.id.minusOreGet:
                 if (oreGet >= 1) {
                     oreGet -= 1;
-                    countOreGet.setText(oreGet);
+                    countOreGet.setText(String.valueOf(oreGet));
                 }
                 break;
 
             case R.id.minusClayGet:
                 if (clayGet >= 1) {
                     clayGet -= 1;
-                    countClayGet.setText(clayGet);
+                    countClayGet.setText(String.valueOf(clayGet));
                 }
                 break;
 
@@ -350,6 +351,8 @@ public class TradeActivity extends AppCompatActivity {
      * Handler for the TradeActivity
      */
     private class TradeHandler extends HandlerOverride {
+
+        private String mess;
 
         TradeHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
@@ -370,11 +373,13 @@ public class TradeActivity extends AppCompatActivity {
 
             if (msg.arg1 == 4) {  // TODO: Change to enums
 
+                intent.putExtra("mess", mess);
+                System.out.println(mess + " objstart");
                 startActivity(intent);
             }
             if (msg.arg1 == 5) {  // TODO: Change to enums
 
-                intent.putExtra("mess", msg.obj.toString());
+                mess = msg.obj.toString();
             }
         }
     }

@@ -36,14 +36,14 @@
             android:text="@string/tradeAnswer"
             android:textAlignment="gravity"
             android:textColor="#FBC02D"
-            android:textSize="35sp" />
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/accept"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginTop="235dp"
+            android:layout_marginTop="150dp"
             android:layout_marginBottom="35dp"
             android:backgroundTint="#FFA000"
             android:onClick="accept"

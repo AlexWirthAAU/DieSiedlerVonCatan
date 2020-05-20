@@ -81,6 +81,13 @@ public class SelectColorsActivity extends AppCompatActivity {
     }
 
     /**
+     * Going back is not possible here.
+     */
+    @Override
+    public void onBackPressed() {
+    }
+
+    /**
      * When the green Button is clicked, the NetworkThread is started to send a Color-Selection to the Server.
      */
     public void onGreen(View view) {

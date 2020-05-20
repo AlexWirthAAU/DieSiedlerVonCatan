@@ -104,11 +104,12 @@ public class SendToClient {
      * @param toSend List of all Player to which the Trade-Message should be sent
      * @param message specific Trade-Message
      */
-    public static void sendTradeMessageBroadcast(List<Player> toSend, String message) {
+    public static void sendTradeMessageBroadcast(List<Player> toSend, String message, GameSession game) {
         List<User> userList = createTradeUserList(toSend);
         for (User user : userList) {
             try {
                 sendToClient(user, message);
+                sendToClient(user, game);
             } catch (IOException ex) {
                 System.err.println(ex.getMessage());
                 System.err.println("Could not send Message to Client" + user.getDisplayName() + ".");

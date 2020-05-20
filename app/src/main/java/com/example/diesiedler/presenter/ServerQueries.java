@@ -103,6 +103,16 @@ public class ServerQueries {
     }
 
     /**
+     * Creates Trade-Query
+     *
+     * @param answer String with answer
+     * @return Query with Identifier and answer
+     */
+    public static String createStringQueryTradeAnswer(String answer) {
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " TRADEANSWER " + answer;
+    }
+
+    /**
      * Creates PortChange-Query
      *
      * @param offer String with offered and wanted Ressources
@@ -217,5 +227,9 @@ public class ServerQueries {
      */
     public static String createStringQueryNext() {
         return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " NEXT";
+    }
+
+    public static String createStringQueryMoveThief(String id){
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " THIEF " + id;
     }
 }

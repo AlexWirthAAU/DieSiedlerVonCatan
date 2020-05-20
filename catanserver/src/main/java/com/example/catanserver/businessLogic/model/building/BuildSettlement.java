@@ -66,6 +66,8 @@ public class BuildSettlement {
     private static void updatePorts(Player player, Knot knot) {
         PlayerInventory playerInventory = player.getInventory();
 
+        playerInventory.setHasPorts(true);
+
         if (knot.isWoodPort()) {
             playerInventory.setWoodport(true);
         } else if (knot.isWoolPort()) {
@@ -77,5 +79,8 @@ public class BuildSettlement {
         } else if (knot.isClayPort()) {
             playerInventory.setClayport(true);
         }
+
+        playerInventory.checkPlayerOptions();
+        System.out.println("UPDATE PORTS");
     }
 }

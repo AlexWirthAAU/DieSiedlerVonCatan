@@ -11,8 +11,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.catangame.GameSession;
-import com.example.catangame.Player;
+import com.example.catangame.PlayerInventory;
 import com.example.diesiedler.MainActivity;
 import com.example.diesiedler.R;
 import com.example.diesiedler.presenter.ClientData;
@@ -75,26 +74,45 @@ public class PortChangeActivity extends AppCompatActivity {
         getBtns.add(oreGet);
         getBtns.add(clayGet);
 
-        GameSession game = ClientData.currentGame;
-        Player player = game.getCurr();
+        PlayerInventory playerInventory = ClientData.currentGame.getPlayer(ClientData.userId).getInventory();
 
-        if (player.getInventory().isWoodport() || player.getInventory().getWood() < 3) {
+        if (playerInventory.getWood() < 3) {
             woodGive.setEnabled(false);
         }
 
-        if (player.getInventory().isWoolport() || player.getInventory().getWool() < 3) {
+        if (!playerInventory.isWoodport()) {
+            woodGet.setEnabled(false);
+        }
+
+        if (playerInventory.getWool() < 3) {
             woolGive.setEnabled(false);
         }
 
-        if (player.getInventory().isWheatport() || player.getInventory().getWheat() < 3) {
+        if (!playerInventory.isWoolport()) {
+            woolGet.setEnabled(false);
+        }
+
+        if (playerInventory.getWheat() < 3) {
             wheatGive.setEnabled(false);
         }
 
-        if (player.getInventory().isOreport() || player.getInventory().getOre() < 3) {
+        if (!playerInventory.isWheatport()) {
+            wheatGet.setEnabled(false);
+        }
+
+        if (playerInventory.getOre() < 3) {
             oreGive.setEnabled(false);
         }
 
-        if (player.getInventory().isClayport() || player.getInventory().getClay() < 3) {
+        if (!playerInventory.isOreport()) {
+            oreGet.setEnabled(false);
+        }
+
+        if (playerInventory.getClay() < 3) {
+            clayGive.setEnabled(false);
+        }
+
+        if (!playerInventory.isClayport()) {
             clayGet.setEnabled(false);
         }
 
@@ -155,6 +173,8 @@ public class PortChangeActivity extends AppCompatActivity {
      */
     private class PortChangeHandler extends HandlerOverride {
 
+        private String mess;
+
         PortChangeHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
         }
@@ -174,11 +194,13 @@ public class PortChangeActivity extends AppCompatActivity {
 
             if (msg.arg1 == 4) {  // TODO: Change to enums
 
+                intent.putExtra("mess", mess);
+                System.out.println(mess + " objstart");
                 startActivity(intent);
             }
             if (msg.arg1 == 5) {  // TODO: Change to enums
 
-                intent.putExtra("mess", msg.obj.toString());
+                mess = msg.obj.toString();
             }
         }
     }

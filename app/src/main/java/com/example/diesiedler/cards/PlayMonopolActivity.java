@@ -112,6 +112,8 @@ public class PlayMonopolActivity extends AppCompatActivity {
      */
     private class PlayMonopolHandler extends HandlerOverride {
 
+        private String mess;
+
         PlayMonopolHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
         }
@@ -131,11 +133,13 @@ public class PlayMonopolActivity extends AppCompatActivity {
 
             if (msg.arg1 == 4) {  // TODO: Change to enums
 
+                intent.putExtra("mess", mess);
+                System.out.println(mess + " objstart");
                 startActivity(intent);
             }
             if (msg.arg1 == 5) {  // TODO: Change to enums
 
-                intent.putExtra("mess", msg.obj.toString());
+                mess = msg.obj.toString();
             }
         }
     }

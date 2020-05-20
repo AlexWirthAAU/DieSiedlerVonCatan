@@ -115,7 +115,6 @@ public class BankThread extends GameThread {
      */
     private String buildMessage() {
 
-        message.append("BANKTRADEMESSAGE/");
         message.append("Du hast erfolgreich 4 ").append(give).append(" gegen 1 ").append(get).append(" getauscht");
 
         System.out.println(message.toString());

@@ -55,8 +55,9 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
     private ImageView devCards;
     private Button scoreBoard;
 
-    //"CARD" when to Activity is started from the PlayCardActivity
-    private String card;
+
+    private static String card; // "CARD" when to Activity is started from the PlayCardActivity
+    //TODO: Methoden kommentieren
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,12 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
         scoreBoard.setOnClickListener(this);
 
         card = getIntent().getStringExtra("card");
+
+        if (card != null) {
+            System.out.println(card + " cardin");
+        }
+
+        System.out.println(card + " card");
 
         UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
         updateResources();
@@ -98,7 +105,6 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
         woolCount.setText(Integer.toString(playerInventory.getWool()));
         devCardCount = findViewById(R.id.devCardCount);
         devCardCount.setText(Integer.toString(playerInventory.getCards()));
-
     }
 
 
@@ -121,6 +127,7 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
         Thread networkThread;
 
         if (card != null) {
+            System.out.println(card + " in thread");
             networkThread = new NetworkThread(ServerQueries.createStringQueryPlayBuildStreetCard(eIString));
         } else {
             networkThread = new NetworkThread(ServerQueries.createStringQueryBuildRoad(eIString));

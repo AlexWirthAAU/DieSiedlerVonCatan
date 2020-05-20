@@ -9,6 +9,7 @@ import com.example.catanserver.threads.GameThread;
 import com.example.catanserver.threads.SendToClient;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,10 +17,11 @@ public class TradeThread extends GameThread {
 
     private List<Player> potentialTradingPartners = new ArrayList<>(); // List of all potential Trading-Partner (have enough Ressources)
 
-    private Map<String, Integer> offer; // Map of the offered Ressources
-    private Map<String, Integer> want; // Map of the desired Ressources
+    private Map<String, Integer> offer = new HashMap<>(); // Map of the offered Ressources
+    private Map<String, Integer> want = new HashMap<>(); // Map of the desired Ressources
 
     private Trade trade; // Representation of a Trade
+    private GameSession gs; // current Game
 
     private Player currPlayer; // current Player
     private StringBuilder message = new StringBuilder(); // Message which should be sent to the Player
@@ -35,6 +37,7 @@ public class TradeThread extends GameThread {
     public TradeThread(User user, GameSession game, String tradeStr) {
         super(user, game);
         this.currPlayer = game.getPlayer(user.getUserId());
+        this.gs = game;
         this.tradeStr = tradeStr;
     }
 
@@ -54,8 +57,9 @@ public class TradeThread extends GameThread {
             System.out.println("checked");
             checkAndSetTradingPartners(game, want);
             String mess = buildMessage();
-            this.trade = new Trade(offer, want, currPlayer, potentialTradingPartners, mess, game);
-            game.setTrade(this.trade);
+            this.trade = new Trade(offer, want, currPlayer, potentialTradingPartners, mess, gs);
+            this.gs.setTrade(this.trade);
+            this.gs.setIsTradeOn(true);
 
             distribute(potentialTradingPartners, mess);
 
@@ -66,13 +70,13 @@ public class TradeThread extends GameThread {
     }
 
     /**
-     * Send the Trade-Message to all potential Trading-Partner.
+     * Send the Trade-Message and to the to all potential Trading-Partner.
      *
      * @param playersToSend List of Player, to which to Message should be sent
      * @param mess Message to send
      */
     private void distribute(List<Player> playersToSend, String mess) {
-        SendToClient.sendTradeMessageBroadcast(playersToSend, mess);
+        SendToClient.sendTradeMessageBroadcast(playersToSend, mess, this.gs);
     }
 
     /**
@@ -84,11 +88,11 @@ public class TradeThread extends GameThread {
 
         if (!currPlayer.getInventory().canTrade) {
             return false;
-        } else return currPlayer.getInventory().getWood() >= offer.get("WoodGive")
-                && currPlayer.getInventory().getWool() >= offer.get("WoolGive")
-                && currPlayer.getInventory().getWheat() >= offer.get("WheatGive")
-                && currPlayer.getInventory().getOre() >= offer.get("OreGive")
-                && currPlayer.getInventory().getClay() >= offer.get("ClayGive");
+        } else return currPlayer.getInventory().getWood() >= offer.get("Holz")
+                && currPlayer.getInventory().getWool() >= offer.get("Wolle")
+                && currPlayer.getInventory().getWheat() >= offer.get("Weizen")
+                && currPlayer.getInventory().getOre() >= offer.get("Erz")
+                && currPlayer.getInventory().getClay() >= offer.get("Lehm");
     }
 
     /**
@@ -107,11 +111,11 @@ public class TradeThread extends GameThread {
 
             if (!player.equals(currPlayer)) {
 
-                if (player.getInventory().getWood() >= want.get("WoodGet")
-                        && player.getInventory().getWool() >= want.get("WoolGet")
-                        && player.getInventory().getWheat() >= want.get("WheatGet")
-                        && player.getInventory().getOre() >= want.get("OreGet")
-                        && player.getInventory().getClay() >= want.get("ClayGet")) {
+                if (player.getInventory().getWood() >= want.get("Holz")
+                        && player.getInventory().getWool() >= want.get("Wolle")
+                        && player.getInventory().getWheat() >= want.get("Weizen")
+                        && player.getInventory().getOre() >= want.get("Erz")
+                        && player.getInventory().getClay() >= want.get("Lehm")) {
 
                     potentialTradingPartners.add(player);
                 }
@@ -131,18 +135,20 @@ public class TradeThread extends GameThread {
     private void setTradeData(String tradeStr) {
 
         String[] trd = tradeStr.split("/");
+
         int i = 0;
 
-        while (i < tradeStr.length() - 1) {
+        while (i < trd.length - 1) {
             int num = Integer.parseInt(trd[i + 1]);
             if (num == -1) {
+                i += 2;
                 break;
             }
             offer.put(trd[i], num);
             i += 2;
         }
 
-        while (i < tradeStr.length() - 1) {
+        while (i < trd.length - 1) {
             int num = Integer.parseInt(trd[i + 1]);
             want.put(trd[i], num);
             i += 2;
@@ -159,16 +165,15 @@ public class TradeThread extends GameThread {
      */
     private String buildMessage () {
 
-        message.append("TRADEMESSAGE/");
-        message.append(currPlayer.getDisplayName()).append("bietet ");
+        message.append(currPlayer.getDisplayName()).append(" bietet ");
 
         for (Map.Entry<String, Integer> entry : offer.entrySet()) {
             if (entry.getValue() > 0) {
-                message.append(entry.getValue()).append(" ").append(entry.getKey()).append(" ");
+                message.append(entry.getValue()).append(" ").append(entry.getKey()).append(" und ");
             }
         }
 
-        message.append(" und möchte dafür ");
+        message.append("moechte dafuer ");
 
         for (Map.Entry<String, Integer> entry : want.entrySet()) {
             if (entry.getValue() > 0) {

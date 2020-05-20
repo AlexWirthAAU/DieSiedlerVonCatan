@@ -1,6 +1,7 @@
 package com.example.catangame;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,7 @@ public class Trade implements Serializable {
 
     private Player tradingPartner; // Player which first acceted the Trade
     private Map<Player, Boolean> answers = new HashMap<>(); // Map of all Answers
-    private List<Player> answeredPlayers; // List of all Player, that have answered
+    private List<Player> answeredPlayers = new ArrayList<>(); // List of all Player, that have answered
     private String answerMessage; // Message to send after the Trade
 
     /**
@@ -48,16 +49,18 @@ public class Trade implements Serializable {
      */
     public Trade(Map<String, Integer> offer, Map<String, Integer> want, Player currPlayer, List<Player> potentialTradingPartners, String mess, GameSession game) {
 
-        this.woodGive = offer.get("WoodGive");
-        this.woodGet = want.get("WoodGet");
-        this.woolGive = offer.get("WoolGive");
-        this.woolGet = want.get("WoolGet");
-        this.wheatGive = offer.get("WheatGive");
-        this.wheatGet = want.get("WheatGet");
-        this.oreGive = offer.get("OreGive");
-        this.oreGet = want.get("OreGet");
-        this.clayGive = offer.get("ClayGive");
-        this.clayGet = want.get("ClayGet");
+        this.woodGive = offer.get("Holz");
+        this.woodGet = want.get("Holz");
+        this.woolGive = offer.get("Wolle");
+        this.woolGet = want.get("Wolle");
+        this.wheatGive = offer.get("Weizen");
+        this.wheatGet = want.get("Weizen");
+        this.oreGive = offer.get("Erz");
+        this.oreGet = want.get("Erz");
+        this.clayGive = offer.get("Lehm");
+        this.clayGet = want.get("Lehm");
+
+        System.out.println(String.valueOf(woodGive) + String.valueOf(woolGive) + String.valueOf(wheatGive) + String.valueOf(oreGive) + String.valueOf(clayGive) + String.valueOf(woodGet) + String.valueOf(woolGet) + String.valueOf(wheatGet) + String.valueOf(oreGet) + String.valueOf(clayGet));
 
         this.offer = offer;
         this.want = want;

@@ -30,6 +30,9 @@ public class GameSession implements Serializable {
     private Player curr;
     private int currPlayer; // current Player and his index
     private ArrayList<DevCard> devCards; // List of DevCards
+    private String message; // optional Message to alert after an Action
+    private boolean isCardBuild; // states whether a BuildRoad is started playing a Card
+    private boolean isTradeOn; // states whether a Trade is active
 
     /**
      * Constructor - Gives the Game the next ID from GameCounter,
@@ -71,6 +74,7 @@ public class GameSession implements Serializable {
         return null;
     }
 
+    // Getters
     public Gameboard getGameboard() {
         return gameboard;
     }
@@ -103,8 +107,20 @@ public class GameSession implements Serializable {
         return this.currTrade;
     }
 
-    public void setTrade(Trade trade) {
-        this.currTrade = trade;
+    public String getMessage() {
+        return this.message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public boolean isCardBuild() {
+        return this.isCardBuild;
+    }
+
+    public void setCardBuild(boolean isCardBuild) {
+        this.isCardBuild = isCardBuild;
     }
 
     public void addSettlement(Knot settlement) {
@@ -116,11 +132,6 @@ public class GameSession implements Serializable {
         cities.add(settlement);
     }
 
-    // add Structures
-    public void addRoad(Edge road) {
-        roads.add(road);
-    }
-
     // Setters
     public void setPlayers(List<Player> players) {
         this.players = players;
@@ -128,6 +139,23 @@ public class GameSession implements Serializable {
 
     public void setPlayer(Player player) {
         this.players.add(player);
+    }
+
+    public boolean isTradeOn() {
+        return this.isTradeOn;
+    }
+
+    // add Structures
+    public void addRoad(Edge road) {
+        roads.add(road);
+    }
+
+    public void setTrade(Trade trade) {
+        this.currTrade = trade;
+    }
+
+    public void setIsTradeOn(boolean isTradeOn) {
+        this.isTradeOn = isTradeOn;
     }
 
     /**

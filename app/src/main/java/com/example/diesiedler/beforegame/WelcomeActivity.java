@@ -42,6 +42,13 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     /**
+     * Going back is not possible here.
+     */
+    @Override
+    public void onBackPressed() {
+    }
+
+    /**
      * When the Button with the Text "Entdecke die Welt von Catan" is clicked,
      * the Thread with the Server-Connection is started.
      *

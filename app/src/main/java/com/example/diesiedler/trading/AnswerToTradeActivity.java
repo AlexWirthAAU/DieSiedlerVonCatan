@@ -11,9 +11,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.diesiedler.ChooseActionActivity;
+import com.example.catangame.Player;
 import com.example.diesiedler.MainActivity;
 import com.example.diesiedler.R;
+import com.example.diesiedler.RollDiceActivity;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.handler.HandlerOverride;
@@ -79,7 +80,7 @@ public class AnswerToTradeActivity extends AppCompatActivity {
 
         toSendAnswer = "accepted";
         logger.log(Level.INFO, "CREATE ANSWER YES");
-        Thread networkThread = new NetworkThread(ServerQueries.createStringQueryTrade(toSendAnswer));
+        Thread networkThread = new NetworkThread(ServerQueries.createStringQueryTradeAnswer(toSendAnswer));
         networkThread.start();
     }
 
@@ -89,6 +90,8 @@ public class AnswerToTradeActivity extends AppCompatActivity {
      * Handler for the AnswerToTradeActivity
      */
     private class AnswerToTradeHandler extends HandlerOverride {
+
+        private String mess;
 
         AnswerToTradeHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
@@ -108,11 +111,17 @@ public class AnswerToTradeActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
 
             Intent intentMain = new Intent(activity, MainActivity.class);
-            Intent intentSelect = new Intent(activity, ChooseActionActivity.class);
+            Intent intentSelect = new Intent(activity, RollDiceActivity.class);
 
             if (msg.arg1 == 4) {  // TODO: Change to enums
 
-                if (ClientData.currentGame.getCurr().getUserId() == ClientData.userId) {
+                intentSelect.putExtra("mess", mess);
+                intentMain.putExtra("mess", mess);
+                System.out.println(mess + " objstart");
+
+                Player currentPlayer = ClientData.currentGame.getPlayer(ClientData.currentGame.getCurrPlayer());
+
+                if (currentPlayer.getUserId() == ClientData.userId) {
                     startActivity(intentSelect);
                 } else {
                     startActivity(intentMain);
@@ -120,8 +129,8 @@ public class AnswerToTradeActivity extends AppCompatActivity {
             }
             if (msg.arg1 == 5) {  // TODO: Change to enums
 
-                intentMain.putExtra("mess", msg.obj.toString());
-                intentSelect.putExtra("mess", msg.obj.toString());
+                mess = msg.obj.toString();
+                mess = msg.obj.toString();
             }
         }
     }

@@ -63,10 +63,10 @@ public class PlayerInventory implements Serializable {
         this.ore = STARTVALUE;
         this.clay = STARTVALUE;
 
-        this.buildStreetCard = STARTVALUE;
-        this.inventionCard = STARTVALUE;
-        this.knightCard = STARTVALUE;
-        this.monopolCard = STARTVALUE;
+        this.buildStreetCard = 0;
+        this.inventionCard = 0;
+        this.knightCard = 0;
+        this.monopolCard = 0;
         this.cards = 0;
         this.victoryPoints = 0;
 
@@ -267,6 +267,7 @@ public class PlayerInventory implements Serializable {
 
     public void addBuildStreetCard(int amount) {
         this.buildStreetCard += amount;
+        this.getBuildStreetCardLinkedList().add(new BuildStreetCard());
         this.cards += amount;
     }
 
@@ -292,6 +293,7 @@ public class PlayerInventory implements Serializable {
 
     public void removeBuildStreetCard(int amount) {
         this.buildStreetCard -= amount;
+        this.getBuildStreetCardLinkedList().remove(this.getBuildStreetCardLinkedList().get(0));
         this.cards -= amount;
     }
 
@@ -444,6 +446,13 @@ public class PlayerInventory implements Serializable {
         this.clayport = clayport;
     }
 
+    public boolean isHasPorts() {
+        return hasPorts;
+    }
+
+    public void setHasPorts(boolean hasPorts) {
+        this.hasPorts = hasPorts;
+    }
 
     //Get Structures
     public LinkedList getSettlements() {
@@ -469,23 +478,19 @@ public class PlayerInventory implements Serializable {
             if (i >= 4) {
                 canTrade = true;
                 canBankTrade = true;
-                System.out.println("can Bank Trade");
             }
 
             if ((isWoodport() || isWoolport() || isWheatport() || isOreport() || isClayport())) {
                 hasPorts = true;
-                System.out.println("has Ports");
             }
 
             if (i >= 3) {
                 canTrade = true;
                 canPortTrade = true;
-                System.out.println("can Port Trade");
             }
 
             if (i >= 1) {
                 canTrade = true;
-                System.out.println("can Trade");
             }
         }
     }

@@ -47,7 +47,7 @@ public class Knot implements Serializable {
         this.isSettled = false;
         this.hasCity = false;
         this.idFigures = row + "" + column;
-        setIsHarbourKnot();
+        setIsHarbourKnot(this.id);
     }
 
     /**
@@ -104,38 +104,38 @@ public class Knot implements Serializable {
     }
 
     // Set Ports
-    private void setIsHarbourKnot() {
-        switch (this.idFigures) {
-            case "15":
-            case "16":
-            case "22":
-            case "23":
-            case "65":
-            case "66":
+    private void setIsHarbourKnot(String id) {
+        switch (id) {
+            case "settlement_1_5":
+            case "settlement_1_6":
+            case "settlement_2_2":
+            case "settlement_2_3":
+            case "settlement_6_5":
+            case "settlement_6_6":
                 this.isHarbourKnot = true;
                 this.isOrePort = true;
                 break;
-            case "18":
-            case "19":
-            case "31":
-            case "41":
+            case "settlement_1_8":
+            case "settlement_1_9":
+            case "settlement_3_1":
+            case "settlement_4_1":
                 this.isHarbourKnot = true;
                 this.isWheatPort = true;
                 break;
-            case "210":
-            case "310":
+            case "settlement_2_10":
+            case "settlement_3_10":
                 this.isHarbourKnot = true;
                 this.isWoolPort = true;
                 break;
-            case "410":
-            case "411":
-            case "53":
-            case "63":
+            case "settlement_4_10":
+            case "settlement_4_11":
+            case "settlement_5_3":
+            case "settlement_6_3":
                 this.isHarbourKnot = true;
                 this.isClayPort = true;
                 break;
-            case "68":
-            case "69":
+            case "settlement_6_8":
+            case "settlement_6_9":
                 this.isHarbourKnot = true;
                 this.isWoodPort = true;
                 break;

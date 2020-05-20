@@ -113,7 +113,6 @@ public class PlayInventionThread extends GameThread {
      */
     private String buildMessage() {
 
-        message.append("CARDPLAYMESSAGE/");
         message.append("Du hast eine Erfindungskarte gespielt und zwei ");
         message.append(resName).append(" erhalten");
 

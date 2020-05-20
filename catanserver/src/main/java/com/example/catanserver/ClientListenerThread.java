@@ -1,26 +1,12 @@
 package com.example.catanserver;
 
 import com.example.catangame.GameSession;
-import com.example.catanserver.threads.ErrorThread;
-import com.example.catanserver.threads.NextThread;
-import com.example.catanserver.threads.ResourceAllocationThread;
-import com.example.catanserver.threads.StartThread;
-import com.example.catanserver.threads.StopThread;
-import com.example.catanserver.threads.beforegame.ApplyThread;
-import com.example.catanserver.threads.beforegame.ColorThread;
-import com.example.catanserver.threads.beforegame.CreateThread;
-import com.example.catanserver.threads.beforegame.LoginThread;
-import com.example.catanserver.threads.building.BuildCityThread;
-import com.example.catanserver.threads.building.BuildRoadThread;
-import com.example.catanserver.threads.building.BuildSettlementThread;
-import com.example.catanserver.threads.cards.BuyCardThread;
-import com.example.catanserver.threads.cards.PlayInventionThread;
-import com.example.catanserver.threads.cards.PlayKnightThread;
-import com.example.catanserver.threads.cards.PlayMonopolThread;
-import com.example.catanserver.threads.trading.BankThread;
-import com.example.catanserver.threads.trading.PortThread;
-import com.example.catanserver.threads.trading.TradeAnswerThread;
-import com.example.catanserver.threads.trading.TradeThread;
+
+import com.example.catanserver.threads.*;
+import com.example.catanserver.threads.beforegame.*;
+import com.example.catanserver.threads.building.*;
+import com.example.catanserver.threads.cards.*;
+import com.example.catanserver.threads.trading.*;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -212,6 +198,16 @@ public class ClientListenerThread extends Thread {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     Thread tradeThread = new TradeThread(user, foundGame, messageSplit[3]);
                                                     tradeThread.start();
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
+                                                }
+
+                                                // Answering to a Trade
+                                                // A new TradeAnswerThread is started with the User, the GameId and the Answer as Data.
+                                                if (messageSplit[2].equals("TRADEANSWER")) {
+                                                    Server.currentlyThreaded.add(foundGame.getGameId());
+                                                    Thread tradeAnswerThread = new TradeAnswerThread(user, foundGame, messageSplit[3]);
+                                                    tradeAnswerThread.start();
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
                                                 }
 
                                                 // Trading with the Bank
@@ -220,6 +216,7 @@ public class ClientListenerThread extends Thread {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     Thread bankThread = new BankThread(user, foundGame, messageSplit[3]);
                                                     bankThread.start();
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
                                                 }
 
                                                 // Trading over a Port
@@ -228,6 +225,7 @@ public class ClientListenerThread extends Thread {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     Thread portThread = new PortThread(user, foundGame, messageSplit[3]);
                                                     portThread.start();
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
                                                 }
 
                                                 // Answer for a Trade
@@ -236,6 +234,7 @@ public class ClientListenerThread extends Thread {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     Thread tradeanswerThread = new TradeAnswerThread(user, foundGame, messageSplit[3]);
                                                     tradeanswerThread.start();
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
                                                 }
 
                                                 // Buying a DevCard
@@ -245,6 +244,7 @@ public class ClientListenerThread extends Thread {
                                                     System.out.println("Starting BUYCARDThread.");
                                                     Thread buyCadThread = new BuyCardThread(user, foundGame);
                                                     buyCadThread.start();
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
                                                 }
 
                                                 // Playing a Knight Card
@@ -254,6 +254,7 @@ public class ClientListenerThread extends Thread {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     Thread playKnightThread = new PlayKnightThread(user, foundGame, messageSplit[3]);
                                                     playKnightThread.start();
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
                                                 }
 
                                                 // Playing a Monopol Card
@@ -262,6 +263,7 @@ public class ClientListenerThread extends Thread {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     Thread playMonopolThread = new PlayMonopolThread(user, foundGame, messageSplit[3]);
                                                     playMonopolThread.start();
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
                                                 }
 
                                                 // Playing a Invention Card
@@ -270,6 +272,7 @@ public class ClientListenerThread extends Thread {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     Thread playInventionThread = new PlayInventionThread(user, foundGame, messageSplit[3]);
                                                     playInventionThread.start();
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
                                                 }
 
                                                 // Playing a BuildStreet Card
@@ -281,6 +284,7 @@ public class ClientListenerThread extends Thread {
                                                     System.out.println("Starting BUILDROADThread.");
                                                     Thread brThread = new BuildRoadThread(user, foundGame, edgeIndex, "CARD");
                                                     brThread.start();
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
                                                 }
 
                                                 // Going on to the next Player
@@ -289,6 +293,7 @@ public class ClientListenerThread extends Thread {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     Thread nextThread = new NextThread(user, foundGame);
                                                     nextThread.start();
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
                                                 }
 
                                                 // Building a Settlement
@@ -335,8 +340,17 @@ public class ClientListenerThread extends Thread {
                                                     rAThread.start();
                                                 }
 
+
                                                 // TODO: Implement Stealing
                                                 // TODO: Implement More DevCards?
+
+                                                if(messageSplit[2].equals("THIEF") && messageSplit.length > 3){
+                                                    Server.currentlyThreaded.add(foundGame.getGameId());
+                                                    System.out.println("Starting ThiefThread");
+                                                    Thread thiefThread = new ThiefThread(user, foundGame, messageSplit[3]);
+                                                    thiefThread.start();
+                                                }
+
 
                                             }
 
