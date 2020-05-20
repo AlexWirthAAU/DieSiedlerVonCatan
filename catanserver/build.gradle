@@ -1,19 +1,9 @@
 apply plugin: 'java-library'
-apply plugin: 'jacoco'
-
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(path: ':catangame')
-    testImplementation 'junit:junit:4.12'
+
 }
 
-jacocoTestReport {
-    reports {
-        xml.enabled true
-        html.enabled true
-    }
-}
-
-sourceCompatibility = "8"
-targetCompatibility = "8"
+sourceCompatibility = "7"
+targetCompatibility = "7"
