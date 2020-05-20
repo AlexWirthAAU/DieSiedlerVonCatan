@@ -43,6 +43,7 @@
         <activity android:name=".building.BuildRoadActivity" />
         <activity android:name=".building.BuildCityActivity" />
         <activity android:name=".ChooseActionActivity" />
+        <activity android:name=".ScoreBoardActivity" />
     </application>
 
 </manifest>

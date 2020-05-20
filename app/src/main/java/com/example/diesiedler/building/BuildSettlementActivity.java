@@ -24,6 +24,7 @@ import com.example.catangame.gameboard.Knot;
 import com.example.diesiedler.ChooseActionActivity;
 import com.example.diesiedler.MainActivity;
 import com.example.diesiedler.R;
+import com.example.diesiedler.ScoreBoardActivity;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.UpdateBuildSettlementView;
@@ -134,7 +135,8 @@ public class BuildSettlementActivity extends AppCompatActivity implements View.O
                 //TODO: load new activity
                 break;
             case R.id.scoreBoard:
-                //TODO: load new activity
+                intent = new Intent(getBaseContext(), ScoreBoardActivity.class);
+                startActivity(intent);
                 break;
         }
     }
