@@ -33,8 +33,6 @@ public class thiefTest {
     }
 
 
-    /**
-     * TODO: Test not working
      @Test public void testMoveThiefNormal(){
      int testIndex = 12;
      for (Tile tile: correctGameSessionTiles) {
@@ -47,7 +45,7 @@ public class thiefTest {
      Assert.assertEquals(correctGameSessionTiles[i].isThief(), testGameSessionTiles[i].isThief());
      }
      }
-     */
+
 
     @Test
     public void testMoveThiefNegative(){
