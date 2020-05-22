@@ -127,7 +127,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //TODO: load new activity
                 break;
             case R.id.scoreBoard:
-                //TODO: load new activity
+                intent = new Intent(getBaseContext(), ScoreBoardActivity.class);
+                startActivity(intent);
                 break;
         }
     }

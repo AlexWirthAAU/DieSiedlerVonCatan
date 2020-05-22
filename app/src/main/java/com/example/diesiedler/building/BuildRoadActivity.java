@@ -20,7 +20,10 @@ import com.example.catangame.gameboard.Edge;
 import com.example.diesiedler.ChooseActionActivity;
 import com.example.diesiedler.MainActivity;
 import com.example.diesiedler.R;
+import com.example.diesiedler.RollDiceActivity;
+import com.example.diesiedler.ScoreBoardActivity;
 import com.example.diesiedler.presenter.ClientData;
+import com.example.diesiedler.presenter.RollDice;
 import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.UpdateBuildRoadView;
 import com.example.diesiedler.presenter.UpdateGameboardView;
@@ -148,7 +151,8 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
                 //TODO: load new activity
                 break;
             case R.id.scoreBoard:
-                //TODO: load new activity
+                intent = new Intent(getBaseContext(), ScoreBoardActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -178,9 +182,19 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
 
                 if (ClientData.currentGame.getCurrPlayer() == ClientData.userId) {
 
-                    Intent intent = new Intent(activity, BuildRoadActivity.class);
-                    intent.putExtra("card", "CARD");
-                    startActivity(intent);
+                    if (ClientData.currentGame.getPlayer(ClientData.userId).getInventory().getRoads().size() < 3) {
+                        if (ClientData.currentGame.getPlayer(ClientData.userId).getInventory().getSettlements().size() == 2) {
+                            Intent intent = new Intent(activity, RollDiceActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Intent intent = new Intent(activity, BuildSettlementActivity.class);
+                            startActivity(intent);
+                        }
+                    } else {
+                        Intent intent = new Intent(activity, BuildRoadActivity.class);
+                        intent.putExtra("card", "CARD");
+                        startActivity(intent);
+                    }
 
                 } else {
                     Intent intent = new Intent(activity, MainActivity.class);

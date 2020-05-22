@@ -52,9 +52,17 @@ public class possibleEdgesRoadTest {
     }
 
     @Test
-    public void initialRoadBuild() {
+    public void initialRoadBuildFirstRoad() {
         posssibleEdges = UpdateBuildRoadView.possibleEdges(gameSession, null);
-        Assert.assertEquals(3, posssibleEdges.size());
+        Assert.assertEquals(2, posssibleEdges.size());
+        Assert.assertEquals(1, UpdateBuildRoadView.status(gameSession, null));
+    }
+
+    @Test
+    public void initialRoadBuildSecondRoad() {
+        playerInventory.addRoad(edge1);
+        posssibleEdges = UpdateBuildRoadView.possibleEdges(gameSession, null);
+        Assert.assertEquals(1, posssibleEdges.size());
         Assert.assertEquals(1, UpdateBuildRoadView.status(gameSession, null));
     }
 
@@ -95,6 +103,8 @@ public class possibleEdgesRoadTest {
 
     @Test
     public void buildWithCard() {
+        playerInventory.addRoad(edge1);
+        playerInventory.addRoad(edge2);
         playerInventory.setWood(0);
         playerInventory.setClay(0);
 
