@@ -22,7 +22,12 @@ public class BuildRoad {
         Player player = gameSession.getPlayer(userID);
         road.setPlayer(player);
         gameSession.addRoad(road);
-        updatePlayerInventoryInit(player, road);
+
+        if (player.getInventory().getRoads().size() < 2) {
+            updatePlayerInventoryInit(player, road);
+        } else {
+            updatePlayerInventory(player, road);
+        }
 
         /**
          * If the player has less than two roads, the resources are not affected, as the first two roads can be built for free.
