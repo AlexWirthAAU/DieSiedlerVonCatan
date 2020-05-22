@@ -22,6 +22,7 @@ public class BuildRoad {
         Player player = gameSession.getPlayer(userID);
         road.setPlayer(player);
         gameSession.addRoad(road);
+        int lastPlayer = gameSession.getPlayers().size() - 1;
 
         if (player.getInventory().getRoads().size() < 2) {
             updatePlayerInventoryInit(player, road);
@@ -29,14 +30,17 @@ public class BuildRoad {
             updatePlayerInventory(player, road);
         }
 
+        System.out.println("Road built from Player: " + player.getUserId());
+
         /**
          * If the player has less than two roads, the resources are not affected, as the first two roads can be built for free.
          * If its a regular built, the resources need to be reduced.
          */
 
 
-        if (player.getInventory().getRoads().size() == 1 && !(player.equals(gameSession.getPlayers().get(gameSession.getPlayers().size() - 1)))) {
+        if (player.getInventory().getRoads().size() == 1 && !(player.getUserId() == lastPlayer)) {
             gameSession.nextPlayer();
+            System.out.println("Next Player");
         }
 
         if (player.getInventory().getRoads().size() == 2) {
@@ -51,9 +55,8 @@ public class BuildRoad {
 
         if (player.getInventory().getRoads().size() > 2) {
             gameSession.nextPlayer();
+            System.out.println("Regulärer Spielzug");
         }
-
-
     }
 
     /**
