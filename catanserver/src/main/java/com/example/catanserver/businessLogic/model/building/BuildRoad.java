@@ -20,21 +20,35 @@ public class BuildRoad {
         Gameboard gameboard = gameSession.getGameboard();
         Edge road = gameboard.getEdges()[roadIndex];
         Player player = gameSession.getPlayer(userID);
-
+        road.setPlayer(player);
+        gameSession.addRoad(road);
+        updatePlayerInventoryInit(player, road);
 
         /**
          * If the player has less than two roads, the resources are not affected, as the first two roads can be built for free.
          * If its a regular built, the resources need to be reduced.
          */
-        if (player.getInventory().getRoads().size() < 2) {
-            updatePlayerInventoryInit(player, road);
-        } else {
-            updatePlayerInventory(player, road);
+
+
+        if (player.getInventory().getRoads().size() == 1 && !(player.equals(gameSession.getPlayers().get(gameSession.getPlayers().size() - 1)))) {
+            gameSession.nextPlayer();
         }
 
-        road.setPlayer(player);
-        gameSession.addRoad(road);
-        gameSession.nextPlayer();
+        if (player.getInventory().getRoads().size() == 2) {
+            gameSession.previosPlayer();
+            System.out.println("Spieler in the middle");
+        }
+
+        if (player.getInventory().getRoads().size() == 2 && player.equals(gameSession.getPlayer(0))) {
+            gameSession.nextPlayer();
+            System.out.println("Letzter INIT Spielzug");
+        }
+
+        if (player.getInventory().getRoads().size() > 2) {
+            gameSession.nextPlayer();
+        }
+
+
     }
 
     /**
@@ -61,6 +75,7 @@ public class BuildRoad {
         gameSession.addRoad(road);
 
         list.get(0).removeCounter();
+
 
         if (list.get(0).getCounter() == 0) {
             player.getInventory().removeBuildStreetCard(1);
