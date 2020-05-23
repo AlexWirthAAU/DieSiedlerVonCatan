@@ -21,7 +21,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
 
         List<Player> playerList = ClientData.currentGame.getPlayers();
 
-        PlayerListAdapter adapter = new PlayerListAdapter(this, R.layout.adapter_view_layout, playerList);
+        PlayerListAdapter adapter = new PlayerListAdapter(this, R.layout.adapter_view_layout_scoreboard, playerList);
         scoreList.setAdapter(adapter);
     }
 }

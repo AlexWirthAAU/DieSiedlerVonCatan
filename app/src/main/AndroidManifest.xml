@@ -44,6 +44,7 @@
         <activity android:name=".building.BuildCityActivity" />
         <activity android:name=".ChooseActionActivity" />
         <activity android:name=".ScoreBoardActivity" />
+        <activity android:name=".cards.DevCardInventoryActivity" />
     </application>
 
 </manifest>

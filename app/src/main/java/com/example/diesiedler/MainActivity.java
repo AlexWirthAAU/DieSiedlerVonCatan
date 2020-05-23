@@ -18,6 +18,7 @@ import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catangame.PlayerInventory;
 import com.example.diesiedler.building.BuildSettlementActivity;
+import com.example.diesiedler.cards.DevCardInventoryActivity;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.UpdateGameboardView;
 import com.example.diesiedler.presenter.handler.HandlerOverride;
@@ -124,7 +125,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent;
         switch (view.getId()) {
             case R.id.devCard:
-                //TODO: load new activity
+                intent = new Intent(getBaseContext(), DevCardInventoryActivity.class);
+                startActivity(intent);
                 break;
             case R.id.scoreBoard:
                 intent = new Intent(getBaseContext(), ScoreBoardActivity.class);
