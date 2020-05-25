@@ -151,5 +151,6 @@ public class TradeAnswerThread extends GameThread {
         game.setIsTradeOn(false);
         game.nextPlayer();
         SendToClient.sendTradeMessageBroadcast(playersToSend, mess, game);
+        SendToClient.sendGameSessionBroadcast(game);
     }
 }

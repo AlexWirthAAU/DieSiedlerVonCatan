@@ -17,7 +17,7 @@ import java.util.LinkedList;
  */
 public class PlayerInventory implements Serializable {
 
-    private final int STARTVALUE = 3; // Every Player has 3 of every Ressource on Game-Start
+    private final int STARTVALUE = 1; // Every Player has 3 of every Ressource on Game-Start
     private final int victoryPointsSettlement = 2; // Victory Points for Building
     private int wool;
     private int wheat;

@@ -32,19 +32,20 @@ public class thiefTest {
         correctGameSessionTiles = null;
     }
 
-    @Test
-    public void testMoveThiefNormal(){
-        int testIndex = 12;
-        for (Tile tile: correctGameSessionTiles) {
-            tile.setThief(false);
-        }
-        correctGameSessionTiles[testIndex].setThief(true);
-        Assert.assertTrue(Thief.moveThief(testGameSession,testIndex));
 
-        for (int i = 0; i < testGameSessionTiles.length; i++) {
-            Assert.assertEquals(correctGameSessionTiles[i].isThief(), testGameSessionTiles[i].isThief());
-        }
-    }
+     @Test public void testMoveThiefNormal(){
+     int testIndex = 12;
+     for (Tile tile: correctGameSessionTiles) {
+     tile.setThief(false);
+     }
+     correctGameSessionTiles[testIndex].setThief(true);
+     Assert.assertTrue(Thief.moveThief(testGameSession,testIndex));
+
+     for (int i = 0; i < testGameSessionTiles.length; i++) {
+     Assert.assertEquals(correctGameSessionTiles[i].isThief(), testGameSessionTiles[i].isThief());
+     }
+     }
+
 
     @Test
     public void testMoveThiefNegative(){

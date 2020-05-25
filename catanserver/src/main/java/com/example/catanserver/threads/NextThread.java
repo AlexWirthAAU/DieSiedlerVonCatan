@@ -1,6 +1,7 @@
 package com.example.catanserver.threads;
 
 import com.example.catangame.GameSession;
+import com.example.catanserver.Server;
 import com.example.catanserver.User;
 
 /**
@@ -24,5 +25,6 @@ public class NextThread extends GameThread {
     public void run() {
         game.nextPlayer();
         SendToClient.sendGameSessionBroadcast(game);
+        Server.currentlyThreaded.remove(game.getGameId());
     }
 }

@@ -2,7 +2,10 @@ package com.example.catangame.gameboard;
 
 import java.io.Serializable;
 
-// TODO: kommenieren
+/**
+ * @author Alex Wirth
+ * The gameboard contains all information about the current settlements, citys and roads.
+ */
 public class Gameboard implements Serializable {
 
     private Tile[] tiles = new Tile[19];        //Gameboard is always compound of 19 hexagons
@@ -13,6 +16,9 @@ public class Gameboard implements Serializable {
         for (int i = 1; i < 20; i++) {
             tiles[i - 1] = new Tile(i);
         }
+        /**
+         * The knots, tiles and edges are instantiated
+         */
         initKnots();
         initTileKnots();
         initEdges();
@@ -292,7 +298,6 @@ public class Gameboard implements Serializable {
         }
     }
 
-    // Get Arrays of all Gameboard-Elements
     public Tile[] getTiles() {
         return tiles;
     }

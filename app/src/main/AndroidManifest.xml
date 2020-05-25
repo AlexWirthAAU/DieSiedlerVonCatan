@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
+        android:theme="@style/AppTheme">
 
         <activity android:name=".ThiefActivity"></activity>
         <activity android:name=".ShowInventoryActivity" />
@@ -42,6 +43,7 @@
         <activity android:name=".building.BuildRoadActivity" />
         <activity android:name=".building.BuildCityActivity" />
         <activity android:name=".ChooseActionActivity" />
+        <activity android:name=".ScoreBoardActivity" />
     </application>
 
 </manifest>

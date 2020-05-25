@@ -66,7 +66,7 @@ public class AnswerToTradeActivity extends AppCompatActivity {
 
         toSendAnswer = "dismissed";
         logger.log(Level.INFO, "CREATE ANSWER NO");
-        Thread networkThread = new NetworkThread(ServerQueries.createStringQueryTrade(toSendAnswer));
+        Thread networkThread = new NetworkThread(ServerQueries.createStringQueryTradeAnswer(toSendAnswer));
         networkThread.start();
     }
 

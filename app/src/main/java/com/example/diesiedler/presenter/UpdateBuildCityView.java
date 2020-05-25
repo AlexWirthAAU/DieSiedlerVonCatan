@@ -10,28 +10,42 @@ import com.richpath.RichPathView;
 
 import java.util.LinkedList;
 
-// TODO: komentieren
+/**
+ * @author Alex Wirth
+ * The purpose of this class, is to update the view that is loaded when a player chooses to build a city. The gameboard is refreshed, highlighting the
+ * knots on which the player may build a city on.
+ */
 public class UpdateBuildCityView {
 
-    public static int updateView(GameSession gs, RichPathView rpv) {
+    /**
+     * Highlights the knots in red.
+     *
+     * @param gs
+     * @param rpv
+     * @return: 0 -> player does not have enough resources | 1 -> player can build
+     */
+    public static void updateView(GameSession gs, RichPathView rpv) {
         LinkedList<Knot> possibleKnots = possibleKnots(gs);
+        int status = status(gs);
 
-        if (possibleKnots != null) {
+        if (status == 1) {
             for (Knot k : possibleKnots
             ) {
-                RichPath knotPath = rpv.findRichPathByName(k.getId());
-                knotPath.setFillColor(Color.RED);
+                RichPath knot = rpv.findRichPathByName(k.getId());
+                knot.setFillColor(Color.RED);
             }
-            return 1;
-        } else {
-            //not enough resources
-            return 0;
         }
     }
 
+    /**
+     * This method checkes the current state of the gamesession to return a list of knots, the player can build on.
+     * The knots in the returned list will be highlighted in red, in method "updateView".
+     * @param gs
+     * @return -> list of possible knots to build on
+     */
     private static LinkedList<Knot> possibleKnots(GameSession gs) {
         LinkedList<Knot> possibleKnots = new LinkedList<>();
-        Player p = gs.getPlayer(ClientData.userId);
+        Player p = gs.getPlayer(gs.getCurrPlayer());
 
 
         if (p.getInventory().getWheat() >= 2 && p.getInventory().getOre() >= 3) {
@@ -44,6 +58,16 @@ public class UpdateBuildCityView {
             return possibleKnots;
         } else {
             return null;
+        }
+    }
+
+    public static int status(GameSession gs) {
+        LinkedList<Knot> possibleKnots = possibleKnots(gs);
+
+        if (possibleKnots == null) {
+            return 0;
+        } else {
+            return 1;
         }
     }
 

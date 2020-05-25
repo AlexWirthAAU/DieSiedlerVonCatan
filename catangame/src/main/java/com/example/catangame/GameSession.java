@@ -189,4 +189,13 @@ public class GameSession implements Serializable {
         }
         curr = players.get(currPlayer);
     }
+
+    public void previosPlayer() {
+        if (currPlayer == 0) {
+            currPlayer = players.size() - 1;
+        } else {
+            currPlayer--;
+        }
+        curr = players.get(currPlayer);
+    }
 }

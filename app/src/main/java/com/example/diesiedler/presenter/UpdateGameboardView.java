@@ -12,9 +12,14 @@ import com.richpath.RichPath;
 import com.richpath.RichPathView;
 
 //TODO: Handle Colors!
-// TODO: komentieren
-public class UpdateGameboardView {
 
+/**
+ * @author Alex Wirth
+ * This class updates the gameboard depending on the state of the current gamesession object.
+ * Each asset of the gameborad is checked for an owner. If a player own an asset, it will be colored in the player's game-appereance color.
+ * Also the thief's position is checked to view him on the correct tile.
+ */
+public class UpdateGameboardView {
 
     public static void updateView(GameSession gs, RichPathView rpv) {
         Gameboard g = gs.getGameboard();

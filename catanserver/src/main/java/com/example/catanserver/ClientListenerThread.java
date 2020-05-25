@@ -318,7 +318,6 @@ public class ClientListenerThread extends Thread {
                                                     System.out.println("Starting BUILDSETTLEMENTThread.");
                                                     Thread bsThread = new BuildSettlementThread(user, foundGame, knotIndex);
                                                     bsThread.start();
-                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
                                                 }
 
                                                 // Building a Road
@@ -330,7 +329,6 @@ public class ClientListenerThread extends Thread {
                                                     System.out.println("Starting BUILDROADThread.");
                                                     Thread brThread = new BuildRoadThread(user, foundGame, edgeIndex, " ");
                                                     brThread.start();
-                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
                                                 }
 
                                                 // Building a City
@@ -342,11 +340,10 @@ public class ClientListenerThread extends Thread {
                                                     System.out.println("Starting BUILDCITYThread.");
                                                     Thread bcThread = new BuildCityThread(foundGame, user, knotIndex);
                                                     bcThread.start();
-                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
                                                 }
 
                                                 // Dicing
-                                                // A new RessourceAllocationThread is started with the User, the GameId
+                                                // A new ResourceAllocationThread is started with the User, the GameId
                                                 // and the diced Value as Data.
                                                 if (messageSplit[2].equals("DICEVALUE")) {
                                                     int diceValue = Integer.parseInt(messageSplit[3]);
@@ -354,7 +351,6 @@ public class ClientListenerThread extends Thread {
                                                     System.out.println("Starting DICEVALUEThread");
                                                     Thread rAThread = new ResourceAllocationThread(user, foundGame, diceValue);
                                                     rAThread.start();
-                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
                                                 }
 
 
