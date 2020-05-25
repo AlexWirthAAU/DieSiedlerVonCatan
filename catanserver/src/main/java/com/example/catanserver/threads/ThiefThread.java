@@ -14,17 +14,32 @@ import com.example.catanserver.businessLogic.model.Thief;
 public class ThiefThread extends GameThread {
 
     String tileIndex;
+    private String card;
 
-    public ThiefThread(User user, GameSession game, String tileIndex) {
+    /**
+     * @param user
+     * @param game
+     * @param tileIndex
+     * @param "CARD"    when the Thread was loaded playing a BuildStreetCard, else null
+     */
+    public ThiefThread(User user, GameSession game, String tileIndex, String card) {
         super(user, game);
         this.tileIndex = tileIndex;
+        this.card = card;
     }
 
+    /**
+     * When card is "CARD" is executes the <code>updateRessources</code>
+     * Method in <code>Thief</code>. It send the new GameSession broadcast.
+     */
     public void run(){
         try {
             int thiefIndex = Integer.parseInt(tileIndex);
             if (game.getCurr().getUserId() == user.getUserId()) {
                 if(Thief.moveThief(game,thiefIndex)){
+                    if (card.equals("CARD")) {
+                        Thief.updateRessources(game, thiefIndex, game.getPlayer(user.getUserId()));
+                    }
                     SendToClient.sendGameSessionBroadcast(game);
                 }
             }

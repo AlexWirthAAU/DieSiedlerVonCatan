@@ -144,10 +144,10 @@ public class ServerQueries {
     /**
      * Creates PlayKnightCard-Query
      *
-     * @return Query with Identifier
+     * @return Query with Identifier and Id
      */
-    public static String createStringQueryPlayKnightCard() {
-        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " PLAYKNIGHT";
+    public static String createStringQueryPlayKnightCard(String id) {
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " PLAYKNIGHT " + id;
     }
 
     /**

@@ -1,13 +1,13 @@
 package com.example.diesiedler;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.catangame.gameboard.Tile;
 import com.example.diesiedler.presenter.ClientData;
@@ -28,6 +28,7 @@ import com.richpath.RichPathView;
 public class ThiefActivity extends AppCompatActivity {
 
     private Handler handler = new ThiefHandler(Looper.getMainLooper(), this);
+    private String card; // "CARD" when to Activity is started from the PlayCardActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,14 @@ public class ThiefActivity extends AppCompatActivity {
         setContentView(R.layout.gameboardview);
 
         ClientData.currentHandler = handler;
+
+        card = getIntent().getStringExtra("card");
+
+        if (card != null) {
+            System.out.println(card + " cardin");
+        }
+
+        System.out.println(card + " card");
 
         RichPathView richPathView = findViewById(R.id.ic_gameboardView);
         UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
@@ -57,7 +66,13 @@ public class ThiefActivity extends AppCompatActivity {
         }
         String tIString = Integer.toString(tileIndex);
 
-        Thread networkThread = new NetworkThread(ServerQueries.createStringQueryMoveThief(tIString));
+        Thread networkThread;
+
+        if (card != null) {
+            networkThread = new NetworkThread(ServerQueries.createStringQueryPlayKnightCard(tIString));
+        } else {
+            networkThread = new NetworkThread(ServerQueries.createStringQueryMoveThief(tIString));
+        }
         networkThread.start();
     }
 

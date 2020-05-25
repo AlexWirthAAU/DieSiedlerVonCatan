@@ -33,6 +33,8 @@ public class GameSession implements Serializable {
     private String message; // optional Message to alert after an Action
     private boolean isCardBuild; // states whether a BuildRoad is started playing a Card
     private boolean isTradeOn; // states whether a Trade is active
+    private int knightPowerCount; // Number of Knight-Cards the Player with the greatest Knightpower has
+    private Player knightPowerOwner; // Player which has the greatest Knightpower
 
     /**
      * Constructor - Gives the Game the next ID from GameCounter,
@@ -107,20 +109,63 @@ public class GameSession implements Serializable {
         return this.currTrade;
     }
 
-    public String getMessage() {
-        return this.message;
+    public boolean isTradeOn() {
+        return this.isTradeOn;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public String getMessage() {
+        return this.message;
     }
 
     public boolean isCardBuild() {
         return this.isCardBuild;
     }
 
+    public int getKnightPowerCount() {
+        return this.knightPowerCount;
+    }
+
+    public void setKnightPowerCount(int knightPowerCount) {
+        this.knightPowerCount = knightPowerCount;
+    }
+
+
+    // Setters
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
+    public void setPlayer(Player player) {
+        this.players.add(player);
+    }
+
+    public void setTrade(Trade trade) {
+        this.currTrade = trade;
+    }
+
+    public void setIsTradeOn(boolean isTradeOn) {
+        this.isTradeOn = isTradeOn;
+    }
+
+    public Player getKnightPowerOwner() {
+        return this.knightPowerOwner;
+    }
+
+    public void setKnightPowerOwner(Player knightPowerOwner) {
+        this.knightPowerOwner = knightPowerOwner;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public void setCardBuild(boolean isCardBuild) {
         this.isCardBuild = isCardBuild;
+    }
+
+    // add Structures
+    public void addRoad(Edge road) {
+        roads.add(road);
     }
 
     public void addSettlement(Knot settlement) {
@@ -132,31 +177,6 @@ public class GameSession implements Serializable {
         cities.add(settlement);
     }
 
-    // Setters
-    public void setPlayers(List<Player> players) {
-        this.players = players;
-    }
-
-    public void setPlayer(Player player) {
-        this.players.add(player);
-    }
-
-    public boolean isTradeOn() {
-        return this.isTradeOn;
-    }
-
-    // add Structures
-    public void addRoad(Edge road) {
-        roads.add(road);
-    }
-
-    public void setTrade(Trade trade) {
-        this.currTrade = trade;
-    }
-
-    public void setIsTradeOn(boolean isTradeOn) {
-        this.isTradeOn = isTradeOn;
-    }
 
     /**
      * Make the next Player in the Row the current Player

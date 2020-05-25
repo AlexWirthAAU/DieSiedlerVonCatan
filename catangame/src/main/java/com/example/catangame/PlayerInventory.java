@@ -1,7 +1,6 @@
 package com.example.catangame;
 
 import com.example.catangame.devcards.BuildStreetCard;
-import com.example.catangame.devcards.KnightCard;
 import com.example.catangame.gameboard.Edge;
 import com.example.catangame.gameboard.Knot;
 
@@ -47,8 +46,7 @@ public class PlayerInventory implements Serializable {
 
     private LinkedList<Knot> roadKnots = new LinkedList<>(); // stores Knots, where the Player could add his next Road
 
-    private LinkedList<KnightCard> knightCards = new LinkedList<>(); // List of Players Cards
-    private LinkedList<BuildStreetCard> buildStreetCardLinkedList = new LinkedList<>();
+    private LinkedList<BuildStreetCard> buildStreetCardLinkedList = new LinkedList<>(); // List of BuildStreetCards
 
     private int[] resValues = new int[5]; // Array of Ressource-Values
     private boolean[] portValues = new boolean[5]; // Array of Port-Values
@@ -347,6 +345,10 @@ public class PlayerInventory implements Serializable {
 
     public void setClay(int clay) {
         this.clay = clay;
+    }
+
+    public int[] getResValues() {
+        return this.resValues;
     }
 
     // Get and Set Victory Points

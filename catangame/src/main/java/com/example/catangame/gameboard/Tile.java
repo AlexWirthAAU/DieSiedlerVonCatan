@@ -95,33 +95,12 @@ public class Tile implements Serializable {
 
     }
 
-
-    public int getId() {
-        return id;
-    }
-
-    public String getResource() {
-        return resource;
-    }
-
     public boolean isThief() {
         return isThief;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public void setThief(boolean thief) {
         this.isThief = thief;
-    }
-
-    public void setKnots(Knot[] knots) {
-        this.knots = knots;
-    }
-
-    public Knot[] getKnots() {
-        return knots;
     }
 
 
@@ -177,14 +156,6 @@ public class Tile implements Serializable {
                 break;
             }
         }
-    }
-
-    public boolean isThief() {
-        return isThief;
-    }
-
-    public void setThief(boolean thief) {
-        this.isThief = true;
     }
 }
 
