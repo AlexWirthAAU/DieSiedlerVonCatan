@@ -50,6 +50,8 @@ public class GameSession implements Serializable {
         cities = new LinkedList<>();
         currPlayer = 0;
         this.devCards = new DevCardStack().getDevCardStack();
+        this.knightPowerCount = 0;
+        this.setKnightPowerOwner(null);
     }
 
     // Getter

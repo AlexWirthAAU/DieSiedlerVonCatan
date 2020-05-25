@@ -31,7 +31,11 @@ public class KnightPower {
         int knightPowerCount = game.getKnightPowerCount();
         Player knightCountOwner = game.getKnightPowerOwner();
         int candidateId = knightPowerCandidate.getUserId();
-        int ownerId = knightCountOwner.getUserId();
+        int ownerId = -1;
+
+        if (knightCountOwner != null) {
+            ownerId = knightCountOwner.getUserId();
+        }
 
         StringBuilder builder = new StringBuilder();
         builder.append(knightPowerCandidate.getDisplayName()).append(" hat jetzt die größte Rittermacht");
@@ -42,14 +46,17 @@ public class KnightPower {
 
         game.nextPlayer();
 
-        if (knightCardCount <= knightPowerCount || candidateId == ownerId) {
+        if (ownerId != -1 && (knightCardCount <= knightPowerCount || candidateId == ownerId)) {
             SendToClient.sendGameSessionBroadcast(game);
         } else {
             game.setKnightPowerCount(knightCardCount);
             game.setKnightPowerOwner(knightPowerCandidate);
 
-            knightPowerCandidate.getInventory().addVictoryPoints(1);
-            knightCountOwner.getInventory().removeVictoryPoints(1);
+            knightPowerCandidate.getInventory().addVictoryPoints(2);
+
+            if (knightCountOwner != null) {
+                knightCountOwner.getInventory().removeVictoryPoints(2);
+            }
 
             SendToClient.sendKnightMessage(toSend, builder.toString());
             SendToClient.sendGameSessionBroadcast(game);
@@ -97,13 +104,18 @@ public class KnightPower {
             }
 
             if (greatest == 0) {
+                if (knightCardCount == 0) {
+                    game.setKnightPowerCount(0);
+                    game.setKnightPowerOwner(null);
+                    knightPowerCandidate.getInventory().removeVictoryPoints(2);
+                }
                 SendToClient.sendGameSessionBroadcast(game);
             } else {
                 game.setKnightPowerCount(greatest);
                 game.setKnightPowerOwner(player);
 
-                knightPowerCandidate.getInventory().removeVictoryPoints(1);
-                player.getInventory().addVictoryPoints(1);
+                knightPowerCandidate.getInventory().removeVictoryPoints(2);
+                player.getInventory().addVictoryPoints(2);
 
                 toSend.add(knightPowerCandidate);
                 toSend.add(player);
