@@ -57,6 +57,8 @@ Entscheidet sich der Spieler eine Siedlung zu bauen, so werden ihm alle möglich
 Straßen können entweder an andere bereits existierende Straßen des Spielers oder an eine seiner Siedlungen gebaut werden. Auch hier werden die möglichen Kanten zunächst rot eingefärbt. Baut der Spieler eine Straße, wird sie in seiner Spielfarbe eingefärbt.
 Siedlungen können im Verlauf des Spieles zu Städten umgebaut werden. Städte werden als schwarze Quadrate mit Punkten der Spielerfarbe dargestellt.
 ### Längste Handelsstraße
+Hat ein Spieler eine Straße, die mindestens 5 Kanten lang ist und nicht von einer Siedlung oder einer Stadt eines Gegners unterbrochen wird, ist er der Besitzer der Entwicklungskarte "Längste Handelsstraße". Diese Karte exisitiert nur einmal im Spiel. Es kann also nur einen Spieler geben der die längste Straße besitzt. Haben 2 Spieler beispielsweise je eine Straße mit 6 Kanten, erfüllen sie zwar die Voraussetzung eine Straße, die länger als 5 Kanten lange ist zu besitzen, sind allerdings nicht alleiiniger Halter dieser Karte, weshlab niemand im Besitz der Entwicklungskarte ist. 
+Dem Spieler mit der längsten Handelsstraße werden 2 zusätzliche Siegespunkte gutgeschrieben, so lange er im Besitz der Karte ist.
 
 ### Würfeln
 Wenn ein Spieler an der Reihe ist, wird er aufgefordert zu würfeln. Dies passiert durch Schütteln seines Smartphones. Eine zufallsgenerierte Zahl wird dem Spieler angezeigt.
