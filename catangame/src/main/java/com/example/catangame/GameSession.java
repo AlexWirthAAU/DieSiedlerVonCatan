@@ -169,6 +169,12 @@ public class GameSession implements Serializable {
         this.currPlayer = id;
     }
 
+    public void setDevCards(ArrayList<DevCard> devCards) {
+        this.devCards = devCards;
+    }
+
+    ;
+
     // add Structures
     public void addRoad(Edge road) {
         roads.add(road);

@@ -1,13 +1,13 @@
 package com.example.diesiedler.threadTests;
 
 import com.example.catangame.GameSession;
+import com.example.catangame.Player;
 import com.example.catanserver.User;
 import com.example.catanserver.threads.SendToClient;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -18,7 +18,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class SendToClientTest {
@@ -33,10 +32,10 @@ public class SendToClientTest {
     GameSession gameSession;
     @Mock
     User user;
+    @Mock
+    SendToClient send;
     private Set<User> set = new HashSet();
-    private List<String> list = new ArrayList();
-    @InjectMocks
-    private SendToClient sendToClient;
+    private ArrayList<Player> list = new ArrayList<Player>();
 
     @Before
     public void setUp() throws IOException {
@@ -48,14 +47,14 @@ public class SendToClientTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        sendToClient = Mockito.mock(SendToClient.class);
-        gameSession = Mockito.mock(GameSession.class);
         user = Mockito.mock(User.class);
-        Mockito.doReturn("").when(sendToClient).sendToClient(user, 0);
+        //sendToClient = Mockito.mock(SendToClient.class);
+        //gameSession = Mockito.mock(GameSession.class);
         Mockito.when(user.getConnectionOutputStream()).thenReturn(oos);
         MockitoAnnotations.initMocks(this);
         Mockito.when(gameSession.getGameId()).thenReturn(0);
-        Mockito.when(gameSession.getPlayers()).thenReturn(new ArrayList<>());
+        Mockito.when(gameSession.getPlayers()).thenReturn(list);
+        Mockito.doNothing().when(send).sendToClient(user, 0);
         set.add(user);
     }
 
@@ -64,14 +63,14 @@ public class SendToClientTest {
         connection = null;
         oos = null;
         ois = null;
-        sendToClient = null;
+        send = null;
         //Mockito.validateMockitoUsage();
     }
 
     @Test
     public void sendUserId() throws IOException {
         SendToClient.sendUserId(user, 0);
-        Mockito.verify(sendToClient, Mockito.times(1)).sendToClient(user, 0);
+        Mockito.verify(send, Mockito.times(1)).sendToClient(user, 0);
     }
 /*
     @Test
