@@ -57,6 +57,8 @@ public class Thief {
 
         String resName;
 
+        game.nextPlayer();
+
         if (destinationIndex >= 0 && destinationIndex < tiles.length) {
 
             Tile tile = tiles[destinationIndex];
@@ -71,15 +73,17 @@ public class Thief {
                     players.add(player);
                 }
 
+                int number = -1;
+                int counter = 0;
+
                 if (players.size() > 0) {
 
                     playerToStealFrom = players.get(rand.nextInt(players.size()));
                     res = playerToStealFrom.getInventory().getResValues();
 
-                    int number = -1;
-
-                    while (number == -1) {
+                    while (number == -1 || counter < 10) {
                         number = selectRes(res);
+                        counter++;
                     }
 
                     switch (number) {
@@ -114,11 +118,13 @@ public class Thief {
                             break;
 
                         default:
-                            resName = "";
-                            break;
+                            SendToClient.sendKnightMessageBroadcast(game, "Nichts zu stehlen");
+                            return true;
                     }
 
                     sendMessage(game, resName, curr, playerToStealFrom);
+                } else {
+                    SendToClient.sendKnightMessageBroadcast(game, "Nichts zu stehlen");
                 }
             }
             return true;
@@ -133,7 +139,7 @@ public class Thief {
      * @param res Array of the Ressource-Values
      * @return Index of the selected Ressource, when there is 1, else -1
      */
-    private static int selectRes(int[] res) {
+    public static int selectRes(int[] res) {
 
         Random rand = new Random();
         int index = rand.nextInt(res.length);
@@ -155,7 +161,7 @@ public class Thief {
      * @param curr        current Player
      * @param toStealFrom Player which the Ressource was stolen from
      */
-    private static void sendMessage(GameSession game, String resName, Player curr, Player toStealFrom) {
+    public static void sendMessage(GameSession game, String resName, Player curr, Player toStealFrom) {
 
         StringBuilder builder = new StringBuilder();
         builder.append(curr.getDisplayName()).append(" hat 1 ").append(resName);

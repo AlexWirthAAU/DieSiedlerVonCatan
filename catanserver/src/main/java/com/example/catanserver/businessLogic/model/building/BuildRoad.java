@@ -84,7 +84,6 @@ public class BuildRoad {
 
         list.get(0).removeCounter();
 
-
         if (list.get(0).getCounter() == 0) {
             player.getInventory().removeBuildStreetCard(1);
             gameSession.nextPlayer();

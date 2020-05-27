@@ -216,7 +216,7 @@ public class SendToClient {
      * @param users Set of of all User currently Searching
      * @return List of UserId and Usernames of all User currently Searching
      */
-    private static List<String> createSearchingList(Set<User> users) {
+    public static List<String> createSearchingList(Set<User> users) {
         List<String> list = new ArrayList<>();
         for (User user : users) {
             list.add("" + user.getUserId());
@@ -255,7 +255,7 @@ public class SendToClient {
      * @param obj  Object to be sent to the User
      * @throws IOException when theres a Problem with the Stream
      */
-    private static void sendToClient(User user, Object obj) throws IOException {
+    public static void sendToClient(User user, Object obj) throws IOException {
         user.getConnectionOutputStream().reset();
         user.getConnectionOutputStream().writeObject(obj);
         user.getConnectionOutputStream().flush();

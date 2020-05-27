@@ -1,9 +1,11 @@
-package com.example.catanserver.threads;
+package com.example.catanserver.threads.beforegame;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catanserver.Server;
 import com.example.catanserver.User;
+import com.example.catanserver.threads.GameThread;
+import com.example.catanserver.threads.SendToClient;
 
 /**
  * @author Fabian Schaffenrath
@@ -11,7 +13,7 @@ import com.example.catanserver.User;
  *
  * This Thread starts the Game for every User.
  */
-public class StartThread extends GameThread{
+public class StartThread extends GameThread {
 
     /**
      * {@inheritDoc}

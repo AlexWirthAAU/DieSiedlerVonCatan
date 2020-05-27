@@ -54,7 +54,7 @@ public class PlayerInventory implements Serializable {
     /**
      * Constructor - Set Values 0 or false
      */
-    PlayerInventory() {
+    public PlayerInventory() {
         this.wood = STARTVALUE;
         this.wool = STARTVALUE;
         this.wheat = STARTVALUE;

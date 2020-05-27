@@ -165,6 +165,10 @@ public class GameSession implements Serializable {
         this.isCardBuild = isCardBuild;
     }
 
+    public void setCurrPlayer(int id) {
+        this.currPlayer = id;
+    }
+
     // add Structures
     public void addRoad(Edge road) {
         roads.add(road);
@@ -189,7 +193,6 @@ public class GameSession implements Serializable {
         } else{
             currPlayer++;
         }
-        curr = players.get(currPlayer);
     }
 
     public void previosPlayer() {
@@ -198,6 +201,5 @@ public class GameSession implements Serializable {
         } else {
             currPlayer--;
         }
-        curr = players.get(currPlayer);
     }
 }

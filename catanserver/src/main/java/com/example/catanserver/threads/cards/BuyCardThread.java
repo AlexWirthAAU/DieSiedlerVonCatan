@@ -69,9 +69,6 @@ public class BuyCardThread extends GameThread {
      * @return true, when there are DevCards left and the Player has enough Ressources to buy on, else false
      */
     private boolean checkStack() {
-        System.out.println(player.getDisplayName() + " has" + player.getInventory().getWool()
-                + " Wolle " + player.getInventory().getOre() + " Erz " + player.getInventory().getWheat() + " Weizen "
-                + " und es gibt " + game.getDevCards().size() + " Karten");
 
         return (player.getInventory().getWool() != 0
                 && player.getInventory().getOre() != 0
@@ -147,6 +144,10 @@ public class BuyCardThread extends GameThread {
             message.append(" und einen Siegpunkt erhalten");
         }
         System.out.println(message.toString());
+        return message.toString();
+    }
+
+    public String getMessage() {
         return message.toString();
     }
 }
