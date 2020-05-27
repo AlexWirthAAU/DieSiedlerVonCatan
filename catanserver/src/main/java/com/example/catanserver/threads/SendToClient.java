@@ -171,18 +171,35 @@ public class SendToClient {
     }
 
     /**
-     * Sends an Error-Message on a specific Stream and flushes the Stream.
+     * Sends a String-Message on a specific Stream and flushes the Stream.
      *
      * @param connectionOutputStream Stream on which the Error-Message should be sent on
      * @param message specific Error-Message
      */
-    public static void sendErrorMessage(ObjectOutputStream connectionOutputStream, String message) {
+    public static void sendStringMessage(ObjectOutputStream connectionOutputStream, String message) {
         try{
+            connectionOutputStream.reset();
             connectionOutputStream.writeObject(message);
             connectionOutputStream.flush();
         } catch (IOException ex) {
             System.err.println(ex.getMessage());
-            System.err.println("Could not send error message to Client.");
+            System.err.println("Could not send string message to Client.");
+            System.err.println("Message: " + message);
+        }
+    }
+
+    /**
+     * Sends a String-Message to a specific user.
+     *
+     * @param user User to whom the Error-Message should be sent to
+     * @param message specific Error-Message
+     */
+    public static void sendStringMessage(User user, String message){
+        try {
+            sendToClient(user,message);
+        } catch (IOException ex) {
+            System.err.println(ex.getMessage());
+            System.err.println("Could not send string message to Client.");
             System.err.println("Message: " + message);
         }
     }

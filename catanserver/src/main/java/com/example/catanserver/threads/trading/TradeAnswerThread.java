@@ -150,6 +150,7 @@ public class TradeAnswerThread extends GameThread {
         game.setTrade(null);
         game.setIsTradeOn(false);
         game.nextPlayer();
+        endTurn();
         SendToClient.sendTradeMessageBroadcast(playersToSend, mess, game);
         SendToClient.sendGameSessionBroadcast(game);
     }

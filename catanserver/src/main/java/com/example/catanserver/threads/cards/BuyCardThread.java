@@ -55,6 +55,7 @@ public class BuyCardThread extends GameThread {
             buyCard();
             String mess = buildMessage();
             game.nextPlayer();
+            endTurn();
             SendToClient.sendTradeMessage(user, mess);
             SendToClient.sendGameSessionBroadcast(game);
 

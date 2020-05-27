@@ -24,6 +24,7 @@ public class NextThread extends GameThread {
      */
     public void run() {
         game.nextPlayer();
+        endTurn();
         SendToClient.sendGameSessionBroadcast(game);
         Server.currentlyThreaded.remove(game.getGameId());
     }

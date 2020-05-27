@@ -28,6 +28,6 @@ public class ErrorThread extends Thread {
      * Sends an error string to the client.
      */
     public void run(){
-        SendToClient.sendErrorMessage(connectionOutputStream, errorMessage);
+        SendToClient.sendStringMessage(connectionOutputStream, errorMessage);
     }
 }

@@ -24,6 +24,7 @@ public class BuildSettlementThread extends GameThread {
 
     public void run() {
         BuildSettlement.updateGameSession(gameSession, knotIndex, userID);
+        endTurn();
         System.out.println("UPDATED GAMESESSION");
         SendToClient.sendGameSessionBroadcast(gameSession);
         System.out.println("BROADCASTED GAMESESSION");

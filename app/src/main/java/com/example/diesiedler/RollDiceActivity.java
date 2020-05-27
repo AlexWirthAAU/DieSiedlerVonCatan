@@ -170,6 +170,8 @@ public class RollDiceActivity extends AppCompatActivity implements SensorEventLi
                 Player currentP = gameSession.getPlayer(gameSession.getCurrPlayer());
 
                 if (currentP.getUserId() == ClientData.userId) {
+                    ClientData.hasRolledDice = true;
+                    ClientData.triedReveal = false;
                     Intent intent = new Intent(activity, ChooseActionActivity.class);
                     startActivity(intent);
                 }

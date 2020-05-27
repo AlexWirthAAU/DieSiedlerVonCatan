@@ -14,10 +14,11 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".ThiefActivity"></activity>
+        <activity android:name=".cheating.CheatSelectResourceActivity"></activity>
+        <activity android:name=".cheating.CheatCounterActivity" />
+        <activity android:name=".cheating.CheatRevealActivity" />
+        <activity android:name=".ThiefActivity" />
         <activity android:name=".ShowInventoryActivity" />
-
         <activity android:name=".cards.PlayMonopolActivity" />
         <activity android:name=".cards.PlayInventionActivity" />
         <activity android:name=".cards.PlayKnightActivity" />

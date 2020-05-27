@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static com.example.diesiedler.presenter.ClientData.GET_FROM_SERVER;
+import static com.example.diesiedler.presenter.ClientData.adjustHasRolledDice;
 import static com.example.diesiedler.presenter.ClientData.currentGame;
 import static com.example.diesiedler.presenter.ClientData.userId;
 
@@ -50,6 +51,7 @@ public class ServerCommunicationThread extends Thread {
                     // New GameSession State
                     logger.log(Level.INFO, "Got GameSession.");
                     currentGame = (GameSession) read;
+                    adjustHasRolledDice();  // Do not roll twice in a turn
                     Message msg = Message.obtain();
                     msg.arg1 = 4;
                     ClientData.currentHandler.sendMessage(msg);

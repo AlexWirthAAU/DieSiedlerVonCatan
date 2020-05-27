@@ -25,7 +25,7 @@ public class Server {
     public static final List<GameSession> currentGames = Collections.synchronizedList(new LinkedList<GameSession>()); // List of all Games that are currently active
     public static final Set<Integer> currentlyThreaded = Collections.synchronizedSet(new HashSet<Integer>()); // Set of all Games (GameId) in which Players are currently making a Network Call
     public static final Set<User> currentlySearching = Collections.synchronizedSet(new HashSet<User>()); // Set of all Users that are currently searching for Opponents
-    private final static int SERVER_PORT = 2020; // Port the Server listens to
+    private final static int SERVER_PORT = 10; // Port the Server listens to
     private static ServerSocket listenerSocket; // ServerSocket
     private static Socket caughtConnection; // Client Socket
 
