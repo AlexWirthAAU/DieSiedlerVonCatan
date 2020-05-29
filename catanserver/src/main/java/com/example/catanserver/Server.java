@@ -52,4 +52,13 @@ public class Server {
             System.err.println("Server could not be started!");
         }
     }
+
+    public static User findUser(int userId){
+        for (User user:currentUsers) {
+            if(user.getUserId() == userId){
+                return user;
+            }
+        }
+        return null;
+    }
 }

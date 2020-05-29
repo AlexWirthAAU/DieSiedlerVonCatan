@@ -28,22 +28,34 @@ public class RevealThread extends GameThread {
      * revealing user is sent.
      */
     public void run(){
+        int grabberIdInt = -1;
+        try{
+            grabberIdInt = Integer.parseInt(grabberId);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         Grab grab = game.getGrabOf(user.getUserId());
-        if(grab != null){
-            if(grab.getResource().equals(resource) && (grab.getRevealed() == null || grab.getRevealed())) {
+        if(grab != null && grab.getGrabber().getUserId() == grabberIdInt){
+            if(grab.getResource().equals(resource) && grab.getRevealed() == null) {
                 grab.setRevealed(true);
+                grab.getGrabber().addSkip();
                 SendToClient.sendStringMessage(user,"CHEAT REVEALED");
-                for (User user: Server.currentUsers) {
-                    if(user.getUserId() == grab.getGrabber().getUserId()){
-                        SendToClient.sendStringMessage(user,"XCHEAT REVEALED");
-                        break;
-                    }
+
+                User grabber = Server.findUser(grab.getGrabber().getUserId());
+                if(grabber != null){
+                    SendToClient.sendStringMessage(grabber,"XCHEAT REVEALED");
                 }
+            }
+            else if(grab.getRevealed() != null && grab.getRevealed()){
+                SendToClient.sendStringMessage(user,"CHEAT ALREADY REVEALED");
             }
             else{
                 grab.setRevealed(false);
                 SendToClient.sendStringMessage(user,"CHEAT NOT REVEALED");
             }
+        }
+        else{
+            SendToClient.sendStringMessage(user,"ERROR");
         }
     }
 }

@@ -175,6 +175,10 @@ public class RollDiceActivity extends AppCompatActivity implements SensorEventLi
                     Intent intent = new Intent(activity, ChooseActionActivity.class);
                     startActivity(intent);
                 }
+                else{
+                    Intent intent = new Intent(activity, MainActivity.class);
+                    startActivity(intent);
+                }
             }
         }
     }

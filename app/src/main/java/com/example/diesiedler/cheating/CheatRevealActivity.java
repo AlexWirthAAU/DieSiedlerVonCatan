@@ -67,37 +67,43 @@ public class CheatRevealActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg){
             if(msg.arg1 == 5 && ((String)msg.obj).startsWith("CHEAT")){
-                String dialogText = "";
-                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                ClientData.triedReveal = true;
-                if(msg.obj.equals("CHEAT REVEALED")){
-                    dialogText = "Richtig geraten. Nun kannst du einen Rohstoff zurückstehlen.";
-                    builder.setNeutralButton(android.R.string.ok,
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                    Intent intent = new Intent(CheatRevealActivity.this, CheatCounterActivity.class);
-                                    intent.putExtra("playerId",playerId);
-                                    startActivity(intent);
-                                }
-                            });
+                if(msg.obj.equals("CHEAT ALREADY REVEALED")) {
+                    Intent intent = new Intent(activity, CheatCounterActivity.class);
+                    intent.putExtra("playerId", playerId);
+                    startActivity(intent);
                 }
-                else if(msg.obj.equals("CHEAT NOT REVEALED")){
-                    dialogText = "Falsch geraten. Der Rohstoff wird dir am Ende deines Zuges abgezogen.";
-                    builder.setNeutralButton(android.R.string.ok,
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                    Intent intent = new Intent(CheatRevealActivity.this, ChooseActionActivity.class);
-                                    startActivity(intent);
-                                }
-                            });
+                else{
+                    String dialogText = "";
+                    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                    ClientData.triedReveal = true;
+                    if (msg.obj.equals("CHEAT REVEALED")) {
+                        dialogText = "Richtig geraten. Nun kannst du einen Rohstoff zurückstehlen.";
+                        builder.setNeutralButton(android.R.string.ok,
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                        Intent intent = new Intent(CheatRevealActivity.this, CheatCounterActivity.class);
+                                        intent.putExtra("playerId", playerId);
+                                        startActivity(intent);
+                                    }
+                                });
+                    } else if (msg.obj.equals("CHEAT NOT REVEALED")) {
+                        dialogText = "Falsch geraten. Der Rohstoff wird dir am Ende deines Zuges abgezogen.";
+                        builder.setNeutralButton(android.R.string.ok,
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                        Intent intent = new Intent(CheatRevealActivity.this, ChooseActionActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
+                    }
+                    builder.setTitle("Ertappen");
+                    builder.setMessage(dialogText);
+                    builder.setCancelable(true);
+                    AlertDialog alert = builder.create();
+                    alert.show();
                 }
-                builder.setTitle("Ertappen");
-                builder.setMessage(dialogText);
-                builder.setCancelable(true);
-                AlertDialog alert = builder.create();
-                alert.show();
             }
         }
     }

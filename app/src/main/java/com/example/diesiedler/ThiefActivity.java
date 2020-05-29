@@ -85,8 +85,14 @@ public class ThiefActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             if (msg.arg1 == 4) {
-                Intent intent = new Intent(activity, ChooseActionActivity.class);
-                startActivity(intent);
+                if(ClientData.currentGame.getCurr().getUserId() == ClientData.userId) {
+                    Intent intent = new Intent(activity, ChooseActionActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    Intent intent = new Intent(activity, MainActivity.class);
+                    startActivity(intent);
+                }
             }
         }
     }

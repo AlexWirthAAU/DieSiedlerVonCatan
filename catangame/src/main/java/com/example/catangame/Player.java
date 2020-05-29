@@ -15,6 +15,7 @@ public class Player implements Serializable {
 
     private Colors color; // the Players Color
     private PlayerInventory inventory; // the Player Inventory
+    private int toSkip;
 
     /**
      * Constructor - set the Values with the Data from Thread
@@ -27,6 +28,7 @@ public class Player implements Serializable {
         this.displayName = displayName;
         this.userId = userId;
         inventory = new PlayerInventory();
+        toSkip = 0;
     }
 
     // Getter
@@ -50,4 +52,22 @@ public class Player implements Serializable {
     public void setColor(Colors color) {
         this.color = color;
     }
+
+    public void addSkip(){
+        toSkip++;
+    }
+
+    public void skip(){
+        if(toSkip>0) {
+            toSkip--;
+        }
+    }
+
+    public boolean hasToSkip(){
+        if(toSkip>0){
+            return true;
+        }
+        return false;
+    }
+
 }

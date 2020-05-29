@@ -1,6 +1,7 @@
 package com.example.catanserver.threads;
 
 import com.example.catangame.GameSession;
+import com.example.catangame.Player;
 import com.example.catanserver.Server;
 import com.example.catanserver.User;
 import com.example.catanserver.businessLogic.model.Thief;
@@ -20,7 +21,7 @@ public class ThiefThread extends GameThread {
      * @param user
      * @param game
      * @param tileIndex
-     * @param "CARD"    when the Thread was loaded playing a BuildStreetCard, else null
+     * @param "CARD"    when the Thread was loaded playing a BuildStreetCard, else " "
      */
     public ThiefThread(User user, GameSession game, String tileIndex, String card) {
         super(user, game);
@@ -39,6 +40,14 @@ public class ThiefThread extends GameThread {
                 if(Thief.moveThief(game,thiefIndex)){
                     if (card.equals("CARD")) {
                         Thief.updateRessources(game, thiefIndex, game.getPlayer(user.getUserId()));
+                    }
+                    else{
+                        Player player = game.getPlayer(user.getUserId());
+                        if(player.hasToSkip()){
+                            player.skip();
+                            endTurn();
+                            game.nextPlayer();
+                        }
                     }
                     SendToClient.sendGameSessionBroadcast(game);
                 }
