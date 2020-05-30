@@ -221,7 +221,7 @@ public class GameSession implements Serializable {
         curr = players.get(currPlayer);
     }
 
-    public void previosPlayer() {
+    public void previousPlayer() {
         if (currPlayer == 0) {
             currPlayer = players.size() - 1;
         } else {

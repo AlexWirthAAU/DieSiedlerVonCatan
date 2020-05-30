@@ -44,7 +44,7 @@ public class BuildRoad {
         }
 
         if (player.getInventory().getRoads().size() == 2) {
-            gameSession.previosPlayer();
+            gameSession.previousPlayer();
             System.out.println("Spieler in the middle");
         }
 
