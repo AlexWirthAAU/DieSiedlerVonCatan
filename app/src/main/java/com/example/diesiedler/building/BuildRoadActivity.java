@@ -183,7 +183,7 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
                 if (ClientData.currentGame.getCurrPlayer() == ClientData.userId) {
 
                     if (ClientData.currentGame.getPlayer(ClientData.userId).getInventory().getRoads().size() < 3) {
-                        if (ClientData.currentGame.getPlayer(ClientData.userId).getInventory().getSettlements().size() == 2) {
+                        if (ClientData.currentGame.getPlayer(ClientData.userId).getInventory().getSettlements().size() == 2 && !ClientData.hasRolledDice) {
                             Intent intent = new Intent(activity, RollDiceActivity.class);
                             startActivity(intent);
                         } else {

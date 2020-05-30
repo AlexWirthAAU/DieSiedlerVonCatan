@@ -19,10 +19,10 @@ import java.util.logging.Logger;
  */
 public class ClientData {
 
-    //private static final String HOST ="25.64.65.87";  // Fabian
-    private static final String HOST = "10.0.0.152"; // Christina
-    //private static final int PORT = 10;  // Hamachi
-    private static final int PORT = 2020; // Non-Hamachi
+    private static final String HOST ="25.64.65.87";  // Fabian
+    //private static final String HOST = "10.0.0.152"; // Christina
+    private static final int PORT = 10;  // Hamachi
+    //private static final int PORT = 2020; // Non-Hamachi
 
     private static final Logger logger = Logger.getLogger(ClientData.class.getName()); // Logger
 
@@ -41,6 +41,9 @@ public class ClientData {
     public static Thread SERVER_COMMUNICATION_THREAD; // Thread, which is set in WelcomeActivity
 
     public static Handler currentHandler; // Handler, which is set for every Activity in their onCreate-Method
+
+    public static boolean hasRolledDice;
+    public static boolean triedReveal;
 
     /**
      * Initializes and saves the Server-Connection.
@@ -74,6 +77,12 @@ public class ClientData {
             SERVER.close();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void adjustHasRolledDice(){
+        if(!currentGame.getPlayer(userId).equals(currentGame.getCurr())){
+            hasRolledDice = false;
         }
     }
 }

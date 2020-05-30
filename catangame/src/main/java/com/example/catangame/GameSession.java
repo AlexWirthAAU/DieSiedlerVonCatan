@@ -35,6 +35,7 @@ public class GameSession implements Serializable {
     private boolean isTradeOn; // states whether a Trade is active
     private int knightPowerCount; // Number of Knight-Cards the Player with the greatest Knightpower has
     private Player knightPowerOwner; // Player which has the greatest Knightpower
+    private LinkedList<Grab> grabs; // Running Cheating requests
 
     /**
      * Constructor - Gives the Game the next ID from GameCounter,
@@ -50,6 +51,7 @@ public class GameSession implements Serializable {
         cities = new LinkedList<>();
         currPlayer = 0;
         this.devCards = new DevCardStack().getDevCardStack();
+        this.grabs = new LinkedList<>();
     }
 
     // Getter
@@ -177,6 +179,35 @@ public class GameSession implements Serializable {
         cities.add(settlement);
     }
 
+    public LinkedList<Grab> getGrabs() {
+        return grabs;
+    }
+
+    public Grab getGrabOf(int userId){
+        for (Grab grab:this.grabs) {
+            if(grab.getGrabbed().getUserId() == userId){
+                return grab;
+            }
+        }
+        return null;
+    }
+
+    public Grab getGrabFrom(int userId){
+        for (Grab grab:this.grabs) {
+            if(grab.getGrabber().getUserId() == userId){
+                return grab;
+            }
+        }
+        return null;
+    }
+
+    public void addGrab(Grab grab){
+        grabs.add(grab);
+    }
+
+    public void removeGrab(Grab grab){
+        grabs.remove(grab);
+    }
 
     /**
      * Make the next Player in the Row the current Player
@@ -190,7 +221,7 @@ public class GameSession implements Serializable {
         curr = players.get(currPlayer);
     }
 
-    public void previosPlayer() {
+    public void previousPlayer() {
         if (currPlayer == 0) {
             currPlayer = players.size() - 1;
         } else {

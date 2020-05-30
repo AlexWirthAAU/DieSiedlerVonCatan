@@ -162,4 +162,7 @@
     <string name="buildSettlement">Siedlung bauen</string>
     <string name="showScore">Spielstand anzeigen</string>
     <string name="getRes">Rohstoffe holen</string>
+    <string name="cheatTitleCreate">Wähle einen Rohstoff, den du stehlen möchtest.</string>
+    <string name="cheatTitleReveal">Rate, welcher deiner Rohstoffe gestohlen werden soll.</string>
+    <string name="cheatTitleCounter">Wähle einen Rohstoff, den du von deinem Räuber zurückstehlen möchtest.</string>
 </resources>

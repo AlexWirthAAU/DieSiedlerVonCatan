@@ -23,6 +23,7 @@ public class BuildCityThread extends GameThread {
 
     public void run() {
         BuildCity.updateGameSession(gameSession, knotIndex, userID);
+        endTurn();
         SendToClient.sendGameSessionBroadcast(gameSession);
         Server.currentlyThreaded.remove(gameSession.getGameId());
     }

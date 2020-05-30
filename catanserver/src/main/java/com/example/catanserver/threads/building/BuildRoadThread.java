@@ -46,6 +46,7 @@ public class BuildRoadThread extends GameThread {
         } else {
             BuildRoad.updateGameSession(gameSession, edgeIndex, userID);
         }
+        endTurn();
         SendToClient.sendGameSessionBroadcast(gameSession);
         Server.currentlyThreaded.remove(gameSession.getGameId());
     }

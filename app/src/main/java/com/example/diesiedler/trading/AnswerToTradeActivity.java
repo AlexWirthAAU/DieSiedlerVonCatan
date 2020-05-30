@@ -121,7 +121,7 @@ public class AnswerToTradeActivity extends AppCompatActivity {
 
                 Player currentPlayer = ClientData.currentGame.getPlayer(ClientData.currentGame.getCurrPlayer());
 
-                if (currentPlayer.getUserId() == ClientData.userId) {
+                if (currentPlayer.getUserId() == ClientData.userId && !ClientData.hasRolledDice) {
                     startActivity(intentSelect);
                 } else {
                     startActivity(intentMain);

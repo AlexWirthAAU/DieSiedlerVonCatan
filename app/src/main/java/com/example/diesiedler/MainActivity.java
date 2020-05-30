@@ -1,6 +1,7 @@
 package com.example.diesiedler;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,15 +16,18 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.catangame.GameSession;
+import com.example.catangame.Grab;
 import com.example.catangame.Player;
 import com.example.catangame.PlayerInventory;
 import com.example.diesiedler.building.BuildSettlementActivity;
+import com.example.diesiedler.cheating.CheatRevealActivity;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.UpdateGameboardView;
 import com.example.diesiedler.presenter.handler.HandlerOverride;
 import com.example.diesiedler.trading.AnswerToTradeActivity;
 import com.richpath.RichPathView;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -49,6 +53,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView devCards; // Button to show Score and DevCards
     private Button scoreBoard;
 
+    private ImageView grabView;
+    private String grabberId;
+
     /**
      * Loads actual Gameboard and Ressources. Sets Handler.
      * If the Intent has an Extra, a Alert-Message with its Test is shown.
@@ -65,6 +72,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         devCards.setOnClickListener(this);
         scoreBoard = findViewById(R.id.scoreBoard);
         scoreBoard.setOnClickListener(this);
+
+        // Cheating
+        grabView = findViewById(R.id.grabActive);
+        grabView.setVisibility(View.GONE);
+        if(ClientData.currentGame.getCurr().getUserId() == ClientData.userId && !ClientData.triedReveal){
+            for (Grab grab:ClientData.currentGame.getGrabs()) {
+                if(grab.getGrabbed().getUserId() == ClientData.userId){
+                    grabberId = "" + grab.getGrabber().getUserId();
+                    grabView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getBaseContext(), CheatRevealActivity.class);
+                            intent.putExtra("playerId","" + grabberId);
+                            startActivity(intent);
+                        }
+                    });
+                    grabView.setClickable(true);
+                    grabView.setVisibility(View.VISIBLE);
+                    break;
+                }
+            }
+        }
 
         UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
         updateResources();
@@ -169,10 +198,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (currentPlayer.getUserId() == ClientData.userId && playerInventory.getRoads().size() < 2) {
                     Intent intent = new Intent(activity, BuildSettlementActivity.class);
                     startActivity(intent);
-                } else if (currentPlayer.getUserId() == ClientData.userId && playerInventory.getSettlements().size() > 1 && playerInventory.getRoads().size() > 1) {
+                } else if (currentPlayer.getUserId() == ClientData.userId && playerInventory.getSettlements().size() > 1 && playerInventory.getRoads().size() > 1 && !ClientData.hasRolledDice) {
                     Intent intent = new Intent(activity, RollDiceActivity.class);
                     startActivity(intent);
-                } else if (currentPlayer.getUserId() == ClientData.userId) {
+                } else if (currentPlayer.getUserId() == ClientData.userId && !ClientData.hasRolledDice) {
                     Intent intent = new Intent(activity, RollDiceActivity.class);
                     startActivity(intent);
                 } else if (currentPlayer.getUserId() != ClientData.userId && gs.isTradeOn()) {
@@ -184,11 +213,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     startActivity(intent);
                 }
             }
+            else if(msg.arg1 == 5 && ((String)msg.obj).startsWith("XCHEAT")){
+                String dialogText = "";
+                if(msg.obj.equals("XCHEAT COUNTERED")){
+                    dialogText = "Dein Diebstahl wurde entdeckt und du hast einen Rohstoff verloren.";
+                }
+                else if(msg.obj.equals("XCHEAT BLOCKED")){
+                    dialogText = "Dein Diebstahl wurde entdeckt, du hast aber keinen Rohstoff verloren.";
+                }
+                else if(msg.obj.equals("XCHEAT REVEALED")){
+                    dialogText = "Dein Diebstahl wurde erkannt.";
+                }
 
-            if (msg.arg1 == 5) {  // TODO: Change to enums
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
+                builder.setTitle("Diebstahl");
+                builder.setMessage(dialogText);
+                builder.setCancelable(true);
+                builder.setNeutralButton(android.R.string.ok,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                android.app.AlertDialog alert = builder.create();
+                alert.show();
+            }
+            else if (msg.arg1 == 5) {  // TODO: Change to enums
 
                 mess = msg.obj.toString();
-                System.out.println(mess + " objstart");
+                logger.log(Level.INFO,mess + " objstart");
             }
         }
     }

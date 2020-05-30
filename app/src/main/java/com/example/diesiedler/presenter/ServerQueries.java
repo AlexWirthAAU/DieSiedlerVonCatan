@@ -229,7 +229,45 @@ public class ServerQueries {
         return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " NEXT";
     }
 
+    /**
+     * Creates MoveThief-Query
+     *
+     * @return Query with Identifier and Asset-ID
+     */
     public static String createStringQueryMoveThief(String id){
         return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " THIEF " + id;
+    }
+
+    /**
+     * Creates cheat request query
+     * @param playerId Id of the Player to be stolen from
+     * @param resource String Identifier of the resource to be stolen
+     * @return Query with Identifier, Player-ID and Resource Identifier
+     */
+    public static String createStringQueryCheat(String playerId, String resource){
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " CHEAT " +
+                playerId + " " + resource;
+    }
+
+    /**
+     * Creates cheat reveal query
+     * @param playerId Id of the cheating player
+     * @param resource String Identifier of the resource to be stolen
+     * @return Query with Identifier, Player-ID and Resource Identifier
+     */
+    public static String createStringQueryReveal(String playerId, String resource){
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " REVEAL " +
+                playerId + " " + resource;
+    }
+
+    /**
+     * Creates cheat counter query
+     * @param playerId Id of the cheating player
+     * @param resource String Identifier of the resource to be stolen
+     * @return Query with Identifier, Player-ID and Resource Identifier
+     */
+    public static String createStringQueryCounter(String playerId, String resource){
+        return "" + ClientData.userId + " " + ClientData.currentGame.getGameId() + " COUNTER " +
+                playerId + " " + resource;
     }
 }

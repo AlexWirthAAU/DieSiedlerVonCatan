@@ -46,6 +46,7 @@ public class PlayInventionThread extends GameThread {
             playCard();
             String mess = buildMessage();
             game.nextPlayer();
+            endTurn();
             SendToClient.sendTradeMessage(user, mess);
             SendToClient.sendGameSessionBroadcast(game);
 
