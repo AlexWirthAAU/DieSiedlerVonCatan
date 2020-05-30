@@ -35,18 +35,14 @@ public class CounterThread extends GameThread {
             Grab grab = game.getGrabOf(user.getUserId());
             if (grab != null && grab.getGrabber().getUserId() == grabber && grab.getRevealed()) {
                 if(Cheating.counter(grab,resource)){
-                    SendToClient.sendStringMessage(user,SendToClient.HEADER_CHEATED + " COUNTERED");
+                    SendToClient.sendStringMessage(user,SendToClient.HEADER_CHEATED + " Du konntest einen Rohstoff zurückstehlen");
                     User grabberUser = Server.findUser(grab.getGrabber().getUserId());
                     if(grabberUser != null){
-                        SendToClient.sendStringMessage(grabberUser,SendToClient.HEADER_CHEATER + " COUNTERED");
+                        SendToClient.sendStringMessage(grabberUser,SendToClient.HEADER_CHEATER + " Dir wurde ein Rohstoff gestohlen.");
                     }
                 }
                 else{
-                    SendToClient.sendStringMessage(user,SendToClient.HEADER_CHEATED + " BLOCKED");
-                    User grabberUser = Server.findUser(grab.getGrabber().getUserId());
-                    if(grabberUser != null){
-                        SendToClient.sendStringMessage(grabberUser,SendToClient.HEADER_CHEATER + " BLOCKED");
-                    }
+                    SendToClient.sendStringMessage(user,SendToClient.HEADER_CHEATED + " Der Dieb besitzt diesen Rohstoff leider nicht.");
                 }
                 game.removeGrab(grab);
                 SendToClient.sendGameSessionBroadcast(game);

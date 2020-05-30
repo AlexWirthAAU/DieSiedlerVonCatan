@@ -20,23 +20,28 @@ import java.util.Set;
  */
 public class SendToClient {
 
-    // Message Headers for Client commands
-    public static final String HEADER_NEXT = "NEXTPLAYER";
-    public static final String HEADER_CHEATER = "CHEAT";
-    public static final String HEADER_CHEATED = "XCHEAT";
-    public static final String HEADER_ERROR = "ERROR";
+    // Used for the steps before the first dice roll
     public static final String HEADER_START = "STARTGAME";
-    public static final String HEADER_ROLLED = "DICEROLLED";
+    public static final String HEADER_BEGININIT = "INIT1";
+    public static final String HEADER_CONTINUEINIT = "INIT2";
+
+    // Message Headers for Client commands
     public static final String HEADER_BEGINTURN = "BEGINTURN";
+    public static final String HEADER_ROLLED = "DICEROLLED";
     public static final String HEADER_ENDTURN = "ENDTURN";
-    public static final String HEADER_WON = "WON";
-    public static final String HEADER_LOST = "LOST";
+
+    public static final String HEADER_CHEATERSET = "CHEATERSET";
+    public static final String HEADER_CHEATER = "CHEATER";
+    public static final String HEADER_CHEATED = "CHEATED";
+    public static final String HEADER_CHEATEDREVEAL = "CHEATEDREVEAL";
     public static final String HEADER_TRADE = "TRADE";
     public static final String HEADER_TRADECOMPLETE = "TRADECOMPLETE";
 
-    // Used for the steps before the first dice roll
-    public static final String HEADER_BEGININIT = "INIT1";
-    public static final String HEADER_CONTINUEINIT = "INIT2";
+    public static final String HEADER_ERROR = "ERROR";
+
+    public static final String HEADER_WON = "WON";
+    public static final String HEADER_LOST = "LOST";
+
 
     /**
      * Send his own Id to a User.

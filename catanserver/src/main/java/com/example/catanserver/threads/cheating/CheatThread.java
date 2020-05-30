@@ -32,10 +32,10 @@ public class CheatThread extends GameThread {
             int grabbed = Integer.parseInt(grabbedId);
             if(Cheating.requestGrab(game,user.getUserId(),grabbed,resource)){
                 SendToClient.sendGameSessionBroadcast(game);
-                SendToClient.sendStringMessage(user,SendToClient.HEADER_CHEATER + " SET");
+                SendToClient.sendStringMessage(user,SendToClient.HEADER_CHEATERSET + " Dein Diebstahl wird am Ende des nächsten Spielzuges deines Opfers durchgeführt, solange dieser nicht erkannt wurde.");
             }
             else{
-                SendToClient.sendStringMessage(user,SendToClient.HEADER_CHEATER + " NOT SET");
+                SendToClient.sendStringMessage(user,SendToClient.HEADER_CHEATERSET + " Dieser Spieler wird bereits bestohlen.");
             }
         }catch (Exception e){
             e.printStackTrace();

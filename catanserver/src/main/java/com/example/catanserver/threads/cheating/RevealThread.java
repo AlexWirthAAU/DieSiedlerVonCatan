@@ -40,19 +40,19 @@ public class RevealThread extends GameThread {
             if(grab.getResource().equals(resource) && grab.getRevealed() == null) {
                 grab.setRevealed(true);
                 grab.getGrabber().addSkip();
-                SendToClient.sendStringMessage(user,SendToClient.HEADER_CHEATED + "REVEALED");
+                SendToClient.sendStringMessage(user,SendToClient.HEADER_CHEATEDREVEAL + " Richtig geraten. Du kannst nun versuchen, einen Rohstoff zurückzustehlen.");
 
                 User grabber = Server.findUser(grab.getGrabber().getUserId());
                 if(grabber != null){
-                    SendToClient.sendStringMessage(grabber,SendToClient.HEADER_CHEATER + " REVEALED");
+                    SendToClient.sendStringMessage(grabber,SendToClient.HEADER_CHEATER + " Dein Diebstahlsversuch wurde entdeckt.");
                 }
             }
             else if(grab.getRevealed() != null && grab.getRevealed()){
-                SendToClient.sendStringMessage(user,SendToClient.HEADER_CHEATED + " ALREADY REVEALED");
+                SendToClient.sendStringMessage(user,SendToClient.HEADER_CHEATEDREVEAL);
             }
             else{
                 grab.setRevealed(false);
-                SendToClient.sendStringMessage(user,SendToClient.HEADER_CHEATED + " NOT REVEALED");
+                SendToClient.sendStringMessage(user,SendToClient.HEADER_CHEATED + " Leider falsch geraten. Der Rohstoff wird dir am Ende des Spielzuges abgezogen.");
             }
         }
         else{
