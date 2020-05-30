@@ -20,6 +20,24 @@ import java.util.Set;
  */
 public class SendToClient {
 
+    // Message Headers for Client commands
+    public static final String HEADER_NEXT = "NEXTPLAYER";
+    public static final String HEADER_CHEATER = "CHEAT";
+    public static final String HEADER_CHEATED = "XCHEAT";
+    public static final String HEADER_ERROR = "ERROR";
+    public static final String HEADER_START = "STARTGAME";
+    public static final String HEADER_ROLLED = "DICEROLLED";
+    public static final String HEADER_BEGINTURN = "BEGINTURN";
+    public static final String HEADER_ENDTURN = "ENDTURN";
+    public static final String HEADER_WON = "WON";
+    public static final String HEADER_LOST = "LOST";
+    public static final String HEADER_TRADE = "TRADE";
+    public static final String HEADER_TRADECOMPLETE = "TRADECOMPLETE";
+
+    // Used for the steps before the first dice roll
+    public static final String HEADER_BEGININIT = "INIT1";
+    public static final String HEADER_CONTINUEINIT = "INIT2";
+
     /**
      * Send his own Id to a User.
      *
@@ -50,28 +68,6 @@ public class SendToClient {
                 System.err.println(ex.getMessage());
                 System.err.println("Could not send List to Client" + user.getDisplayName() + ".");
             }
-        }
-    }
-
-    /**
-     * Creates a Userlist from the GameSession and sends the
-     * identifier "STARTGAME" to every User in this List.
-     *
-     * @param game GameSessionObject to send
-     */
-    public static void sendGameStartBroadcast(GameSession game) {
-        List<User> userList = createGameUserList(game);
-        if (userList.size() == game.getPlayers().size()) {
-            for (User user : userList) {
-                try {
-                    sendToClient(user, "STARTGAME");
-                } catch (IOException ex) {
-                    System.err.println(ex.getMessage());
-                    System.err.println("Could not start GameSession at Client " + user.getDisplayName() + ".");
-                }
-            }
-        } else {
-            // TODO: What happens if a user cant be found? (should not happen)
         }
     }
 
@@ -108,27 +104,12 @@ public class SendToClient {
         List<User> userList = createTradeUserList(toSend);
         for (User user : userList) {
             try {
-                sendToClient(user, message);
                 sendToClient(user, game);
+                sendToClient(user, message);
             } catch (IOException ex) {
                 System.err.println(ex.getMessage());
                 System.err.println("Could not send Message to Client" + user.getDisplayName() + ".");
             }
-        }
-    }
-
-    /**
-     * Sends an Trade-Message to a specific User.
-     *
-     * @param user User to which the Trade-Message should be sent
-     * @param message specific Trade-Message
-     */
-    public static void sendTradeMessage(User user, String message) {
-        try {
-            sendToClient(user, message);
-        } catch (IOException ex) {
-            System.err.println(ex.getMessage());
-            System.err.println("Could not send GameSession to Client.");
         }
     }
 
@@ -201,6 +182,29 @@ public class SendToClient {
             System.err.println(ex.getMessage());
             System.err.println("Could not send string message to Client.");
             System.err.println("Message: " + message);
+        }
+    }
+
+    /**
+     * Creates a Userlist from the GameSession and sends the
+     * identifier "STARTGAME" to every User in this List.
+     *
+     * @param game GameSessionObject to send
+     */
+    public static void sendStringMessageBroadcast(GameSession game, String message) {
+        List<User> userList = createGameUserList(game);
+        if (userList.size() == game.getPlayers().size()) {
+            for (User user : userList) {
+                try {
+                    sendToClient(user, message);
+                } catch (IOException ex) {
+                    System.err.println(ex.getMessage());
+                    System.err.println("Could not send string message to Client " + user.getDisplayName() + ".");
+                    System.err.println("Message: " + message);
+                }
+            }
+        } else {
+            // TODO: What happens if a user cant be found? (should not happen)
         }
     }
 

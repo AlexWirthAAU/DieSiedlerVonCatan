@@ -10,22 +10,25 @@ import com.example.catanserver.threads.SendToClient;
 // TODO: kommentieren
 public class BuildCityThread extends GameThread {
 
-    GameSession gameSession;
     int knotIndex;
     int userID;
 
-    public BuildCityThread(GameSession g, User user, int k) {
-        super(user, g);
-        this.gameSession = g;
+    public BuildCityThread(GameSession game, User user, int k) {
+        super(user, game);
         this.knotIndex = k;
         this.userID = user.getUserId();
     }
 
     public void run() {
-        BuildCity.updateGameSession(gameSession, knotIndex, userID);
+        BuildCity.updateGameSession(game, knotIndex, userID);
         endTurn();
-        SendToClient.sendGameSessionBroadcast(gameSession);
-        Server.currentlyThreaded.remove(gameSession.getGameId());
+        SendToClient.sendGameSessionBroadcast(game);
+        SendToClient.sendStringMessage(user,SendToClient.HEADER_ENDTURN);
+        User nextUser = Server.findUser(game.getCurr().getUserId());
+        if(nextUser != null) {
+            SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN);
+        }
+        Server.currentlyThreaded.remove(game.getGameId());
     }
 
 }

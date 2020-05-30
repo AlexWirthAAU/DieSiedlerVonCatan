@@ -31,7 +31,8 @@ public class ThiefThread extends GameThread {
 
     /**
      * When card is "CARD" is executes the <code>updateRessources</code>
-     * Method in <code>Thief</code>. It send the new GameSession broadcast.
+     * Method in <code>Thief</code>. It broadcasts a new GameSession, as well as sends a
+     * command String to the current user and possibly the next user.
      */
     public void run(){
         try {
@@ -40,6 +41,7 @@ public class ThiefThread extends GameThread {
                 if(Thief.moveThief(game,thiefIndex)){
                     if (card.equals("CARD")) {
                         Thief.updateRessources(game, thiefIndex, game.getPlayer(user.getUserId()));
+                        SendToClient.sendGameSessionBroadcast(game);
                     }
                     else{
                         Player player = game.getPlayer(user.getUserId());
@@ -47,9 +49,18 @@ public class ThiefThread extends GameThread {
                             player.skip();
                             endTurn();
                             game.nextPlayer();
+                            SendToClient.sendGameSessionBroadcast(game);
+                            SendToClient.sendStringMessage(user,SendToClient.HEADER_ENDTURN);
+                            User nextUser = Server.findUser(game.getCurr().getUserId());
+                            if(nextUser != null) {
+                                SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN);
+                            }
+                        }
+                        else{
+                            SendToClient.sendGameSessionBroadcast(game);
+                            SendToClient.sendStringMessage(user,SendToClient.HEADER_ROLLED);
                         }
                     }
-                    SendToClient.sendGameSessionBroadcast(game);
                 }
             }
         }catch(Exception e){

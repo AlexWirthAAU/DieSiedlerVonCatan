@@ -1,6 +1,7 @@
 package com.example.catanserver.threads;
 
 import com.example.catangame.GameSession;
+import com.example.catangame.Player;
 import com.example.catanserver.User;
 import com.example.catanserver.businessLogic.model.Cheating;
 
@@ -32,6 +33,21 @@ public abstract class GameThread extends Thread {
      * to be stolen from is executed.
      */
     public void endTurn(){
+        checkInitialized();
         Cheating.processGrabs(game,user);
+    }
+
+    private void checkInitialized(){
+        if(!game.isInitialized()){
+            boolean isFinished = true;
+            for (Player player:game.getPlayers()) {
+                if(player.getInventory().getSettlements().size() < 2 || player.getInventory().getRoads().size() < 2){
+                    isFinished = false;
+                }
+            }
+            if(isFinished){
+                game.setInitialized(true);
+            }
+        }
     }
 }

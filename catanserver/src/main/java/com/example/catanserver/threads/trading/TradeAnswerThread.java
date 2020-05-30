@@ -3,6 +3,7 @@ package com.example.catanserver.threads.trading;
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catangame.Trade;
+import com.example.catanserver.Server;
 import com.example.catanserver.User;
 import com.example.catanserver.threads.GameThread;
 import com.example.catanserver.threads.SendToClient;
@@ -12,6 +13,7 @@ import java.util.List;
 
 /**
  * @author Christina Senger
+ * @author Fabian Schaffenrath (edit)
  * <p>
  * This Thread handles the Answers of the Players to the current active Trade.
  */
@@ -70,29 +72,16 @@ public class TradeAnswerThread extends GameThread {
     }
 
     /**
-     * When no Trading-Partner could be found, the current Player and all potential
-     * Trading-Partners are added to the List of Player, to which a Message should be send.
-     * The Answer-Message is set and distributed to all Player in the List.
-     *
-     * Else, the current Player and the Player who first answered with accept are added
-     * to the to the List of Player, to which a Message should be send.
-     * The Ressources are exchanged, the Answer-Message is set and distributed to all Player in the List.
+     * A specified message is set depending on the presence of a tradingPartner and this message
+     * is sent via distribute(). Should a tradingPartner be present, the resourceExchange is called.
      */
     private void setAnswerList() {
-
-        List<Player> toSend = new ArrayList<>();
-
+        String message;
         if (tradingPartner == null) {
-            toSend.add(tradingOfferer);
-
-            distribute(toSend, "Leider keine Handelspartner");
-
+            message = "Leider keine Handelspartner";
         } else {
-
+            message = "Handel zwischen " + tradingOfferer.getDisplayName() + " und " + tradingPartner.getDisplayName() + " durchgefuehrt";
             System.out.println(tradingOfferer + " offer " + tradingPartner + " partner");
-
-            toSend.add(tradingOfferer);
-            toSend.add(tradingPartner);
 
             System.out.println(tradingOfferer.getInventory().getAllSupplies() + " curr ");
             System.out.println(tradingPartner.getInventory().getAllSupplies());
@@ -100,8 +89,8 @@ public class TradeAnswerThread extends GameThread {
 
             System.out.println("Handel durchgefuehrt");
             System.out.println("Handel zwischen " + tradingOfferer.getDisplayName() + " und " + tradingPartner.getDisplayName() + " durchgefuehrt");
-            distribute(toSend, "Handel zwischen " + tradingOfferer.getDisplayName() + " und " + tradingPartner.getDisplayName() + " durchgefuehrt");
         }
+        distribute(message);
     }
 
     /**
@@ -141,17 +130,45 @@ public class TradeAnswerThread extends GameThread {
     }
 
     /**
-     * Send the Trade-Message to all potential Trading-Partner.
-     *
-     * @param playersToSend List of Player, to which to Message should be sent
+     * Sends the Trade-Message to the tradeOfferer and, if present, to the trading partner.
+     * Sends the endturn command to the TradeOfferer with a message attached and, if present, a
+     * trade command with the same message attached to the trading Partner. If the Trading Partner
+     * is also the nextPlayer, the begin turn command is sent instead. Otherwise the begin turn
+     * command is sent to the next player.
      * @param mess Message to send
      */
-    private void distribute(List<Player> playersToSend, String mess) {
+    private void distribute(String mess){
         game.setTrade(null);
         game.setIsTradeOn(false);
         game.nextPlayer();
         endTurn();
-        SendToClient.sendTradeMessageBroadcast(playersToSend, mess, game);
+
         SendToClient.sendGameSessionBroadcast(game);
+        SendToClient.sendStringMessage(Server.findUser(tradingOfferer.getUserId()),SendToClient.HEADER_ENDTURN + " " + mess);
+
+        if(tradingPartner != null){
+            if(game.getCurr().equals(tradingPartner)){
+                User nextUser = Server.findUser(game.getCurr().getUserId());
+                if (nextUser != null) {
+                    SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN + " " + mess);
+                }
+            }
+            else{
+                User tradingPartnerUser = Server.findUser(game.getCurr().getUserId());
+                if (tradingPartnerUser != null) {
+                    SendToClient.sendStringMessage(tradingPartnerUser, SendToClient.HEADER_TRADECOMPLETE + " " + mess);
+                }
+                User nextUser = Server.findUser(game.getCurr().getUserId());
+                if (nextUser != null) {
+                    SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN);
+                }
+            }
+        }
+        else {
+            User nextUser = Server.findUser(game.getCurr().getUserId());
+            if (nextUser != null) {
+                SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN);
+            }
+        }
     }
 }

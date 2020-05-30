@@ -36,6 +36,7 @@ public class GameSession implements Serializable {
     private int knightPowerCount; // Number of Knight-Cards the Player with the greatest Knightpower has
     private Player knightPowerOwner; // Player which has the greatest Knightpower
     private LinkedList<Grab> grabs; // Running Cheating requests
+    private boolean isInitialized;
 
     /**
      * Constructor - Gives the Game the next ID from GameCounter,
@@ -52,6 +53,7 @@ public class GameSession implements Serializable {
         currPlayer = 0;
         this.devCards = new DevCardStack().getDevCardStack();
         this.grabs = new LinkedList<>();
+        isInitialized = false;
     }
 
     // Getter
@@ -78,7 +80,6 @@ public class GameSession implements Serializable {
         return null;
     }
 
-    // Getters
     public Gameboard getGameboard() {
         return gameboard;
     }
@@ -131,6 +132,9 @@ public class GameSession implements Serializable {
         this.knightPowerCount = knightPowerCount;
     }
 
+    public boolean isInitialized() {
+        return isInitialized;
+    }
 
     // Setters
     public void setPlayers(List<Player> players) {
@@ -163,6 +167,10 @@ public class GameSession implements Serializable {
 
     public void setCardBuild(boolean isCardBuild) {
         this.isCardBuild = isCardBuild;
+    }
+
+    public void setInitialized(boolean initialized) {
+        isInitialized = initialized;
     }
 
     // add Structures
