@@ -19,7 +19,7 @@ import com.example.diesiedler.R;
 import com.example.diesiedler.building.BuildSettlementActivity;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
-import com.example.diesiedler.presenter.handler.HandlerOverride;
+import com.example.diesiedler.presenter.handler.PreGameHandler;
 import com.example.diesiedler.threads.NetworkThread;
 
 import java.util.ArrayList;
@@ -168,7 +168,7 @@ public class SelectColorsActivity extends AppCompatActivity {
      * <p>
      * Handler for the SelectColorsActivity
      */
-    private class SelectColorsHandler extends HandlerOverride {
+    private class SelectColorsHandler extends PreGameHandler {
 
         SelectColorsHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
@@ -201,7 +201,7 @@ public class SelectColorsActivity extends AppCompatActivity {
 
             } else if (msg.arg1 == 5 && msg.obj.equals("STARTGAME")) {  // TODO: Change to enums
 
-                if (ClientData.currentGame.getCurrPlayer() == ClientData.userId) {
+                if (ClientData.currentGame.getCurr().getUserId() == ClientData.userId) {
                     Intent intent = new Intent(activity, BuildSettlementActivity.class);
                     startActivity(intent);
                 } else {

@@ -23,7 +23,7 @@ import com.example.diesiedler.trading.AnswerToTradeActivity;
  *
  * Handler which saves the Looper for Messagehandling and the calling Activity
  */
-public class HandlerOverride extends Handler {
+public class GameHandler extends Handler {
 
     protected Activity activity;
 
@@ -33,18 +33,20 @@ public class HandlerOverride extends Handler {
      * @param mainLooper Looper for Messagehandling
      * @param ac         calling Activity
      */
-    public HandlerOverride(Looper mainLooper, Activity ac) {
+    public GameHandler(Looper mainLooper, Activity ac) {
         super(mainLooper);
         activity = ac;
     }
 
     /**
      * Handles all Client calls, that need to display a Alert or switch to a different Activity.
+     * If the Header starts with another header, the order is important!
+     * example: (CHEATED, CHEATEDREVEAL)
      * @param msg the object received from the Server
      */
     @Override
     public void handleMessage(Message msg){
-        if(msg.obj instanceof String){
+        if(msg.arg1 == 5){
             String message = null;
             if(((String) msg.obj).contains(" ")){
                 message = ((String) msg.obj).substring(((String) msg.obj).indexOf(" ") + 1);
@@ -90,9 +92,6 @@ public class HandlerOverride extends Handler {
             else if(((String) msg.obj).startsWith("CHEATER")){
                 showAlert("Diebstahl",message);
             }
-            else if(((String) msg.obj).startsWith("CHEATED")){
-                showAlertWithChooseActionActivityCall("Diebstahl",message);
-            }
             else if(((String) msg.obj).startsWith("CHEATEDREVEAL")){  //TODO: putExtra of playerId umgehen
                 if(message != null){
                     showAlertWithCheatCounterActivityCall("Diebstahl",message);
@@ -102,13 +101,17 @@ public class HandlerOverride extends Handler {
                     activity.startActivity(intent);
                 }
             }
+            else if(((String) msg.obj).startsWith("CHEATED")){
+                showAlertWithChooseActionActivityCall("Diebstahl",message);
+            }
+
+            else if(((String) msg.obj).startsWith("TRADECOMPLETE")){
+                showAlert("Handel",message);
+            }
             else if(((String) msg.obj).startsWith("TRADE")){
                 Intent intent = new Intent(activity, AnswerToTradeActivity.class);
                 intent.putExtra("mess", message);
                 activity.startActivity(intent);
-            }
-            else if(((String) msg.obj).startsWith("TRADECOMPLETE")){
-                showAlert("Handel",message);
             }
             else if(((String) msg.obj).startsWith("ERROR")){
                 showAlert("Fehler",message);

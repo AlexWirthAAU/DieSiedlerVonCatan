@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.diesiedler.R;
 import com.example.diesiedler.presenter.ClientData;
-import com.example.diesiedler.presenter.handler.HandlerOverride;
+import com.example.diesiedler.presenter.handler.PreGameHandler;
 import com.example.diesiedler.threads.ServerCommunicationThread;
 import com.example.diesiedler.threads.StartServerCommunicationThread;
 
@@ -64,7 +64,7 @@ public class WelcomeActivity extends AppCompatActivity {
      * <p>
      * Handler for the WelcomeActivity
      */
-    private class WelcomeHandler extends HandlerOverride {
+    private class WelcomeHandler extends PreGameHandler {
 
         WelcomeHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
