@@ -27,7 +27,6 @@ public class GameSession implements Serializable {
     private LinkedList<Knot> settlements;
     private LinkedList<Knot> cities;
     private LinkedList<Edge> roads; // Lists of Structures
-    private Player curr;
     private int currPlayer; // current Player and his index
     private ArrayList<DevCard> devCards; // List of DevCards
     private String message; // optional Message to alert after an Action
@@ -98,10 +97,6 @@ public class GameSession implements Serializable {
 
     public Player getCurr() {
         return players.get(currPlayer);
-    }
-
-    public int getCurrPlayer() {
-        return currPlayer;
     }
 
     public ArrayList<DevCard> getDevCards() {
@@ -226,7 +221,6 @@ public class GameSession implements Serializable {
         } else{
             currPlayer++;
         }
-        curr = players.get(currPlayer);
     }
 
     public void previousPlayer() {
@@ -235,6 +229,5 @@ public class GameSession implements Serializable {
         } else {
             currPlayer--;
         }
-        curr = players.get(currPlayer);
     }
 }
