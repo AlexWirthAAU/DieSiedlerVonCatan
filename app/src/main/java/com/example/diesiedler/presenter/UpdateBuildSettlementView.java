@@ -48,7 +48,7 @@ public class UpdateBuildSettlementView {
 
     private static LinkedList possibleKnots(GameSession gs) {
         LinkedList<Knot> possibleKnots = new LinkedList<>();
-        Player currentP = gs.getPlayer(gs.getCurrPlayer());
+        Player currentP = gs.getCurr();
 
         if (currentP.getInventory().getSettlements().size() >= 2 && hasResources(currentP) == false) {
             /**

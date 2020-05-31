@@ -42,8 +42,6 @@ public class ClientData {
 
     public static Handler currentHandler; // Handler, which is set for every Activity in their onCreate-Method
 
-    public static boolean hasRolledDice;
-    public static boolean triedReveal;
 
     /**
      * Initializes and saves the Server-Connection.
@@ -80,9 +78,7 @@ public class ClientData {
         }
     }
 
-    public static void adjustHasRolledDice(){
-        if(!currentGame.getPlayer(userId).equals(currentGame.getCurr())){
-            hasRolledDice = false;
-        }
+    public static void emptyGameData(){
+        currentGame = null;
     }
 }

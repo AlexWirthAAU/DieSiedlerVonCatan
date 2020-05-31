@@ -9,25 +9,32 @@ import com.example.catanserver.businessLogic.model.ResourceAllocation;
 // TODO: kommentieren
 public class ResourceAllocationThread extends GameThread {
 
-    GameSession gameSession;
     int diceValue;
 
 
     public ResourceAllocationThread(User user, GameSession game, int diceValue) {
         super(user, game);
-        this.gameSession = game;
         this.diceValue = diceValue;
     }
 
     public void run() {
-        ResourceAllocation.updateResources(gameSession, diceValue);
-        Player player = gameSession.getPlayer(user.getUserId());
+        ResourceAllocation.updateResources(game, diceValue);
+        Player player = game.getPlayer(user.getUserId());
         if(player.hasToSkip()){
             player.skip();
             endTurn();
-            gameSession.nextPlayer();
+            game.nextPlayer();
+            SendToClient.sendGameSessionBroadcast(game);
+            SendToClient.sendStringMessage(user,SendToClient.HEADER_ENDTURN);
+            User nextUser = Server.findUser(game.getCurr().getUserId());
+            if(nextUser != null) {
+                SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN);
+            }
         }
-        SendToClient.sendGameSessionBroadcast(gameSession);
-        Server.currentlyThreaded.remove(gameSession.getGameId());
+        else {
+            SendToClient.sendGameSessionBroadcast(game);
+            SendToClient.sendStringMessage(user, SendToClient.HEADER_ROLLED);
+        }
+        Server.currentlyThreaded.remove(game.getGameId());
     }
 }

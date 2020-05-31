@@ -1,7 +1,6 @@
 package com.example.diesiedler;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -14,7 +13,7 @@ import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.UpdateGameboardView;
 import com.example.diesiedler.presenter.UpdateThiefView;
-import com.example.diesiedler.presenter.handler.HandlerOverride;
+import com.example.diesiedler.presenter.handler.GameHandler;
 import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
 import com.example.diesiedler.threads.NetworkThread;
 import com.richpath.RichPathView;
@@ -28,6 +27,7 @@ import com.richpath.RichPathView;
 public class ThiefActivity extends AppCompatActivity {
 
     private Handler handler = new ThiefHandler(Looper.getMainLooper(), this);
+    private RichPathView richPathView;
     private String card; // "CARD" when to Activity is started from the PlayCardActivity
 
     @Override
@@ -45,13 +45,24 @@ public class ThiefActivity extends AppCompatActivity {
 
         System.out.println(card + " card");
 
-        RichPathView richPathView = findViewById(R.id.ic_gameboardView);
+        richPathView = findViewById(R.id.ic_gameboardView);
         UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
 
         UpdateThiefView.updateView(ClientData.currentGame, richPathView);
 
         GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView, this);
         gameBoardClickListener.clickBoard("MoveThief");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ClientData.currentHandler = handler;
+    }
+
+    public void onRestart() {
+        super.onRestart();
+        ClientData.currentHandler = handler;
     }
 
     public void clicked(String clicked){
@@ -76,7 +87,7 @@ public class ThiefActivity extends AppCompatActivity {
         networkThread.start();
     }
 
-    private class ThiefHandler extends HandlerOverride {
+    private class ThiefHandler extends GameHandler {
 
         public ThiefHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
@@ -84,15 +95,12 @@ public class ThiefActivity extends AppCompatActivity {
 
         @Override
         public void handleMessage(Message msg) {
-            if (msg.arg1 == 4) {
-                if(ClientData.currentGame.getCurr().getUserId() == ClientData.userId) {
-                    Intent intent = new Intent(activity, ChooseActionActivity.class);
-                    startActivity(intent);
-                }
-                else{
-                    Intent intent = new Intent(activity, MainActivity.class);
-                    startActivity(intent);
-                }
+            if(msg.arg1 == 5){
+                super.handleMessage(msg);
+            }
+            else if(msg.arg1 == 4){
+                UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
+                UpdateThiefView.updateView(ClientData.currentGame, richPathView);
             }
         }
     }

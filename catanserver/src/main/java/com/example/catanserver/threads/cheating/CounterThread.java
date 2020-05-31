@@ -26,7 +26,8 @@ public class CounterThread extends GameThread {
 
     /**
      * If a grab is revealed, a chosen resource is tried to be stolen from the cheating player.
-     * A Message with the Outcome is sent to the countering User and a GameSession is sent to all players.
+     * A Message with the cheated command and the Outcome is sent to the countering User, a message
+     * with the cheater and the outcome is sent to the cheater and a GameSession is sent to all players.
      */
     public void run(){
         try {
@@ -34,24 +35,15 @@ public class CounterThread extends GameThread {
             Grab grab = game.getGrabOf(user.getUserId());
             if (grab != null && grab.getGrabber().getUserId() == grabber && grab.getRevealed()) {
                 if(Cheating.counter(grab,resource)){
-                    SendToClient.sendStringMessage(user,"CHEAT COUNTERED");
-                    for (User user:Server.currentUsers) {
-                        if(user.getUserId() == grab.getGrabber().getUserId()){
-                            SendToClient.sendStringMessage(user,"XCHEAT COUNTERED");
-                            break;
-                        }
+                    SendToClient.sendStringMessage(user,SendToClient.HEADER_CHEATED + " Du konntest einen Rohstoff zurückstehlen");
+                    User grabberUser = Server.findUser(grab.getGrabber().getUserId());
+                    if(grabberUser != null){
+                        SendToClient.sendStringMessage(grabberUser,SendToClient.HEADER_CHEATER + " Dir wurde ein Rohstoff gestohlen.");
                     }
                 }
                 else{
-                    SendToClient.sendStringMessage(user,"CHEAT BLOCKED");
-                    for (User user:Server.currentUsers) {
-                        if(user.getUserId() == grab.getGrabber().getUserId()){
-                            SendToClient.sendStringMessage(user,"XCHEAT BLOCKED");
-                            break;
-                        }
-                    }
+                    SendToClient.sendStringMessage(user,SendToClient.HEADER_CHEATED + " Der Dieb besitzt diesen Rohstoff leider nicht.");
                 }
-                // TODO: implement Player skip
                 game.removeGrab(grab);
                 SendToClient.sendGameSessionBroadcast(game);
             }

@@ -21,16 +21,15 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.catangame.GameSession;
-import com.example.catangame.Player;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.RollDice;
 import com.example.diesiedler.presenter.ServerQueries;
-import com.example.diesiedler.presenter.handler.HandlerOverride;
+import com.example.diesiedler.presenter.handler.GameHandler;
 import com.example.diesiedler.threads.NetworkThread;
 
 /**
  * @author Alex Wirth
+ * @author Fabian Schaffenrath (edit)
  * <p>
  * This activity is the beginning of a player's turn. It has to be executed every begiinig of a new turn. Only if the player diced, he can continue his turn.
  * Player is able to shake dive to generate some random value between 2-12.
@@ -86,6 +85,13 @@ public class RollDiceActivity extends AppCompatActivity implements SensorEventLi
     @Override
     protected void onResume() {
         super.onResume();
+        ClientData.currentHandler = handler;
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
+    }
+
+    public void onRestart() {
+        super.onRestart();
+        ClientData.currentHandler = handler;
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
     }
 
@@ -154,31 +160,21 @@ public class RollDiceActivity extends AppCompatActivity implements SensorEventLi
     public void onAccuracyChanged(Sensor sensor, int i) {
     }
 
-    /**
-     * After having send the dice-value and receives the new gamesession object tha player can now choose what to do in his turn.
-     */
-    private class RollDiceHandler extends HandlerOverride {
+
+    private class RollDiceHandler extends GameHandler {
 
         public RollDiceHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
         }
 
+        /**
+         * After having send the dice-value and receives the rolled command, the ChooseActionActivity
+         * will be called from the super handleMessage method.
+         */
         @Override
         public void handleMessage(Message msg) {
-            if (msg.arg1 == 4) {
-                GameSession gameSession = ClientData.currentGame;
-                Player currentP = gameSession.getPlayer(gameSession.getCurrPlayer());
-
-                if (currentP.getUserId() == ClientData.userId) {
-                    ClientData.hasRolledDice = true;
-                    ClientData.triedReveal = false;
-                    Intent intent = new Intent(activity, ChooseActionActivity.class);
-                    startActivity(intent);
-                }
-                else{
-                    Intent intent = new Intent(activity, MainActivity.class);
-                    startActivity(intent);
-                }
+            if(msg.arg1 == 5){
+                super.handleMessage(msg);
             }
         }
     }

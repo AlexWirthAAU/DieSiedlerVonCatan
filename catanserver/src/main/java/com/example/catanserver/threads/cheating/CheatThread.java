@@ -24,18 +24,18 @@ public class CheatThread extends GameThread {
 
     /**
      * Tries to create a new Grab in the GameSession. If successful, a GameSession is sent
-     * to all players. Regardless of the Outcome, a String containing the Outcome is sent to the
-     * requesting User.
+     * to all players. Regardless of the Outcome, the cheat command and a String
+     * containing the Outcome is sent to the requesting User.
      */
     public void run(){
         try{
             int grabbed = Integer.parseInt(grabbedId);
             if(Cheating.requestGrab(game,user.getUserId(),grabbed,resource)){
-                SendToClient.sendStringMessage(user,"CHEAT SET");
                 SendToClient.sendGameSessionBroadcast(game);
+                SendToClient.sendStringMessage(user,SendToClient.HEADER_CHEATERSET + " Dein Diebstahl wird am Ende des nächsten Spielzuges deines Opfers durchgeführt, solange dieser nicht erkannt wurde.");
             }
             else{
-                SendToClient.sendStringMessage(user,"CHEAT NOT SET");
+                SendToClient.sendStringMessage(user,SendToClient.HEADER_CHEATERSET + " Dieser Spieler wird bereits bestohlen.");
             }
         }catch (Exception e){
             e.printStackTrace();

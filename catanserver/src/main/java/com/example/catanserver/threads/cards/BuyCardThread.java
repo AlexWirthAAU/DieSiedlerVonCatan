@@ -8,6 +8,7 @@ import com.example.catangame.devcards.InventionCard;
 import com.example.catangame.devcards.KnightCard;
 import com.example.catangame.devcards.MonopolCard;
 import com.example.catangame.devcards.VictoryPointCard;
+import com.example.catanserver.Server;
 import com.example.catanserver.User;
 import com.example.catanserver.threads.ErrorThread;
 import com.example.catanserver.threads.GameThread;
@@ -18,6 +19,7 @@ import java.util.Random;
 
 /**
  * @author Christina Senger
+ * @author Fabian Schaffenrath (edit)
  * <p>
  * This Thread handles the Buy of a DevCard.
  */
@@ -42,10 +44,11 @@ public class BuyCardThread extends GameThread {
     }
 
     /**
-     * When the Player can buy a Card, his Inventory and the
-     * GameSession are updated. A Message is built and send to
-     * the User. The new GameSession is send broadcast. Else an
-     * Error-Thread is started.
+     * If the Player can buy a Card, his Inventory and the
+     * GameSession are updated. The updated GameSession is broadcast and the end turn command is
+     * sent to the user, containing a displayed message. Additionally the begin turn command is
+     * sent to the next user.
+     * Otherwise an Error-Thread is started.
      */
     public void run() {
 
@@ -56,8 +59,12 @@ public class BuyCardThread extends GameThread {
             String mess = buildMessage();
             game.nextPlayer();
             endTurn();
-            SendToClient.sendTradeMessage(user, mess);
             SendToClient.sendGameSessionBroadcast(game);
+            SendToClient.sendStringMessage(user, SendToClient.HEADER_ENDTURN + " " + mess);
+            User nextUser = Server.findUser(game.getCurr().getUserId());
+            if(nextUser != null) {
+                SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN);
+            }
 
         } else {
             System.out.println("error");

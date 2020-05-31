@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.diesiedler.R;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
-import com.example.diesiedler.presenter.handler.HandlerOverride;
+import com.example.diesiedler.presenter.handler.PreGameHandler;
 import com.example.diesiedler.threads.NetworkThread;
 
 import java.util.ArrayList;
@@ -62,6 +62,15 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
         stopButton = this.findViewById(R.id.stopButton);
 
         ClientData.currentHandler = handler;
+
+        ClientData.emptyGameData();
+    }
+
+    /**
+     * Going back is not possible here.
+     */
+    @Override
+    public void onBackPressed() {
     }
 
     /**
@@ -155,7 +164,7 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
      * <p>
      * Handler for the SearchPlayersActivity
      */
-    private class SearchPlayersHandler extends HandlerOverride {
+    private class SearchPlayersHandler extends PreGameHandler {
 
         SearchPlayersHandler(Looper mainLooper, Activity ac) {
             super(mainLooper,ac);

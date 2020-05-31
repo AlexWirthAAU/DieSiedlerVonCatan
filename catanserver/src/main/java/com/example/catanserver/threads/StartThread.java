@@ -21,9 +21,9 @@ public class StartThread extends GameThread{
     }
 
     /**
-     * When all Players have selected their Colors, it sends a
-     * GameSession Object to every user who is part of this Game (broadcast)
-     * and removes the Game from currentlyThreaded.
+     * When all Players have selected their Colors, a command string is sent
+     * to every user indicating a game start.
+     * Game is removed from currentlyThreaded.
      */
     public void run(){
         boolean allColorsSet = true;
@@ -34,7 +34,7 @@ public class StartThread extends GameThread{
             }
         }
         if(allColorsSet){
-            SendToClient.sendGameStartBroadcast(game);
+            SendToClient.sendStringMessageBroadcast(game,SendToClient.HEADER_START);
         }
         Server.currentlyThreaded.remove(game.getGameId());
     }

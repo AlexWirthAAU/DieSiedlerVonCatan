@@ -13,6 +13,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Christina Senger
+ * @author Fabian Schaffenrath (edit)
+ * <p>
+ * This Thread handles the starting of a new Trade.
+ */
 public class TradeThread extends GameThread {
 
     private List<Player> potentialTradingPartners = new ArrayList<>(); // List of all potential Trading-Partner (have enough Ressources)
@@ -70,13 +76,13 @@ public class TradeThread extends GameThread {
     }
 
     /**
-     * Send the Trade-Message and to the to all potential Trading-Partner.
+     * Send the Trade-Message and the GameSession to all potential Trading-Partner.
      *
      * @param playersToSend List of Player, to which to Message should be sent
      * @param mess Message to send
      */
     private void distribute(List<Player> playersToSend, String mess) {
-        SendToClient.sendTradeMessageBroadcast(playersToSend, mess, this.gs);
+        SendToClient.sendTradeMessageBroadcast(playersToSend, SendToClient.HEADER_TRADE + " " + mess, this.gs);
     }
 
     /**

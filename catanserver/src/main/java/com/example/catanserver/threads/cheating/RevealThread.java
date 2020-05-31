@@ -24,8 +24,9 @@ public class RevealThread extends GameThread {
     }
 
     /**
-     * Depending on the guess, the revealed value of the grab is set and a message to the
-     * revealing user is sent.
+     * Depending on the guess, the revealed value of the grab is set and a cheated command with a
+     * message is sent to the revealing user. If revealed, a cheater command with a message is sent
+     * to the cheating user as well.
      */
     public void run(){
         int grabberIdInt = -1;
@@ -39,20 +40,21 @@ public class RevealThread extends GameThread {
             if(grab.getResource().equals(resource) && grab.getRevealed() == null) {
                 grab.setRevealed(true);
                 grab.getGrabber().addSkip();
-                SendToClient.sendStringMessage(user,"CHEAT REVEALED");
+                SendToClient.sendStringMessage(user,SendToClient.HEADER_CHEATEDREVEAL + " Richtig geraten. Du kannst nun versuchen, einen Rohstoff zurückzustehlen.");
 
                 User grabber = Server.findUser(grab.getGrabber().getUserId());
                 if(grabber != null){
-                    SendToClient.sendStringMessage(grabber,"XCHEAT REVEALED");
+                    SendToClient.sendStringMessage(grabber,SendToClient.HEADER_CHEATER + " Dein Diebstahlsversuch wurde entdeckt.");
                 }
             }
             else if(grab.getRevealed() != null && grab.getRevealed()){
-                SendToClient.sendStringMessage(user,"CHEAT ALREADY REVEALED");
+                SendToClient.sendStringMessage(user,SendToClient.HEADER_CHEATEDREVEAL);
             }
             else{
                 grab.setRevealed(false);
-                SendToClient.sendStringMessage(user,"CHEAT NOT REVEALED");
+                SendToClient.sendStringMessage(user,SendToClient.HEADER_CHEATED + " Leider falsch geraten. Der Rohstoff wird dir am Ende des Spielzuges abgezogen.");
             }
+            SendToClient.sendGameSessionBroadcast(game);
         }
         else{
             SendToClient.sendStringMessage(user,"ERROR");

@@ -27,7 +27,6 @@ public class GameSession implements Serializable {
     private LinkedList<Knot> settlements;
     private LinkedList<Knot> cities;
     private LinkedList<Edge> roads; // Lists of Structures
-    private Player curr;
     private int currPlayer; // current Player and his index
     private ArrayList<DevCard> devCards; // List of DevCards
     private String message; // optional Message to alert after an Action
@@ -36,6 +35,7 @@ public class GameSession implements Serializable {
     private int knightPowerCount; // Number of Knight-Cards the Player with the greatest Knightpower has
     private Player knightPowerOwner; // Player which has the greatest Knightpower
     private LinkedList<Grab> grabs; // Running Cheating requests
+    private boolean isInitialized;
 
     /**
      * Constructor - Gives the Game the next ID from GameCounter,
@@ -52,6 +52,7 @@ public class GameSession implements Serializable {
         currPlayer = 0;
         this.devCards = new DevCardStack().getDevCardStack();
         this.grabs = new LinkedList<>();
+        isInitialized = false;
     }
 
     // Getter
@@ -78,7 +79,6 @@ public class GameSession implements Serializable {
         return null;
     }
 
-    // Getters
     public Gameboard getGameboard() {
         return gameboard;
     }
@@ -97,10 +97,6 @@ public class GameSession implements Serializable {
 
     public Player getCurr() {
         return players.get(currPlayer);
-    }
-
-    public int getCurrPlayer() {
-        return currPlayer;
     }
 
     public ArrayList<DevCard> getDevCards() {
@@ -131,6 +127,9 @@ public class GameSession implements Serializable {
         this.knightPowerCount = knightPowerCount;
     }
 
+    public boolean isInitialized() {
+        return isInitialized;
+    }
 
     // Setters
     public void setPlayers(List<Player> players) {
@@ -163,6 +162,10 @@ public class GameSession implements Serializable {
 
     public void setCardBuild(boolean isCardBuild) {
         this.isCardBuild = isCardBuild;
+    }
+
+    public void setInitialized(boolean initialized) {
+        isInitialized = initialized;
     }
 
     // add Structures
@@ -218,7 +221,6 @@ public class GameSession implements Serializable {
         } else{
             currPlayer++;
         }
-        curr = players.get(currPlayer);
     }
 
     public void previousPlayer() {
@@ -227,6 +229,5 @@ public class GameSession implements Serializable {
         } else {
             currPlayer--;
         }
-        curr = players.get(currPlayer);
     }
 }

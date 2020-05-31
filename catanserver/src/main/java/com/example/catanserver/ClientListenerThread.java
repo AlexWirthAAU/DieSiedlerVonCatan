@@ -45,8 +45,6 @@ public class ClientListenerThread extends Thread {
 
     private User user;
 
-    // TODO: change Strings in messages to enums for faster comparison (ConnectionEnum x = ConnectionEnum.values()[messageSplit[0]])
-
     private Socket connection;
     private ObjectInputStream connectionInputStream;
     private ObjectOutputStream connectionOutputStream;
@@ -85,8 +83,8 @@ public class ClientListenerThread extends Thread {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // TODO: Add callbacks for blocked comms (enums error code?)
-        System.out.println("Processing Connection.");
+
+        System.out.println("Start Listening.");
 
         // Reading UTF from InputStream and storing it into <code>message</code>.
         String message = null;
@@ -417,7 +415,7 @@ public class ClientListenerThread extends Thread {
                                             }
 
                                             if(!threadCreated){
-                                                Thread errorThread = new ErrorThread(user.getConnectionOutputStream(),"REQUEST DENIED.");
+                                                Thread errorThread = new ErrorThread(user.getConnectionOutputStream(),"Aktion konnte nicht durchgeführt werden.");
                                                 errorThread.start();
                                             }
                                         }

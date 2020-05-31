@@ -1,7 +1,6 @@
 package com.example.diesiedler;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,13 +23,11 @@ import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.UpdateBuildCityView;
 import com.example.diesiedler.presenter.UpdateBuildRoadView;
 import com.example.diesiedler.presenter.UpdateBuildSettlementView;
-import com.example.diesiedler.presenter.handler.HandlerOverride;
-import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
+import com.example.diesiedler.presenter.handler.GameHandler;
 import com.example.diesiedler.threads.NetworkThread;
 import com.example.diesiedler.trading.BankChangeActivity;
 import com.example.diesiedler.trading.PortChangeActivity;
 import com.example.diesiedler.trading.TradeActivity;
-import com.richpath.RichPathView;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,6 +35,7 @@ import java.util.logging.Logger;
 /**
  * @author Christina Senger
  * @author Alex Wirth
+ * @author Fabian Schaffenrath (edit)
  * <p>
  * Activity in which the Player can choose his Action.
  */
@@ -94,20 +92,21 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
         showCosts.setOnClickListener(this);
         ahead.setOnClickListener(this);
 
-        String tradeMessage = getIntent().getStringExtra("mess");
-
-        if (tradeMessage != null) {
-            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-            builder1.setCancelable(true);
-            builder1.setMessage(tradeMessage);
-            AlertDialog alert1 = builder1.create();
-            alert1.show();
-        }
-
         ClientData.currentHandler = handler;
 
         player = ClientData.currentGame.getPlayer(ClientData.userId);
         game = ClientData.currentGame;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ClientData.currentHandler = handler;
+    }
+
+    public void onRestart() {
+        super.onRestart();
+        ClientData.currentHandler = handler;
     }
 
     /**
@@ -235,39 +234,27 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
 
     /**
      * @author Christina Senger
+     * @author Fabian Schaffenrath (edit)
      *
      * Handler for the ChooseActionActivity
      */
-    private class ChooseActionHandler extends HandlerOverride {
+    private class ChooseActionHandler extends GameHandler {
 
-        String mess;
         ChooseActionHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
         }
 
         /**
-         * Called from ServerCommunicationThread. When a String is send,
-         * it is set as Extra of the Intent. If a GameSession was send,
-         * a card was bought and the MainActivity is loaded.
+         * Called from ServerCommunicationThread. When a String is sent, it is
+         * processed by the super handleMessage method.
          *
          * @param msg msg.arg1 has the Param for further Actions
-         *            msg.obj holds an Object send from Server
+         *            msg.obj holds an Object sent from Server
          */
         @Override
         public void handleMessage(Message msg) {
-
-            Intent intent = new Intent(activity, MainActivity.class);
-
-            if (msg.arg1 == 4) {  // TODO: Change to enums
-
-                intent.putExtra("mess", mess);
-                System.out.println(mess + " objstart");
-                startActivity(intent);
-            }
-
-            if (msg.arg1 == 5) {  // TODO: Change to enums
-
-                mess = msg.obj.toString();
+            if(msg.arg1 == 5){
+                super.handleMessage(msg);
             }
         }
     }

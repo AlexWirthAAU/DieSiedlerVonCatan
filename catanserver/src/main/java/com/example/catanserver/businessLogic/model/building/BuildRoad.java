@@ -13,6 +13,7 @@ import java.util.LinkedList;
 /**
  * @author Alex Wirth
  * @author Christina Senger (edit)
+ * @author Fabian Schaffenrath
  */
 public class BuildRoad {
 
@@ -22,7 +23,9 @@ public class BuildRoad {
         Player player = gameSession.getPlayer(userID);
         road.setPlayer(player);
         gameSession.addRoad(road);
-        int lastPlayer = gameSession.getPlayers().size() - 1;
+
+        Player lastPlayer = gameSession.getPlayers().get(gameSession.getPlayers().size()-1);
+        Player firstPlayer = gameSession.getPlayers().get(0);
 
         if (player.getInventory().getRoads().size() < 2) {
             updatePlayerInventoryInit(player, road);
@@ -38,7 +41,7 @@ public class BuildRoad {
          */
 
 
-        if (player.getInventory().getRoads().size() == 1 && !(player.getUserId() == lastPlayer)) {
+        if (player.getInventory().getRoads().size() == 1 && !(player.getUserId() == lastPlayer.getUserId())) {
             gameSession.nextPlayer();
             System.out.println("Next Player");
         }
@@ -48,7 +51,7 @@ public class BuildRoad {
             System.out.println("Spieler in the middle");
         }
 
-        if (player.getInventory().getRoads().size() == 2 && player.equals(gameSession.getPlayer(0))) {
+        if (player.getInventory().getRoads().size() == 2 && player.getUserId() == firstPlayer.getUserId()) {
             gameSession.nextPlayer();
             System.out.println("Letzter INIT Spielzug");
         }

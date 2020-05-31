@@ -19,13 +19,19 @@ public class NextThread extends GameThread {
     }
 
     /**
-     * Goes on to the next Player and sends to updated
-     * GameSession broadcast.
+     * Goes on to the next Player, broadcasts an updated
+     * GameSession and also sends the end turn command to the current user as well as the begin
+     * turn command to the next user.
      */
     public void run() {
         game.nextPlayer();
         endTurn();
         SendToClient.sendGameSessionBroadcast(game);
+        SendToClient.sendStringMessage(user,SendToClient.HEADER_ENDTURN);
+        User nextUser = Server.findUser(game.getCurr().getUserId());
+        if(nextUser != null) {
+            SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN);
+        }
         Server.currentlyThreaded.remove(game.getGameId());
     }
 }

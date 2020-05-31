@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.diesiedler.R;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
-import com.example.diesiedler.presenter.handler.HandlerOverride;
+import com.example.diesiedler.presenter.handler.PreGameHandler;
 import com.example.diesiedler.threads.NetworkThread;
 
 import java.util.logging.Level;
@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
      * <p>
      * Handler for the LoginActivity
      */
-    private class LoginHandler extends HandlerOverride {
+    private class LoginHandler extends PreGameHandler {
 
         LoginHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);

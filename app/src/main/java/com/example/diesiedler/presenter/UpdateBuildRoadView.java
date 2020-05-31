@@ -43,7 +43,7 @@ public class UpdateBuildRoadView {
 
     public static LinkedList<Edge> possibleEdges(GameSession gs, String card) {
         LinkedList<Edge> possibleEdges = new LinkedList<>();
-        Player p = gs.getPlayer(gs.getCurrPlayer());
+        Player p = gs.getPlayer(ClientData.userId);
 
 
         /**
