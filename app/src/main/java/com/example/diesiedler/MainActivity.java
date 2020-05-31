@@ -108,12 +108,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * Going back is not possible here.
-     * TODO: When choosing action i call this activity to give an overview -> i have to go back then to choose what todo
+     * Going back is only possible, if it is the users turn.
+     */
     @Override
     public void onBackPressed() {
+        if(ClientData.currentGame.getCurr().getUserId() == ClientData.userId){
+            super.onBackPressed();
+        }
     }
-     */
+
     private void alert(String tradeMessage) {
         if (tradeMessage != null) {
             AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
