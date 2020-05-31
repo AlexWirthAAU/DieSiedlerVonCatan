@@ -49,7 +49,6 @@ public class BuildRoadThread extends GameThread {
         endTurn();
         SendToClient.sendGameSessionBroadcast(game);
         SendToClient.sendStringMessage(user,SendToClient.HEADER_ENDTURN);
-
         User nextUser = Server.findUser(game.getCurr().getUserId());
         if(nextUser != null) {
             if (!game.isInitialized()) {

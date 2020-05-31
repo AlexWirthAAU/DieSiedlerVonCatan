@@ -54,6 +54,7 @@ public class RevealThread extends GameThread {
                 grab.setRevealed(false);
                 SendToClient.sendStringMessage(user,SendToClient.HEADER_CHEATED + " Leider falsch geraten. Der Rohstoff wird dir am Ende des Spielzuges abgezogen.");
             }
+            SendToClient.sendGameSessionBroadcast(game);
         }
         else{
             SendToClient.sendStringMessage(user,"ERROR");
