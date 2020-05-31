@@ -62,6 +62,15 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
         stopButton = this.findViewById(R.id.stopButton);
 
         ClientData.currentHandler = handler;
+
+        ClientData.emptyGameData();
+    }
+
+    /**
+     * Going back is not possible here.
+     */
+    @Override
+    public void onBackPressed() {
     }
 
     /**

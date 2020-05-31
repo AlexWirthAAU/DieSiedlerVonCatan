@@ -1,7 +1,6 @@
 package com.example.diesiedler;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,24 +14,21 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.catangame.GameSession;
 import com.example.catangame.Grab;
 import com.example.catangame.Player;
 import com.example.catangame.PlayerInventory;
-import com.example.diesiedler.building.BuildSettlementActivity;
 import com.example.diesiedler.cheating.CheatRevealActivity;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.UpdateGameboardView;
-import com.example.diesiedler.presenter.handler.HandlerOverride;
-import com.example.diesiedler.trading.AnswerToTradeActivity;
+import com.example.diesiedler.presenter.handler.GameHandler;
 import com.richpath.RichPathView;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * @author Alex Wirth
  * @author Christina Senger (edit)
+ * @author Fabian Schaffenrath (edit)
  * <p>
  * Overview of Gameboard and Inventory
  */
@@ -40,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final Logger logger = Logger.getLogger(MainActivity.class.getName()); // Logger
     private Handler handler = new MainHandler(Looper.getMainLooper(), this); // Handler
+    private RichPathView richPathView;
 
     private TextView woodCount; // Number of Ressources
     private TextView clayCount;
@@ -66,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameboardview);
-        RichPathView richPathView = findViewById(R.id.ic_gameboardView);
+        richPathView = findViewById(R.id.ic_gameboardView);
 
         devCards = findViewById(R.id.devCard);
         devCards.setOnClickListener(this);
@@ -76,24 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Cheating
         grabView = findViewById(R.id.grabActive);
         grabView.setVisibility(View.GONE);
-        if(ClientData.currentGame.getCurr().getUserId() == ClientData.userId && !ClientData.triedReveal){
-            for (Grab grab:ClientData.currentGame.getGrabs()) {
-                if(grab.getGrabbed().getUserId() == ClientData.userId){
-                    grabberId = "" + grab.getGrabber().getUserId();
-                    grabView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(getBaseContext(), CheatRevealActivity.class);
-                            intent.putExtra("playerId","" + grabberId);
-                            startActivity(intent);
-                        }
-                    });
-                    grabView.setClickable(true);
-                    grabView.setVisibility(View.VISIBLE);
-                    break;
-                }
-            }
-        }
+        checkForGrab();
 
         UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
         updateResources();
@@ -108,6 +88,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         System.out.println(intentMess + " inentmessinMainout");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ClientData.currentHandler = handler;
+        UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
+        updateResources();
+        checkForGrab();
+    }
+
+    public void onRestart() {
+        super.onRestart();
+        ClientData.currentHandler = handler;
+        UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
+        updateResources();
+        checkForGrab();
     }
 
     /**
@@ -129,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void updateResources() {
         PlayerInventory playerInventory = ClientData.currentGame.getPlayer(ClientData.userId).getInventory();
-        Player currentP = ClientData.currentGame.getPlayer(ClientData.currentGame.getCurrPlayer());
+        Player currentP = ClientData.currentGame.getCurr();
 
         woodCount = findViewById(R.id.woodCount);
         woodCount.setText(Integer.toString(playerInventory.getWood()));
@@ -163,85 +160,59 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
+     * If the user is the current player and someone is trying to steal from him, show the
+     * hand grabbing image.
+     */
+    private void checkForGrab(){
+        if(ClientData.currentGame.getCurr().getUserId() == ClientData.userId){
+            for (Grab grab:ClientData.currentGame.getGrabs()) {
+                if(grab.getGrabbed().getUserId() == ClientData.userId && (grab.getRevealed() == null || grab.getRevealed())){
+                    grabberId = "" + grab.getGrabber().getUserId();
+                    grabView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getBaseContext(), CheatRevealActivity.class);
+                            intent.putExtra("playerId","" + grabberId);
+                            startActivity(intent);
+                        }
+                    });
+                    grabView.setClickable(true);
+                    grabView.setVisibility(View.VISIBLE);
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
      * @author Alex Wirth
      * @author Christina Senger (edit)
+     * @author Fabian Schaffenrath (edit)
      *
      * Handler for the MainActivity
      */
-    private class MainHandler extends HandlerOverride {
-
-        private String mess;
+    private class MainHandler extends GameHandler {
 
         MainHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
         }
 
         /**
-         * Calles from ServerCommunicationThread. When a String is send, it is set as
-         * Extra of the Intent and the AnswerToTradeActivity is started.
-         * If a GameSession was send, it is checked, if its your Turn.
-         * If not, the MainActivity is started.
-         * If yes, to correspondending Activity is started.
+         * Calls from ServerCommunicationThread. If a String is sent, it is processed by the
+         * super handleMessage method. If a game session is sent, the view gets updated.
          *
          * @param msg msg.arg1 has the Param for further Actions
-         *            msg.obj holds a Object send from Server
+         *            msg.obj holds a Object sent from Server
          */
         @Override
         public void handleMessage(Message msg) {
-
-            if (msg.arg1 == 4) {  // TODO: Change to enums
-
-                GameSession gs = ClientData.currentGame;
-                Player currentPlayer = gs.getPlayer(gs.getCurrPlayer());
-                PlayerInventory playerInventory = currentPlayer.getInventory();
-
-                if (currentPlayer.getUserId() == ClientData.userId && playerInventory.getRoads().size() < 2) {
-                    Intent intent = new Intent(activity, BuildSettlementActivity.class);
-                    startActivity(intent);
-                } else if (currentPlayer.getUserId() == ClientData.userId && playerInventory.getSettlements().size() > 1 && playerInventory.getRoads().size() > 1 && !ClientData.hasRolledDice) {
-                    Intent intent = new Intent(activity, RollDiceActivity.class);
-                    startActivity(intent);
-                } else if (currentPlayer.getUserId() == ClientData.userId && !ClientData.hasRolledDice) {
-                    Intent intent = new Intent(activity, RollDiceActivity.class);
-                    startActivity(intent);
-                } else if (currentPlayer.getUserId() != ClientData.userId && gs.isTradeOn()) {
-                    Intent intent = new Intent(activity, AnswerToTradeActivity.class);
-                    intent.putExtra("mess", mess);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(activity, MainActivity.class);
-                    startActivity(intent);
-                }
+            if(msg.arg1 == 5){
+                super.handleMessage(msg);
             }
-            else if(msg.arg1 == 5 && ((String)msg.obj).startsWith("XCHEAT")){
-                String dialogText = "";
-                if(msg.obj.equals("XCHEAT COUNTERED")){
-                    dialogText = "Dein Diebstahl wurde entdeckt und du hast einen Rohstoff verloren.";
-                }
-                else if(msg.obj.equals("XCHEAT BLOCKED")){
-                    dialogText = "Dein Diebstahl wurde entdeckt, du hast aber keinen Rohstoff verloren.";
-                }
-                else if(msg.obj.equals("XCHEAT REVEALED")){
-                    dialogText = "Dein Diebstahl wurde erkannt.";
-                }
-
-                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
-                builder.setTitle("Diebstahl");
-                builder.setMessage(dialogText);
-                builder.setCancelable(true);
-                builder.setNeutralButton(android.R.string.ok,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-                android.app.AlertDialog alert = builder.create();
-                alert.show();
-            }
-            else if (msg.arg1 == 5) {  // TODO: Change to enums
-
-                mess = msg.obj.toString();
-                logger.log(Level.INFO,mess + " objstart");
+            else if(msg.arg1 == 4){
+                UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
+                updateResources();
+                checkForGrab();
             }
         }
     }

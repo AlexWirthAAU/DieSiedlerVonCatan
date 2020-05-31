@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -200,7 +201,6 @@ public class SelectColorsActivity extends AppCompatActivity {
                 }
 
             } else if (msg.arg1 == 5 && msg.obj.equals("STARTGAME")) {  // TODO: Change to enums
-
                 if (ClientData.currentGame.getCurr().getUserId() == ClientData.userId) {
                     Intent intent = new Intent(activity, BuildSettlementActivity.class);
                     startActivity(intent);

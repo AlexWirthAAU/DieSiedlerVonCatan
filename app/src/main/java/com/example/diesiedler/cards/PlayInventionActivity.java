@@ -1,7 +1,6 @@
 package com.example.diesiedler.cards;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -10,11 +9,10 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.diesiedler.MainActivity;
 import com.example.diesiedler.R;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
-import com.example.diesiedler.presenter.handler.HandlerOverride;
+import com.example.diesiedler.presenter.handler.GameHandler;
 import com.example.diesiedler.threads.NetworkThread;
 import com.example.diesiedler.trading.BankChangeActivity;
 
@@ -42,6 +40,17 @@ public class PlayInventionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_invention);
 
+        ClientData.currentHandler = handler;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ClientData.currentHandler = handler;
+    }
+
+    public void onRestart() {
+        super.onRestart();
         ClientData.currentHandler = handler;
     }
 
@@ -110,36 +119,22 @@ public class PlayInventionActivity extends AppCompatActivity {
      *
      * Handler for the PlayInvenionActivity
      */
-    private class PlayInventionHandler extends HandlerOverride {
-
-        private String mess;
+    private class PlayInventionHandler extends GameHandler {
 
         PlayInventionHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
         }
 
         /**
-         * Called from ServerCommunicationThread. When a String is send, it is set as Extra
-         * of the Intent. When a GameSession is send, the Card was played.
-         * The GameSession gets updated and the MainActivity is called.
+         * Called from ServerCommunicationThread. Passes command string to the super method.
          *
          * @param msg msg.arg1 has the Param for further actions
-         *            msg.obj has the updated GameSession
+         *            msg.obj has the received object
          */
         @Override
         public void handleMessage(Message msg) {
-
-            Intent intent = new Intent(activity, MainActivity.class);
-
-            if (msg.arg1 == 4) {  // TODO: Change to enums
-
-                intent.putExtra("mess", mess);
-                System.out.println(mess + " objstart");
-                startActivity(intent);
-            }
-            if (msg.arg1 == 5) {  // TODO: Change to enums
-
-                mess = msg.obj.toString();
+            if(msg.arg1 == 5){
+                super.handleMessage(msg);
             }
         }
     }

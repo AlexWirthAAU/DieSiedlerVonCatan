@@ -45,7 +45,7 @@ public class UpdateBuildCityView {
      */
     private static LinkedList<Knot> possibleKnots(GameSession gs) {
         LinkedList<Knot> possibleKnots = new LinkedList<>();
-        Player p = gs.getPlayer(gs.getCurrPlayer());
+        Player p = gs.getCurr();
 
 
         if (p.getInventory().getWheat() >= 2 && p.getInventory().getOre() >= 3) {

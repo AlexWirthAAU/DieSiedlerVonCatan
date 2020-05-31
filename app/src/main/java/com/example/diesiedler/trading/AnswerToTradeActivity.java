@@ -1,7 +1,6 @@
 package com.example.diesiedler.trading;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -11,13 +10,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.catangame.Player;
-import com.example.diesiedler.MainActivity;
 import com.example.diesiedler.R;
-import com.example.diesiedler.RollDiceActivity;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
-import com.example.diesiedler.presenter.handler.HandlerOverride;
+import com.example.diesiedler.presenter.handler.GameHandler;
 import com.example.diesiedler.threads.NetworkThread;
 
 import java.util.logging.Level;
@@ -25,6 +21,7 @@ import java.util.logging.Logger;
 
 /**
  * @author Christina Senger
+ * @author Fabian Schaffenrath (edit)
  *
  * This Activity is loaded, when the MainActivity is on and the
  * Server sends a Trade-Offer. The Player can here accept or
@@ -53,6 +50,17 @@ public class AnswerToTradeActivity extends AppCompatActivity {
         TextView tradeMes = findViewById(R.id.tradeMes);
         tradeMes.setText(tradeMessage);
 
+        ClientData.currentHandler = handler;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ClientData.currentHandler = handler;
+    }
+
+    public void onRestart() {
+        super.onRestart();
         ClientData.currentHandler = handler;
     }
 
@@ -89,7 +97,7 @@ public class AnswerToTradeActivity extends AppCompatActivity {
      * <p>
      * Handler for the AnswerToTradeActivity
      */
-    private class AnswerToTradeHandler extends HandlerOverride {
+    private class AnswerToTradeHandler extends GameHandler {
 
         private String mess;
 
@@ -98,39 +106,16 @@ public class AnswerToTradeActivity extends AppCompatActivity {
         }
 
         /**
-         * Called from ServerCommunicationThread. When a String was send, it is set
-         * as Extra of the Intent. When a GameSession was send, the Trade was
-         * carried out. It is checked, whether it is the Players Turn.
-         * If yes, the ChooseActionActivity is started.
-         * If not, the MainActivity is started.
+         * Called from ServerCommunicationThread. When a String was send, it is
+         * processed by the super handleMessage method.
          *
          * @param msg msg.arg1 has the Param for further Actions
-         *            msg.obj holds the Object send from the Server
+         *            msg.obj holds the Object sent from the Server
          */
         @Override
         public void handleMessage(Message msg) {
-
-            Intent intentMain = new Intent(activity, MainActivity.class);
-            Intent intentSelect = new Intent(activity, RollDiceActivity.class);
-
-            if (msg.arg1 == 4) {  // TODO: Change to enums
-
-                intentSelect.putExtra("mess", mess);
-                intentMain.putExtra("mess", mess);
-                System.out.println(mess + " objstart");
-
-                Player currentPlayer = ClientData.currentGame.getPlayer(ClientData.currentGame.getCurrPlayer());
-
-                if (currentPlayer.getUserId() == ClientData.userId && !ClientData.hasRolledDice) {
-                    startActivity(intentSelect);
-                } else {
-                    startActivity(intentMain);
-                }
-            }
-            if (msg.arg1 == 5) {  // TODO: Change to enums
-
-                mess = msg.obj.toString();
-                mess = msg.obj.toString();
+            if(msg.arg1 == 5){
+                super.handleMessage(msg);
             }
         }
     }

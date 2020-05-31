@@ -1,7 +1,6 @@
 package com.example.diesiedler.trading;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -13,11 +12,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.catangame.Player;
-import com.example.diesiedler.MainActivity;
 import com.example.diesiedler.R;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
-import com.example.diesiedler.presenter.handler.HandlerOverride;
+import com.example.diesiedler.presenter.handler.GameHandler;
 import com.example.diesiedler.threads.NetworkThread;
 
 import java.util.logging.Level;
@@ -82,6 +80,17 @@ public class TradeActivity extends AppCompatActivity {
 
         player = ClientData.currentGame.getPlayer(ClientData.userId);
 
+        ClientData.currentHandler = handler;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ClientData.currentHandler = handler;
+    }
+
+    public void onRestart() {
+        super.onRestart();
         ClientData.currentHandler = handler;
     }
 
@@ -350,7 +359,7 @@ public class TradeActivity extends AppCompatActivity {
      *
      * Handler for the TradeActivity
      */
-    private class TradeHandler extends HandlerOverride {
+    private class TradeHandler extends GameHandler {
 
         private String mess;
 
@@ -359,27 +368,16 @@ public class TradeActivity extends AppCompatActivity {
         }
 
         /**
-         * Called from ServerCommunicationThread. When a String was send, it is set
-         * as Extra of the Intent. When a GameSession was send, the Trade was
-         * carried out and the MainActivity is started.
+         * Called from ServerCommunicationThread. When a String was sent, it is processed
+         * by the super handleMessage method.
          *
          * @param msg msg.arg1 has the Param for further Actions
-         *            msg.obj holds the Object send from the Server
+         *            msg.obj holds the Object sent from the Server
          */
         @Override
         public void handleMessage(Message msg) {
-
-            Intent intent = new Intent(activity, MainActivity.class);
-
-            if (msg.arg1 == 4) {  // TODO: Change to enums
-
-                intent.putExtra("mess", mess);
-                System.out.println(mess + " objstart");
-                startActivity(intent);
-            }
-            if (msg.arg1 == 5) {  // TODO: Change to enums
-
-                mess = msg.obj.toString();
+            if(msg.arg1 == 5){
+                super.handleMessage(msg);
             }
         }
     }
