@@ -42,6 +42,7 @@ public class ThiefThread extends GameThread {
                     if (card.equals("CARD")) {
                         Thief.updateRessources(game, thiefIndex, game.getPlayer(user.getUserId()));
                         SendToClient.sendGameSessionBroadcast(game);
+                        SendToClient.sendStringMessage(user,SendToClient.HEADER_ROLLED);
                     }
                     else{
                         Player player = game.getPlayer(user.getUserId());

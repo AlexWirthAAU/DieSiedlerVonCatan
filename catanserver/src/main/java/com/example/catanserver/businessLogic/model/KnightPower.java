@@ -34,6 +34,7 @@ public class KnightPower {
         int ownerId = knightCountOwner.getUserId();
 
         StringBuilder builder = new StringBuilder();
+        builder.append(SendToClient.HEADER_KNIGHT).append(" ");
         builder.append(knightPowerCandidate.getDisplayName()).append(" hat jetzt die größte Rittermacht");
 
         List<Player> toSend = new ArrayList<>();
@@ -51,8 +52,8 @@ public class KnightPower {
             knightPowerCandidate.getInventory().addVictoryPoints(1);
             knightCountOwner.getInventory().removeVictoryPoints(1);
 
-            SendToClient.sendKnightMessage(toSend, builder.toString());
             SendToClient.sendGameSessionBroadcast(game);
+            SendToClient.sendStringMessage(toSend, builder.toString());
         }
     }
 
@@ -78,6 +79,7 @@ public class KnightPower {
         Player player = knightCountOwner;
 
         StringBuilder builder = new StringBuilder();
+        builder.append(SendToClient.HEADER_KNIGHT).append(" ");
         builder.append(knightPowerCandidate.getDisplayName()).append(" hat jetzt die größte Rittermacht");
 
         List<Player> players = game.getPlayers();
@@ -108,8 +110,8 @@ public class KnightPower {
                 toSend.add(knightPowerCandidate);
                 toSend.add(player);
 
-                SendToClient.sendKnightMessage(toSend, builder.toString());
                 SendToClient.sendGameSessionBroadcast(game);
+                SendToClient.sendStringMessage(toSend, builder.toString());
             }
         }
     }

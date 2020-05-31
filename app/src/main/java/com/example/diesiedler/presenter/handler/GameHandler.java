@@ -113,6 +113,9 @@ public class GameHandler extends Handler {
                 intent.putExtra("mess", message);
                 activity.startActivity(intent);
             }
+            else if(((String) msg.obj).startsWith("KNIGHT")){
+                showAlert("Ritter",message);
+            }
             else if(((String) msg.obj).startsWith("ERROR")){
                 showAlert("Fehler",message);
             }
