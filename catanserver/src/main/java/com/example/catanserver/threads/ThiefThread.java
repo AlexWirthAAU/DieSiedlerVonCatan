@@ -47,13 +47,14 @@ public class ThiefThread extends GameThread {
                         Player player = game.getPlayer(user.getUserId());
                         if(player.hasToSkip()){
                             player.skip();
-                            endTurn();
-                            game.nextPlayer();
-                            SendToClient.sendGameSessionBroadcast(game);
-                            SendToClient.sendStringMessage(user,SendToClient.HEADER_ENDTURN);
-                            User nextUser = Server.findUser(game.getCurr().getUserId());
-                            if(nextUser != null) {
-                                SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN);
+                            if(!endTurn()) {
+                                game.nextPlayer();
+                                SendToClient.sendGameSessionBroadcast(game);
+                                SendToClient.sendStringMessage(user, SendToClient.HEADER_ENDTURN);
+                                User nextUser = Server.findUser(game.getCurr().getUserId());
+                                if (nextUser != null) {
+                                    SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN);
+                                }
                             }
                         }
                         else{

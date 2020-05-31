@@ -25,12 +25,13 @@ public class NextThread extends GameThread {
      */
     public void run() {
         game.nextPlayer();
-        endTurn();
-        SendToClient.sendGameSessionBroadcast(game);
-        SendToClient.sendStringMessage(user,SendToClient.HEADER_ENDTURN);
-        User nextUser = Server.findUser(game.getCurr().getUserId());
-        if(nextUser != null) {
-            SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN);
+        if(!endTurn()) {
+            SendToClient.sendGameSessionBroadcast(game);
+            SendToClient.sendStringMessage(user, SendToClient.HEADER_ENDTURN);
+            User nextUser = Server.findUser(game.getCurr().getUserId());
+            if (nextUser != null) {
+                SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN);
+            }
         }
         Server.currentlyThreaded.remove(game.getGameId());
     }

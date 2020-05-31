@@ -141,33 +141,32 @@ public class TradeAnswerThread extends GameThread {
         game.setTrade(null);
         game.setIsTradeOn(false);
         game.nextPlayer();
-        endTurn();
+        if(!endTurn()) {
 
-        SendToClient.sendGameSessionBroadcast(game);
-        SendToClient.sendStringMessage(Server.findUser(tradingOfferer.getUserId()),SendToClient.HEADER_ENDTURN + " " + mess);
+            SendToClient.sendGameSessionBroadcast(game);
+            SendToClient.sendStringMessage(Server.findUser(tradingOfferer.getUserId()), SendToClient.HEADER_ENDTURN + " " + mess);
 
-        if(tradingPartner != null){
-            if(game.getCurr().equals(tradingPartner)){
-                User nextUser = Server.findUser(game.getCurr().getUserId());
-                if (nextUser != null) {
-                    SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN + " " + mess);
+            if (tradingPartner != null) {
+                if (game.getCurr().equals(tradingPartner)) {
+                    User nextUser = Server.findUser(game.getCurr().getUserId());
+                    if (nextUser != null) {
+                        SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN + " " + mess);
+                    }
+                } else {
+                    User tradingPartnerUser = Server.findUser(game.getCurr().getUserId());
+                    if (tradingPartnerUser != null) {
+                        SendToClient.sendStringMessage(tradingPartnerUser, SendToClient.HEADER_TRADECOMPLETE + " " + mess);
+                    }
+                    User nextUser = Server.findUser(game.getCurr().getUserId());
+                    if (nextUser != null) {
+                        SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN);
+                    }
                 }
-            }
-            else{
-                User tradingPartnerUser = Server.findUser(game.getCurr().getUserId());
-                if (tradingPartnerUser != null) {
-                    SendToClient.sendStringMessage(tradingPartnerUser, SendToClient.HEADER_TRADECOMPLETE + " " + mess);
-                }
+            } else {
                 User nextUser = Server.findUser(game.getCurr().getUserId());
                 if (nextUser != null) {
                     SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN);
                 }
-            }
-        }
-        else {
-            User nextUser = Server.findUser(game.getCurr().getUserId());
-            if (nextUser != null) {
-                SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN);
             }
         }
     }

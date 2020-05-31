@@ -58,12 +58,13 @@ public class BuyCardThread extends GameThread {
             buyCard();
             String mess = buildMessage();
             game.nextPlayer();
-            endTurn();
-            SendToClient.sendGameSessionBroadcast(game);
-            SendToClient.sendStringMessage(user, SendToClient.HEADER_ENDTURN + " " + mess);
-            User nextUser = Server.findUser(game.getCurr().getUserId());
-            if(nextUser != null) {
-                SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN);
+            if(!endTurn()) {
+                SendToClient.sendGameSessionBroadcast(game);
+                SendToClient.sendStringMessage(user, SendToClient.HEADER_ENDTURN + " " + mess);
+                User nextUser = Server.findUser(game.getCurr().getUserId());
+                if (nextUser != null) {
+                    SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN);
+                }
             }
 
         } else {

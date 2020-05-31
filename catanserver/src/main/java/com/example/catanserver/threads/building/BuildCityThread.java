@@ -21,12 +21,13 @@ public class BuildCityThread extends GameThread {
 
     public void run() {
         BuildCity.updateGameSession(game, knotIndex, userID);
-        endTurn();
-        SendToClient.sendGameSessionBroadcast(game);
-        SendToClient.sendStringMessage(user,SendToClient.HEADER_ENDTURN);
-        User nextUser = Server.findUser(game.getCurr().getUserId());
-        if(nextUser != null) {
-            SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN);
+        if(!endTurn()) {
+            SendToClient.sendGameSessionBroadcast(game);
+            SendToClient.sendStringMessage(user, SendToClient.HEADER_ENDTURN);
+            User nextUser = Server.findUser(game.getCurr().getUserId());
+            if (nextUser != null) {
+                SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN);
+            }
         }
         Server.currentlyThreaded.remove(game.getGameId());
     }
