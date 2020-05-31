@@ -110,6 +110,13 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
     }
 
     /**
+     * Going back is not possible here.
+     */
+    @Override
+    public void onBackPressed() {
+    }
+
+    /**
      * Depending on what Button is clicked, the correspondending Activity is loaded.
      * When a Player cannot make a specific Action, an Error-Alert is shown.
      * When the Player wants to buy a DevCard, a NetworkThread is started, which

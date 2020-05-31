@@ -65,6 +65,13 @@ public class AnswerToTradeActivity extends AppCompatActivity {
     }
 
     /**
+     * Going back is not possible here.
+     */
+    @Override
+    public void onBackPressed() {
+    }
+
+    /**
      * When the Player dismisses the Offer, the NetworkThread is started,
      * which sends the Answer-String to the Server.
      *

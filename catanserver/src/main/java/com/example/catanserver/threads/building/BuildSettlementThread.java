@@ -22,16 +22,16 @@ public class BuildSettlementThread extends GameThread {
 
     public void run() {
         BuildSettlement.updateGameSession(game, knotIndex, userID);
-        endTurn();
-        SendToClient.sendGameSessionBroadcast(game);
-        if(!game.isInitialized()){
-            SendToClient.sendStringMessage(user,SendToClient.HEADER_CONTINUEINIT);
-        }
-        else {
-            SendToClient.sendStringMessage(user, SendToClient.HEADER_ENDTURN);
-            User nextUser = Server.findUser(game.getCurr().getUserId());
-            if(nextUser != null) {
-                SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN);
+        if(!endTurn()) {
+            SendToClient.sendGameSessionBroadcast(game);
+            if (!game.isInitialized()) {
+                SendToClient.sendStringMessage(user, SendToClient.HEADER_CONTINUEINIT);
+            } else {
+                SendToClient.sendStringMessage(user, SendToClient.HEADER_ENDTURN);
+                User nextUser = Server.findUser(game.getCurr().getUserId());
+                if (nextUser != null) {
+                    SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN);
+                }
             }
         }
         Server.currentlyThreaded.remove(game.getGameId());

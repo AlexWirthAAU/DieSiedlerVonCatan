@@ -96,6 +96,16 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
     }
 
     /**
+     * Going back is not allowed in the init phase.
+     */
+    @Override
+    public void onBackPressed() {
+        if(ClientData.currentGame.isInitialized()){
+            super.onBackPressed();
+        }
+    }
+
+    /**
      * This method is responsible for refreshing the player's resources.
      */
     private void updateResources() {

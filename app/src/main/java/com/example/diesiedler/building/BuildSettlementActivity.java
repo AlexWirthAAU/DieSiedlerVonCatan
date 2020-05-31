@@ -82,6 +82,16 @@ public class BuildSettlementActivity extends AppCompatActivity implements View.O
     }
 
     /**
+     * Going back is not allowed in the init phase.
+     */
+    @Override
+    public void onBackPressed() {
+        if(ClientData.currentGame.isInitialized()){
+            super.onBackPressed();
+        }
+    }
+
+    /**
      * After having clicked a knot, the knots index will be send to the server by starting a new Network-Thread.
      * The method is called in "GameBoardClickListener".
      *

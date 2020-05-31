@@ -65,6 +65,13 @@ public class ThiefActivity extends AppCompatActivity {
         ClientData.currentHandler = handler;
     }
 
+    /**
+     * Going back is not possible here.
+     */
+    @Override
+    public void onBackPressed() {
+    }
+
     public void clicked(String clicked){
         Tile[] tiles = ClientData.currentGame.getGameboard().getTiles();
 
