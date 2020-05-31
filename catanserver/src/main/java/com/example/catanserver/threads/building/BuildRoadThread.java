@@ -46,12 +46,13 @@ public class BuildRoadThread extends GameThread {
         } else {
             BuildRoad.updateGameSession(game, edgeIndex, userID);
         }
-        if(!endTurn()) {
+        if(card.equals("CARD")) {
             SendToClient.sendGameSessionBroadcast(game);
-            if(card.equals("CARD")) {
-                SendToClient.sendStringMessage(user, SendToClient.HEADER_ROLLED);
-            }
-            else{
+            SendToClient.sendStringMessage(user, SendToClient.HEADER_ROLLED);
+        }
+        else {
+            if (!endTurn()) {
+                SendToClient.sendGameSessionBroadcast(game);
                 SendToClient.sendStringMessage(user, SendToClient.HEADER_ENDTURN);
                 User nextUser = Server.findUser(game.getCurr().getUserId());
                 if (nextUser != null) {
