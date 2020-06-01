@@ -48,6 +48,8 @@ public class Thief {
      */
     public static boolean updateRessources(GameSession game, int destinationIndex, Player curr) {
 
+        // TODO: Does this work as intended?
+
         Tile[] tiles = game.getGameboard().getTiles();
 
         List<Player> players = new ArrayList<>(3);
@@ -158,9 +160,10 @@ public class Thief {
     private static void sendMessage(GameSession game, String resName, Player curr, Player toStealFrom) {
 
         StringBuilder builder = new StringBuilder();
+        builder.append(SendToClient.HEADER_KNIGHT).append(" ");
         builder.append(curr.getDisplayName()).append(" hat 1 ").append(resName);
         builder.append(" von ").append(toStealFrom.getDisplayName()).append(" gestohlen");
 
-        SendToClient.sendKnightMessageBroadcast(game, builder.toString());
+        SendToClient.sendStringMessageBroadcast(game, builder.toString());
     }
 }

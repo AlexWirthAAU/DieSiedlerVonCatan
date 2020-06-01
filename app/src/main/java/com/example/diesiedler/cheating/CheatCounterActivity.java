@@ -17,14 +17,12 @@ import com.example.diesiedler.threads.NetworkThread;
 
 public class CheatCounterActivity extends AppCompatActivity {
 
-    private String playerId;
     private Handler handler = new CheatCounterHandler(Looper.getMainLooper(),this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cheat_counter);
-        playerId = getIntent().getStringExtra("playerId");
 
         ClientData.currentHandler = handler;
     }
@@ -38,6 +36,13 @@ public class CheatCounterActivity extends AppCompatActivity {
     public void onRestart() {
         super.onRestart();
         ClientData.currentHandler = handler;
+    }
+
+    /**
+     * Going back is not possible here.
+     */
+    @Override
+    public void onBackPressed() {
     }
 
     public void chooseWood(View view){
@@ -61,7 +66,7 @@ public class CheatCounterActivity extends AppCompatActivity {
     }
 
     public void send(String resource){
-        Thread networkThread = new NetworkThread(ServerQueries.createStringQueryCounter(playerId,resource));
+        Thread networkThread = new NetworkThread(ServerQueries.createStringQueryCounter(ClientData.cheaterId,resource));
         networkThread.start();
     }
 

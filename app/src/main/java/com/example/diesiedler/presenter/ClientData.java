@@ -42,6 +42,8 @@ public class ClientData {
 
     public static Handler currentHandler; // Handler, which is set for every Activity in their onCreate-Method
 
+    public static String cheaterId = "";
+
 
     /**
      * Initializes and saves the Server-Connection.

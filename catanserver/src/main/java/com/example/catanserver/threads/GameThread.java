@@ -2,6 +2,7 @@ package com.example.catanserver.threads;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
+import com.example.catanserver.Server;
 import com.example.catanserver.User;
 import com.example.catanserver.businessLogic.model.Cheating;
 
@@ -31,10 +32,12 @@ public abstract class GameThread extends Thread {
     /**
      * After every turn, a not noticed Grab containing the User who finished his turn as the Player
      * to be stolen from is executed.
+     * If the user has won true is returned, false otherwise.
      */
-    public void endTurn(){
+    public boolean endTurn(){
         checkInitialized();
         Cheating.processGrabs(game,user);
+        return checkForWin();
     }
 
     private void checkInitialized(){
@@ -49,5 +52,23 @@ public abstract class GameThread extends Thread {
                 game.setInitialized(true);
             }
         }
+    }
+
+    private boolean checkForWin(){
+        if(game.getPlayer(user.getUserId()).getInventory().getVictoryPoints() >= 10){
+            SendToClient.sendGameSessionBroadcast(game);
+            SendToClient.sendStringMessage(user,SendToClient.HEADER_WON);
+            for (Player player:game.getPlayers()) {
+                if(player.getUserId() != user.getUserId()){
+                    User losingUser = Server.findUser(player.getUserId());
+                    if(losingUser != null) {
+                        SendToClient.sendStringMessage(losingUser,SendToClient.HEADER_LOST);
+                    }
+                }
+            }
+            Server.currentGames.remove(game);
+            return true;
+        }
+        return false;
     }
 }

@@ -36,6 +36,7 @@ public class SendToClient {
     public static final String HEADER_CHEATEDREVEAL = "CHEATEDREVEAL";
     public static final String HEADER_TRADE = "TRADE";
     public static final String HEADER_TRADECOMPLETE = "TRADECOMPLETE";
+    public static final String HEADER_KNIGHT = "KNIGHT";
 
     public static final String HEADER_ERROR = "ERROR";
 
@@ -119,44 +120,6 @@ public class SendToClient {
     }
 
     /**
-     * Creates a Userlist from the Playerlist and sends the Message to
-     * every User in this List.
-     *
-     * @param toSend  List of all Player to which the Knight-Message should be sent
-     * @param message specific Knight-Message
-     */
-    public static void sendKnightMessage(List<Player> toSend, String message) {
-        List<User> userList = createTradeUserList(toSend);
-        for (User user : userList) {
-            try {
-                sendToClient(user, message);
-            } catch (IOException ex) {
-                System.err.println(ex.getMessage());
-                System.err.println("Could not send Message to Client" + user.getDisplayName() + ".");
-            }
-        }
-    }
-
-    /**
-     * Creates a Userlist from the Game and sends the Message to
-     * every User in this List.
-     *
-     * @param game    current Game
-     * @param message specific Knight-Message
-     */
-    public static void sendKnightMessageBroadcast(GameSession game, String message) {
-        List<User> userList = createGameUserList(game);
-        for (User user : userList) {
-            try {
-                sendToClient(user, message);
-            } catch (IOException ex) {
-                System.err.println(ex.getMessage());
-                System.err.println("Could not send Message to Client" + user.getDisplayName() + ".");
-            }
-        }
-    }
-
-    /**
      * Sends a String-Message on a specific Stream and flushes the Stream.
      *
      * @param connectionOutputStream Stream on which the Error-Message should be sent on
@@ -187,6 +150,25 @@ public class SendToClient {
             System.err.println(ex.getMessage());
             System.err.println("Could not send string message to Client.");
             System.err.println("Message: " + message);
+        }
+    }
+
+    /**
+     * Creates a Userlist from the Playerlist and sends the Message to
+     * every User in this List.
+     *
+     * @param toSend  List of all Player to which the Knight-Message should be sent
+     * @param message specific Knight-Message
+     */
+    public static void sendStringMessage(List<Player> toSend, String message) {
+        List<User> userList = createTradeUserList(toSend);
+        for (User user : userList) {
+            try {
+                sendToClient(user, message);
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+                System.err.println("Could not send Message to Client" + user.getDisplayName() + ".");
+            }
         }
     }
 

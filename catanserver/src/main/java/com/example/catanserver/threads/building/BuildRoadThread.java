@@ -46,15 +46,22 @@ public class BuildRoadThread extends GameThread {
         } else {
             BuildRoad.updateGameSession(game, edgeIndex, userID);
         }
-        endTurn();
-        SendToClient.sendGameSessionBroadcast(game);
-        SendToClient.sendStringMessage(user,SendToClient.HEADER_ENDTURN);
-        User nextUser = Server.findUser(game.getCurr().getUserId());
-        if(nextUser != null) {
-            if (!game.isInitialized()) {
-                SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGININIT);
-            } else {
-                SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN);
+        if(card.equals("CARD")) {
+            SendToClient.sendGameSessionBroadcast(game);
+            SendToClient.sendStringMessage(user, SendToClient.HEADER_ROLLED);
+        }
+        else {
+            if (!endTurn()) {
+                SendToClient.sendGameSessionBroadcast(game);
+                SendToClient.sendStringMessage(user, SendToClient.HEADER_ENDTURN);
+                User nextUser = Server.findUser(game.getCurr().getUserId());
+                if (nextUser != null) {
+                    if (!game.isInitialized()) {
+                        SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGININIT);
+                    } else {
+                        SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN);
+                    }
+                }
             }
         }
         Server.currentlyThreaded.remove(game.getGameId());

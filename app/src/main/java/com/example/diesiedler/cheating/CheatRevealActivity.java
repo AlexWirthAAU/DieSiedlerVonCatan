@@ -25,6 +25,7 @@ public class CheatRevealActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cheat_reveal);
         playerId = getIntent().getStringExtra("playerId");
+        ClientData.cheaterId = playerId;
 
         ClientData.currentHandler = handler;
     }

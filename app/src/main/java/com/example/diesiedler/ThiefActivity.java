@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,7 +29,7 @@ public class ThiefActivity extends AppCompatActivity {
 
     private Handler handler = new ThiefHandler(Looper.getMainLooper(), this);
     private RichPathView richPathView;
-    private String card; // "CARD" when to Activity is started from the PlayCardActivity
+    public String card; // "CARD" when to Activity is started from the PlayCardActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,19 +40,18 @@ public class ThiefActivity extends AppCompatActivity {
 
         card = getIntent().getStringExtra("card");
 
-        if (card != null) {
-            System.out.println(card + " cardin");
-        }
-
-        System.out.println(card + " card");
-
         richPathView = findViewById(R.id.ic_gameboardView);
         UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
 
         UpdateThiefView.updateView(ClientData.currentGame, richPathView);
 
         GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView, this);
-        gameBoardClickListener.clickBoard("MoveThief");
+        if(card != null && card.equals("CARD")) {
+            gameBoardClickListener.clickBoard("MoveThiefCARD");
+        }
+        else{
+            gameBoardClickListener.clickBoard("MoveThief");
+        }
     }
 
     @Override
@@ -63,6 +63,13 @@ public class ThiefActivity extends AppCompatActivity {
     public void onRestart() {
         super.onRestart();
         ClientData.currentHandler = handler;
+    }
+
+    /**
+     * Going back is not possible here.
+     */
+    @Override
+    public void onBackPressed() {
     }
 
     public void clicked(String clicked){
