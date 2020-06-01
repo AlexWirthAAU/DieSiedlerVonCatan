@@ -78,6 +78,8 @@ public class BuildRoadTest {
         playerInventoryOne.addRoadKnots(gameSession.getGameboard().getEdges()[20].getTwo());
         playerInventoryOne.addRoadKnots(gameSession.getGameboard().getEdges()[21].getOne());
         playerInventoryOne.addRoadKnots(gameSession.getGameboard().getEdges()[21].getTwo());
+        playerInventoryOne.addWood(1);
+        playerInventoryOne.addClay(1);
 
         assertionsBeforeRegularBuilding();
 
@@ -104,14 +106,14 @@ public class BuildRoadTest {
     }
 
     private void assertionsBeforeTurnOne() {
-        Assert.assertEquals(1, playerInventoryOne.getWood());
-        Assert.assertEquals(1, playerInventoryOne.getClay());
+        Assert.assertEquals(0, playerInventoryOne.getWood());
+        Assert.assertEquals(0, playerInventoryOne.getClay());
         Assert.assertEquals(0, playerInventoryOne.getRoads().size());
         Assert.assertEquals(0, playerInventoryOne.getRoadKnots().size());
         Assert.assertEquals(null, toBeBuildOne.getPlayer());
 
-        Assert.assertEquals(1, playerInventoryTwo.getWood());
-        Assert.assertEquals(1, playerInventoryTwo.getClay());
+        Assert.assertEquals(0, playerInventoryTwo.getWood());
+        Assert.assertEquals(0, playerInventoryTwo.getClay());
         Assert.assertEquals(0, playerInventoryTwo.getRoads().size());
         Assert.assertEquals(0, playerInventoryTwo.getRoadKnots().size());
         Assert.assertEquals(null, toBeBuildOne.getPlayer());
@@ -119,8 +121,8 @@ public class BuildRoadTest {
 
 
     private void assertionsAfterPlayerOne() {
-        Assert.assertEquals(1, playerInventoryOne.getWood());
-        Assert.assertEquals(1, playerInventoryOne.getClay());
+        Assert.assertEquals(0, playerInventoryOne.getWood());
+        Assert.assertEquals(0, playerInventoryOne.getClay());
         Assert.assertEquals(1, playerInventoryOne.getRoads().size());
         Assert.assertEquals(2, playerInventoryOne.getRoadKnots().size());
         Assert.assertEquals(playerOne, toBeBuildOne.getPlayer());
@@ -128,8 +130,8 @@ public class BuildRoadTest {
     }
 
     private void assertionsAfterPlayerTwo() {
-        Assert.assertEquals(1, playerInventoryTwo.getWood());
-        Assert.assertEquals(1, playerInventoryTwo.getClay());
+        Assert.assertEquals(0, playerInventoryTwo.getWood());
+        Assert.assertEquals(0, playerInventoryTwo.getClay());
         Assert.assertEquals(1, playerInventoryTwo.getRoads().size());
         Assert.assertEquals(2, playerInventoryTwo.getRoadKnots().size());
         Assert.assertEquals(playerTwo, toBeBuildTwo.getPlayer());
@@ -137,8 +139,8 @@ public class BuildRoadTest {
     }
 
     private void assertionsAfterPlayerOneTurnTwo() {
-        Assert.assertEquals(1, playerInventoryOne.getWood());
-        Assert.assertEquals(1, playerInventoryOne.getClay());
+        Assert.assertEquals(0, playerInventoryOne.getWood());
+        Assert.assertEquals(0, playerInventoryOne.getClay());
         Assert.assertEquals(2, playerInventoryOne.getRoads().size());
         Assert.assertEquals(4, playerInventoryOne.getRoadKnots().size());
         Assert.assertEquals(playerOne, toBeBuildFour.getPlayer());
@@ -146,8 +148,8 @@ public class BuildRoadTest {
     }
 
     private void assertionsAfterPlayerTwoTurnTwo() {
-        Assert.assertEquals(1, playerInventoryTwo.getWood());
-        Assert.assertEquals(1, playerInventoryTwo.getClay());
+        Assert.assertEquals(0, playerInventoryTwo.getWood());
+        Assert.assertEquals(0, playerInventoryTwo.getClay());
         Assert.assertEquals(2, playerInventoryTwo.getRoads().size());
         Assert.assertEquals(4, playerInventoryTwo.getRoadKnots().size());
         Assert.assertEquals(playerTwo, toBeBuildThree.getPlayer());
@@ -171,8 +173,8 @@ public class BuildRoadTest {
     }
 
     private void assertionsAfterBuildingWithCard() {
-        Assert.assertEquals(1, playerInventoryOne.getWood());
-        Assert.assertEquals(1, playerInventoryOne.getClay());
+        Assert.assertEquals(0, playerInventoryOne.getWood());
+        Assert.assertEquals(0, playerInventoryOne.getClay());
         Assert.assertEquals(4, playerInventoryOne.getRoads().size());
         Assert.assertEquals(8, playerInventoryOne.getRoadKnots().size());
         Assert.assertEquals(0, playerInventoryOne.getBuildStreetCard());
