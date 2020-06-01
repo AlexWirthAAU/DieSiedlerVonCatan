@@ -8,9 +8,9 @@
         android:pathData="M4.711,3.364L176.597,3.364A0.747,0.747 0,0 1,177.344 4.111L177.344,175.203A0.747,0.747 0,0 1,176.597 175.95L4.711,175.95A0.747,0.747 0,0 1,3.964 175.203L3.964,4.111A0.747,0.747 0,0 1,4.711 3.364z"
         android:strokeAlpha="1"
         android:strokeLineJoin="round"
-        android:strokeWidth="0.25234112"
+        android:strokeWidth="2.05234112"
         android:fillColor="#7676ff"
-        android:strokeColor="#ffffff"
+        android:strokeColor="#000000"
         android:fillAlpha="0.8639456" />
     <path
         android:name="backgroundTile_1"
