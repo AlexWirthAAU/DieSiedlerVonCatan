@@ -25,6 +25,11 @@ public class possibleKnotsSettlementTest {
         this.gameSession = new GameSession();
         this.player = new Player("Test", 0);
         this.playerInventory = player.getInventory();
+        playerInventory.addWood(2);
+        playerInventory.addClay(2);
+        playerInventory.addWheat(2);
+        playerInventory.addOre(2);
+        playerInventory.addWool(2);
 
         gameSession.setPlayer(player);
     }

@@ -5,6 +5,7 @@ import com.example.catangame.Player;
 import com.example.catanserver.Server;
 import com.example.catanserver.User;
 import com.example.catanserver.businessLogic.model.Cheating;
+import com.example.catanserver.businessLogic.model.resourceallocation.InitResAllocation;
 
 /**
  * @author Fabian Schaffenrath
@@ -49,6 +50,7 @@ public abstract class GameThread extends Thread {
                 }
             }
             if(isFinished){
+                InitResAllocation.allocateInit(game);
                 game.setInitialized(true);
             }
         }
