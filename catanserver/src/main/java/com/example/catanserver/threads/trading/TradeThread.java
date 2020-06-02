@@ -58,12 +58,17 @@ public class TradeThread extends GameThread {
 
             System.out.println("checked");
             potentialTradingPartners = StartTrade.checkAndSetTradingPartners(game, want, currPlayer);
-            String mess = StartTrade.buildMessage(currPlayer, offer, want);
-            this.trade = new Trade(offer, want, currPlayer, potentialTradingPartners, mess, gs);
-            this.gs.setTrade(this.trade);
-            this.gs.setIsTradeOn(true);
 
-            SendToClient.sendTradeMessageBroadcast(potentialTradingPartners, mess, this.gs);
+            if (potentialTradingPartners.size() == 0) {
+                SendToClient.sendTradeMessage(user, "Keine Handelspartner");
+                game.nextPlayer();
+                SendToClient.sendGameSessionBroadcast(game);
+            } else {
+                String mess = StartTrade.buildMessage(currPlayer, offer, want);
+                StartTrade.setTrade(offer, want, currPlayer, potentialTradingPartners, mess, gs);
+
+                SendToClient.sendTradeMessageBroadcast(potentialTradingPartners, mess, this.gs);
+            }
 
         } else {
             ErrorThread errThread = new ErrorThread(user.getConnectionOutputStream(), "Nicht genug Rohstoffe um zu handeln");

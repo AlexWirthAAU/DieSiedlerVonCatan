@@ -78,7 +78,6 @@ public class KnightPowerTest {
         Assert.assertEquals(2, playerInventory1.getVictoryPoints());
         Assert.assertNotNull(gameSession.getKnightPowerOwner());
         Assert.assertEquals(gameSession.getKnightPowerOwner().getUserId(), player1.getUserId());
-        Assert.assertEquals(1, gameSession.getCurrPlayer());
     }
 
     @Test
@@ -96,7 +95,6 @@ public class KnightPowerTest {
         Assert.assertEquals(0, playerInventory2.getVictoryPoints());
         Assert.assertNotNull(gameSession.getKnightPowerOwner());
         Assert.assertEquals(gameSession.getKnightPowerOwner().getUserId(), player1.getUserId());
-        Assert.assertEquals(1, gameSession.getCurrPlayer());
     }
 
     @Test
@@ -111,7 +109,6 @@ public class KnightPowerTest {
         Assert.assertEquals(2, playerInventory1.getVictoryPoints());
         Assert.assertNotNull(gameSession.getKnightPowerOwner());
         Assert.assertEquals(gameSession.getKnightPowerOwner().getUserId(), player1.getUserId());
-        Assert.assertEquals(1, gameSession.getCurrPlayer());
     }
 
     @Test
@@ -129,7 +126,6 @@ public class KnightPowerTest {
         Assert.assertEquals(2, playerInventory2.getVictoryPoints());
         Assert.assertNotNull(gameSession.getKnightPowerOwner());
         Assert.assertEquals(gameSession.getKnightPowerOwner().getUserId(), player2.getUserId());
-        Assert.assertEquals(1, gameSession.getCurrPlayer());
     }
 
     @Test
@@ -147,7 +143,6 @@ public class KnightPowerTest {
         Assert.assertEquals(0, playerInventory2.getVictoryPoints());
         Assert.assertNotNull(gameSession.getKnightPowerOwner());
         Assert.assertEquals(gameSession.getKnightPowerOwner().getUserId(), player1.getUserId());
-        Assert.assertEquals(1, gameSession.getCurrPlayer());
     }
 
     @Test
@@ -171,7 +166,6 @@ public class KnightPowerTest {
         Assert.assertEquals(0, playerInventory3.getVictoryPoints());
         Assert.assertNotNull(gameSession.getKnightPowerOwner());
         Assert.assertEquals(gameSession.getKnightPowerOwner().getUserId(), player1.getUserId());
-        Assert.assertEquals(1, gameSession.getCurrPlayer());
     }
 
     @Test
@@ -189,7 +183,6 @@ public class KnightPowerTest {
         Assert.assertEquals(0, playerInventory2.getVictoryPoints());
         Assert.assertNotNull(gameSession.getKnightPowerOwner());
         Assert.assertEquals(gameSession.getKnightPowerOwner().getUserId(), player1.getUserId());
-        Assert.assertEquals(1, gameSession.getCurrPlayer());
     }
 
     @Test
@@ -212,7 +205,6 @@ public class KnightPowerTest {
         Assert.assertEquals(0, playerInventory3.getVictoryPoints());
         Assert.assertEquals(0, playerInventory3.getVictoryPoints());
         Assert.assertNull(gameSession.getKnightPowerOwner());
-        Assert.assertEquals(1, gameSession.getCurrPlayer());
     }
 
     @Test
@@ -236,7 +228,6 @@ public class KnightPowerTest {
         Assert.assertEquals(0, playerInventory3.getVictoryPoints());
         Assert.assertNotNull(gameSession.getKnightPowerOwner());
         Assert.assertEquals(gameSession.getKnightPowerOwner().getUserId(), player2.getUserId());
-        Assert.assertEquals(1, gameSession.getCurrPlayer());
     }
 
     @Test
@@ -260,6 +251,5 @@ public class KnightPowerTest {
         Assert.assertEquals(0, playerInventory3.getVictoryPoints());
         Assert.assertNotNull(gameSession.getKnightPowerOwner());
         Assert.assertEquals(gameSession.getKnightPowerOwner().getUserId(), player2.getUserId());
-        Assert.assertEquals(1, gameSession.getCurrPlayer());
     }
 }

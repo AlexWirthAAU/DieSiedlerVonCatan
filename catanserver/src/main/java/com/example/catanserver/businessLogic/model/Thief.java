@@ -56,8 +56,16 @@ public class Thief {
         int[] res;
 
         String resName;
+        StringBuilder builder = new StringBuilder();
+        String message = "Nichts zu stehlen";
 
         game.nextPlayer();
+        curr.getInventory().removeKnightCard(1);
+        KnightPower.checkKnightPowerOnPlay(game, curr.getInventory().getKnightCard(), curr);
+
+        if (game.getKnightPowerOwner() != null) {
+            builder.append(" ").append(game.getKnightPowerOwner().getDisplayName()).append(" hat jetzt die größte Rittermacht");
+        }
 
         if (destinationIndex >= 0 && destinationIndex < tiles.length) {
 
@@ -74,17 +82,13 @@ public class Thief {
                 }
 
                 int number = -1;
-                int counter = 0;
 
                 if (players.size() > 0) {
 
                     playerToStealFrom = players.get(rand.nextInt(players.size()));
                     res = playerToStealFrom.getInventory().getResValues();
 
-                    while (number == -1 || counter < 10) {
-                        number = selectRes(res);
-                        counter++;
-                    }
+                    number = selectRes(res);
 
                     switch (number) {
                         case 0:
@@ -118,13 +122,13 @@ public class Thief {
                             break;
 
                         default:
-                            SendToClient.sendKnightMessageBroadcast(game, "Nichts zu stehlen");
+                            SendToClient.sendKnightMessageBroadcast(game, message + builder.toString());
                             return true;
                     }
 
                     sendMessage(game, resName, curr, playerToStealFrom);
                 } else {
-                    SendToClient.sendKnightMessageBroadcast(game, "Nichts zu stehlen");
+                    SendToClient.sendKnightMessageBroadcast(game, message + builder.toString());
                 }
             }
             return true;
@@ -141,15 +145,28 @@ public class Thief {
      */
     public static int selectRes(int[] res) {
 
+        int counter = 0;
+
+        for (int i = 0; i < res.length; i++) {
+            if (res[i] != 0) {
+                counter++;
+            }
+        }
+
+        if (counter == 0) {
+            return -1;
+        }
+
         Random rand = new Random();
         int index = rand.nextInt(res.length);
         int number = res[index];
 
-        if (number != 0) {
-            return index;
+        while (number == 0) {
+            index = rand.nextInt(res.length);
+            number = res[index];
         }
 
-        return -1;
+        return index;
     }
 
     /**
@@ -161,12 +178,17 @@ public class Thief {
      * @param curr        current Player
      * @param toStealFrom Player which the Ressource was stolen from
      */
-    public static void sendMessage(GameSession game, String resName, Player curr, Player toStealFrom) {
+    public static String sendMessage(GameSession game, String resName, Player curr, Player toStealFrom) {
 
         StringBuilder builder = new StringBuilder();
         builder.append(curr.getDisplayName()).append(" hat 1 ").append(resName);
         builder.append(" von ").append(toStealFrom.getDisplayName()).append(" gestohlen");
 
+        if (game.getKnightPowerOwner() != null) {
+            builder.append(" ").append(game.getKnightPowerOwner().getDisplayName()).append(" hat jetzt die größte Rittermacht");
+        }
+
         SendToClient.sendKnightMessageBroadcast(game, builder.toString());
+        return builder.toString();
     }
 }

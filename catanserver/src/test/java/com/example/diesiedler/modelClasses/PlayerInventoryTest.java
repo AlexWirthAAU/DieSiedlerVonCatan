@@ -50,6 +50,14 @@ public class PlayerInventoryTest {
     }
 
     @Test
+    public void addMoreWool() {
+        playerInventory.addWool(3);
+        Assert.assertEquals(4, playerInventory.getWool());
+        Assert.assertEquals(4, playerInventory.getResValues()[1]);
+        Assert.assertTrue(playerInventory.canBankTrade);
+    }
+
+    @Test
     public void addWheat() {
         playerInventory.addWheat(1);
         Assert.assertEquals(2, playerInventory.getWheat());
@@ -229,33 +237,41 @@ public class PlayerInventoryTest {
 
     @Test
     public void canTradeOption() {
-        playerInventory.checkPlayerOptions();
+        playerInventory.checkPlayerOptions(0);
         Assert.assertTrue(playerInventory.canTrade);
     }
 
     @Test
     public void cannotBankTradeOption() {
-        playerInventory.checkPlayerOptions();
+        playerInventory.checkPlayerOptions(0);
         Assert.assertFalse(playerInventory.canBankTrade);
     }
 
     @Test
     public void canBankTradeOption() {
         playerInventory.addWood(4);
-        playerInventory.checkPlayerOptions();
         Assert.assertTrue(playerInventory.canBankTrade);
     }
 
     @Test
+    public void cannotMoreBankTrade() {
+        playerInventory.addWool(3);
+        playerInventory.removeWool(1);
+        Assert.assertEquals(3, playerInventory.getWool());
+        Assert.assertEquals(3, playerInventory.getResValues()[1]);
+        Assert.assertFalse(playerInventory.canBankTrade);
+    }
+
+    @Test
     public void cannotPortTradeOption() {
-        playerInventory.checkPlayerOptions();
+        playerInventory.checkPlayerOptions(0);
         Assert.assertFalse(playerInventory.canPortTrade);
     }
 
     @Test
     public void canPortTradeOption() {
         playerInventory.addWood(3);
-        playerInventory.checkPlayerOptions();
+        playerInventory.checkPlayerOptions(0);
         Assert.assertTrue(playerInventory.canPortTrade);
     }
 

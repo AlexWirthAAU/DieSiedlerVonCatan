@@ -16,50 +16,48 @@ import java.util.List;
 public class KnightPower {
 
     /**
-     * When the Player has less or equal Cards than the one with the greatest Knightpower
-     * the updated Gamesession is send. Else it now has the greatest Knightpower and the
-     * Variables are set. He gets a Victory Point and one Victory Point is removed from
-     * the last Owner. A Message is send to the old and the new Owner and a Gamesession
-     * is send to all Players.
+     * When the Player has more Cards than the one with the greatest Knightpower
+     * it now has the greatest Knightpower and the Variables are set.
+     * He gets a Victory Point and two Victory Points and two are removed from
+     * the last Owner, id there is one. A Message is send to the last Owner.
      *
      * @param game                 current Game
      * @param knightCardCount      Number of Knight Cards the Player has
      * @param knightPowerCandidate Player was has bought a Knight-Card
      */
-    public void checkKnightPowerOnBuy(GameSession game, int knightCardCount, Player knightPowerCandidate) {
+    public static void checkKnightPowerOnBuy(GameSession game, int knightCardCount, Player knightPowerCandidate) {
 
         int knightPowerCount = game.getKnightPowerCount();
         Player knightCountOwner = game.getKnightPowerOwner();
         int candidateId = knightPowerCandidate.getUserId();
         int ownerId = -1;
 
-        if (knightCountOwner != null) {
-            ownerId = knightCountOwner.getUserId();
-        }
-
         StringBuilder builder = new StringBuilder();
         builder.append(knightPowerCandidate.getDisplayName()).append(" hat jetzt die größte Rittermacht");
 
         List<Player> toSend = new ArrayList<>();
-        toSend.add(knightPowerCandidate);
-        toSend.add(knightCountOwner);
 
-        game.nextPlayer();
+        if (knightCountOwner != null) {
+            ownerId = knightCountOwner.getUserId();
+        }
 
-        if (ownerId != -1 && (knightCardCount <= knightPowerCount || candidateId == ownerId)) {
-            SendToClient.sendGameSessionBroadcast(game);
-        } else {
-            game.setKnightPowerCount(knightCardCount);
-            game.setKnightPowerOwner(knightPowerCandidate);
+        if (knightCardCount > knightPowerCount) {
 
-            knightPowerCandidate.getInventory().addVictoryPoints(2);
+            if (candidateId == ownerId) {
+                game.setKnightPowerCount(knightCardCount);
+            } else {
 
-            if (knightCountOwner != null) {
-                knightCountOwner.getInventory().removeVictoryPoints(2);
+                game.setKnightPowerCount(knightCardCount);
+                game.setKnightPowerOwner(knightPowerCandidate);
+
+                knightPowerCandidate.getInventory().addVictoryPoints(2);
+
+                if (ownerId != -1) {
+                    knightCountOwner.getInventory().removeVictoryPoints(2);
+                    toSend.add(knightCountOwner);
+                    SendToClient.sendKnightMessage(toSend, builder.toString());
+                }
             }
-
-            SendToClient.sendKnightMessage(toSend, builder.toString());
-            SendToClient.sendGameSessionBroadcast(game);
         }
     }
 
@@ -75,26 +73,22 @@ public class KnightPower {
      * @param knightCardCount      Number of Knight Cards the Player has
      * @param knightPowerCandidate Player was has bought a Knight-Card
      */
-    public void checkKnightPowerOnPlay(GameSession game, int knightCardCount, Player knightPowerCandidate) {
+    public static void checkKnightPowerOnPlay(GameSession game, int knightCardCount, Player knightPowerCandidate) {
 
         Player knightCountOwner = game.getKnightPowerOwner();
         int candidateId = knightPowerCandidate.getUserId();
-        int ownerId = knightCountOwner.getUserId();
+        int ownerId = -1;
+
+        if (knightCountOwner != null) {
+            ownerId = knightCountOwner.getUserId();
+        }
 
         int greatest = 0;
         Player player = knightCountOwner;
 
-        StringBuilder builder = new StringBuilder();
-        builder.append(knightPowerCandidate.getDisplayName()).append(" hat jetzt die größte Rittermacht");
-
         List<Player> players = game.getPlayers();
-        List<Player> toSend = new ArrayList<>();
 
-        game.nextPlayer();
-
-        if (candidateId != ownerId) {
-            SendToClient.sendGameSessionBroadcast(game);
-        } else {
+        if (candidateId == ownerId) {
 
             for (Player p : players) {
                 if (p.getInventory().getKnightCard() > knightCardCount && p.getInventory().getKnightCard() > greatest) {
@@ -109,19 +103,12 @@ public class KnightPower {
                     game.setKnightPowerOwner(null);
                     knightPowerCandidate.getInventory().removeVictoryPoints(2);
                 }
-                SendToClient.sendGameSessionBroadcast(game);
             } else {
                 game.setKnightPowerCount(greatest);
                 game.setKnightPowerOwner(player);
 
                 knightPowerCandidate.getInventory().removeVictoryPoints(2);
                 player.getInventory().addVictoryPoints(2);
-
-                toSend.add(knightPowerCandidate);
-                toSend.add(player);
-
-                SendToClient.sendKnightMessage(toSend, builder.toString());
-                SendToClient.sendGameSessionBroadcast(game);
             }
         }
     }

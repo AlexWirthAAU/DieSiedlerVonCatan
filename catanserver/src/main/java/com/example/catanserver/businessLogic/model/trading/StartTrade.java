@@ -2,6 +2,7 @@ package com.example.catanserver.businessLogic.model.trading;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
+import com.example.catangame.Trade;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -105,7 +106,7 @@ public class StartTrade {
      */
     public static Map<String, Integer> getOffered() {
         Map<String, Integer> ret = offer;
-        offer = null;
+        offer = new HashMap<>();
         return ret;
     }
 
@@ -114,7 +115,7 @@ public class StartTrade {
      */
     public static Map<String, Integer> getDesired() {
         Map<String, Integer> ret = want;
-        want = null;
+        want = new HashMap<>();
         return ret;
     }
 
@@ -144,11 +145,27 @@ public class StartTrade {
 
         for (Map.Entry<String, Integer> entry : want.entrySet()) {
             if (entry.getValue() > 0) {
-                message.append(entry.getValue()).append(" ").append(entry.getKey()).append(" ");
+                message.append(entry.getValue()).append(" ").append(entry.getKey()).append(", ");
             }
         }
 
         System.out.println(message.toString());
         return message.toString();
+    }
+
+    /**
+     * Sets the Data on the Trade and activates a Trade in the Game
+     *
+     * @param offer                    Map of offered Ressources
+     * @param want                     Map of desired Ressources
+     * @param currPlayer               current Player
+     * @param potentialTradingPartners List of all potential Trading-Partners
+     * @param mess                     Trade-Message
+     * @param gs                       current Game
+     */
+    public static void setTrade(Map offer, Map want, Player currPlayer, List<Player> potentialTradingPartners, String mess, GameSession gs) {
+        Trade trade = new Trade(offer, want, currPlayer, potentialTradingPartners, mess, gs);
+        gs.setTrade(trade);
+        gs.setIsTradeOn(true);
     }
 }

@@ -110,6 +110,8 @@ public class Bank {
      */
     public static void exchangeRessources(String give, String get, Player currPlayer) {
 
+        System.out.println(currPlayer.getInventory().getAllRessources());
+
         switch (get) {
             case "Holz":
                 currPlayer.getInventory().addWood(1);

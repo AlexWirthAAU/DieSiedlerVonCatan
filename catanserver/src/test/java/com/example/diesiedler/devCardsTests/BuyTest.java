@@ -90,7 +90,7 @@ public class BuyTest {
 
     @Test
     public void buyFirstKnight() {
-        Assert.assertEquals("Ritterkarte", Buy.buyCard(player1, gameSession.getDevCards()));
+        Assert.assertEquals("Ritterkarte", Buy.buyCard(player1, gameSession.getDevCards(), gameSession));
         Assert.assertEquals(0, player1.getInventory().getWool());
         Assert.assertEquals(0, player1.getInventory().getWheat());
         Assert.assertEquals(0, player1.getInventory().getOre());
@@ -101,35 +101,35 @@ public class BuyTest {
 
     @Test
     public void buyRandom() {
-        Buy.buyCard(player1, gameSession.getDevCards());
+        Buy.buyCard(player1, gameSession.getDevCards(), gameSession);
         player1.getInventory().setWool(1);
         player1.getInventory().setWheat(1);
         player1.getInventory().setOre(1);
-        Buy.buyCard(player1, gameSession.getDevCards());
+        Buy.buyCard(player1, gameSession.getDevCards(), gameSession);
         player1.getInventory().setWool(1);
         player1.getInventory().setWheat(1);
         player1.getInventory().setOre(1);
-        Buy.buyCard(player1, gameSession.getDevCards());
+        Buy.buyCard(player1, gameSession.getDevCards(), gameSession);
         player1.getInventory().setWool(1);
         player1.getInventory().setWheat(1);
         player1.getInventory().setOre(1);
-        Buy.buyCard(player1, gameSession.getDevCards());
+        Buy.buyCard(player1, gameSession.getDevCards(), gameSession);
         Assert.assertEquals(0, player1.getInventory().getWool());
         Assert.assertEquals(0, player1.getInventory().getWheat());
         Assert.assertEquals(0, player1.getInventory().getOre());
         Assert.assertEquals(22, gameSession.getDevCards().size());
-        Assert.assertTrue(player1.getInventory().getVictoryPoints() >= 1);
+        Assert.assertTrue(player1.getInventory().getVictoryPoints() >= 3);
         Assert.assertTrue(player1.getInventory().getCards() >= 2);
 
     }
 
     @Test
     public void buySecondBuildStreet() {
-        Buy.buyCard(player1, gameSession.getDevCards());
+        Buy.buyCard(player1, gameSession.getDevCards(), gameSession);
         player1.getInventory().setWool(1);
         player1.getInventory().setWheat(1);
         player1.getInventory().setOre(1);
-        Assert.assertEquals("Strassenbaukarte", Buy.buyCard(player1, gameSession.getDevCards()));
+        Assert.assertEquals("Strassenbaukarte", Buy.buyCard(player1, gameSession.getDevCards(), gameSession));
         Assert.assertEquals(0, player1.getInventory().getWool());
         Assert.assertEquals(0, player1.getInventory().getWheat());
         Assert.assertEquals(0, player1.getInventory().getOre());
@@ -141,20 +141,20 @@ public class BuyTest {
 
     @Test
     public void buyVictoryCard() {
-        Buy.buyCard(player1, gameSession.getDevCards());
+        Buy.buyCard(player1, gameSession.getDevCards(), gameSession);
         player1.getInventory().setWool(1);
         player1.getInventory().setWheat(1);
         player1.getInventory().setOre(1);
-        Buy.buyCard(player1, gameSession.getDevCards());
+        Buy.buyCard(player1, gameSession.getDevCards(), gameSession);
         player1.getInventory().setWool(1);
         player1.getInventory().setWheat(1);
         player1.getInventory().setOre(1);
-        Assert.assertEquals("Siegpunktkarte", Buy.buyCard(player1, gameSession.getDevCards()));
+        Assert.assertEquals("Siegpunktkarte", Buy.buyCard(player1, gameSession.getDevCards(), gameSession));
         Assert.assertEquals(0, player1.getInventory().getWool());
         Assert.assertEquals(0, player1.getInventory().getWheat());
         Assert.assertEquals(0, player1.getInventory().getOre());
         Assert.assertEquals(23, gameSession.getDevCards().size());
-        Assert.assertEquals(1, player1.getInventory().getVictoryPoints());
+        Assert.assertEquals(3, player1.getInventory().getVictoryPoints());
         Assert.assertEquals(2, player1.getInventory().getCards());
     }
 }

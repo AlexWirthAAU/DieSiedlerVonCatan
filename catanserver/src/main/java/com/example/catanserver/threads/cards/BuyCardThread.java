@@ -47,7 +47,7 @@ public class BuyCardThread extends GameThread {
         if (Buy.checkStack(player, game)) {
 
             System.out.println("checked");
-            cardName = Buy.buyCard(player, devCardStack);
+            cardName = Buy.buyCard(player, devCardStack, game);
             String mess = Buy.buildMessage(cardName);
             game.nextPlayer();
             SendToClient.sendTradeMessage(user, mess);

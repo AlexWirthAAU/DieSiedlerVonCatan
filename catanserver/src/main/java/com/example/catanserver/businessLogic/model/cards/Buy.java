@@ -8,6 +8,7 @@ import com.example.catangame.devcards.InventionCard;
 import com.example.catangame.devcards.KnightCard;
 import com.example.catangame.devcards.MonopolCard;
 import com.example.catangame.devcards.VictoryPointCard;
+import com.example.catanserver.businessLogic.model.KnightPower;
 
 import java.util.List;
 import java.util.Random;
@@ -42,7 +43,7 @@ public class Buy {
      * @param devCardStack current Stack of Cards
      * @return cardName Name of the bought card
      */
-    public static String buyCard(Player player, List<DevCard> devCardStack) {
+    public static String buyCard(Player player, List<DevCard> devCardStack, GameSession game) {
 
         String cardName = null;
 
@@ -72,6 +73,7 @@ public class Buy {
         } else if (card instanceof KnightCard) {
             player.getInventory().addKnightCard(1);
             cardName = "Ritterkarte";
+            KnightPower.checkKnightPowerOnBuy(game, player.getInventory().getKnightCard(), player);
             System.out.println(cardName);
 
         } else if (card instanceof InventionCard) {
@@ -109,6 +111,7 @@ public class Buy {
         if (cardName.equals("Siegpunktkarte")) {
             message.append(" und einen Siegpunkt erhalten");
         }
+
         System.out.println(message.toString());
         return message.toString();
     }
