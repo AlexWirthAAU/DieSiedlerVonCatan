@@ -326,7 +326,7 @@ public class ClientListenerThread extends Thread {
 
                                                 // Building a Settlement
                                                 // A new BuildSettlementThread is started with the User, the GameId, the Index of the Knot,
-                                                // where the Player wants to build a Settlement as Data.
+                                                // where the Player wants to build a settlement as Data.
                                                 else if (messageSplit[2].equals("BUILDSETTLEMENT")) {
                                                     int knotIndex = Integer.parseInt(messageSplit[3]);
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
@@ -338,7 +338,7 @@ public class ClientListenerThread extends Thread {
 
                                                 // Building a Road
                                                 // A new BuildRoadThread is started with the User, the GameId, the Index of the Edge,
-                                                // where the Player wants to build a Road as Data.
+                                                // where the Player wants to build a road as Data.
                                                 else if (messageSplit[2].equals("BUILDROAD")) {
                                                     int edgeIndex = Integer.parseInt(messageSplit[3]);
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
@@ -350,7 +350,7 @@ public class ClientListenerThread extends Thread {
 
                                                 // Building a City
                                                 // A new BuildCityThread is started with the User, the GameId, the Index of the Knot,
-                                                // where the Player wants to build a City as Data.
+                                                // where the Player wants to build a city as Data.
                                                 else if (messageSplit[2].equals("BUILDCITY")) {
                                                     int knotIndex = Integer.parseInt(messageSplit[3]);
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
