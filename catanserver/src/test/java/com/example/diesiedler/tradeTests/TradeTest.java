@@ -55,7 +55,6 @@ public class TradeTest {
         Assert.assertFalse(player1.getInventory().canPortTrade);
         Assert.assertFalse(player1.getInventory().hasPorts);
         Assert.assertTrue(player1.getInventory().canTrade);
-        Assert.assertNull(gameSession.getTrade());
     }
 
     @Test
