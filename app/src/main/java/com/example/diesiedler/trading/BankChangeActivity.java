@@ -110,7 +110,10 @@ public class BankChangeActivity extends AppCompatActivity {
             btn.setEnabled(false);
 
             if (btn.getId() == view.getId()) {
-                res.append(btn.getText().toString()).append("/");
+                if (res.toString().length() > 0) {
+                    res.append("/");
+                }
+                res.append(btn.getText().toString());
             }
         }
     }
@@ -127,6 +130,9 @@ public class BankChangeActivity extends AppCompatActivity {
             btn.setEnabled(false);
 
             if (btn.getId() == view.getId()) {
+                if (res.toString().length() > 0) {
+                    res.append("/");
+                }
                 res.append(btn.getText().toString());
             }
         }
