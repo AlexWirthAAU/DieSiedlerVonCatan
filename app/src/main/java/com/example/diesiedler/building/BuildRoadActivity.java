@@ -17,6 +17,7 @@ import com.example.catangame.PlayerInventory;
 import com.example.catangame.gameboard.Edge;
 import com.example.diesiedler.R;
 import com.example.diesiedler.ScoreBoardActivity;
+import com.example.diesiedler.cards.DevCardInventoryActivity;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.UpdateBuildRoadView;
@@ -163,7 +164,8 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
         Intent intent;
         switch (view.getId()) {
             case R.id.devCard:
-                //TODO: load new activity
+                intent = new Intent(getBaseContext(), DevCardInventoryActivity.class);
+                startActivity(intent);
                 break;
             case R.id.scoreBoard:
                 intent = new Intent(getBaseContext(), ScoreBoardActivity.class);

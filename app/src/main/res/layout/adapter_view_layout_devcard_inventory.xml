@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="100">
+
+        <TextView
+            android:background="#A10101"
+            android:textColor="#FBC02D"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:text="Entwicklungskarte"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:id="@+id/devCardName"
+            android:layout_weight="50" />
+
+        <TextView
+            android:background="#A10101"
+            android:textColor="#FBC02D"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Anzahl"
+            android:layout_weight="50"
+            android:id="@+id/devCardAmount" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
