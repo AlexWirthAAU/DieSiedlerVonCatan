@@ -102,7 +102,6 @@ public class BuildRoadTest {
         BuildRoad.buildRoadWithCard(gameSession, 5, playerOne.getUserId());
 
         assertionsAfterBuildingWithCard();
-        //TODO: test for building roads with a devcard
     }
 
     private void assertionsBeforeTurnOne() {
@@ -178,6 +177,7 @@ public class BuildRoadTest {
         Assert.assertEquals(4, playerInventoryOne.getRoads().size());
         Assert.assertEquals(8, playerInventoryOne.getRoadKnots().size());
         Assert.assertEquals(0, playerInventoryOne.getBuildStreetCard());
+        Assert.assertEquals(0, playerInventoryOne.getBuildStreetCardLinkedList().size());
         Assert.assertEquals(playerOne, toBeBuildOne.getPlayer());
         Assert.assertEquals(playerOne, toBeBuildTwo.getPlayer());
     }

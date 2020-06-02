@@ -54,7 +54,7 @@ public class PlayerInventory implements Serializable {
     /**
      * Constructor - Set Values 0 or false
      */
-    PlayerInventory() {
+    public PlayerInventory() {
         this.wood = STARTVALUE;
         this.wool = STARTVALUE;
         this.wheat = STARTVALUE;
@@ -95,7 +95,7 @@ public class PlayerInventory implements Serializable {
      * @return A String displaying all Resources, Cards and Victory Points
      */
     public String getAllSupplies() {
-        return "Wood: " + this.wood + "\nWool: " + this.wool + "\nWheat: " + this.wool + "\nOre: " + this.ore
+        return "Wood: " + this.wood + "\nWool: " + this.wool + "\nWheat: " + this.wheat + "\nOre: " + this.ore
                 + "\nClay: " + this.clay + "\nVictoty points: " + this.victoryPoints + "\nKnightCard: " + this.knightCard
                 + "\nInventionCard: " + this.inventionCard + "\nBuildStreetCard: " + this.buildStreetCard
                 + "\nMonopolCard: " + this.monopolCard + "\nVictoty points: " + this.victoryPoints;
@@ -105,7 +105,7 @@ public class PlayerInventory implements Serializable {
      * @return A String displaying all Resources
      */
     public String getAllRessources() {
-        return "Wood: " + this.wood + "\nWool: " + this.wool + "\nWheat: " + this.wool + "\nOre: " + this.ore
+        return "Wood: " + this.wood + "\nWool: " + this.wool + "\nWheat: " + this.wheat + "\nOre: " + this.ore
                 + "\nClay: " + this.clay;
     }
 
@@ -113,101 +113,101 @@ public class PlayerInventory implements Serializable {
     public void addWood(int amount) {
         this.wood += amount;
         this.resValues[0] = this.wood;
-        checkPlayerOptions();
+        checkPlayerOptions(0);
     }
 
     public void addWool(int amount) {
         this.wool += amount;
         this.resValues[1] = this.wool;
-        checkPlayerOptions();
+        checkPlayerOptions(1);
     }
 
     public void addWheat(int amount) {
         this.wheat += amount;
         this.resValues[2] = this.wheat;
-        checkPlayerOptions();
+        checkPlayerOptions(2);
     }
 
     public void addOre(int amount) {
         this.ore += amount;
         this.resValues[3] = this.ore;
-        checkPlayerOptions();
+        checkPlayerOptions(3);
     }
 
     public void addClay(int amount) {
         this.clay += amount;
         this.resValues[4] = this.clay;
-        checkPlayerOptions();
+        checkPlayerOptions(4);
     }
 
     // removing Resources
     public void removeWood(int amount) {
         this.wood -= amount;
         this.resValues[0] = this.wood;
-        checkPlayerOptions();
+        checkPlayerOptions(0);
     }
 
     public int removeAllWood() {
         int num = this.wood;
         this.wood = 0;
         this.resValues[0] = this.wood;
-        checkPlayerOptions();
+        checkPlayerOptions(0);
         return num;
     }
 
     public void removeWool(int amount) {
         this.wool -= amount;
         this.resValues[1] = this.wool;
-        checkPlayerOptions();
+        checkPlayerOptions(1);
     }
 
     public int removeAllWool() {
         int num = this.wool;
         this.wool = 0;
         this.resValues[1] = this.wool;
-        checkPlayerOptions();
+        checkPlayerOptions(1);
         return num;
     }
 
     public void removeWheat(int amount) {
         this.wheat -= amount;
         this.resValues[2] = this.wheat;
-        checkPlayerOptions();
+        checkPlayerOptions(2);
     }
 
     public int removeAllWheat() {
         int num = this.wheat;
         this.wheat = 0;
         this.resValues[2] = this.wheat;
-        checkPlayerOptions();
+        checkPlayerOptions(2);
         return num;
     }
 
     public void removeOre(int amount) {
         this.ore -= amount;
         this.resValues[3] = this.ore;
-        checkPlayerOptions();
+        checkPlayerOptions(3);
     }
 
     public int removeAllOre() {
         int num = this.ore;
         this.ore = 0;
         this.resValues[3] = this.ore;
-        checkPlayerOptions();
+        checkPlayerOptions(3);
         return num;
     }
 
     public void removeClay(int amount) {
         this.clay -= amount;
         this.resValues[4] = this.clay;
-        checkPlayerOptions();
+        checkPlayerOptions(4);
     }
 
     public int removeAllClay() {
         int num = this.clay;
         this.clay = 0;
         this.resValues[4] = this.clay;
-        checkPlayerOptions();
+        checkPlayerOptions(4);
         return num;
     }
 
@@ -474,26 +474,55 @@ public class PlayerInventory implements Serializable {
     }
 
 
+    //Set Player Options
+    public void setCanTrade(boolean canTrade) {
+        this.canTrade = canTrade;
+    }
+
+    public void setCanBankTrade(boolean canBankTrade) {
+        this.canBankTrade = canBankTrade;
+    }
+
+    public void setCanPortTrade(boolean canTrade) {
+        this.canPortTrade = canPortTrade;
+    }
+
+
+    public void checkPlayerOptions(int index) {
+        int i = resValues[index];
+
+        if (i >= 4) {
+            canTrade = true;
+            canBankTrade = true;
+        } else {
+            canBankTrade = false;
+        }
+
+        if ((isWoodport() || isWoolport() || isWheatport() || isOreport() || isClayport())) {
+            hasPorts = true;
+        } else {
+            hasPorts = false;
+        }
+
+        if (i >= 3) {
+            canTrade = true;
+            canPortTrade = true;
+        } else {
+            canPortTrade = false;
+        }
+
+        if (i >= 1) {
+            canTrade = true;
+        } else {
+            canTrade = false;
+        }
+    }
+
     public void checkPlayerOptions() {
-        for (Integer i : resValues) {
-
-            if (i >= 4) {
-                canTrade = true;
-                canBankTrade = true;
-            }
-
-            if ((isWoodport() || isWoolport() || isWheatport() || isOreport() || isClayport())) {
-                hasPorts = true;
-            }
-
-            if (i >= 3) {
-                canTrade = true;
-                canPortTrade = true;
-            }
-
-            if (i >= 1) {
-                canTrade = true;
-            }
+        if ((isWoodport() || isWoolport() || isWheatport() || isOreport() || isClayport())) {
+            hasPorts = true;
+        } else {
+            hasPorts = false;
         }
     }
 }

@@ -48,8 +48,6 @@ public class Thief {
      */
     public static boolean updateRessources(GameSession game, int destinationIndex, Player curr) {
 
-        // TODO: Does this work as intended?
-
         Tile[] tiles = game.getGameboard().getTiles();
 
         List<Player> players = new ArrayList<>(3);
@@ -58,6 +56,16 @@ public class Thief {
         int[] res;
 
         String resName;
+        StringBuilder builder = new StringBuilder();
+        String message = "Nichts zu stehlen";
+
+        game.nextPlayer();
+        curr.getInventory().removeKnightCard(1);
+        KnightPower.checkKnightPowerOnPlay(game, curr.getInventory().getKnightCard(), curr);
+
+        if (game.getKnightPowerOwner() != null) {
+            builder.append(" ").append(game.getKnightPowerOwner().getDisplayName()).append(" hat jetzt die größte Rittermacht");
+        }
 
         if (destinationIndex >= 0 && destinationIndex < tiles.length) {
 
@@ -73,16 +81,14 @@ public class Thief {
                     players.add(player);
                 }
 
+                int number = -1;
+
                 if (players.size() > 0) {
 
                     playerToStealFrom = players.get(rand.nextInt(players.size()));
                     res = playerToStealFrom.getInventory().getResValues();
 
-                    int number = -1;
-
-                    while (number == -1) {
-                        number = selectRes(res);
-                    }
+                    number = selectRes(res);
 
                     switch (number) {
                         case 0:
@@ -116,11 +122,13 @@ public class Thief {
                             break;
 
                         default:
-                            resName = "";
-                            break;
+                            SendToClient.sendStringMessageBroadcast(game, message + builder.toString());
+                            return true;
                     }
 
                     sendMessage(game, resName, curr, playerToStealFrom);
+                } else {
+                    SendToClient.sendStringMessageBroadcast(game, SendToClient.HEADER_KNIGHT + " " + message + builder.toString());
                 }
             }
             return true;
@@ -135,17 +143,30 @@ public class Thief {
      * @param res Array of the Ressource-Values
      * @return Index of the selected Ressource, when there is 1, else -1
      */
-    private static int selectRes(int[] res) {
+    public static int selectRes(int[] res) {
+
+        int counter = 0;
+
+        for (int i = 0; i < res.length; i++) {
+            if (res[i] != 0) {
+                counter++;
+            }
+        }
+
+        if (counter == 0) {
+            return -1;
+        }
 
         Random rand = new Random();
         int index = rand.nextInt(res.length);
         int number = res[index];
 
-        if (number != 0) {
-            return index;
+        while (number == 0) {
+            index = rand.nextInt(res.length);
+            number = res[index];
         }
 
-        return -1;
+        return index;
     }
 
     /**
@@ -157,13 +178,18 @@ public class Thief {
      * @param curr        current Player
      * @param toStealFrom Player which the Ressource was stolen from
      */
-    private static void sendMessage(GameSession game, String resName, Player curr, Player toStealFrom) {
+    public static String sendMessage(GameSession game, String resName, Player curr, Player toStealFrom) {
 
         StringBuilder builder = new StringBuilder();
         builder.append(SendToClient.HEADER_KNIGHT).append(" ");
         builder.append(curr.getDisplayName()).append(" hat 1 ").append(resName);
         builder.append(" von ").append(toStealFrom.getDisplayName()).append(" gestohlen");
 
+        if (game.getKnightPowerOwner() != null) {
+            builder.append(" ").append(game.getKnightPowerOwner().getDisplayName()).append(" hat jetzt die größte Rittermacht");
+        }
+
         SendToClient.sendStringMessageBroadcast(game, builder.toString());
+        return builder.toString();
     }
 }

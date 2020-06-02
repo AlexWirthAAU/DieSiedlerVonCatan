@@ -2,7 +2,6 @@ package com.example.catanserver.threads.cards;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
-import com.example.catangame.devcards.BuildStreetCard;
 import com.example.catangame.devcards.DevCard;
 import com.example.catangame.devcards.InventionCard;
 import com.example.catangame.devcards.KnightCard;
@@ -10,12 +9,12 @@ import com.example.catangame.devcards.MonopolCard;
 import com.example.catangame.devcards.VictoryPointCard;
 import com.example.catanserver.Server;
 import com.example.catanserver.User;
+import com.example.catanserver.businessLogic.model.cards.Buy;
 import com.example.catanserver.threads.ErrorThread;
 import com.example.catanserver.threads.GameThread;
 import com.example.catanserver.threads.SendToClient;
 
 import java.util.List;
-import java.util.Random;
 
 /**
  * @author Christina Senger
@@ -52,11 +51,11 @@ public class BuyCardThread extends GameThread {
      */
     public void run() {
 
-        if (checkStack()) {
+        if (Buy.checkStack(player, game)) {
 
             System.out.println("checked");
-            buyCard();
-            String mess = buildMessage();
+            cardName = Buy.buyCard(player, devCardStack, game);
+            String mess = Buy.buildMessage(cardName);
             game.nextPlayer();
             if(!endTurn()) {
                 SendToClient.sendGameSessionBroadcast(game);
@@ -72,90 +71,5 @@ public class BuyCardThread extends GameThread {
             ErrorThread errThread = new ErrorThread(user.getConnectionOutputStream(), "Nicht genug Rohstoffe um Karten zu kaufen");
             errThread.run();
         }
-    }
-
-    /**
-     * @return true, when there are DevCards left and the Player has enough Ressources to buy on, else false
-     */
-    private boolean checkStack() {
-        System.out.println(player.getDisplayName() + " has" + player.getInventory().getWool()
-                + " Wolle " + player.getInventory().getOre() + " Erz " + player.getInventory().getWheat() + " Weizen "
-                + " und es gibt " + game.getDevCards().size() + " Karten");
-
-        return (player.getInventory().getWool() != 0
-                && player.getInventory().getOre() != 0
-                && player.getInventory().getWheat() != 0
-                && game.getDevCards().size() != 0);
-    }
-
-    /**
-     * The Ressources are from the Players Inventory.
-     * When the Stack is greate than 23 (first 3 Cards), the first
-     * Card is bought, else a random Card is bought. The Card is
-     * removed from the Stack, added to the Players Inventory and its Name is stored.
-     */
-    private void buyCard() {
-
-        DevCard card;
-        System.out.println(player.getInventory().getAllSupplies());
-
-        player.getInventory().removeWool(1);
-        player.getInventory().removeWheat(1);
-        player.getInventory().removeOre(1);
-
-        System.out.println(devCardStack.size());
-
-        if (devCardStack.size() > 23) {
-            card = devCardStack.remove(0);
-            System.out.println("first");
-        } else {
-            Random rand = new Random();
-            card = devCardStack.remove(rand.nextInt(devCardStack.size()));
-            System.out.println("random");
-        }
-
-        if (card instanceof BuildStreetCard) {
-            player.getInventory().addBuildStreetCard(1);
-            cardName = "Strassenbaukarte";
-            System.out.println(cardName);
-
-        } else if (card instanceof KnightCard) {
-            player.getInventory().addKnightCard(1);
-            cardName = "Ritterkarte";
-            System.out.println(cardName);
-
-        } else if (card instanceof InventionCard) {
-            player.getInventory().addInventianCard(1);
-            cardName = "Erfindungskarte";
-            System.out.println(cardName);
-
-        } else if (card instanceof MonopolCard) {
-            player.getInventory().addMonopolCard(1);
-            cardName = "Monopolkarte";
-            System.out.println(cardName);
-
-        } else if (card instanceof VictoryPointCard) {
-            player.getInventory().addVictoryCard();
-            cardName = "Siegpunktkarte";
-            System.out.println(cardName);
-        }
-        System.out.println(player.getInventory().getAllSupplies());
-    }
-
-    /**
-     * Creates a Message, specific to the Type of the bought Card,
-     * and appends it to a StringBuilder.
-     *
-     * @return the StringBuilder as a String
-     */
-    private String buildMessage() {
-
-        message.append("Du hast eine ").append(cardName).append(" gekauft");
-
-        if (cardName.equals("Siegpunktkarte")) {
-            message.append(" und einen Siegpunkt erhalten");
-        }
-        System.out.println(message.toString());
-        return message.toString();
     }
 }

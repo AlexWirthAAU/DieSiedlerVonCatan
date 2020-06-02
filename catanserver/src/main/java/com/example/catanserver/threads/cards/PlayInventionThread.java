@@ -4,6 +4,7 @@ import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catanserver.Server;
 import com.example.catanserver.User;
+import com.example.catanserver.businessLogic.model.cards.Invention;
 import com.example.catanserver.threads.ErrorThread;
 import com.example.catanserver.threads.GameThread;
 import com.example.catanserver.threads.SendToClient;
@@ -44,10 +45,10 @@ public class PlayInventionThread extends GameThread {
      */
     public void run() {
 
-        if (checkCards()) {
+        if (Invention.checkCards(player)) {
             System.out.println("checked");
-            playCard();
-            String mess = buildMessage();
+            resName = Invention.playCard(player, res);
+            String mess = Invention.buildMessage(resName);
             game.nextPlayer();
             if(!endTurn()) {
                 SendToClient.sendGameSessionBroadcast(game);
@@ -62,70 +63,5 @@ public class PlayInventionThread extends GameThread {
             ErrorThread errThread = new ErrorThread(user.getConnectionOutputStream(), "Karte konnte nicht gespielt werden");
             errThread.run();
         }
-    }
-
-    /**
-     * @return true, when the Player has an Invention Card, else false
-     */
-    private boolean checkCards() {
-
-        return player.getInventory().getInventionCard() != 0;
-    }
-
-    /**
-     * Depending on the Name of the desired Ressource, the Value of
-     * the Ressource is increases by 2. The Invention Card is
-     * removed from the Players Inventory.
-     */
-    private void playCard() {
-
-        System.out.println(player.getInventory().getAllSupplies());
-        switch (res) {
-            case "wood":
-                player.getInventory().addWood(2);
-                resName = "Holz";
-                break;
-
-            case "wool":
-                resName = "Wolle";
-                player.getInventory().addWool(2);
-                break;
-
-            case "wheat":
-                player.getInventory().addWheat(2);
-                resName = "Weizen";
-                break;
-
-            case "ore":
-                player.getInventory().addOre(2);
-                resName = "Erz";
-                break;
-
-            case "clay":
-                player.getInventory().addClay(2);
-                resName = "Lehm";
-                break;
-
-            default:
-                break;
-        }
-
-        player.getInventory().removeInventianCard(1);
-        System.out.println(player.getInventory().getAllSupplies() + " after");
-    }
-
-    /**
-     * Creates a Message, specific to the Name of the desired Ressource,
-     * and appends it to a StringBuilder.
-     *
-     * @return the StringBuilder as a String
-     */
-    private String buildMessage() {
-
-        message.append("Du hast eine Erfindungskarte gespielt und zwei ");
-        message.append(resName).append(" erhalten");
-
-        System.out.println(message.toString());
-        return message.toString();
     }
 }

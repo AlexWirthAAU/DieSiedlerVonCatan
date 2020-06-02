@@ -53,6 +53,8 @@ public class GameSession implements Serializable {
         this.devCards = new DevCardStack().getDevCardStack();
         this.grabs = new LinkedList<>();
         isInitialized = false;
+        this.knightPowerCount = 0;
+        this.setKnightPowerOwner(null);
     }
 
     // Getter
@@ -79,6 +81,7 @@ public class GameSession implements Serializable {
         return null;
     }
 
+    // Getters
     public Gameboard getGameboard() {
         return gameboard;
     }
@@ -163,6 +166,16 @@ public class GameSession implements Serializable {
     public void setCardBuild(boolean isCardBuild) {
         this.isCardBuild = isCardBuild;
     }
+
+    public void setCurrPlayer(int id) {
+        this.currPlayer = id;
+    }
+
+    public void setDevCards(ArrayList<DevCard> devCards) {
+        this.devCards = devCards;
+    }
+
+    ;
 
     public void setInitialized(boolean initialized) {
         isInitialized = initialized;

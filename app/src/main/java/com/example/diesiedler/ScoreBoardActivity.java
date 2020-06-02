@@ -17,6 +17,8 @@ import java.util.List;
 
 public class ScoreBoardActivity extends AppCompatActivity {
 
+    TextView text = findViewById(R.id.knightpower);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,5 +46,9 @@ public class ScoreBoardActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        if (ClientData.currentGame.getKnightPowerOwner() != null) {
+            text.setText("Größte Rittermacht hat " + ClientData.currentGame.getKnightPowerOwner());
+        }
     }
 }
