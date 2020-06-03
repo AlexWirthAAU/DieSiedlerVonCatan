@@ -90,7 +90,7 @@ public class BankChangeActivity extends AppCompatActivity {
         }
 
         if (playerInventory.getClay() < 4) {
-            clayGet.setEnabled(false);
+            clayGive.setEnabled(false);
         }
 
         ClientData.currentHandler = handler;
