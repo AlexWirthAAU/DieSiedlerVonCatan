@@ -167,8 +167,8 @@ public class GameSession implements Serializable {
         this.isCardBuild = isCardBuild;
     }
 
-    public void setCurrPlayer(int id) {
-        this.currPlayer = id;
+    public void setCurrPlayer(int index) {
+        this.currPlayer = index;
     }
 
     public void setDevCards(ArrayList<DevCard> devCards) {

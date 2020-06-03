@@ -54,13 +54,13 @@ public class GameSessionTest {
     @Test
     public void prevPlayer() {
         gameSession.setCurrPlayer(2);
-        gameSession.previosPlayer();
+        gameSession.previousPlayer();
         Assert.assertEquals(1, gameSession.getCurr().getUserId());
     }
 
     @Test
     public void prevPlayer0() {
-        gameSession.previosPlayer();
+        gameSession.previousPlayer();
         Assert.assertEquals(2, gameSession.getCurr().getUserId());
     }
 

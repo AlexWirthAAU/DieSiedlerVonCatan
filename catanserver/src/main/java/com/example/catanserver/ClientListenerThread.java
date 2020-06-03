@@ -4,7 +4,7 @@ import com.example.catangame.GameSession;
 import com.example.catanserver.threads.ErrorThread;
 import com.example.catanserver.threads.NextThread;
 import com.example.catanserver.threads.ResourceAllocationThread;
-import com.example.catanserver.threads.StartThread;
+import com.example.catanserver.threads.beforegame.StartThread;
 import com.example.catanserver.threads.beforegame.StopThread;
 import com.example.catanserver.threads.ThiefThread;
 import com.example.catanserver.threads.beforegame.ApplyThread;
