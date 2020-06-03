@@ -3,6 +3,7 @@ package com.example.catanserver.threads.trading;
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catangame.Trade;
+import com.example.catanserver.Server;
 import com.example.catanserver.User;
 import com.example.catanserver.businessLogic.model.trading.StartTrade;
 import com.example.catanserver.threads.ErrorThread;
@@ -56,28 +57,35 @@ public class TradeThread extends GameThread {
      */
     public void run() {
 
-        StartTrade.setTradeData(tradeStr);
-        offer = StartTrade.getOffered();
-        want = StartTrade.getDesired();
+        StartTrade startTrade = new StartTrade();
 
-        if (StartTrade.checkTrade(offer, currPlayer)) {
+        startTrade.setTradeData(tradeStr);
+        offer = startTrade.getOffered();
+        want = startTrade.getDesired();
+
+        if (startTrade.checkTrade(offer, currPlayer)) {
 
             System.out.println("checked");
-            potentialTradingPartners = StartTrade.checkAndSetTradingPartners(game, want, currPlayer);
+            potentialTradingPartners = startTrade.checkAndSetTradingPartners(game, want,currPlayer);
 
             if (potentialTradingPartners.size() == 0) {
-                SendToClient.sendStringMessage(user, "Keine Handelspartner");
                 game.nextPlayer();
                 SendToClient.sendGameSessionBroadcast(game);
+                SendToClient.sendStringMessage(user, SendToClient.HEADER_ENDTURN + " Keine Handelspartner");
+                User nextUser = Server.findUser(game.getCurr().getUserId());
+                if (nextUser != null) {
+                    SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN);
+                }
             } else {
-                String mess = StartTrade.buildMessage(currPlayer, offer, want);
-                StartTrade.setTrade(offer, want, currPlayer, potentialTradingPartners, mess, gs);
+                String mess = startTrade.buildMessage(currPlayer, offer, want);
+                startTrade.setTrade(offer, want, currPlayer, potentialTradingPartners, mess, gs);
 
-                SendToClient.sendTradeMessageBroadcast(potentialTradingPartners, mess, this.gs);
+                SendToClient.sendGameSessionBroadcast(game);
+                SendToClient.sendStringMessage(potentialTradingPartners,SendToClient.HEADER_TRADE + " " + mess);
             }
 
         } else {
-            ErrorThread errThread = new ErrorThread(user.getConnectionOutputStream(), "Nicht genug Rohstoffe um zu handeln");
+            ErrorThread errThread = new ErrorThread(user.getConnectionOutputStream(),"Nicht genug Rohstoffe um zu handeln");
             errThread.run();
         }
     }

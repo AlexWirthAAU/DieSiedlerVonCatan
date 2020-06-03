@@ -107,7 +107,7 @@ public class SendToClient {
      * @param message specific Trade-Message
      */
     public static void sendTradeMessageBroadcast(List<Player> toSend, String message, GameSession game) {
-        List<User> userList = createTradeUserList(toSend);
+        List<User> userList = createUserListFromPlayerList(toSend);
         for (User user : userList) {
             try {
                 sendToClient(user, game);
@@ -161,7 +161,7 @@ public class SendToClient {
      * @param message specific Knight-Message
      */
     public static void sendStringMessage(List<Player> toSend, String message) {
-        List<User> userList = createTradeUserList(toSend);
+        List<User> userList = createUserListFromPlayerList(toSend);
         for (User user : userList) {
             try {
                 sendToClient(user, message);
@@ -224,7 +224,7 @@ public class SendToClient {
      * @param users Set of of all User currently Searching
      * @return List of UserId and Usernames of all User currently Searching
      */
-    public static List<String> createSearchingList(Set<User> users) {
+    private static List<String> createSearchingList(Set<User> users) {
         List<String> list = new ArrayList<>();
         for (User user : users) {
             list.add("" + user.getUserId());
@@ -239,7 +239,7 @@ public class SendToClient {
      * @param players List of all Player which the Trade Message should be send to
      * @return List of all User which the Trade Message should be send to
      */
-    private static List<User> createTradeUserList(List<Player> players) {
+    private static List<User> createUserListFromPlayerList(List<Player> players) {
         List<User> list = new ArrayList<>();
         for (Player player : players) {
             User foundUser = null;
@@ -263,7 +263,7 @@ public class SendToClient {
      * @param obj  Object to be sent to the User
      * @throws IOException when theres a Problem with the Stream
      */
-    public static void sendToClient(User user, Object obj) throws IOException {
+    private static void sendToClient(User user, Object obj) throws IOException {
         user.getConnectionOutputStream().reset();
         user.getConnectionOutputStream().writeObject(obj);
         user.getConnectionOutputStream().flush();
