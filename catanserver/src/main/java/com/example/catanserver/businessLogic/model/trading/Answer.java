@@ -68,18 +68,12 @@ public class Answer {
      * @param trade          current Trade
      * @return List of Players a Message should be send to
      */
-    public static List<Player> setAnswerList(Player tradingOfferer, Trade trade) {
-
-        List<Player> toSend = new ArrayList<>();
+    public static boolean trade(Player tradingOfferer, Trade trade) {
 
         Player tradingPartner = setPartner(trade);
         trade.setTradingPartner(tradingPartner);
 
-        if (tradingPartner == null) {
-            toSend.add(tradingOfferer);
-            return toSend;
-        } else {
-
+        if (tradingPartner != null) {
             System.out.println(tradingOfferer + " offer " + tradingPartner + " partner");
 
             System.out.println(tradingOfferer.getInventory().getAllSupplies() + " curr ");
@@ -88,11 +82,9 @@ public class Answer {
 
             System.out.println("Handel durchgefuehrt");
             System.out.println("Handel zwischen " + tradingOfferer.getDisplayName() + " und " + tradingPartner.getDisplayName() + " durchgefuehrt");
-
-            toSend.add(tradingOfferer);
-            toSend.add(tradingPartner);
-            return toSend;
+            return true;
         }
+        return false;
     }
 
     /**

@@ -156,8 +156,8 @@ public class AnswerTest {
     @Test
     public void setAnswerListNull() {
 
-        Assert.assertEquals(1, Answer.setAnswerList(player1, trade).size());
-        Assert.assertEquals(0, Answer.setAnswerList(player1, trade).get(0).getUserId());
+        Assert.assertEquals(1, Answer.trade(player1, trade).size());
+        Assert.assertEquals(0, Answer.trade(player1, trade).get(0).getUserId());
     }
 
     @Test
@@ -165,7 +165,7 @@ public class AnswerTest {
 
         Answer.addAnsweredPlayer("accepted", trade, player2);
 
-        Assert.assertEquals(2, Answer.setAnswerList(player1, trade).size());
-        Assert.assertEquals(1, Answer.setAnswerList(player1, trade).get(1).getUserId());
+        Assert.assertEquals(2, Answer.trade(player1, trade).size());
+        Assert.assertEquals(1, Answer.trade(player1, trade).get(1).getUserId());
     }
 }
