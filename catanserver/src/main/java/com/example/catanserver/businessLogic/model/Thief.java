@@ -80,57 +80,58 @@ public class Thief {
 
                     players.add(player);
                 }
-
-                int number = -1;
-
-                if (players.size() > 0) {
-
-                    playerToStealFrom = players.get(rand.nextInt(players.size()));
-                    res = playerToStealFrom.getInventory().getResValues();
-
-                    number = selectRes(res);
-
-                    switch (number) {
-                        case 0:
-                            playerToStealFrom.getInventory().removeWood(1);
-                            curr.getInventory().addWood(1);
-                            resName = "Holz";
-                            break;
-
-                        case 1:
-                            playerToStealFrom.getInventory().removeWool(1);
-                            curr.getInventory().addWool(1);
-                            resName = "Wolle";
-                            break;
-
-                        case 2:
-                            playerToStealFrom.getInventory().removeWheat(1);
-                            curr.getInventory().addWheat(1);
-                            resName = "Weizen";
-                            break;
-
-                        case 3:
-                            playerToStealFrom.getInventory().removeOre(1);
-                            curr.getInventory().addOre(1);
-                            resName = "Erz";
-                            break;
-
-                        case 4:
-                            playerToStealFrom.getInventory().removeClay(1);
-                            curr.getInventory().addClay(1);
-                            resName = "Lehm";
-                            break;
-
-                        default:
-                            SendToClient.sendStringMessageBroadcast(game, message + builder.toString());
-                            return true;
-                    }
-
-                    sendMessage(game, resName, curr, playerToStealFrom);
-                } else {
-                    SendToClient.sendStringMessageBroadcast(game, SendToClient.HEADER_KNIGHT + " " + message + builder.toString());
-                }
             }
+
+            int number = -1;
+
+            if (players.size() > 0) {
+
+                playerToStealFrom = players.get(rand.nextInt(players.size()));
+                res = playerToStealFrom.getInventory().getResValues();
+
+                number = selectRes(res);
+
+                switch (number) {
+                    case 0:
+                        playerToStealFrom.getInventory().removeWood(1);
+                        curr.getInventory().addWood(1);
+                        resName = "Holz";
+                        break;
+
+                    case 1:
+                        playerToStealFrom.getInventory().removeWool(1);
+                        curr.getInventory().addWool(1);
+                        resName = "Wolle";
+                        break;
+
+                    case 2:
+                        playerToStealFrom.getInventory().removeWheat(1);
+                        curr.getInventory().addWheat(1);
+                        resName = "Weizen";
+                        break;
+
+                    case 3:
+                        playerToStealFrom.getInventory().removeOre(1);
+                        curr.getInventory().addOre(1);
+                        resName = "Erz";
+                        break;
+
+                    case 4:
+                        playerToStealFrom.getInventory().removeClay(1);
+                        curr.getInventory().addClay(1);
+                        resName = "Lehm";
+                        break;
+
+                    default:
+                        SendToClient.sendStringMessageBroadcast(game, message + builder.toString());
+                        return true;
+                }
+
+                sendMessage(game, resName, curr, playerToStealFrom);
+            } else {
+                SendToClient.sendStringMessageBroadcast(game, SendToClient.HEADER_KNIGHT + " " + message + builder.toString());
+            }
+
             return true;
         }
         return false;
