@@ -24,6 +24,11 @@ public class BuyTest {
         gameSession = new GameSession();
         player1 = new Player("Test", 0);
         gameSession.setPlayer(player1);
+        player1.getInventory().setWood(1);
+        player1.getInventory().setWool(1);
+        player1.getInventory().setWheat(1);
+        player1.getInventory().setOre(1);
+        player1.getInventory().setClay(1);
     }
 
     @After

@@ -10,7 +10,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.MockitoAnnotations;
 
 public class thiefTest {
 
@@ -32,7 +31,16 @@ public class thiefTest {
         player = new Player("Test", 0);
         player2 = new Player("Test2", 1);
         player.getInventory().addKnightCard(1);
-        MockitoAnnotations.initMocks(this);
+        player.getInventory().addWood(1);
+        player.getInventory().addWool(1);
+        player.getInventory().addWheat(1);
+        player.getInventory().addOre(1);
+        player.getInventory().addClay(1);
+        player2.getInventory().addWood(1);
+        player2.getInventory().addWool(1);
+        player2.getInventory().addWheat(1);
+        player2.getInventory().addOre(1);
+        player2.getInventory().addClay(1);
     }
 
     @After
@@ -212,6 +220,7 @@ public class thiefTest {
         testGameSession.setKnightPowerOwner(player);
 
         StringBuilder builder = new StringBuilder();
+        builder.append("KNIGHT ");
         builder.append(player.getDisplayName()).append(" hat 1 ").append("Holz");
         builder.append(" von ").append(player2.getDisplayName()).append(" gestohlen");
 
