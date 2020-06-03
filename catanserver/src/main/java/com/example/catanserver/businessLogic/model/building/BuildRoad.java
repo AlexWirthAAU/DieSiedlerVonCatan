@@ -13,6 +13,7 @@ import java.util.LinkedList;
 /**
  * @author Alex Wirth
  * @author Christina Senger (edit)
+ * @author Fabian Schaffenrath
  */
 public class BuildRoad {
 
@@ -20,21 +21,45 @@ public class BuildRoad {
         Gameboard gameboard = gameSession.getGameboard();
         Edge road = gameboard.getEdges()[roadIndex];
         Player player = gameSession.getPlayer(userID);
+        road.setPlayer(player);
+        gameSession.addRoad(road);
 
+        Player lastPlayer = gameSession.getPlayers().get(gameSession.getPlayers().size()-1);
+        Player firstPlayer = gameSession.getPlayers().get(0);
 
-        /**
-         * If the player has less than two roads, the resources are not affected, as the first two roads can be built for free.
-         * If its a regular built, the resources need to be reduced.
-         */
         if (player.getInventory().getRoads().size() < 2) {
             updatePlayerInventoryInit(player, road);
         } else {
             updatePlayerInventory(player, road);
         }
 
-        road.setPlayer(player);
-        gameSession.addRoad(road);
-        gameSession.nextPlayer();
+        System.out.println("Road built from Player: " + player.getUserId());
+
+        /**
+         * If the player has less than two roads, the resources are not affected, as the first two roads can be built for free.
+         * If its a regular built, the resources need to be reduced.
+         */
+
+
+        if (player.getInventory().getRoads().size() == 1 && !(player.getUserId() == lastPlayer.getUserId())) {
+            gameSession.nextPlayer();
+            System.out.println("Next Player");
+        }
+
+        if (player.getInventory().getRoads().size() == 2) {
+            gameSession.previousPlayer();
+            System.out.println("Spieler in the middle");
+        }
+
+        if (player.getInventory().getRoads().size() == 2 && player.getUserId() == firstPlayer.getUserId()) {
+            gameSession.nextPlayer();
+            System.out.println("Letzter INIT Spielzug");
+        }
+
+        if (player.getInventory().getRoads().size() > 2) {
+            gameSession.nextPlayer();
+            System.out.println("Regulärer Spielzug");
+        }
     }
 
     /**

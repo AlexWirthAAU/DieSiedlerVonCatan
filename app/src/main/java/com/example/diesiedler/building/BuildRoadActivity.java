@@ -1,8 +1,6 @@
 package com.example.diesiedler.building;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,14 +15,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.catangame.PlayerInventory;
 import com.example.catangame.gameboard.Edge;
-import com.example.diesiedler.ChooseActionActivity;
-import com.example.diesiedler.MainActivity;
 import com.example.diesiedler.R;
+import com.example.diesiedler.ScoreBoardActivity;
+import com.example.diesiedler.cards.DevCardInventoryActivity;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.UpdateBuildRoadView;
 import com.example.diesiedler.presenter.UpdateGameboardView;
-import com.example.diesiedler.presenter.handler.HandlerOverride;
+import com.example.diesiedler.presenter.handler.GameHandler;
 import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
 import com.example.diesiedler.threads.NetworkThread;
 import com.richpath.RichPathView;
@@ -41,7 +39,7 @@ import com.richpath.RichPathView;
 public class BuildRoadActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Handler handler = new BuildRoadHandler(Looper.getMainLooper(), this); // Handler
-    private AlertDialog.Builder alertBuilder; // AlertBuilder
+    private RichPathView richPathView;
 
     // TextViews for number of resources
     private TextView woodCount;
@@ -56,14 +54,14 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
     private Button scoreBoard;
 
 
-    private static String card; // "CARD" when to Activity is started from the PlayCardActivity
+    private static String card = ""; // "CARD" when to Activity is started from the PlayCardActivity
     //TODO: Methoden kommentieren
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameboardview);
-        RichPathView richPathView = findViewById(R.id.ic_gameboardView);
+        richPathView = findViewById(R.id.ic_gameboardView);
 
         devCards = findViewById(R.id.devCard);
         devCards.setOnClickListener(this);
@@ -78,13 +76,34 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
 
         System.out.println(card + " card");
 
+        ClientData.currentHandler = handler;
+
         UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
         updateResources();
-        ClientData.currentHandler = handler;
         UpdateBuildRoadView.updateView(ClientData.currentGame, richPathView, card);
 
         GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView, this);
         gameBoardClickListener.clickBoard("BuildRoad");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ClientData.currentHandler = handler;
+    }
+    public void onRestart() {
+        super.onRestart();
+        ClientData.currentHandler = handler;
+    }
+
+    /**
+     * Going back is not allowed in the init phase.
+     */
+    @Override
+    public void onBackPressed() {
+        if(ClientData.currentGame.isInitialized()){
+            super.onBackPressed();
+        }
     }
 
     /**
@@ -145,10 +164,12 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
         Intent intent;
         switch (view.getId()) {
             case R.id.devCard:
-                //TODO: load new activity
+                intent = new Intent(getBaseContext(), DevCardInventoryActivity.class);
+                startActivity(intent);
                 break;
             case R.id.scoreBoard:
-                //TODO: load new activity
+                intent = new Intent(getBaseContext(), ScoreBoardActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -156,36 +177,29 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
     /**
      * @author Alex Wirth
      * @author Christina Senger (edit)
+     * @author Fabian Schaffenrath (edit)
      * <p>
      * Handler for the BuildRoadActivity
      */
-    private class BuildRoadHandler extends HandlerOverride {
+    private class BuildRoadHandler extends GameHandler {
         public BuildRoadHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
         }
 
         /**
-         * When a GameSession is send, it is checked if it is the Players Turn.
-         * If yes, the Activity get loaded once more with card as Extra of  the Intent.
-         * If no, the MainActivit is started.
+         * When a new game session is available, the view is updated.
          *
          * @param msg msg.arg1 has the Param for further Actions
-         *            msg.obj has the updated GameSession
+         *            msg.obj has the received object
          */
         @Override
         public void handleMessage(Message msg) {
-            if (msg.arg1 == 4) {
-
-                if (ClientData.currentGame.getCurrPlayer() == ClientData.userId) {
-
-                    Intent intent = new Intent(activity, BuildRoadActivity.class);
-                    intent.putExtra("card", "CARD");
-                    startActivity(intent);
-
-                } else {
-                    Intent intent = new Intent(activity, MainActivity.class);
-                    startActivity(intent);
-                }
+            if(msg.arg1 == 5){
+                super.handleMessage(msg);
+            }
+            else if (msg.arg1 == 4) {
+                UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
+                updateResources();
             }
         }
 

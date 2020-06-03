@@ -155,7 +155,7 @@ public class Gameboard implements Serializable {
             tile9Knots[i] = knots[i + 18];
         }
         for (int i = 3; i < 6; i++) {
-            tile9Knots[i] = knots[i + 25];
+            tile9Knots[i] = knots[i + 26];
         }
 
         for (int i = 0; i < 3; i++) {
@@ -169,7 +169,7 @@ public class Gameboard implements Serializable {
             tile11Knots[i] = knots[i + 22];
         }
         for (int i = 3; i < 6; i++) {
-            tile11Knots[1] = knots[i + 30];
+            tile11Knots[i] = knots[i + 30];
         }
 
         for (int i = 0; i < 3; i++) {

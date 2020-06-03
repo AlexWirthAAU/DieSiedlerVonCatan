@@ -64,6 +64,10 @@ public class User {
     }
 
     // Setters
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     public void setConnection(Socket connection) {
         this.connection = connection;
     }

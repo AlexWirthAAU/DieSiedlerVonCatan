@@ -1,8 +1,6 @@
 package com.example.diesiedler.building;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,20 +13,16 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.catangame.Colors;
-import com.example.catangame.GameSession;
-import com.example.catangame.Player;
 import com.example.catangame.PlayerInventory;
-import com.example.catangame.gameboard.Edge;
 import com.example.catangame.gameboard.Knot;
-import com.example.diesiedler.ChooseActionActivity;
-import com.example.diesiedler.MainActivity;
 import com.example.diesiedler.R;
+import com.example.diesiedler.ScoreBoardActivity;
+import com.example.diesiedler.cards.DevCardInventoryActivity;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.UpdateBuildSettlementView;
 import com.example.diesiedler.presenter.UpdateGameboardView;
-import com.example.diesiedler.presenter.handler.HandlerOverride;
+import com.example.diesiedler.presenter.handler.GameHandler;
 import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
 import com.example.diesiedler.threads.NetworkThread;
 import com.richpath.RichPathView;
@@ -44,7 +38,7 @@ import com.richpath.RichPathView;
 public class BuildSettlementActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Handler handler = new BuildSettlementHandler(Looper.getMainLooper(), this); // Handler
-    private AlertDialog.Builder alertBuilder; // AlertBuilder
+    private RichPathView richPathView;
 
     // TextViews for number of resources
     private TextView woodCount;
@@ -62,7 +56,7 @@ public class BuildSettlementActivity extends AppCompatActivity implements View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameboardview);
-        RichPathView richPathView = findViewById(R.id.ic_gameboardView);
+        richPathView = findViewById(R.id.ic_gameboardView);
 
         devCards = findViewById(R.id.devCard);
         devCards.setOnClickListener(this);
@@ -76,6 +70,26 @@ public class BuildSettlementActivity extends AppCompatActivity implements View.O
 
         GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView, this);
         gameBoardClickListener.clickBoard("BuildSettlement");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ClientData.currentHandler = handler;
+    }
+    public void onRestart() {
+        super.onRestart();
+        ClientData.currentHandler = handler;
+    }
+
+    /**
+     * Going back is not allowed in the init phase.
+     */
+    @Override
+    public void onBackPressed() {
+        if(ClientData.currentGame.isInitialized()){
+            super.onBackPressed();
+        }
     }
 
     /**
@@ -131,10 +145,12 @@ public class BuildSettlementActivity extends AppCompatActivity implements View.O
         Intent intent;
         switch (view.getId()) {
             case R.id.devCard:
-                //TODO: load new activity
+                intent = new Intent(getBaseContext(), DevCardInventoryActivity.class);
+                startActivity(intent);
                 break;
             case R.id.scoreBoard:
-                //TODO: load new activity
+                intent = new Intent(getBaseContext(), ScoreBoardActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -142,11 +158,9 @@ public class BuildSettlementActivity extends AppCompatActivity implements View.O
 
     /**
      * Handler is responsible for reacting to the new gamesession object received by the server.
-     * If it is not the player's turn, the main activity will be loaded.
-     * When it is the beginning of the game, each player is allowed to choose one settlement and one road in his first two turns. So when the player's
-     * settlement amount is less that two, the build road activity will be called instantly after having placed the settlement.
+     * When a new game session is received, the View is updated.
      */
-    private class BuildSettlementHandler extends HandlerOverride {
+    private class BuildSettlementHandler extends GameHandler {
 
         public BuildSettlementHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
@@ -154,17 +168,13 @@ public class BuildSettlementActivity extends AppCompatActivity implements View.O
 
         @Override
         public void handleMessage(Message msg) {
-            if (msg.arg1 == 4) {
-                GameSession gameSession = ClientData.currentGame;
-                Player currentP = gameSession.getPlayer(gameSession.getCurrPlayer());
-
-                if (currentP.getUserId() == ClientData.userId && gameSession.getPlayer(ClientData.userId).getInventory().getRoads().size() < 2) {
-                    Intent intent = new Intent(activity, BuildRoadActivity.class);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(activity, MainActivity.class);
-                    startActivity(intent);
-                }
+            if(msg.arg1 == 5){
+                super.handleMessage(msg);
+            }
+            else if (msg.arg1 == 4) {
+                UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
+                updateResources();
+                UpdateBuildSettlementView.updateView(ClientData.currentGame, richPathView);
             }
         }
     }

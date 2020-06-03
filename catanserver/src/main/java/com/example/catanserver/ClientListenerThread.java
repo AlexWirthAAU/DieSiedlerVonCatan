@@ -1,12 +1,29 @@
 package com.example.catanserver;
 
 import com.example.catangame.GameSession;
-
-import com.example.catanserver.threads.*;
-import com.example.catanserver.threads.beforegame.*;
-import com.example.catanserver.threads.building.*;
-import com.example.catanserver.threads.cards.*;
-import com.example.catanserver.threads.trading.*;
+import com.example.catanserver.threads.ErrorThread;
+import com.example.catanserver.threads.NextThread;
+import com.example.catanserver.threads.ResourceAllocationThread;
+import com.example.catanserver.threads.beforegame.StartThread;
+import com.example.catanserver.threads.beforegame.StopThread;
+import com.example.catanserver.threads.ThiefThread;
+import com.example.catanserver.threads.beforegame.ApplyThread;
+import com.example.catanserver.threads.beforegame.ColorThread;
+import com.example.catanserver.threads.beforegame.CreateThread;
+import com.example.catanserver.threads.beforegame.LoginThread;
+import com.example.catanserver.threads.building.BuildCityThread;
+import com.example.catanserver.threads.building.BuildRoadThread;
+import com.example.catanserver.threads.building.BuildSettlementThread;
+import com.example.catanserver.threads.cards.BuyCardThread;
+import com.example.catanserver.threads.cards.PlayInventionThread;
+import com.example.catanserver.threads.cards.PlayMonopolThread;
+import com.example.catanserver.threads.cheating.CheatThread;
+import com.example.catanserver.threads.cheating.CounterThread;
+import com.example.catanserver.threads.cheating.RevealThread;
+import com.example.catanserver.threads.trading.BankThread;
+import com.example.catanserver.threads.trading.PortThread;
+import com.example.catanserver.threads.trading.TradeAnswerThread;
+import com.example.catanserver.threads.trading.TradeThread;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -27,8 +44,6 @@ import java.util.Arrays;
 public class ClientListenerThread extends Thread {
 
     private User user;
-
-    // TODO: change Strings in messages to enums for faster comparison (ConnectionEnum x = ConnectionEnum.values()[messageSplit[0]])
 
     private Socket connection;
     private ObjectInputStream connectionInputStream;
@@ -68,8 +83,8 @@ public class ClientListenerThread extends Thread {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // TODO: Add callbacks for blocked comms (enums error code?)
-        System.out.println("Processing Connection.");
+
+        System.out.println("Start Listening.");
 
         // Reading UTF from InputStream and storing it into <code>message</code>.
         String message = null;
@@ -172,6 +187,7 @@ public class ClientListenerThread extends Thread {
                                     }
                                     if (foundGame != null) {
                                         if (messageSplit.length > 2) {
+                                            boolean threadCreated = false;
                                             if (!Server.currentlyThreaded.contains(foundGame.getGameId())) {
 
                                                 // Color-Selection
@@ -181,183 +197,227 @@ public class ClientListenerThread extends Thread {
                                                     System.out.println("Starting COLORThread.");
                                                     Thread colorThread = new ColorThread(user, foundGame, messageSplit[3]);
                                                     colorThread.start();
+                                                    threadCreated = true;
                                                 }
 
                                                 // Starting a Game
                                                 // A new StartThread is started with the User and the GameId as Data.
-                                                if (messageSplit[2].equals("START")) {
+                                                else if (messageSplit[2].equals("START")) {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     System.out.println("Starting STARTThread.");
                                                     Thread startThread = new StartThread(user, foundGame);
                                                     startThread.start();
+                                                    threadCreated = true;
                                                 }
 
                                                 // Trading with Opponents
                                                 // A new TradeThread is started with the User, the GameId and the Trade-Message as Data.
-                                                if (messageSplit[2].equals("TRADE")) {
+                                                else if (messageSplit[2].equals("TRADE")) {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     Thread tradeThread = new TradeThread(user, foundGame, messageSplit[3]);
                                                     tradeThread.start();
-                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
+                                                    threadCreated = true;
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());  // TODO: has to be called inside the created thread.
                                                 }
 
                                                 // Answering to a Trade
                                                 // A new TradeAnswerThread is started with the User, the GameId and the Answer as Data.
-                                                if (messageSplit[2].equals("TRADEANSWER")) {
+                                                else if (messageSplit[2].equals("TRADEANSWER")) {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     Thread tradeAnswerThread = new TradeAnswerThread(user, foundGame, messageSplit[3]);
                                                     tradeAnswerThread.start();
-                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
+                                                    threadCreated = true;
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());  // TODO: has to be called inside the created thread.
                                                 }
 
                                                 // Trading with the Bank
                                                 // A new BankThread is started with the User, the GameId and the Trade-Message as Data.
-                                                if (messageSplit[2].equals("BANK")) {
+                                                else if (messageSplit[2].equals("BANK")) {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     Thread bankThread = new BankThread(user, foundGame, messageSplit[3]);
                                                     bankThread.start();
-                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
+                                                    threadCreated = true;
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());  // TODO: has to be called inside the created thread.
                                                 }
 
                                                 // Trading over a Port
                                                 // A new PortThread is started with the User, the GameId and the Trade-Message as Data.
-                                                if (messageSplit[2].equals("PORT")) {
+                                                else if (messageSplit[2].equals("PORT")) {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     Thread portThread = new PortThread(user, foundGame, messageSplit[3]);
                                                     portThread.start();
-                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
+                                                    threadCreated = true;
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());  // TODO: has to be called inside the created thread.
                                                 }
 
                                                 // Answer for a Trade
                                                 // A new TradeAnswerThread is started with the User, the GameId and the Trade-Answer as Data.
-                                                if (messageSplit[2].equals("ANSWER")) {
+                                                else if (messageSplit[2].equals("ANSWER")) {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     Thread tradeanswerThread = new TradeAnswerThread(user, foundGame, messageSplit[3]);
                                                     tradeanswerThread.start();
-                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
+                                                    threadCreated = true;
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());  // TODO: has to be called inside the created thread.
                                                 }
 
                                                 // Buying a DevCard
                                                 // A new BuyCardThread is started with the User and the GameId as Data.
-                                                if (messageSplit[2].equals("BUYCARD")) {
+                                                else if (messageSplit[2].equals("BUYCARD")) {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     System.out.println("Starting BUYCARDThread.");
                                                     Thread buyCadThread = new BuyCardThread(user, foundGame);
                                                     buyCadThread.start();
-                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
+                                                    threadCreated = true;
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());  // TODO: has to be called inside the created thread.
                                                 }
 
                                                 // Playing a Knight Card
-                                                // A new PlayKnightThread is started with the User, the GameId and the .. as Data.
-                                                // TODO: comment
-                                                if (messageSplit[2].equals("PLAYKNIGHT")) {
+                                                // A new PlayKnightThread is started with the User, the GameId and the id of the Tile as Data.
+                                                else if (messageSplit[2].equals("PLAYKNIGHT")) {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
-                                                    Thread playKnightThread = new PlayKnightThread(user, foundGame, messageSplit[3]);
-                                                    playKnightThread.start();
-                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
+                                                    System.out.println("Starting ThiefThread");
+                                                    Thread thiefThread = new ThiefThread(user, foundGame, messageSplit[3], "CARD");
+                                                    thiefThread.start();
+                                                    threadCreated = true;
                                                 }
 
                                                 // Playing a Monopol Card
                                                 // A new PlayMonopolThread is started with the User, the GameId and the desired Ressource as Data.
-                                                if (messageSplit[2].equals("PLAYMONOPOL")) {
+                                                else if (messageSplit[2].equals("PLAYMONOPOL")) {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     Thread playMonopolThread = new PlayMonopolThread(user, foundGame, messageSplit[3]);
                                                     playMonopolThread.start();
-                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
+                                                    threadCreated = true;
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());  // TODO: has to be called inside the created thread.
                                                 }
 
                                                 // Playing a Invention Card
                                                 // A new PlayInventionThread is started with the User, the GameId and the desired Ressource as Data.
-                                                if (messageSplit[2].equals("PLAYINVENTION")) {
+                                                else if (messageSplit[2].equals("PLAYINVENTION")) {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     Thread playInventionThread = new PlayInventionThread(user, foundGame, messageSplit[3]);
                                                     playInventionThread.start();
-                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
+                                                    threadCreated = true;
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());  // TODO: has to be called inside the created thread.
                                                 }
 
                                                 // Playing a BuildStreet Card
                                                 // A new BuildRoadThread is started with the User, the GameId, the Index of the Edge,
                                                 // where the Player wants to build a Road and the identifier CARD as Data.
-                                                if (messageSplit[2].equals("PLAYBUILDSTREET")) {
+                                                else if (messageSplit[2].equals("PLAYBUILDSTREET")) {
                                                     int edgeIndex = Integer.parseInt(messageSplit[3]);
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     System.out.println("Starting BUILDROADThread.");
                                                     Thread brThread = new BuildRoadThread(user, foundGame, edgeIndex, "CARD");
                                                     brThread.start();
-                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
+                                                    threadCreated = true;
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());  // TODO: has to be called inside the created thread.
                                                 }
 
                                                 // Going on to the next Player
                                                 // A new NextThread is started with the User and the GameId as Data.
-                                                if (messageSplit[2].equals("NEXT")) {
+                                                else if (messageSplit[2].equals("NEXT")) {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     Thread nextThread = new NextThread(user, foundGame);
                                                     nextThread.start();
-                                                    Server.currentlyThreaded.remove(foundGame.getGameId());
+                                                    threadCreated = true;
+                                                    Server.currentlyThreaded.remove(foundGame.getGameId());  // TODO: has to be called inside the created thread.
                                                 }
 
                                                 // Building a Settlement
                                                 // A new BuildSettlementThread is started with the User, the GameId, the Index of the Knot,
-                                                // where the Player wants to build a Settlement as Data.
-                                                if (messageSplit[2].equals("BUILDSETTLEMENT")) {
+                                                // where the Player wants to build a settlement as Data.
+                                                else if (messageSplit[2].equals("BUILDSETTLEMENT")) {
                                                     int knotIndex = Integer.parseInt(messageSplit[3]);
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     System.out.println("Starting BUILDSETTLEMENTThread.");
                                                     Thread bsThread = new BuildSettlementThread(user, foundGame, knotIndex);
                                                     bsThread.start();
+                                                    threadCreated = true;
                                                 }
 
                                                 // Building a Road
                                                 // A new BuildRoadThread is started with the User, the GameId, the Index of the Edge,
-                                                // where the Player wants to build a Road as Data.
-                                                if (messageSplit[2].equals("BUILDROAD")) {
+                                                // where the Player wants to build a road as Data.
+                                                else if (messageSplit[2].equals("BUILDROAD")) {
                                                     int edgeIndex = Integer.parseInt(messageSplit[3]);
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     System.out.println("Starting BUILDROADThread.");
                                                     Thread brThread = new BuildRoadThread(user, foundGame, edgeIndex, " ");
                                                     brThread.start();
+                                                    threadCreated = true;
                                                 }
 
                                                 // Building a City
                                                 // A new BuildCityThread is started with the User, the GameId, the Index of the Knot,
-                                                // where the Player wants to build a City as Data.
-                                                if (messageSplit[2].equals("BUILDCITY")) {
+                                                // where the Player wants to build a city as Data.
+                                                else if (messageSplit[2].equals("BUILDCITY")) {
                                                     int knotIndex = Integer.parseInt(messageSplit[3]);
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     System.out.println("Starting BUILDCITYThread.");
                                                     Thread bcThread = new BuildCityThread(foundGame, user, knotIndex);
                                                     bcThread.start();
+                                                    threadCreated = true;
                                                 }
 
                                                 // Dicing
                                                 // A new ResourceAllocationThread is started with the User, the GameId
                                                 // and the diced Value as Data.
-                                                if (messageSplit[2].equals("DICEVALUE")) {
+                                                else if (messageSplit[2].equals("DICEVALUE")) {
                                                     int diceValue = Integer.parseInt(messageSplit[3]);
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     System.out.println("Starting DICEVALUEThread");
                                                     Thread rAThread = new ResourceAllocationThread(user, foundGame, diceValue);
                                                     rAThread.start();
+                                                    threadCreated = true;
                                                 }
-
-
-                                                // TODO: Implement Stealing
-                                                // TODO: Implement More DevCards?
-
-                                                if(messageSplit[2].equals("THIEF") && messageSplit.length > 3){
+                                                // Moving the Thief
+                                                // A new ThiefThread is started wirh the user, the game, the TileId and an empty cardstring
+                                                else if(messageSplit[2].equals("THIEF") && messageSplit.length > 3){
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
                                                     System.out.println("Starting ThiefThread");
-                                                    Thread thiefThread = new ThiefThread(user, foundGame, messageSplit[3]);
+                                                    Thread thiefThread = new ThiefThread(user, foundGame, messageSplit[3], " ");
                                                     thiefThread.start();
+                                                    threadCreated = true;
                                                 }
 
 
                                             }
-
                                             /*
-                                             * TODO: This area is for actions,  that do not directly change the GameSession
-                                             * Implement Cheating
+                                             * This area is for actions,  that do not directly change the GameSession
                                              */
+                                            // Creating Cheat Request
+                                            // A new CheatThread is started with the user, the game, the user to be stolen from
+                                            // and the resource to be stolen
+                                            if(messageSplit[2].equals("CHEAT") && messageSplit.length > 4){
+                                                System.out.println("Starting CheatThread.");
+                                                Thread cheatThread = new CheatThread(user,foundGame,messageSplit[3],messageSplit[4]);
+                                                cheatThread.start();
+                                                threadCreated = true;
+                                            }
+                                            // Cheat Reveal
+                                            // A new RevealThread is started with the user, the game, the cheating userId
+                                            // and the guessed stolen resource
+                                            else if(messageSplit[2].equals("REVEAL") && messageSplit.length > 4){
+                                                System.out.println("Starting RevealThread.");
+                                                Thread revealThread = new RevealThread(user,foundGame,messageSplit[3],messageSplit[4]);
+                                                revealThread.start();
+                                                threadCreated = true;
+                                            }
+                                            // Counter Cheat
+                                            // A new CounterThread is started with the user, the game, the cheating userId
+                                            // and the to be stolen resource
+                                            else if(messageSplit[2].equals("COUNTER") && messageSplit.length > 4){
+                                                System.out.println("Starting CounterThread.");
+                                                Thread counterThread = new CounterThread(user,foundGame,messageSplit[3],messageSplit[4]);
+                                                counterThread.start();
+                                                threadCreated = true;
+                                            }
+
+                                            if(!threadCreated){
+                                                Thread errorThread = new ErrorThread(user.getConnectionOutputStream(),"Aktion konnte nicht durchgeführt werden.");
+                                                errorThread.start();
+                                            }
                                         }
                                     } else {
                                         // When the GameId is wrong, a new ErrorThread is started

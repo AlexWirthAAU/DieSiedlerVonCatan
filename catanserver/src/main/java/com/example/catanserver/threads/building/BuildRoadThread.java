@@ -12,10 +12,10 @@ import com.example.catanserver.threads.SendToClient;
 /**
  * @author Alex Wirth
  * @author Christina Senger (edit)
+ * @author Fabian Schaffenrath (edit)
  */
 public class BuildRoadThread extends GameThread {
 
-    GameSession gameSession;
     int edgeIndex;
     int userID;
     private String card;
@@ -29,7 +29,6 @@ public class BuildRoadThread extends GameThread {
      */
     public BuildRoadThread(User user, GameSession game, int edgeIndex, String card) {
         super(user, game);
-        this.gameSession = game;
         this.userID = user.getUserId();
         this.edgeIndex = edgeIndex;
         this.card = card;
@@ -38,15 +37,33 @@ public class BuildRoadThread extends GameThread {
     /**
      * When card is "CARD" is executes the <code>buildRoadWithCard</code>
      * Method in <code>BuildRoad</code>. Else it executes the <code>updateGameSession</code>.
-     * It send the new GameSession broadcast.
+     * It broadcasts an updated GameSession and sends the endturn command to the user, as well as
+     * the begin turn command to the next user.
      */
     public void run() {
         if (card.equals("CARD")) {
-            BuildRoad.buildRoadWithCard(gameSession, edgeIndex, userID);
+            BuildRoad.buildRoadWithCard(game, edgeIndex, userID);
         } else {
-            BuildRoad.updateGameSession(gameSession, edgeIndex, userID);
+            BuildRoad.updateGameSession(game, edgeIndex, userID);
         }
-        SendToClient.sendGameSessionBroadcast(gameSession);
-        Server.currentlyThreaded.remove(gameSession.getGameId());
+        if(card.equals("CARD")) {
+            SendToClient.sendGameSessionBroadcast(game);
+            SendToClient.sendStringMessage(user, SendToClient.HEADER_ROLLED);
+        }
+        else {
+            if (!endTurn()) {
+                SendToClient.sendGameSessionBroadcast(game);
+                SendToClient.sendStringMessage(user, SendToClient.HEADER_ENDTURN);
+                User nextUser = Server.findUser(game.getCurr().getUserId());
+                if (nextUser != null) {
+                    if (!game.isInitialized()) {
+                        SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGININIT);
+                    } else {
+                        SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN);
+                    }
+                }
+            }
+        }
+        Server.currentlyThreaded.remove(game.getGameId());
     }
 }

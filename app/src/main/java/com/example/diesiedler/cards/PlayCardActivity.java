@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.catangame.Player;
 import com.example.diesiedler.R;
+import com.example.diesiedler.ThiefActivity;
 import com.example.diesiedler.building.BuildRoadActivity;
 import com.example.diesiedler.presenter.ClientData;
 
@@ -54,12 +55,14 @@ public class PlayCardActivity extends AppCompatActivity {
     }
 
     /**
-     * If the Button with the Text "Ritterkarte" is clicked, ...
+     * If the Button with the Text "Ritterkarte" is clicked, "CARD" is set as
+     * extra to the Intent and the ThiefActivity is started.
      *
      * @param view View to acces the Button
      */
     public void playKnight(View view) {
-        Intent intent = new Intent(this, PlayKnightActivity.class);
+        Intent intent = new Intent(this, ThiefActivity.class);
+        intent.putExtra("card", "CARD");
         startActivity(intent);
     }
 

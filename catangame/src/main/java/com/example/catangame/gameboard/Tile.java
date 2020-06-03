@@ -16,6 +16,7 @@ public class Tile implements Serializable {
 
     /**
      * Constructor - Sets the Start-Values
+     *
      * @param Tid gives each Tile a id
      */
     public Tile(int Tid) {
@@ -94,6 +95,13 @@ public class Tile implements Serializable {
 
     }
 
+    public boolean isThief() {
+        return isThief;
+    }
+
+    public void setThief(boolean thief) {
+        this.isThief = thief;
+    }
 
 
     private void setDiceValue() {
@@ -148,14 +156,6 @@ public class Tile implements Serializable {
                 break;
             }
         }
-    }
-
-    public boolean isThief() {
-        return isThief;
-    }
-
-    public void setThief(boolean thief) {
-        this.isThief = true;
     }
 }
 

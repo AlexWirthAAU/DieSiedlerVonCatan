@@ -31,9 +31,13 @@ public class GameBoardClickListener {
                 String pathType = getPathType(richPath);
                 if (pathType.contains("tile")) {
                     //TODO: What should happen if Tile is clicked:
-                    if(activity.equals("MoveThief")){
+                    if(activity.equals("MoveThief") || activity.equals("MoveThiefCARD")){
                         toSend[0] = richPath.getName();
-                        new ThiefActivity().clicked(toSend[0]);
+                        ThiefActivity thiefActivity = new ThiefActivity();
+                        if(activity.equals("MoveThiefCARD")){
+                            thiefActivity.card = "CARD";
+                        }
+                        thiefActivity.clicked(toSend[0]);
                     }
                     toSend[0] = richPath.getName();
 

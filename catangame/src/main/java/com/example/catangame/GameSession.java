@@ -27,12 +27,15 @@ public class GameSession implements Serializable {
     private LinkedList<Knot> settlements;
     private LinkedList<Knot> cities;
     private LinkedList<Edge> roads; // Lists of Structures
-    private Player curr;
     private int currPlayer; // current Player and his index
     private ArrayList<DevCard> devCards; // List of DevCards
     private String message; // optional Message to alert after an Action
     private boolean isCardBuild; // states whether a BuildRoad is started playing a Card
     private boolean isTradeOn; // states whether a Trade is active
+    private int knightPowerCount; // Number of Knight-Cards the Player with the greatest Knightpower has
+    private Player knightPowerOwner; // Player which has the greatest Knightpower
+    private LinkedList<Grab> grabs; // Running Cheating requests
+    private boolean isInitialized;
 
     /**
      * Constructor - Gives the Game the next ID from GameCounter,
@@ -48,6 +51,10 @@ public class GameSession implements Serializable {
         cities = new LinkedList<>();
         currPlayer = 0;
         this.devCards = new DevCardStack().getDevCardStack();
+        this.grabs = new LinkedList<>();
+        isInitialized = false;
+        this.knightPowerCount = 0;
+        this.setKnightPowerOwner(null);
     }
 
     // Getter
@@ -95,10 +102,6 @@ public class GameSession implements Serializable {
         return players.get(currPlayer);
     }
 
-    public int getCurrPlayer() {
-        return currPlayer;
-    }
-
     public ArrayList<DevCard> getDevCards() {
         return devCards;
     }
@@ -107,29 +110,28 @@ public class GameSession implements Serializable {
         return this.currTrade;
     }
 
-    public String getMessage() {
-        return this.message;
+    public boolean isTradeOn() {
+        return this.isTradeOn;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public String getMessage() {
+        return this.message;
     }
 
     public boolean isCardBuild() {
         return this.isCardBuild;
     }
 
-    public void setCardBuild(boolean isCardBuild) {
-        this.isCardBuild = isCardBuild;
+    public int getKnightPowerCount() {
+        return this.knightPowerCount;
     }
 
-    public void addSettlement(Knot settlement) {
-        settlements.add(settlement);
+    public void setKnightPowerCount(int knightPowerCount) {
+        this.knightPowerCount = knightPowerCount;
     }
 
-    public void addCity(Knot settlement) {
-        settlements.remove(settlement);
-        cities.add(settlement);
+    public boolean isInitialized() {
+        return isInitialized;
     }
 
     // Setters
@@ -141,8 +143,42 @@ public class GameSession implements Serializable {
         this.players.add(player);
     }
 
-    public boolean isTradeOn() {
-        return this.isTradeOn;
+    public void setTrade(Trade trade) {
+        this.currTrade = trade;
+    }
+
+    public void setIsTradeOn(boolean isTradeOn) {
+        this.isTradeOn = isTradeOn;
+    }
+
+    public Player getKnightPowerOwner() {
+        return this.knightPowerOwner;
+    }
+
+    public void setKnightPowerOwner(Player knightPowerOwner) {
+        this.knightPowerOwner = knightPowerOwner;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setCardBuild(boolean isCardBuild) {
+        this.isCardBuild = isCardBuild;
+    }
+
+    public void setCurrPlayer(int index) {
+        this.currPlayer = index;
+    }
+
+    public void setDevCards(ArrayList<DevCard> devCards) {
+        this.devCards = devCards;
+    }
+
+    ;
+
+    public void setInitialized(boolean initialized) {
+        isInitialized = initialized;
     }
 
     // add Structures
@@ -150,12 +186,43 @@ public class GameSession implements Serializable {
         roads.add(road);
     }
 
-    public void setTrade(Trade trade) {
-        this.currTrade = trade;
+    public void addSettlement(Knot settlement) {
+        settlements.add(settlement);
     }
 
-    public void setIsTradeOn(boolean isTradeOn) {
-        this.isTradeOn = isTradeOn;
+    public void addCity(Knot settlement) {
+        settlements.remove(settlement);
+        cities.add(settlement);
+    }
+
+    public LinkedList<Grab> getGrabs() {
+        return grabs;
+    }
+
+    public Grab getGrabOf(int userId){
+        for (Grab grab:this.grabs) {
+            if(grab.getGrabbed().getUserId() == userId){
+                return grab;
+            }
+        }
+        return null;
+    }
+
+    public Grab getGrabFrom(int userId){
+        for (Grab grab:this.grabs) {
+            if(grab.getGrabber().getUserId() == userId){
+                return grab;
+            }
+        }
+        return null;
+    }
+
+    public void addGrab(Grab grab){
+        grabs.add(grab);
+    }
+
+    public void removeGrab(Grab grab){
+        grabs.remove(grab);
     }
 
     /**
@@ -167,6 +234,13 @@ public class GameSession implements Serializable {
         } else{
             currPlayer++;
         }
-        curr = players.get(currPlayer);
+    }
+
+    public void previousPlayer() {
+        if (currPlayer == 0) {
+            currPlayer = players.size() - 1;
+        } else {
+            currPlayer--;
+        }
     }
 }

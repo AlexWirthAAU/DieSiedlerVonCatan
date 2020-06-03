@@ -3,15 +3,17 @@ package com.example.catanserver.threads.trading;
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catangame.Trade;
+import com.example.catanserver.Server;
 import com.example.catanserver.User;
+import com.example.catanserver.businessLogic.model.trading.Answer;
 import com.example.catanserver.threads.GameThread;
 import com.example.catanserver.threads.SendToClient;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Christina Senger
+ * @author Fabian Schaffenrath (edit)
  * <p>
  * This Thread handles the Answers of the Players to the current active Trade.
  */
@@ -46,98 +48,19 @@ public class TradeAnswerThread extends GameThread {
      * accepted is set as Trading-Partner.
      */
     public void run() {
-        if (answerStr.equals("accepted")) {
-            trade.addAnsweredPlayer(currPlayer);
-            trade.addAnswers(currPlayer, true);
-        } else {
-            trade.addAnsweredPlayer(currPlayer);
-            trade.addAnswers(currPlayer, false);
-        }
 
-        System.out.println(trade.getAnsweredPlayers().size() + " " + trade.getAnswers());
+        Answer.addAnsweredPlayer(answerStr, trade, currPlayer);
 
         if (trade.getAnsweredPlayers().size() == trade.getPotentialTradingPartners().size()) {
 
-            for (Player p : trade.getAnsweredPlayers()) {
-                if (trade.getAnswers().get(p)) {
-                    this.tradingPartner = p;
-                    break;
-                }
+            List<Player> toSend = Answer.setAnswerList(this.tradingOfferer, trade);
+
+            if (toSend.size() == 1) {
+                distribute(toSend, "Leider keine Handelspartner");
+            } else {
+                distribute(toSend, "Handel zwischen " + toSend.get(0).getDisplayName() + " und " + toSend.get(1).getDisplayName() + " durchgefuehrt");
             }
-
-            setAnswerList();
         }
-    }
-
-    /**
-     * When no Trading-Partner could be found, the current Player and all potential
-     * Trading-Partners are added to the List of Player, to which a Message should be send.
-     * The Answer-Message is set and distributed to all Player in the List.
-     *
-     * Else, the current Player and the Player who first answered with accept are added
-     * to the to the List of Player, to which a Message should be send.
-     * The Ressources are exchanged, the Answer-Message is set and distributed to all Player in the List.
-     */
-    private void setAnswerList() {
-
-        List<Player> toSend = new ArrayList<>();
-
-        if (tradingPartner == null) {
-            toSend.add(tradingOfferer);
-
-            distribute(toSend, "Leider keine Handelspartner");
-
-        } else {
-
-            System.out.println(tradingOfferer + " offer " + tradingPartner + " partner");
-
-            toSend.add(tradingOfferer);
-            toSend.add(tradingPartner);
-
-            System.out.println(tradingOfferer.getInventory().getAllSupplies() + " curr ");
-            System.out.println(tradingPartner.getInventory().getAllSupplies());
-            exchangeRessources();
-
-            System.out.println("Handel durchgefuehrt");
-            System.out.println("Handel zwischen " + tradingOfferer.getDisplayName() + " und " + tradingPartner.getDisplayName() + " durchgefuehrt");
-            distribute(toSend, "Handel zwischen " + tradingOfferer.getDisplayName() + " und " + tradingPartner.getDisplayName() + " durchgefuehrt");
-        }
-    }
-
-    /**
-     * The offered Ressources are removed from the current Players Inventory
-     * and added to the Trading Partners Inventory.
-     * The desired Ressources are added to the current Players Inventory
-     * and removed from the Trading Partners Inventory.
-     */
-    private void exchangeRessources() {
-
-        tradingOfferer.getInventory().addWood(trade.getWoodGet());
-        tradingOfferer.getInventory().addWool(trade.getWoolGet());
-        tradingOfferer.getInventory().addWheat(trade.getWheatGet());
-        tradingOfferer.getInventory().addOre(trade.getOreGet());
-        tradingOfferer.getInventory().addClay(trade.getClayGet());
-
-        tradingOfferer.getInventory().removeWood(trade.getWoodGive());
-        tradingOfferer.getInventory().removeWool(trade.getWoolGive());
-        tradingOfferer.getInventory().removeWheat(trade.getWheatGive());
-        tradingOfferer.getInventory().removeOre(trade.getOreGive());
-        tradingOfferer.getInventory().removeClay(trade.getClayGive());
-
-        tradingPartner.getInventory().addWood(trade.getWoodGive());
-        tradingPartner.getInventory().addWool(trade.getWoolGive());
-        tradingPartner.getInventory().addWheat(trade.getWheatGive());
-        tradingPartner.getInventory().addOre(trade.getOreGive());
-        tradingPartner.getInventory().addClay(trade.getClayGive());
-
-        tradingPartner.getInventory().removeWood(trade.getWoodGet());
-        tradingPartner.getInventory().removeWool(trade.getWoolGet());
-        tradingPartner.getInventory().removeWheat(trade.getWheatGet());
-        tradingPartner.getInventory().removeOre(trade.getOreGet());
-        tradingPartner.getInventory().removeClay(trade.getClayGet());
-
-        System.out.println(tradingOfferer.getInventory().getAllSupplies() + " curr ");
-        System.out.println(tradingPartner.getInventory().getAllSupplies());
     }
 
     /**
@@ -151,5 +74,48 @@ public class TradeAnswerThread extends GameThread {
         game.setIsTradeOn(false);
         game.nextPlayer();
         SendToClient.sendTradeMessageBroadcast(playersToSend, mess, game);
+        SendToClient.sendGameSessionBroadcast(game);
     }
+
+//    /**
+//     * Sends the Trade-Message to the tradeOfferer and, if present, to the trading partner.
+//     * Sends the endturn command to the TradeOfferer with a message attached and, if present, a
+//     * trade command with the same message attached to the trading Partner. If the Trading Partner
+//     * is also the nextPlayer, the begin turn command is sent instead. Otherwise the begin turn
+//     * command is sent to the next player.
+//     * @param mess Message to send
+//     */
+//    private void distribute(String mess){
+//        game.setTrade(null);
+//        game.setIsTradeOn(false);
+//        game.nextPlayer();
+//        if(!endTurn()) {
+//
+//            SendToClient.sendGameSessionBroadcast(game);
+//            SendToClient.sendStringMessage(Server.findUser(tradingOfferer.getUserId()), SendToClient.HEADER_ENDTURN + " " + mess);
+//
+//            if (tradingPartner != null) {
+//                if (game.getCurr().equals(tradingPartner)) {
+//                    User nextUser = Server.findUser(game.getCurr().getUserId());
+//                    if (nextUser != null) {
+//                        SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN + " " + mess);
+//                    }
+//                } else {
+//                    User tradingPartnerUser = Server.findUser(game.getCurr().getUserId());
+//                    if (tradingPartnerUser != null) {
+//                        SendToClient.sendStringMessage(tradingPartnerUser, SendToClient.HEADER_TRADECOMPLETE + " " + mess);
+//                    }
+//                    User nextUser = Server.findUser(game.getCurr().getUserId());
+//                    if (nextUser != null) {
+//                        SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN);
+//                    }
+//                }
+//            } else {
+//                User nextUser = Server.findUser(game.getCurr().getUserId());
+//                if (nextUser != null) {
+//                    SendToClient.sendStringMessage(nextUser, SendToClient.HEADER_BEGINTURN);
+//                }
+//            }
+//        }
+//    }
 }

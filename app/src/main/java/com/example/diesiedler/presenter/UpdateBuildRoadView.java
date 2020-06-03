@@ -43,16 +43,35 @@ public class UpdateBuildRoadView {
 
     public static LinkedList<Edge> possibleEdges(GameSession gs, String card) {
         LinkedList<Edge> possibleEdges = new LinkedList<>();
-        Player p = gs.getPlayer(gs.getCurrPlayer());
+        Player p = gs.getPlayer(ClientData.userId);
 
 
         /**
          * Checks if the player has enough resources.
          * If the total amount of roads he has, it means it is still the beginning of the game and the player can build for free.
          */
-        if (p.getInventory().getWood() >= 1 && p.getInventory().getClay() >= 1 || p.getInventory().getRoads().size() < 2 || card != null) {
-            for (Edge e : gs.getGameboard().getEdges()
-            ) {
+
+        if (p.getInventory().getRoads().size() == 0) {
+            for (Edge e : gs.getGameboard().getEdges()) {
+                if (e.getPlayer() == null && e.getOne().equals(p.getInventory().getSettlements().get(0)) || e.getTwo().equals(p.getInventory().getSettlements().get(0))) {
+                    possibleEdges.add(e);
+                }
+            }
+            return possibleEdges;
+        }
+
+
+        if (p.getInventory().getRoads().size() == 1) {
+            for (Edge e : gs.getGameboard().getEdges()) {
+                if (e.getPlayer() == null && e.getOne().equals(p.getInventory().getSettlements().get(1)) || e.getTwo().equals(p.getInventory().getSettlements().get(1))) {
+                    possibleEdges.add(e);
+                }
+            }
+            return possibleEdges;
+        }
+
+        if (p.getInventory().getWood() >= 1 && p.getInventory().getClay() >= 1 || card != null) {
+            for (Edge e : gs.getGameboard().getEdges()) {
                 /**
                  * A road can either be built next to a settlement or at the end of a road he already owns.
                  */
@@ -62,6 +81,7 @@ public class UpdateBuildRoadView {
             }
             return possibleEdges;
         }
+
         return null;
     }
 

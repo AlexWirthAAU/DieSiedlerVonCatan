@@ -23,10 +23,10 @@ public class BuildSettlementTest {
         player = new Player("Alex", 1);
         toBeSettled = gameSession.getGameboard().getKnots()[10];
         gameSession.setPlayer(player);
-        player.getInventory().addWheat(1);
-        player.getInventory().addClay(1);
-        player.getInventory().addWood(1);
-        player.getInventory().addWool(1);
+        player.getInventory().addWheat(2);
+        player.getInventory().addClay(2);
+        player.getInventory().addWood(2);
+        player.getInventory().addWool(2);
         playerInventory = player.getInventory();
     }
 

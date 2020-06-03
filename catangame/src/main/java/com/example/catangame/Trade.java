@@ -172,6 +172,10 @@ public class Trade implements Serializable {
     public void setAnswerMessage(String answerMessage) {
         this.answerMessage = answerMessage;
     }
+
+    public void setTradingPartner(Player tradingPartner) {
+        this.tradingPartner = tradingPartner;
+    }
 }
 
 
