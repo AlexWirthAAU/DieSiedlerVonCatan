@@ -29,6 +29,26 @@ public class MonopolTest {
         gameSession.setPlayer(player2);
         gameSession.setPlayer(player3);
         gameSession.setPlayer(player4);
+        player1.getInventory().setWood(1);
+        player1.getInventory().setWool(1);
+        player1.getInventory().setWheat(1);
+        player1.getInventory().setOre(1);
+        player1.getInventory().setClay(1);
+        player2.getInventory().setWood(1);
+        player2.getInventory().setWool(1);
+        player2.getInventory().setWheat(1);
+        player2.getInventory().setOre(1);
+        player2.getInventory().setClay(1);
+        player3.getInventory().setWood(1);
+        player3.getInventory().setWool(1);
+        player3.getInventory().setWheat(1);
+        player3.getInventory().setOre(1);
+        player3.getInventory().setClay(1);
+        player4.getInventory().setWood(1);
+        player4.getInventory().setWool(1);
+        player4.getInventory().setWheat(1);
+        player4.getInventory().setOre(1);
+        player4.getInventory().setClay(1);
     }
 
     @After

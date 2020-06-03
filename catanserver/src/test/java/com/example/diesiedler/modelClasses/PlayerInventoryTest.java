@@ -14,6 +14,11 @@ public class PlayerInventoryTest {
     @Before
     public void setUp() {
         playerInventory = new PlayerInventory();
+        playerInventory.setWood(1);
+        playerInventory.setWool(1);
+        playerInventory.setWheat(1);
+        playerInventory.setOre(1);
+        playerInventory.setClay(1);
     }
 
     @After
@@ -237,6 +242,7 @@ public class PlayerInventoryTest {
 
     @Test
     public void canTradeOption() {
+        playerInventory.addWood(1);
         playerInventory.checkPlayerOptions(0);
         Assert.assertTrue(playerInventory.canTrade);
     }
