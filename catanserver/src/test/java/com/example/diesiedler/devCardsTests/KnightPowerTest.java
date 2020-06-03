@@ -66,7 +66,6 @@ public class KnightPowerTest {
         Assert.assertEquals(0, playerInventory4.getVictoryPoints());
         Assert.assertEquals(0, gameSession.getKnightPowerCount());
         Assert.assertNull(gameSession.getKnightPowerOwner());
-        Assert.assertEquals(0, gameSession.getCurrPlayer());
     }
 
     @Test
