@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 public class TradeTest {
+
+    StartTrade startTrade;
     GameSession gameSession;
     Player player1;
     Player player2;
@@ -23,6 +25,7 @@ public class TradeTest {
 
     @Before
     public void setUp() {
+        startTrade = new StartTrade();
         gameSession = new GameSession();
         player1 = new Player("Test", 0);
         gameSession.setPlayer(player1);
@@ -56,6 +59,7 @@ public class TradeTest {
 
     @After
     public void tearDown() {
+        startTrade = null;
         gameSession = null;
         player1 = null;
         player2 = null;
@@ -84,7 +88,7 @@ public class TradeTest {
         player1.getInventory().removeAllWheat();
         player1.getInventory().removeAllOre();
         player1.getInventory().removeAllClay();
-        Assert.assertFalse(StartTrade.checkTrade(map, player1));
+        Assert.assertFalse(startTrade.checkTrade(map, player1));
     }
 
     @Test
@@ -95,7 +99,7 @@ public class TradeTest {
         map.put("Weizen", 0);
         map.put("Erz", 0);
         map.put("Lehm", 0);
-        Assert.assertFalse(StartTrade.checkTrade(map, player1));
+        Assert.assertFalse(startTrade.checkTrade(map, player1));
     }
 
     @Test
@@ -107,7 +111,7 @@ public class TradeTest {
         map.put("Weizen", 0);
         map.put("Erz", 0);
         map.put("Lehm", 0);
-        Assert.assertTrue(StartTrade.checkTrade(map, player1));
+        Assert.assertTrue(startTrade.checkTrade(map, player1));
     }
 
     @Test
@@ -131,7 +135,7 @@ public class TradeTest {
 
         message.append(player1.getDisplayName()).append(" bietet ").append("2 Holz und moechte dafuer 2 Holz, 1 Erz, ");
 
-        Assert.assertEquals(message.toString(), StartTrade.buildMessage(player1, map, map2));
+        Assert.assertEquals(message.toString(), startTrade.buildMessage(player1, map, map2));
     }
 
     @Test
@@ -150,15 +154,14 @@ public class TradeTest {
         tradeMap.append("/Erz/").append(0);
         tradeMap.append("/Lehm/").append(0);
 
-        Assert.assertEquals(0, StartTrade.getOffered().size());
-        Assert.assertEquals(0, StartTrade.getDesired().size());
+        Assert.assertEquals(0, startTrade.getOffered().size());
+        Assert.assertEquals(0, startTrade.getDesired().size());
 
-        StartTrade.setTradeData(tradeMap.toString());
+        startTrade.setTradeData(tradeMap.toString());
 
-        Assert.assertEquals(5, StartTrade.getOffered().size());
-        Assert.assertEquals(5, StartTrade.getDesired().size());
+        Assert.assertEquals(5, startTrade.getOffered().size());
+        Assert.assertEquals(5, startTrade.getDesired().size());
 
-        Assert.assertEquals(0, StartTrade.getOffered().size());
     }
 
     @Test
@@ -171,7 +174,7 @@ public class TradeTest {
         map.put("Erz", 1);
         map.put("Lehm", 1);
 
-        Assert.assertEquals(3, StartTrade.checkAndSetTradingPartners(gameSession, map, player1).size());
+        Assert.assertEquals(3, startTrade.checkAndSetTradingPartners(gameSession, map, player1).size());
     }
 
     @Test
@@ -186,7 +189,7 @@ public class TradeTest {
         map.put("Erz", 1);
         map.put("Lehm", 1);
 
-        Assert.assertEquals(2, StartTrade.checkAndSetTradingPartners(gameSession, map, player1).size());
+        Assert.assertEquals(2, startTrade.checkAndSetTradingPartners(gameSession, map, player1).size());
     }
 
     @Test
@@ -200,7 +203,7 @@ public class TradeTest {
         map.put("Erz", 1);
         map.put("Lehm", 1);
 
-        Assert.assertEquals(1, StartTrade.checkAndSetTradingPartners(gameSession, map, player1).size());
+        Assert.assertEquals(1, startTrade.checkAndSetTradingPartners(gameSession, map, player1).size());
     }
 
     @Test
@@ -213,7 +216,7 @@ public class TradeTest {
         map.put("Erz", 1);
         map.put("Lehm", 1);
 
-        Assert.assertEquals(0, StartTrade.checkAndSetTradingPartners(gameSession, map, player1).size());
+        Assert.assertEquals(0, startTrade.checkAndSetTradingPartners(gameSession, map, player1).size());
     }
 
     @Test
@@ -237,7 +240,7 @@ public class TradeTest {
         map2.put("Erz", 1);
         map2.put("Lehm", 0);
 
-        StartTrade.setTrade(map, map2, player1, list, "TestMessage", gameSession);
+        startTrade.setTrade(map, map2, player1, list, "TestMessage", gameSession);
         Assert.assertTrue(gameSession.isTradeOn());
         Assert.assertEquals(2, gameSession.getTrade().getPotentialTradingPartners().size());
         Assert.assertEquals(0, gameSession.getTrade().getCurrPlayer().getUserId());

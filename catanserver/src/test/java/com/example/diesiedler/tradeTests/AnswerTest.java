@@ -154,18 +154,13 @@ public class AnswerTest {
     }
 
     @Test
-    public void setAnswerListNull() {
-
-        Assert.assertEquals(1, Answer.trade(player1, trade).size());
-        Assert.assertEquals(0, Answer.trade(player1, trade).get(0).getUserId());
+    public void tradeWithoutPartner(){
+        Assert.assertFalse(Answer.trade(player1,trade));
     }
 
     @Test
-    public void setAnswerList() {
-
+    public void tradeWithPartner(){
         Answer.addAnsweredPlayer("accepted", trade, player2);
-
-        Assert.assertEquals(2, Answer.trade(player1, trade).size());
-        Assert.assertEquals(1, Answer.trade(player1, trade).get(1).getUserId());
+        Assert.assertTrue(Answer.trade(player1,trade));
     }
 }
