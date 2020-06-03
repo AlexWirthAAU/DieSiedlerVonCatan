@@ -104,7 +104,6 @@ public class GameHandler extends Handler {
             else if(((String) msg.obj).startsWith("CHEATED")){
                 showAlertWithChooseActionActivityCall("Diebstahl",message);
             }
-
             else if(((String) msg.obj).startsWith("TRADECOMPLETE")){
                 showAlert("Handel",message);
             }

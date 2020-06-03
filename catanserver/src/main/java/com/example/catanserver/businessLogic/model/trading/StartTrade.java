@@ -16,8 +16,8 @@ import java.util.Map;
  */
 public class StartTrade {
 
-    private static Map<String, Integer> offer = new HashMap<>(); // Map of the offered Ressources
-    private static Map<String, Integer> want = new HashMap<>(); // Map of the desired Ressources
+    private Map<String, Integer> offer = new HashMap<>(); // Map of the offered Ressources
+    private Map<String, Integer> want = new HashMap<>(); // Map of the desired Ressources
 
     /**
      * @param offer      Map with the offer Ressources
@@ -25,7 +25,7 @@ public class StartTrade {
      * @return true, when the Player <code>canTrade</code> and has
      * at least the number of offered Ressources, else false.
      */
-    public static boolean checkTrade(Map<String, Integer> offer, Player currPlayer) {
+    public boolean checkTrade(Map<String, Integer> offer, Player currPlayer) {
 
         if (!currPlayer.getInventory().canTrade) {
             return false;
@@ -45,7 +45,7 @@ public class StartTrade {
      * @param want       Map with the desired Ressources
      * @param currPlayer current Player
      */
-    public static List<Player> checkAndSetTradingPartners(GameSession game, Map<String, Integer> want, Player currPlayer) {
+    public List<Player> checkAndSetTradingPartners(GameSession game, Map<String, Integer> want, Player currPlayer) {
 
         List<Player> players = game.getPlayers();
         List<Player> potentialTradingPartners = new ArrayList<>();
@@ -76,7 +76,7 @@ public class StartTrade {
      *
      * @param tradeStr Trade-Offer sent from Client
      */
-    public static void setTradeData(String tradeStr) {
+    public void setTradeData(String tradeStr) {
 
         String[] trd = tradeStr.split("/");
 
@@ -104,19 +104,15 @@ public class StartTrade {
     /**
      * @return Map of the offered Ressources
      */
-    public static Map<String, Integer> getOffered() {
-        Map<String, Integer> ret = offer;
-        offer = new HashMap<>();
-        return ret;
+    public Map<String, Integer> getOffered() {
+        return offer;
     }
 
     /**
      * @return Map of the desired Ressources
      */
-    public static Map<String, Integer> getDesired() {
-        Map<String, Integer> ret = want;
-        want = new HashMap<>();
-        return ret;
+    public Map<String, Integer> getDesired() {
+        return want;
     }
 
 
@@ -129,7 +125,7 @@ public class StartTrade {
      * @param want       Map wih to desired Ressources
      * @return the StringBuilder as a String
      */
-    public static String buildMessage(Player currPlayer, Map<String, Integer> offer, Map<String, Integer> want) {
+    public String buildMessage(Player currPlayer, Map<String, Integer> offer, Map<String, Integer> want) {
 
         StringBuilder message = new StringBuilder();
 
@@ -163,7 +159,7 @@ public class StartTrade {
      * @param mess                     Trade-Message
      * @param gs                       current Game
      */
-    public static void setTrade(Map offer, Map want, Player currPlayer, List<Player> potentialTradingPartners, String mess, GameSession gs) {
+    public void setTrade(Map offer, Map want, Player currPlayer, List<Player> potentialTradingPartners, String mess, GameSession gs) {
         Trade trade = new Trade(offer, want, currPlayer, potentialTradingPartners, mess, gs);
         gs.setTrade(trade);
         gs.setIsTradeOn(true);

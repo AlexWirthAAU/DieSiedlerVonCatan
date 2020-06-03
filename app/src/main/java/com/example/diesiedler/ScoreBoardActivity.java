@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ScoreBoardActivity extends AppCompatActivity {
 
-    TextView knightPowerText = findViewById(R.id.knightpower);
+    TextView knightPowerText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scoreboard);
 
         ListView scoreList = (ListView) findViewById(R.id.scorelist);
+        knightPowerText = findViewById(R.id.knightpower);
 
         List<Player> playerList = ClientData.currentGame.getPlayers();
 
@@ -51,4 +52,6 @@ public class ScoreBoardActivity extends AppCompatActivity {
             knightPowerText.setText("Größte Rittermacht hat " + ClientData.currentGame.getKnightPowerOwner());
         }
     }
+
+    // TODO: Handler with update
 }
