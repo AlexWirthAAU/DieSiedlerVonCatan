@@ -66,7 +66,7 @@ public class TradeThread extends GameThread {
             potentialTradingPartners = StartTrade.checkAndSetTradingPartners(game, want, currPlayer);
 
             if (potentialTradingPartners.size() == 0) {
-                SendToClient.sendTradeMessage(user, "Keine Handelspartner");
+                SendToClient.sendStringMessage(user, "Keine Handelspartner");
                 game.nextPlayer();
                 SendToClient.sendGameSessionBroadcast(game);
             } else {
