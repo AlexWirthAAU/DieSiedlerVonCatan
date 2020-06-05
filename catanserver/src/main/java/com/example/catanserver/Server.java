@@ -38,7 +38,7 @@ public class Server {
             listenerSocket = new ServerSocket(SERVER_PORT);
             System.out.println("Server running on: " + listenerSocket.getInetAddress() + SERVER_PORT);
 
-            while(true){
+            while(true){//NOSONAR
                 caughtConnection = listenerSocket.accept();
                 if(caughtConnection != null){
                     System.out.println("Connection to " + caughtConnection.getInetAddress() + ":" + caughtConnection.getPort() + "(ListenerThread)");
@@ -46,7 +46,7 @@ public class Server {
                     Thread serverReaderThread = new ClientListenerThread(caughtConnection);
                     serverReaderThread.start();
                 }
-            }//NOSONAR
+            }
         }catch(IOException ex){
             System.err.println(ex.getMessage());
             System.err.println("Server could not be started!");
