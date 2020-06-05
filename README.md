@@ -57,12 +57,21 @@ Siedlungen können im Verlauf des Spieles zu Städten umgebaut werden. Städte w
 ### Würfeln
 Wenn ein Spieler an der Reihe ist, wird er aufgefordert zu würfeln. Dies passiert durch Schütteln seines Smartphones. Eine zufallsgenerierte Zahl wird dem Spieler angezeigt.
 Je nach Zahl werden Rohstoffe an jene Spieler verteilt, die Siedlungen bzw. Städte an den betroffenen Feldern haben. Siedlungen bringen eine Einheit des Rohstoffs, Städte zwei.
+Wird eine 7 gewürfelt, so werden keine Rohstoffe verteilt, sondern der würfelnde Spieler kann den Räuber auf ein anderes Rohstofffeld setzen.
 
 ### Räuber 
+Der Räuber belegt zu jeder Zeit eines der Rohstofffelder auf dem Spielfeld. Spieler, deren Siedlungen an dieses Rohstofffeld grenzen, erhalten aber keine Rohstoffe von diesem Feld.
 
 ### Schummeln
+Ein Spieler kann zu jeder Zeit versuchen, einem anderen Spieler einen Rohstoff zu stehlen. Dabei wählt er einen Spieler und danach einen Rohstoff aus. Der zu bestehlende Spieler hat während seines nächsten Zuges die Möglichkeit, diesen Diebstahlsversuch aufzudecken. Dabei muss er das Diebstahlsicon berühren und raten, welche seiner Rohstoffe gestohlen wird. Sollte der Spieler richtig raten, so darf er versuchen, einen Rohstoff von seinem Dieb zurückzustehlen. Außerdem muss der Dieb seinen nächsten Zug aussetzen. Ratet der Spieler falsch, so wird ihm am Ende seines Spielzuges der Rohstoff gestohlen.
+Gleichzeitig kann nur 1 Diebstahl an einem Spieler stattfinden.
 
 ### Netzwerk
+Die grundsätzliche Kommunikation über das Netzwerk erfolgt durch Command Identifier gesendet als Strings. Zusätzlich gibt es ein GameSession Objekt, dass alle Daten zu einem Spiel speichert und bei Änderungen ebenfalls übertragen wird.
+Server:
+Der Server verfügt über eine Endlossschleife, die auf neue Verbindungen reagiert. Wird eine neue Verbindung erkannt, so wird ein seperater Listener Thread gestartet, der auf Nachrichten dieser Verbindung reagiert. Bei jeder Nachricht wird überprüft, welche Aktion gewünscht ist und ob dafür alle nötigen Informationen/Vorraussetzungen erfüllt sind. Falsl ja wird ein entsprechender Logikthread aufgerufen, der die Aktion letztendlich ausführt und gegebenfalls Nachrichten an Clients zurücksendet. Wird kein Logikthread gestartet, so wird in der Grundverbindung eine Fehlermeldung zurückgesendet.
+Client:
+Sobald der Client den Wilkommensbildschirm verlässt, ist im Hintergrund eine Verbindung zum Server aufgebaut. Ein ListenerThread wartet dauerhaft auf neue Nachrichten des Servers. Selbst sendet der Client Nachrichten über einen seperaten Thread an den Server. Wird eine Nachricht vom Server erhalten, so werden entsprechende lokale Daten aktualisiert und der derzeitige Handler aufgerufen. Der Handler führt dann die Interface Operationen aus, die der Nachricht folgen sollen.
 
 ### Handeln
 Ein Spieler kann mit der Bank 4:1 handeln, sofern er von mindestens einem Rohstoff 4 oder mehr hat. Dazu wählt er den gewünschten und gebotenen Rohstoff aus und schließt den Handel ab. 
@@ -71,7 +80,7 @@ Besitzt ein Spieler mindestens einen Rohstoff, kann er mit seinen Mitspielern ha
 
 ### Entwicklungskarten
 Insgesamt gibt es 26 Entwicklungskarten im Spiel. Als erstes werden Ritterkarte, Straßenbaukarte und Siegpunktkarte verkauft. Die restlichen Karten werden zufällig gekauft. Nach dem Ausspielen sind die Karten aus dem Spiel. Insgesamt gibt es fünf verschiedene Karten:
-* Ritterkarte: der Spieler darf den Räuber versetzten und von einem Mitspieler wird ein zufälliger Rohstoff gestohlen
+* Ritterkarte: der Spieler darf den Räuber versetzen. Grenzen an die neue Position des Räubers Siedlungen oder Städte anderer Spieler, so wird einem dieser Spieler ein zufälliger Rohstoff gestohlen.
 * Straßenbaukarte: der Spieler darf zwei Straßen bauen 
 * Erfindungskarte: der Spieler wählt einen Rohstoff, von dem er zwei erhält
 * Monopolkarte: der Spieler wählt einen Rohstoff, von dem er die Vorräte aller anderen Spieler erhält
