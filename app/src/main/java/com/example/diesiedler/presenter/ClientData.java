@@ -19,31 +19,38 @@ import java.util.logging.Logger;
  */
 public class ClientData {
 
-    private static final String HOST = "10.0.0.53";  // Fabian
+    private static final String HOST = "25.64.65.87";  // Fabian
     //private static final String HOST = "10.0.0.152"; // Christina
-    private static final int PORT = 2020;  // Hamachi
+    private static final int PORT = 10;  // Hamachi
     //private static final int PORT = 2020; // Non-Hamachi
 
     private static final Logger logger = Logger.getLogger(ClientData.class.getName()); // Logger
 
-    public static Socket SERVER; // Socket and Streams
-    public static ObjectInputStream GET_FROM_SERVER;
-    public static ObjectOutputStream SEND_TO_SERVER;
+    // Socket and Streams
+    public static Socket SERVER;//NOSONAR
+    public static ObjectInputStream GET_FROM_SERVER;//NOSONAR
+    public static ObjectOutputStream SEND_TO_SERVER;//NOSONAR
 
-    public static int userId = 0; // this Users ID
-    public static String userDisplayName; // this Users Name
+    // this Users ID
+    public static int userId = 0;//NOSONAR
+    // this Users Name
+    public static String userDisplayName;//NOSONAR
 
-    public static Set<String> searchingUserNames; // as Set of all Users, that a currently Searching for Opponents
-    public static Map<String, Integer> searchingUsers; // all currently searching Users and their ID
+    // as Set of all Users, that a currently Searching for Opponents
+    public static Set<String> searchingUserNames;//NOSONAR
+    // all currently searching Users and their ID
+    public static Map<String, Integer> searchingUsers;//NOSONAR
 
-    public static GameSession currentGame; // the current active Game
+    // the current active Game
+    public static GameSession currentGame;//NOSONAR
 
-    public static Thread SERVER_COMMUNICATION_THREAD; // Thread, which is set in WelcomeActivity
+    // Thread, which is set in WelcomeActivity
+    public static Thread SERVER_COMMUNICATION_THREAD;//NOSONAR
 
-    public static Handler currentHandler; // Handler, which is set for every Activity in their onCreate-Method
+    // Handler, which is set for every Activity in their onCreate-Method
+    public static Handler currentHandler;//NOSONAR
 
     public static String cheaterId = "";
-
 
     /**
      * Initializes and saves the Server-Connection.

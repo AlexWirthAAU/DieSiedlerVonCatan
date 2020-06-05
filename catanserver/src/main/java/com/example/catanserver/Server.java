@@ -20,12 +20,12 @@ import java.util.Set;
  */
 public class Server {
 
-    public static final List<User> currentUsers = Collections.synchronizedList(new LinkedList<User>()); // List of all Users that are currently active
-    public static final List<Socket> currentConnections = Collections.synchronizedList(new LinkedList<Socket>()); // List of all Connections that are currently active
+    protected static final List<User> currentUsers = Collections.synchronizedList(new LinkedList<User>()); // List of all Users that are currently active
+    protected static final List<Socket> currentConnections = Collections.synchronizedList(new LinkedList<Socket>()); // List of all Connections that are currently active
     public static final List<GameSession> currentGames = Collections.synchronizedList(new LinkedList<GameSession>()); // List of all Games that are currently active
-    public static final Set<Integer> currentlyThreaded = Collections.synchronizedSet(new HashSet<Integer>()); // Set of all Games (GameId) in which Players are currently making a Network Call
-    public static final Set<User> currentlySearching = Collections.synchronizedSet(new HashSet<User>()); // Set of all Users that are currently searching for Opponents
-    private final static int SERVER_PORT = 2020; // Port the Server listens to
+    protected static final Set<Integer> currentlyThreaded = Collections.synchronizedSet(new HashSet<Integer>()); // Set of all Games (GameId) in which Players are currently making a Network Call
+    protected static final Set<User> currentlySearching = Collections.synchronizedSet(new HashSet<User>()); // Set of all Users that are currently searching for Opponents
+    private final static int SERVER_PORT = 10; // Port the Server listens to
     private static ServerSocket listenerSocket; // ServerSocket
     private static Socket caughtConnection; // Client Socket
 
@@ -46,7 +46,7 @@ public class Server {
                     Thread serverReaderThread = new ClientListenerThread(caughtConnection);
                     serverReaderThread.start();
                 }
-            }
+            }//NOSONAR
         }catch(IOException ex){
             System.err.println(ex.getMessage());
             System.err.println("Server could not be started!");
