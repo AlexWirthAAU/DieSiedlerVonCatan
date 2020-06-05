@@ -110,11 +110,9 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
         ClientData.currentHandler = handler;
     }
 
-    /**
-     * Going back is not possible here.
-     */
     @Override
     public void onBackPressed() {
+        // Back button should not return to the previous Activity here.
     }
 
     /**
@@ -130,6 +128,8 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
         Intent intent;
         int status;
 
+        String messNoResources = "Nicht genügend Rohstoffe.";
+
         switch (view.getId()) {
             case R.id.buildSettlement:
                 status = UpdateBuildSettlementView.status(ClientData.currentGame);
@@ -137,7 +137,7 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
                 if (status == -1) {
                     alert("Du kannst nicht bauen. Keine deiner Straßen führt zu einer bebaubaren Kreuzung!");
                 } else if (status == 0) {
-                    alert("Du kannst nicht bauen. Du hast nicht genügend Rohstoffe!");
+                    alert(messNoResources);
                 } else {
                     intent = new Intent(getBaseContext(), BuildSettlementActivity.class);
                     startActivity(intent);
@@ -146,7 +146,7 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
             case R.id.buildRoad:
                 status = UpdateBuildRoadView.status(ClientData.currentGame, null);
                 if (status == 0) {
-                    alert("Du kannst nicht bauen. Du hast nicht genügend Rohstoffe!");
+                    alert(messNoResources);
                 } else {
                     intent = new Intent(getBaseContext(), BuildRoadActivity.class);
                     startActivity(intent);
@@ -155,7 +155,7 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
             case R.id.buildCity:
                 status = UpdateBuildCityView.status(ClientData.currentGame);
                 if (status == 0) {
-                    alert("Du kannst nicht bauen. Du hast nicht genügend Rohstoffe!");
+                    alert(messNoResources);
                 } else {
                     intent = new Intent(getBaseContext(), BuildCityActivity.class);
                     startActivity(intent);
@@ -170,7 +170,7 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
                     intent = new Intent(getBaseContext(), BankChangeActivity.class);
                     startActivity(intent);
                 } else {
-                    alert("Nicht genug Rohstoffe um zu tauschen");
+                    alert(messNoResources);
                 }
                 break;
             case R.id.exchangePort:
@@ -178,11 +178,11 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
                     intent = new Intent(getBaseContext(), PortChangeActivity.class);
                     startActivity(intent);
                 } else if (!player.getInventory().canPortTrade && player.getInventory().hasPorts) {
-                    alert("Nicht genug Rohstoffe um zu tauschen");
+                    alert(messNoResources);
                 } else if (player.getInventory().canPortTrade && !player.getInventory().hasPorts) {
-                    alert("Du hast keine Häfen");
+                    alert("Du besitzt keine Häfen");
                 } else {
-                    alert("Nicht genug Rohstoffe und keine Häfen um zu tauschen");
+                    alert(messNoResources + " Du besitzt keine Häfen.");
                 }
                 break;
             case R.id.trade:
@@ -190,7 +190,7 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
                     intent = new Intent(getBaseContext(), TradeActivity.class);
                     startActivity(intent);
                 } else {
-                    alert("Nicht genug Rohstoffe um zu handeln");
+                    alert(messNoResources);
                 }
                 break;
             case R.id.setDevCard:
@@ -208,11 +208,11 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
                     Thread networkThread = new NetworkThread(ServerQueries.createStringQueryBuyCard());
                     networkThread.start();
                 } else if (!res && game.getDevCards().size() > 0) {
-                    alert("Nicht genug Rohstoffe um Entwicklungskarten zu kaufen");
+                    alert(messNoResources);
                 } else if (game.getDevCards().size() == 0 && res) {
                     alert("Es gibt keine Entwicklungskarten mehr");
                 } else {
-                    alert("Du hast nicht genug Rohstoffe und es gibt auch keine Entwicklungskarten mehr");
+                    alert(messNoResources + " Es gibt keine Entwicklungskarten mehr.");
                 }
                 break;
             case R.id.showCosts:
@@ -223,6 +223,8 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
                 logger.log(Level.INFO, "AHEAD");
                 Thread networkThread = new NetworkThread(ServerQueries.createStringQueryNext());
                 networkThread.start();
+                break;
+            default:
                 break;
         }
     }

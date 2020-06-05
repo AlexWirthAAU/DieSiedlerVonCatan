@@ -91,6 +91,8 @@ public class Tile implements Serializable {
             case 11:
                 this.resource = "DESERT";
                 break;
+            default:
+                break;
         }
 
     }
@@ -155,6 +157,8 @@ public class Tile implements Serializable {
                 this.diceValue = 2;
                 break;
             }
+            default:
+                break;
         }
     }
 }
