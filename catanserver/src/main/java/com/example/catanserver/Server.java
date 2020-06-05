@@ -20,11 +20,16 @@ import java.util.Set;
  */
 public class Server {
 
-    protected static final List<User> currentUsers = Collections.synchronizedList(new LinkedList<User>()); // List of all Users that are currently active
-    protected static final List<Socket> currentConnections = Collections.synchronizedList(new LinkedList<Socket>()); // List of all Connections that are currently active
-    public static final List<GameSession> currentGames = Collections.synchronizedList(new LinkedList<GameSession>()); // List of all Games that are currently active
-    protected static final Set<Integer> currentlyThreaded = Collections.synchronizedSet(new HashSet<Integer>()); // Set of all Games (GameId) in which Players are currently making a Network Call
-    protected static final Set<User> currentlySearching = Collections.synchronizedSet(new HashSet<User>()); // Set of all Users that are currently searching for Opponents
+    // List of all Users that are currently active
+    public static final List<User> currentUsers = Collections.synchronizedList(new LinkedList<User>());//NOSONAR
+    // List of all Connections that are currently active
+    public static final List<Socket> currentConnections = Collections.synchronizedList(new LinkedList<Socket>());//NOSONAR
+    // List of all Games that are currently active
+    public static final List<GameSession> currentGames = Collections.synchronizedList(new LinkedList<GameSession>());//NOSONAR
+    // Set of all Games (GameId) in which Players are currently making a Network Call
+    public static final Set<Integer> currentlyThreaded = Collections.synchronizedSet(new HashSet<Integer>());//NOSONAR
+    // Set of all Users that are currently searching for Opponents
+    public static final Set<User> currentlySearching = Collections.synchronizedSet(new HashSet<User>());//NOSONAR
     private final static int SERVER_PORT = 10; // Port the Server listens to
     private static ServerSocket listenerSocket; // ServerSocket
     private static Socket caughtConnection; // Client Socket
