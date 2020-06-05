@@ -27,7 +27,7 @@ public class ServerQueries {
             ClientData.SEND_TO_SERVER.writeUTF(query);
             ClientData.SEND_TO_SERVER.flush();
         } catch (IOException ex) {
-            logger.log(Level.INFO, "ERROR: Couldn't send query to server.");
+            logger.log(Level.INFO, "ERROR: Couldn\'t send query to server.");
         }
     }
 

@@ -50,14 +50,14 @@ public class DevCardListAdapter extends ArrayAdapter<String> {
         }
 
         LayoutInflater inflater = LayoutInflater.from(myContext);
-        convertView = inflater.inflate(mResource, parent, false);
+        View retConvertView = inflater.inflate(mResource, parent, false);
 
-        TextView devCard = convertView.findViewById(R.id.devCardName);
-        TextView devCardAmount = convertView.findViewById(R.id.devCardAmount);
+        TextView devCard = retConvertView.findViewById(R.id.devCardName);
+        TextView devCardAmount = retConvertView.findViewById(R.id.devCardAmount);
 
         devCard.setText(name);
         devCardAmount.setText(Integer.toString(amount));
 
-        return convertView;
+        return retConvertView;
     }
 }

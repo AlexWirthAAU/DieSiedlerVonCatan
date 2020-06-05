@@ -30,6 +30,10 @@ public abstract class GameThread extends Thread {
         this.user = user;
     }
 
+    public void run(){
+        System.out.println("Thread is started.");
+    }
+
     /**
      * After every turn, a not noticed Grab containing the User who finished his turn as the Player
      * to be stolen from is executed.

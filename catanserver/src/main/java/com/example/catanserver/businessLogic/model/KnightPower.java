@@ -53,7 +53,7 @@ public class KnightPower {
 
                 knightPowerCandidate.getInventory().addVictoryPoints(2);
 
-                if (ownerId != -1) {
+                if (ownerId != -1 && knightCountOwner != null) { // knightCountOwner != null for Sonar
                     knightCountOwner.getInventory().removeVictoryPoints(2);
                     toSend.add(knightCountOwner);
                     SendToClient.sendGameSessionBroadcast(game);
