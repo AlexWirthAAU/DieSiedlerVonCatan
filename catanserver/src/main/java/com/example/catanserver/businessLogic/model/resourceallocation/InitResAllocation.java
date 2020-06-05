@@ -28,23 +28,23 @@ public class InitResAllocation {
                     switch (tResource) {
                         case "WOOD":
                             playerInventory.addWood(1);
-                            System.out.println(p.getDisplayName() + "received 1 " + t.getResource());
+                            printResourceAllocation(p.getDisplayName(),t.getResource());
                             break;
                         case "WOOL":
                             playerInventory.addWool(1);
-                            System.out.println(p.getDisplayName() + "received 1 " + t.getResource());
+                            printResourceAllocation(p.getDisplayName(),t.getResource());
                             break;
                         case "CLAY":
                             playerInventory.addClay(1);
-                            System.out.println(p.getDisplayName() + "received 1 " + t.getResource());
+                            printResourceAllocation(p.getDisplayName(),t.getResource());
                             break;
                         case "WHEAT":
                             playerInventory.addWheat(1);
-                            System.out.println(p.getDisplayName() + "received 1 " + t.getResource());
+                            printResourceAllocation(p.getDisplayName(),t.getResource());
                             break;
                         case "ORE":
                             playerInventory.addOre(1);
-                            System.out.println(p.getDisplayName() + "received 1 " + t.getResource());
+                            printResourceAllocation(p.getDisplayName(),t.getResource());
                             break;
                         default:
                             break;
@@ -52,5 +52,9 @@ public class InitResAllocation {
                 }
             }
         }
+    }
+
+    private static void printResourceAllocation(String playerName, String resource){
+        System.out.println(playerName + " received 1 " + resource);
     }
 }

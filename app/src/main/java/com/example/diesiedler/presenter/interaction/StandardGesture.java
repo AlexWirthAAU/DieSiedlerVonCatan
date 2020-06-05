@@ -47,6 +47,7 @@ public class StandardGesture implements View.OnTouchListener, GestureDetector.On
 
     @Override
     public void onLongPress(MotionEvent event) {
+        // Interface requirement, but not needed.
     }
 
     @Override
@@ -82,6 +83,7 @@ public class StandardGesture implements View.OnTouchListener, GestureDetector.On
 
     @Override
     public void onShowPress(MotionEvent event) {
+        // Interface requirement, but not needed.
     }
 
     @Override

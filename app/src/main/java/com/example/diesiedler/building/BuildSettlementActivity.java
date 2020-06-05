@@ -152,6 +152,8 @@ public class BuildSettlementActivity extends AppCompatActivity implements View.O
                 intent = new Intent(getBaseContext(), ScoreBoardActivity.class);
                 startActivity(intent);
                 break;
+            default:
+                break;
         }
     }
 

@@ -44,6 +44,8 @@ public class ResourceAllocation {
                 case "WHEAT":
                     updateWheat(t);
                     break;
+                default:
+                    break;
             }
             for (Player p : game.getPlayers()) {
                 p.getInventory().checkPlayerOptions();

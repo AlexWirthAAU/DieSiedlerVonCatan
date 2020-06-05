@@ -20,12 +20,17 @@ import java.util.Set;
  */
 public class Server {
 
-    public static final List<User> currentUsers = Collections.synchronizedList(new LinkedList<User>()); // List of all Users that are currently active
-    public static final List<Socket> currentConnections = Collections.synchronizedList(new LinkedList<Socket>()); // List of all Connections that are currently active
-    public static final List<GameSession> currentGames = Collections.synchronizedList(new LinkedList<GameSession>()); // List of all Games that are currently active
-    public static final Set<Integer> currentlyThreaded = Collections.synchronizedSet(new HashSet<Integer>()); // Set of all Games (GameId) in which Players are currently making a Network Call
-    public static final Set<User> currentlySearching = Collections.synchronizedSet(new HashSet<User>()); // Set of all Users that are currently searching for Opponents
-    private final static int SERVER_PORT = 2020; // Port the Server listens to
+    // List of all Users that are currently active
+    public static final List<User> currentUsers = Collections.synchronizedList(new LinkedList<User>());//NOSONAR
+    // List of all Connections that are currently active
+    public static final List<Socket> currentConnections = Collections.synchronizedList(new LinkedList<Socket>());//NOSONAR
+    // List of all Games that are currently active
+    public static final List<GameSession> currentGames = Collections.synchronizedList(new LinkedList<GameSession>());//NOSONAR
+    // Set of all Games (GameId) in which Players are currently making a Network Call
+    public static final Set<Integer> currentlyThreaded = Collections.synchronizedSet(new HashSet<Integer>());//NOSONAR
+    // Set of all Users that are currently searching for Opponents
+    public static final Set<User> currentlySearching = Collections.synchronizedSet(new HashSet<User>());//NOSONAR
+    private final static int SERVER_PORT = 10; // Port the Server listens to
     private static ServerSocket listenerSocket; // ServerSocket
     private static Socket caughtConnection; // Client Socket
 
@@ -38,7 +43,7 @@ public class Server {
             listenerSocket = new ServerSocket(SERVER_PORT);
             System.out.println("Server running on: " + listenerSocket.getInetAddress() + SERVER_PORT);
 
-            while(true){
+            while(true){//NOSONAR
                 caughtConnection = listenerSocket.accept();
                 if(caughtConnection != null){
                     System.out.println("Connection to " + caughtConnection.getInetAddress() + ":" + caughtConnection.getPort() + "(ListenerThread)");

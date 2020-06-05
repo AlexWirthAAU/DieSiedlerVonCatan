@@ -171,6 +171,8 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
                 intent = new Intent(getBaseContext(), ScoreBoardActivity.class);
                 startActivity(intent);
                 break;
+            default:
+                break;
         }
     }
 

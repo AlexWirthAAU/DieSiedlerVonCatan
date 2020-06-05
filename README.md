@@ -5,7 +5,7 @@
 
 # Allgemein: 
 ## Spielablauf:
-Zu Beginn loggt sich der User mit seinem Namen ein. Dann wird er in eine Lobby weitergeleitet, wo er nach Mitspielern suchen kann. Er kann zwischen zwei und drei Mitspielern auswählen und das Spiel starten. Ist dies passiert, kommen alle gewählten Spieler zu einer Farbauswahl. Haben alle ihre Spielfarbe gewählt, kann das Hauptspiel gestartet werden. Es beginnt jener Spieler, der nach der Farbauswahl das Spiel startet. Zu Beginn erhält jeder einen Rohstoff jeder Art. Reihum kann jeder Spieler „kostenlos“ zwei Siedlungen und Straßen bauen. In Rot werden die Siedlungen bzw. Straßen angezeigt, auf denen der Spieler bauen kann. Dann beginnt der normale Spielablauf: Zu Beginn muss der Spieler würfeln, indem er das Handy schüttelt. Je nach Augenzahl werden die Rohstoffe verteilt und Spieler kommt zu einer Auswahl bei der aus folgenden Optionen wählen kann: 
+Zu Beginn loggt sich der User mit seinem Namen ein. Dann wird er in eine Lobby weitergeleitet, wo er nach Mitspielern suchen kann. Er kann zwischen zwei und drei Mitspielern auswählen und das Spiel starten. Ist dies passiert, kommen alle gewählten Spieler zu einer Farbauswahl. Haben alle ihre Spielfarbe gewählt, kann das Hauptspiel gestartet werden. Es beginnt jener Spieler, der zuerst die App gestartet hat. Zu Beginn kann jeder Spieler „kostenlos“ zwei Siedlungen und Straßen bauen. Basierend auf den Landschaften, an denen er Siedlungen gebaut hat, erhält jeder Spieler seine Startrohstoffe.Dann beginnt der normale Spielablauf: Zu Beginn muss der Spieler würfeln, indem er das Handy schüttelt. Je nach Augenzahl werden die Rohstoffe verteilt und Spieler kommt zu einer Auswahl bei der aus folgenden Optionen wählen kann: 
 
   * Siedlung bauen 
   * Straße bauen 
@@ -20,21 +20,17 @@ Zu Beginn loggt sich der User mit seinem Namen ein. Dann wird er in eine Lobby w
   * Weiter 
 
 \
-Es darf jeweils nur eine Aktion pro Spielzug gewählt werden. Wird eine 7 gewürfelt, werden keine Rohstoffe verteilt und der Spieler darf den Räuber versetzten. Befindet sich der Räuber auf der Landschaft mit der gewürfelten Zahl gibt es ebenso keine Rohstoffe. Für jede Siedlung gibt es 2, für jeder Stadt 3 Siegpunkte. Eine Siegpunktkarte bringt einen Siegpunkt, ebenso wie die längste Handelsstraße und die größte Rittermacht. Hat ein Spieler 10 Siegpunkte erreicht, ist das Spiel beendet. \
-TODO: ergänzung Spielende
+Es darf jeweils nur eine Aktion pro Spielzug gewählt werden. Wird eine 7 gewürfelt, werden keine Rohstoffe verteilt und der Spieler darf den Räuber versetzten. Befindet sich der Räuber auf der Landschaft mit der gewürfelten Zahl gibt es ebenso keine Rohstoffe. Für jede Siedlung gibt es 2, für jeder Stadt 3 Siegpunkte. Eine Siegpunktkarte bringt einen Siegpunkt. Für die größte Rittermacht gibt es 2 Siegpunkte. Hat ein Spieler 10 Siegpunkte erreicht, ist das Spiel beendet und die Spieler kommen wieder in die Lobby. \
 
 ## Regelanpassungen:
 * nur eine Aktion pro Spielzug erlaubt
-* zu Beginn gibt es einen Rohstoff jeder Art 
-* zu Beginn werden die zwei Straßen und Siedlungen reihum gebaut
 * es gibt nur Spezialhäfen
-* der Räuber stielt nur einen Rohstoff pro Spieler
-* beim Ausspielen der Ritterkarte, erhält der Spieler nur zwei Rohstoffe von den Mitspielern
+* beim Räuber erhält der Spieler einen zufälligen Rohstoff von einem zufälligen Spieler
+* die größte Rittermacht erhält man bereits ab einem Ritter
 
 **@author Alex Wirth**
 * Gameboard
 * Bauen
-* Längste Handelsstraße
 * Würfeln & Ressourcenverteilung
 
 **@author Fabien Schaffenrath**
@@ -52,22 +48,30 @@ TODO: ergänzung Spielende
 
 ### Gameboard
 Das Spielbrett besteht aus 19 Feldern, die einer bestimmten Ressource zugeteilt sind und einen Würfelwert zwischen 2-12 haben. An jedem Knotenpunkt der Felder können Siedlungen gebaut werden, die mit Straßen verbunden sind. Einige Knotenpunkte sind Hafensiedlungen. An ihnen ist ein weißes Schiff zu erkennen. 
+
 ### Bauen
 Entscheidet sich der Spieler eine Siedlung zu bauen, so werden ihm alle möglichen Knotenpunkte in Rot markiert. Klickt er auf einen dieser markierten Punkte, wird der Punkt besiedelt und in seiner Spielerfarbe eingefärbt. Eine Siedlung kann nur an einer Straße des Spielers gebaut werden sofern die benachbarten Kreuzungen noch nicht besiedelt sind.
 Straßen können entweder an andere bereits existierende Straßen des Spielers oder an eine seiner Siedlungen gebaut werden. Auch hier werden die möglichen Kanten zunächst rot eingefärbt. Baut der Spieler eine Straße, wird sie in seiner Spielfarbe eingefärbt.
 Siedlungen können im Verlauf des Spieles zu Städten umgebaut werden. Städte werden als schwarze Quadrate mit Punkten der Spielerfarbe dargestellt.
-### Längste Handelsstraße
-Hat ein Spieler eine Straße, die mindestens 5 Kanten lang ist und nicht von einer Siedlung oder einer Stadt eines Gegners unterbrochen wird, ist er der Besitzer der Entwicklungskarte "Längste Handelsstraße". Diese Karte exisitiert nur einmal im Spiel. Es kann also nur einen Spieler geben der die längste Straße besitzt. Haben 2 Spieler beispielsweise je eine Straße mit 6 Kanten, erfüllen sie zwar die Voraussetzung eine Straße, die länger als 5 Kanten lange ist zu besitzen, sind allerdings nicht alleiiniger Halter dieser Karte, weshlab niemand im Besitz der Entwicklungskarte ist. 
-Dem Spieler mit der längsten Handelsstraße werden 2 zusätzliche Siegespunkte gutgeschrieben, so lange er im Besitz der Karte ist.
 
 ### Würfeln
 Wenn ein Spieler an der Reihe ist, wird er aufgefordert zu würfeln. Dies passiert durch Schütteln seines Smartphones. Eine zufallsgenerierte Zahl wird dem Spieler angezeigt.
 Je nach Zahl werden Rohstoffe an jene Spieler verteilt, die Siedlungen bzw. Städte an den betroffenen Feldern haben. Siedlungen bringen eine Einheit des Rohstoffs, Städte zwei.
+Wird eine 7 gewürfelt, so werden keine Rohstoffe verteilt, sondern der würfelnde Spieler kann den Räuber auf ein anderes Rohstofffeld setzen.
+
 ### Räuber 
+Der Räuber belegt zu jeder Zeit eines der Rohstofffelder auf dem Spielfeld. Spieler, deren Siedlungen an dieses Rohstofffeld grenzen, erhalten aber keine Rohstoffe von diesem Feld.
 
 ### Schummeln
+Ein Spieler kann zu jeder Zeit versuchen, einem anderen Spieler einen Rohstoff zu stehlen. Dabei wählt er einen Spieler und danach einen Rohstoff aus. Der zu bestehlende Spieler hat während seines nächsten Zuges die Möglichkeit, diesen Diebstahlsversuch aufzudecken. Dabei muss er das Diebstahlsicon berühren und raten, welche seiner Rohstoffe gestohlen wird. Sollte der Spieler richtig raten, so darf er versuchen, einen Rohstoff von seinem Dieb zurückzustehlen. Außerdem muss der Dieb seinen nächsten Zug aussetzen. Ratet der Spieler falsch, so wird ihm am Ende seines Spielzuges der Rohstoff gestohlen.
+Gleichzeitig kann nur 1 Diebstahl an einem Spieler stattfinden.
 
 ### Netzwerk
+Die grundsätzliche Kommunikation über das Netzwerk erfolgt durch Command Identifier gesendet als Strings. Zusätzlich gibt es ein GameSession Objekt, dass alle Daten zu einem Spiel speichert und bei Änderungen ebenfalls übertragen wird.
+Server:
+Der Server verfügt über eine Endlossschleife, die auf neue Verbindungen reagiert. Wird eine neue Verbindung erkannt, so wird ein seperater Listener Thread gestartet, der auf Nachrichten dieser Verbindung reagiert. Bei jeder Nachricht wird überprüft, welche Aktion gewünscht ist und ob dafür alle nötigen Informationen/Vorraussetzungen erfüllt sind. Falsl ja wird ein entsprechender Logikthread aufgerufen, der die Aktion letztendlich ausführt und gegebenfalls Nachrichten an Clients zurücksendet. Wird kein Logikthread gestartet, so wird in der Grundverbindung eine Fehlermeldung zurückgesendet.
+Client:
+Sobald der Client den Wilkommensbildschirm verlässt, ist im Hintergrund eine Verbindung zum Server aufgebaut. Ein ListenerThread wartet dauerhaft auf neue Nachrichten des Servers. Selbst sendet der Client Nachrichten über einen seperaten Thread an den Server. Wird eine Nachricht vom Server erhalten, so werden entsprechende lokale Daten aktualisiert und der derzeitige Handler aufgerufen. Der Handler führt dann die Interface Operationen aus, die der Nachricht folgen sollen.
 
 ### Handeln
 Ein Spieler kann mit der Bank 4:1 handeln, sofern er von mindestens einem Rohstoff 4 oder mehr hat. Dazu wählt er den gewünschten und gebotenen Rohstoff aus und schließt den Handel ab. 
@@ -76,7 +80,7 @@ Besitzt ein Spieler mindestens einen Rohstoff, kann er mit seinen Mitspielern ha
 
 ### Entwicklungskarten
 Insgesamt gibt es 26 Entwicklungskarten im Spiel. Als erstes werden Ritterkarte, Straßenbaukarte und Siegpunktkarte verkauft. Die restlichen Karten werden zufällig gekauft. Nach dem Ausspielen sind die Karten aus dem Spiel. Insgesamt gibt es fünf verschiedene Karten:
-* Ritterkarte: der Spieler darf den Räuber versetzten und von den Mitspielern, auf deren Landschaft der Räuber nun ist, zwei von deren Rohstoffen stehlen
+* Ritterkarte: der Spieler darf den Räuber versetzen. Grenzen an die neue Position des Räubers Siedlungen oder Städte anderer Spieler, so wird einem dieser Spieler ein zufälliger Rohstoff gestohlen.
 * Straßenbaukarte: der Spieler darf zwei Straßen bauen 
 * Erfindungskarte: der Spieler wählt einen Rohstoff, von dem er zwei erhält
 * Monopolkarte: der Spieler wählt einen Rohstoff, von dem er die Vorräte aller anderen Spieler erhält

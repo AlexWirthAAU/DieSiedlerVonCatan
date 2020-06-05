@@ -64,11 +64,9 @@ public class AnswerToTradeActivity extends AppCompatActivity {
         ClientData.currentHandler = handler;
     }
 
-    /**
-     * Going back is not possible here.
-     */
     @Override
     public void onBackPressed() {
+        // Back button should not return to the previous Activity here.
     }
 
     /**

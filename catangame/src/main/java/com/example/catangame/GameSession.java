@@ -19,7 +19,6 @@ import java.util.List;
  */
 public class GameSession implements Serializable {
 
-    public static Trade currTrade; // current active Trade
     private static int gameCounter = 0; // consecutive ID
     private int gameId; // GameID
     private List<Player> players = new ArrayList<>(4); // List of all Players in the Game (max. 4)
@@ -32,6 +31,7 @@ public class GameSession implements Serializable {
     private String message; // optional Message to alert after an Action
     private boolean isCardBuild; // states whether a BuildRoad is started playing a Card
     private boolean isTradeOn; // states whether a Trade is active
+    private Trade currTrade; // current active Trade
     private int knightPowerCount; // Number of Knight-Cards the Player with the greatest Knightpower has
     private Player knightPowerOwner; // Player which has the greatest Knightpower
     private LinkedList<Grab> grabs; // Running Cheating requests

@@ -73,6 +73,8 @@ public class RollDice {
             case 6:
                 diceOne.setImageResource(R.drawable.six);
                 break;
+            default:
+                break;
         }
     }
 
@@ -97,6 +99,8 @@ public class RollDice {
                 break;
             case 6:
                 diceTwo.setImageResource(R.drawable.six);
+                break;
+            default:
                 break;
         }
     }

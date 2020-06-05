@@ -41,11 +41,9 @@ public class WelcomeActivity extends AppCompatActivity {
         handler = new WelcomeHandler(Looper.getMainLooper(), this);
     }
 
-    /**
-     * Going back is not possible here.
-     */
     @Override
     public void onBackPressed() {
+        // Back button should not return to the previous Activity here.
     }
 
     /**

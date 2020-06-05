@@ -48,6 +48,7 @@ public class GameHandler extends Handler {
     public void handleMessage(Message msg){
         if(msg.arg1 == 5){
             String message = null;
+            String titleCheat = "Diebstahl";
             if(((String) msg.obj).contains(" ")){
                 message = ((String) msg.obj).substring(((String) msg.obj).indexOf(" ") + 1);
             }
@@ -83,18 +84,18 @@ public class GameHandler extends Handler {
             }
             else if(((String) msg.obj).startsWith("CHEATERSET")){
                 if(ClientData.currentGame.getCurr().getUserId() == ClientData.userId){
-                    showAlertWithChooseActionActivityCall("Diebstahl",message);
+                    showAlertWithChooseActionActivityCall(titleCheat,message);
                 }
                 else {
-                    showAlertWithMainActivityCall("Diebstahl",message);
+                    showAlertWithMainActivityCall(titleCheat,message);
                 }
             }
             else if(((String) msg.obj).startsWith("CHEATER")){
-                showAlert("Diebstahl",message);
+                showAlert(titleCheat,message);
             }
             else if(((String) msg.obj).startsWith("CHEATEDREVEAL")){  //TODO: putExtra of playerId umgehen
                 if(message != null){
-                    showAlertWithCheatCounterActivityCall("Diebstahl",message);
+                    showAlertWithCheatCounterActivityCall(titleCheat,message);
                 }
                 else{
                     Intent intent = new Intent(activity,CheatCounterActivity.class);
@@ -102,7 +103,7 @@ public class GameHandler extends Handler {
                 }
             }
             else if(((String) msg.obj).startsWith("CHEATED")){
-                showAlertWithChooseActionActivityCall("Diebstahl",message);
+                showAlertWithChooseActionActivityCall(titleCheat,message);
             }
             else if(((String) msg.obj).startsWith("TRADECOMPLETE")){
                 showAlert("Handel",message);

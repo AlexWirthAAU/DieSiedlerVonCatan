@@ -66,11 +66,9 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
         ClientData.emptyGameData();
     }
 
-    /**
-     * Going back is not possible here.
-     */
     @Override
     public void onBackPressed() {
+        // Back button should not return to the previous Activity here.
     }
 
     /**
@@ -80,7 +78,7 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
      */
     @Override
     public void onItemSelected(SelectableItem selectableItem) {
-
+        // Interface requirement, but not needed.
     }
 
     /**

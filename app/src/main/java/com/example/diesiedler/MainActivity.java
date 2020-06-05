@@ -161,6 +161,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent = new Intent(getBaseContext(), ScoreBoardActivity.class);
                 startActivity(intent);
                 break;
+            default:
+                break;
         }
     }
 
