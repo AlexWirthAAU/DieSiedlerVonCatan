@@ -20,6 +20,8 @@ import java.util.Random;
  */
 public class Buy {
 
+    private static Random rand = new Random();
+
     /**
      * @param player current Player
      * @param game   current Game
@@ -60,7 +62,6 @@ public class Buy {
             card = devCardStack.remove(0);
             System.out.println("first");
         } else {
-            Random rand = new Random();
             card = devCardStack.remove(rand.nextInt(devCardStack.size()));
             System.out.println("random");
         }

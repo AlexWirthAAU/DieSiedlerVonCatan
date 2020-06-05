@@ -49,7 +49,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
         });
 
         if (ClientData.currentGame.getKnightPowerOwner() != null) {
-            knightPowerText.setText("Größte Rittermacht hat " + ClientData.currentGame.getKnightPowerOwner());
+            knightPowerText.setText("Größte Rittermacht hat " + ClientData.currentGame.getKnightPowerOwner().getDisplayName());
         }
     }
 

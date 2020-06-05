@@ -20,6 +20,8 @@ import java.util.Random;
 
 public class Thief {
 
+    private static Random rand = new Random();
+
     public static boolean moveThief(GameSession game, int destinationIndex){
         Tile[] tiles = game.getGameboard().getTiles();
         if(destinationIndex >= 0 && destinationIndex < tiles.length) {
@@ -52,7 +54,6 @@ public class Thief {
 
         List<Player> players = new ArrayList<>(3);
         Player playerToStealFrom;
-        Random rand = new Random();
         int[] res;
 
         String resName;
@@ -158,7 +159,6 @@ public class Thief {
             return -1;
         }
 
-        Random rand = new Random();
         int index = rand.nextInt(res.length);
         int number = res[index];
 

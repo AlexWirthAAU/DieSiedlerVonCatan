@@ -34,14 +34,14 @@ class PlayerListAdapter extends ArrayAdapter<Player> {
         String victoryPoints = Integer.toString(victoryPointsInt);
 
         LayoutInflater inflater = LayoutInflater.from(myContext);
-        convertView = inflater.inflate(mResource, parent, false);
+        View retConvertView = inflater.inflate(mResource, parent, false);
 
-        TextView playerName = convertView.findViewById(R.id.scPlayer);
-        TextView playerPoints = convertView.findViewById(R.id.scPoints);
+        TextView playerName = retConvertView.findViewById(R.id.scPlayer);
+        TextView playerPoints = retConvertView.findViewById(R.id.scPoints);
 
         playerName.setText(name);
         playerPoints.setText(victoryPoints);
 
-        return convertView;
+        return retConvertView;
     }
 }
