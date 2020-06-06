@@ -63,7 +63,7 @@ public class BuildSettlementActivity extends AppCompatActivity implements View.O
         UpdateBuildSettlementView.updateView(ClientData.currentGame, richPathView);
         ClientData.currentHandler = handler;
 
-        GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView, this);
+        GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView);
         gameBoardClickListener.clickBoard("BuildSettlement");
     }
 
@@ -94,7 +94,7 @@ public class BuildSettlementActivity extends AppCompatActivity implements View.O
      * @param s
      */
     public void clicked(String s) {
-        logger.log(Level.INFO, s + " clicked");
+        logger.log(Level.INFO, s, " clicked");
         Knot[] knots = ClientData.currentGame.getGameboard().getKnots();
         int knotIndex = 0;
         String[] values = s.split("_");
@@ -133,9 +133,9 @@ public class BuildSettlementActivity extends AppCompatActivity implements View.O
 
         TextView currentPlayer = findViewById(R.id.currentPlayer);
         if (currentP.getUserId() == ClientData.userId) {
-            currentPlayer.setText(String.format("Du bist gerade am Zug!"));
+            currentPlayer.setText(("Du bist gerade am Zug!"));
         } else {
-            currentPlayer.setText(String.format(currentP.getDisplayName() + " ist gerade am Zug"));
+            currentPlayer.setText((currentP.getDisplayName() + " ist gerade am Zug"));
         }
         TextView devCardCount = findViewById(R.id.devCardCount);
         devCardCount.setText(String.format(Integer.toString(playerInventory.getCards())));

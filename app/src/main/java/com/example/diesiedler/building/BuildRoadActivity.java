@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.catangame.Player;
 import com.example.catangame.PlayerInventory;
 import com.example.catangame.gameboard.Edge;
-import com.example.diesiedler.MainActivity;
 import com.example.diesiedler.R;
 import com.example.diesiedler.ScoreBoardActivity;
 import com.example.diesiedler.cards.DevCardInventoryActivity;
@@ -62,10 +61,10 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
 
         card = getIntent().getStringExtra("card");
         if (card != null) {
-            logger.log(Level.INFO, card + " cardin");
+            logger.log(Level.INFO, card, " cardin");
         }
 
-        logger.log(Level.INFO, card + " card");
+        logger.log(Level.INFO, card, " card");
 
         ClientData.currentHandler = handler;
 
@@ -73,7 +72,7 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
         updateResources();
         UpdateBuildRoadView.updateView(ClientData.currentGame, richPathView, card);
 
-        GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView, this);
+        GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView);
         gameBoardClickListener.clickBoard("BuildRoad");
     }
 
@@ -118,9 +117,9 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
 
         TextView currentPlayer = findViewById(R.id.currentPlayer);
         if (currentP.getUserId() == ClientData.userId) {
-            currentPlayer.setText(String.format("Du bist gerade am Zug!"));
+            currentPlayer.setText(("Du bist gerade am Zug!"));
         } else {
-            currentPlayer.setText(String.format(currentP.getDisplayName() + " ist gerade am Zug"));
+            currentPlayer.setText((currentP.getDisplayName() + " ist gerade am Zug"));
         }
         TextView devCardCount = findViewById(R.id.devCardCount);
         devCardCount.setText(String.format(Integer.toString(playerInventory.getCards())));
@@ -134,7 +133,7 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
      * @param s
      */
     public void clicked(String s) {
-        logger.log(Level.INFO, s + " clicked");
+        logger.log(Level.INFO, s, " clicked");
         Edge[] edges = ClientData.currentGame.getGameboard().getEdges();
         int edgeIndex = 0;
         for (int i = 0; i < edges.length; i++) {

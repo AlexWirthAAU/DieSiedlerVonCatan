@@ -136,9 +136,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         TextView currentPlayer = findViewById(R.id.currentPlayer);
         if (currentP.getUserId() == ClientData.userId) {
-            currentPlayer.setText(String.format("Du bist gerade am Zug!"));
+            currentPlayer.setText(("Du bist gerade am Zug!"));
         } else {
-            currentPlayer.setText(String.format(currentP.getDisplayName() + " ist gerade am Zug"));
+            currentPlayer.setText((currentP.getDisplayName() + " ist gerade am Zug"));
         }
         TextView devCardCount = findViewById(R.id.devCardCount);
         devCardCount.setText(String.format(Integer.toString(playerInventory.getCards())));

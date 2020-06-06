@@ -45,7 +45,7 @@ public class ThiefActivity extends AppCompatActivity {
 
         UpdateThiefView.updateView(ClientData.currentGame, richPathView);
 
-        GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView, this);
+        GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView);
         if(card != null && card.equals("CARD")) {
             gameBoardClickListener.clickBoard("MoveThiefCARD");
         }

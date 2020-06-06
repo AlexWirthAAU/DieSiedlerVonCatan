@@ -30,7 +30,7 @@ public class GameBoardClickListener {
     private RichPathView richPathView;
     private static final Logger logger = Logger.getLogger(GameBoardClickListener.class.getName()); // Logger
 
-    public GameBoardClickListener(RichPathView richPathView, Context c) {
+    public GameBoardClickListener(RichPathView richPathView) {
         this.richPathView = richPathView;
     }
 
@@ -70,7 +70,7 @@ public class GameBoardClickListener {
                 }
             }
         });
-        logger.log(Level.INFO, toSend[0] + "clicked");
+        logger.log(Level.INFO, toSend[0], "clicked");
     }
 
     private String getPathType(RichPath richPath) {
