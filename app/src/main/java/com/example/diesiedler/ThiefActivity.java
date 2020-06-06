@@ -5,9 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.catangame.gameboard.Tile;
 import com.example.diesiedler.presenter.ClientData;
@@ -15,9 +12,7 @@ import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.UpdateGameboardView;
 import com.example.diesiedler.presenter.UpdateThiefView;
 import com.example.diesiedler.presenter.handler.GameHandler;
-import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
 import com.example.diesiedler.threads.NetworkThread;
-import com.richpath.RichPathView;
 
 /**
  * @author Fabian Schaffenrath
@@ -25,27 +20,21 @@ import com.richpath.RichPathView;
  * Once selected, the TileIndex is sent to the Server to execute the movement.
  */
 
-public class ThiefActivity extends AppCompatActivity {
+public class ThiefActivity extends MainActivity {
 
     private Handler handler = new ThiefHandler(Looper.getMainLooper(), this);
-    private RichPathView richPathView;
     public String card; // "CARD" when to Activity is started from the PlayCardActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gameboardview);
-
         ClientData.currentHandler = handler;
 
         card = getIntent().getStringExtra("card");
 
-        richPathView = findViewById(R.id.ic_gameboardView);
-        UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
-
         UpdateThiefView.updateView(ClientData.currentGame, richPathView);
 
-        GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView);
+
         if(card != null && card.equals("CARD")) {
             gameBoardClickListener.clickBoard("MoveThiefCARD");
         }

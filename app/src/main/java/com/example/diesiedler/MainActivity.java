@@ -35,11 +35,10 @@ import java.util.logging.Logger;
  * <p>
  * Overview of Gameboard and Inventory
  */
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends GameBoardOverviewActivity {
 
     private static final Logger logger = Logger.getLogger(MainActivity.class.getName()); // Logger
     private Handler handler = new MainHandler(Looper.getMainLooper(), this); // Handler
-    private RichPathView richPathView;
     private ImageView grabView;
     private String grabberId;
 
@@ -52,24 +51,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gameboardview);
-        richPathView = findViewById(R.id.ic_gameboardView);
-
-        // Button to show Score and DevCards
-        ImageView devCards = findViewById(R.id.devCard);
-        devCards.setOnClickListener(this);
-        Button scoreBoard = findViewById(R.id.scoreBoard);
-        scoreBoard.setOnClickListener(this);
+        ClientData.currentHandler = handler;
 
         // Cheating
         grabView = findViewById(R.id.grabActive);
         grabView.setVisibility(View.GONE);
         checkForGrab();
-
-        UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
-        updateResources();
-
-        ClientData.currentHandler = handler;
 
         String intentMess = getIntent().getStringExtra("mess");
 
@@ -115,49 +102,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             builder1.setMessage(tradeMessage);
             AlertDialog alert1 = builder1.create();
             alert1.show();
-        }
-    }
-
-    private void updateResources() {
-        PlayerInventory playerInventory = ClientData.currentGame.getCurr().getInventory();
-        Player currentP = ClientData.currentGame.getCurr();
-
-        //TextViews for number of players resources
-        TextView woodCount = findViewById(R.id.woodCount);
-        woodCount.setText(String.format(Integer.toString(playerInventory.getWood())));
-        TextView clayCount = findViewById(R.id.clayCount);
-        clayCount.setText(String.format(Integer.toString(playerInventory.getClay())));
-        TextView wheatCount = findViewById(R.id.wheatCount);
-        wheatCount.setText(String.format(Integer.toString(playerInventory.getWheat())));
-        TextView oreCount = findViewById(R.id.oreCount);
-        oreCount.setText(String.format(Integer.toString(playerInventory.getOre())));
-        TextView woolCount = findViewById(R.id.woolCount);
-        woolCount.setText(String.format(Integer.toString(playerInventory.getWool())));
-
-        TextView currentPlayer = findViewById(R.id.currentPlayer);
-        if (currentP.getUserId() == ClientData.userId) {
-            currentPlayer.setText(("Du bist gerade am Zug!"));
-        } else {
-            currentPlayer.setText((currentP.getDisplayName() + " ist gerade am Zug"));
-        }
-        TextView devCardCount = findViewById(R.id.devCardCount);
-        devCardCount.setText(String.format(Integer.toString(playerInventory.getCards())));
-    }
-
-    @Override
-    public void onClick(View view) {
-        Intent intent;
-        switch (view.getId()) {
-            case R.id.devCard:
-                intent = new Intent(getBaseContext(), DevCardInventoryActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.scoreBoard:
-                intent = new Intent(getBaseContext(), ScoreBoardActivity.class);
-                startActivity(intent);
-                break;
-            default:
-                break;
         }
     }
 

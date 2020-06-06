@@ -30,7 +30,7 @@ public class Server {
     public static final Set<Integer> currentlyThreaded = Collections.synchronizedSet(new HashSet<Integer>());//NOSONAR
     // Set of all Users that are currently searching for Opponents
     public static final Set<User> currentlySearching = Collections.synchronizedSet(new HashSet<User>());//NOSONAR
-    private final static int SERVER_PORT = 10; // Port the Server listens to
+    private final static int SERVER_PORT = 2020; // Port the Server listens to
     private static ServerSocket listenerSocket; // ServerSocket
     private static Socket caughtConnection; // Client Socket
 
