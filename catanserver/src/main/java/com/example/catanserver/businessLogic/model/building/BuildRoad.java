@@ -17,6 +17,10 @@ import java.util.LinkedList;
  */
 public class BuildRoad {
 
+    private BuildRoad() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static void updateGameSession(GameSession gameSession, int roadIndex, int userID) {
         Gameboard gameboard = gameSession.getGameboard();
         Edge road = gameboard.getEdges()[roadIndex];
@@ -41,7 +45,7 @@ public class BuildRoad {
          */
 
 
-        if (player.getInventory().getRoads().size() == 1 && !(player.getUserId() == lastPlayer.getUserId())) {
+        if (player.getInventory().getRoads().size() == 1 && (player.getUserId() != lastPlayer.getUserId())) {
             gameSession.nextPlayer();
             System.out.println("Next Player");
         }

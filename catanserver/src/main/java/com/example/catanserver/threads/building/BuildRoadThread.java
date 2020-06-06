@@ -7,7 +7,6 @@ import com.example.catanserver.businessLogic.model.building.BuildRoad;
 import com.example.catanserver.threads.GameThread;
 import com.example.catanserver.threads.SendToClient;
 
-// TODO: kommentieren
 
 /**
  * @author Alex Wirth
@@ -16,8 +15,8 @@ import com.example.catanserver.threads.SendToClient;
  */
 public class BuildRoadThread extends GameThread {
 
-    int edgeIndex;
-    int userID;
+    private int edgeIndex;
+    private int userID;
     private String card;
 
     /**
@@ -40,6 +39,8 @@ public class BuildRoadThread extends GameThread {
      * It broadcasts an updated GameSession and sends the endturn command to the user, as well as
      * the begin turn command to the next user.
      */
+
+    @Override
     public void run() {
         if (card.equals("CARD")) {
             BuildRoad.buildRoadWithCard(game, edgeIndex, userID);

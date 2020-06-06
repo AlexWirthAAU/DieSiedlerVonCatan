@@ -17,6 +17,11 @@ import java.util.LinkedList;
  */
 public class UpdateBuildCityView {
 
+
+    private UpdateBuildCityView() {
+        throw new IllegalStateException("Utility class");
+    }
+
     /**
      * Highlights the knots in red.
      *

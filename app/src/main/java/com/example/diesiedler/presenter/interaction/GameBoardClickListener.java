@@ -14,6 +14,17 @@ import com.richpath.RichPathView;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * @author Alex Wirth
+ * @author Christina Senger (edit)
+ * @author Fabian Schaffenrath (edit)
+ * <p>
+ * Depending on which action the player chooses to do (BuildSettlement, BuildCity, BuildRoad, MoveThief) the affected assets are
+ * open to be clicked on (The ones that are marked red). The clicked asset's ID will the be sent back to the activity where it was called from.
+ * The clickBoard method is called in activities concerning buildings and moving the thief. There the server communication for requesting to change
+ * the gameboard is handled.
+ */
+
 public class GameBoardClickListener {
 
     private RichPathView richPathView;

@@ -18,6 +18,10 @@ import java.util.LinkedList;
 
 public class UpdateBuildRoadView {
 
+    private UpdateBuildRoadView() {
+        throw new IllegalStateException("Utility class");
+    }
+
     /**
      * The delivered list contains all edges a player can possibly build a road on. These edges are highlighted in red.
      *
@@ -51,7 +55,7 @@ public class UpdateBuildRoadView {
          * If the total amount of roads he has, it means it is still the beginning of the game and the player can build for free.
          */
 
-        if (p.getInventory().getRoads().size() == 0) {
+        if (p.getInventory().getRoads().isEmpty()) {
             for (Edge e : gs.getGameboard().getEdges()) {
                 if (e.getPlayer() == null && e.getOne().equals(p.getInventory().getSettlements().get(0)) || e.getTwo().equals(p.getInventory().getSettlements().get(0))) {
                     possibleEdges.add(e);

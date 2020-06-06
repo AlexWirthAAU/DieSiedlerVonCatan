@@ -293,8 +293,6 @@ public class Gameboard implements Serializable {
         }
         for (int i = 66; i < 72; i++) {
             edges[i] = new Edge(knots[i - 19], knots[i - 18]);
-            {
-            }
         }
     }
 
