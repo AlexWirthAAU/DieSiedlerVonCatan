@@ -11,15 +11,16 @@ import com.example.diesiedler.building.BuildSettlementActivity;
 import com.richpath.RichPath;
 import com.richpath.RichPathView;
 
-// TODO: kommentieren
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class GameBoardClickListener {
 
     private RichPathView richPathView;
-    private Context context;
+    private static final Logger logger = Logger.getLogger(GameBoardClickListener.class.getName()); // Logger
 
     public GameBoardClickListener(RichPathView richPathView, Context c) {
         this.richPathView = richPathView;
-        this.context = c;
     }
 
     public void clickBoard(String a) {
@@ -30,7 +31,6 @@ public class GameBoardClickListener {
             public void onClick(RichPath richPath) {
                 String pathType = getPathType(richPath);
                 if (pathType.contains("tile")) {
-                    //TODO: What should happen if Tile is clicked:
                     if(activity.equals("MoveThief") || activity.equals("MoveThiefCARD")){
                         toSend[0] = richPath.getName();
                         ThiefActivity thiefActivity = new ThiefActivity();
@@ -42,7 +42,6 @@ public class GameBoardClickListener {
                     toSend[0] = richPath.getName();
 
                 } else if (pathType.contains("settlement")) {
-                    //TODO: What should happen if Knot is clicked:
                     if (activity.equals("BuildSettlement") && richPath.getFillColor() == Color.RED) {
                         toSend[0] = richPath.getName();
                         new BuildSettlementActivity().clicked(toSend[0]);
@@ -51,26 +50,19 @@ public class GameBoardClickListener {
                         new BuildCityActivity().clicked(toSend[0]);
                     }
                 } else if (pathType.contains("edge")) {
-                    //TODO: What should happen if Edge is clicked:
-
                     if (activity.equals("BuildRoad") && richPath.getFillColor() == Color.RED) {
                         toSend[0] = richPath.getName();
                         new BuildRoadActivity().clicked(toSend[0]);
                     }
                 } else if (pathType.contains("background") || pathType.contains("harbour")) {
-                    Log.d("DEBUG", "Touched background");
+                    logger.log(Level.INFO, "Clicked background");
                 }
             }
         });
-        Log.d("DEBUG", toSend[0]);
-    }
-
-    public void scaleBoard() {
-        richPathView.setOnTouchListener(new StandardGesture(this.context));
+        logger.log(Level.INFO, toSend[0] + "clicked");
     }
 
     private String getPathType(RichPath richPath) {
-        String type = richPath.getName().split("_")[0];
-        return type;
+        return richPath.getName().split("_")[0];
     }
 }
