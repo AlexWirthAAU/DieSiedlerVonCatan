@@ -1,9 +1,6 @@
 package com.example.diesiedler.presenter.interaction;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
-
 import com.example.diesiedler.ThiefActivity;
 import com.example.diesiedler.building.BuildCityActivity;
 import com.example.diesiedler.building.BuildRoadActivity;

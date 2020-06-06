@@ -146,7 +146,7 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
         Thread networkThread;
 
         if (card != null) {
-            logger.log(Level.INFO, card + " cardin");
+            logger.log(Level.INFO, card, " cardin");
             networkThread = new NetworkThread(ServerQueries.createStringQueryPlayBuildStreetCard(eIString));
         } else {
             networkThread = new NetworkThread(ServerQueries.createStringQueryBuildRoad(eIString));
