@@ -24,6 +24,8 @@ import com.example.diesiedler.presenter.UpdateGameboardView;
 import com.example.diesiedler.presenter.handler.GameHandler;
 import com.richpath.RichPathView;
 
+import org.w3c.dom.Text;
+
 import java.util.logging.Logger;
 
 /**
@@ -38,37 +40,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final Logger logger = Logger.getLogger(MainActivity.class.getName()); // Logger
     private Handler handler = new MainHandler(Looper.getMainLooper(), this); // Handler
     private RichPathView richPathView;
-
-    private TextView woodCount; // Number of Ressources
-    private TextView clayCount;
-    private TextView wheatCount;
-    private TextView oreCount;
-    private TextView woolCount;
-    private TextView devCardCount;
-
-    private TextView currentPlayer; // View of the current Player
-
-    private ImageView devCards; // Button to show Score and DevCards
-    private Button scoreBoard;
-
     private ImageView grabView;
     private String grabberId;
 
     /**
      * Loads actual Gameboard and Ressources. Sets Handler.
      * If the Intent has an Extra, a Alert-Message with its Test is shown.
-     *
      * @param savedInstanceState saved State
      */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameboardview);
         richPathView = findViewById(R.id.ic_gameboardView);
 
-        devCards = findViewById(R.id.devCard);
+        // Button to show Score and DevCards
+        ImageView devCards = findViewById(R.id.devCard);
         devCards.setOnClickListener(this);
-        scoreBoard = findViewById(R.id.scoreBoard);
+        Button scoreBoard = findViewById(R.id.scoreBoard);
         scoreBoard.setOnClickListener(this);
 
         // Cheating
@@ -129,24 +119,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void updateResources() {
-        PlayerInventory playerInventory = ClientData.currentGame.getPlayer(ClientData.userId).getInventory();
+        PlayerInventory playerInventory = ClientData.currentGame.getCurr().getInventory();
         Player currentP = ClientData.currentGame.getCurr();
 
-        woodCount = findViewById(R.id.woodCount);
-        woodCount.setText(Integer.toString(playerInventory.getWood()));
-        clayCount = findViewById(R.id.clayCount);
-        clayCount.setText(Integer.toString(playerInventory.getClay()));
-        wheatCount = findViewById(R.id.wheatCount);
-        wheatCount.setText(Integer.toString(playerInventory.getWheat()));
-        oreCount = findViewById(R.id.oreCount);
-        oreCount.setText(Integer.toString(playerInventory.getOre()));
-        woolCount = findViewById(R.id.woolCount);
-        woolCount.setText(Integer.toString(playerInventory.getWool()));
-        currentPlayer = findViewById(R.id.currentPlayer);
-        currentPlayer.setText(currentP.getDisplayName() + " ist gerade am Zug");
-        devCardCount = findViewById(R.id.devCardCount);
-        devCardCount.setText(Integer.toString(playerInventory.getCards()));
-
+        //TextViews for number of players resources
+        TextView woodCount = findViewById(R.id.woodCount);
+        woodCount.setText(String.format(Integer.toString(playerInventory.getWood())));
+        TextView clayCount = findViewById(R.id.clayCount);
+        clayCount.setText(String.format(Integer.toString(playerInventory.getClay())));
+        TextView wheatCount = findViewById(R.id.wheatCount);
+        wheatCount.setText(String.format(Integer.toString(playerInventory.getWheat())));
+        TextView oreCount = findViewById(R.id.oreCount);
+        oreCount.setText(String.format(Integer.toString(playerInventory.getOre())));
+        TextView woolCount = findViewById(R.id.woolCount);
+        woolCount.setText(String.format(Integer.toString(playerInventory.getWool())));
+        TextView currentPlayer = findViewById(R.id.currentPlayer);
+        currentPlayer.setText(String.format(currentP.getDisplayName() + " ist gerade am Zug"));
+        TextView devCardCount = findViewById(R.id.devCardCount);
+        devCardCount.setText(String.format(Integer.toString(playerInventory.getCards())));
     }
 
     @Override

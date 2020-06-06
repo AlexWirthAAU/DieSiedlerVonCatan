@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.catangame.Player;
 import com.example.catangame.PlayerInventory;
 import com.example.catangame.gameboard.Knot;
 import com.example.diesiedler.R;
@@ -28,6 +29,9 @@ import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
 import com.example.diesiedler.threads.NetworkThread;
 import com.richpath.RichPathView;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @author Alex Wirth
  * @author Fabian Schaffenrath (edit)
@@ -39,20 +43,10 @@ import com.richpath.RichPathView;
  */
 public class BuildCityActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final Logger logger = Logger.getLogger(BuildCityActivity.class.getName()); // Logger
     private Handler handler = new BuildCityHandler(Looper.getMainLooper(), this); // Handler
     private RichPathView richPathView;
 
-    // TextViews for number of resources
-    private TextView woodCount;
-    private TextView clayCount;
-    private TextView wheatCount;
-    private TextView oreCount;
-    private TextView woolCount;
-    private TextView devCardCount;
-
-    // Buttons to show score and inventory:
-    private ImageView devCards;
-    private Button scoreBoard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,16 +54,16 @@ public class BuildCityActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.gameboardview);
         richPathView = findViewById(R.id.ic_gameboardView);
 
-        devCards = findViewById(R.id.devCard);
+        // Buttons to show score and inventory:
+        ImageView devCards = findViewById(R.id.devCard);
         devCards.setOnClickListener(this);
-        scoreBoard = findViewById(R.id.scoreBoard);
+        Button scoreBoard = findViewById(R.id.scoreBoard);
         scoreBoard.setOnClickListener(this);
 
         UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
         updateResources();
         UpdateBuildCityView.updateView(ClientData.currentGame, richPathView);
         ClientData.currentHandler = handler;
-
 
         GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView, this);
         gameBoardClickListener.clickBoard("BuildCity");
@@ -92,6 +86,7 @@ public class BuildCityActivity extends AppCompatActivity implements View.OnClick
      * @param s
      */
     public void clicked(String s) {
+        logger.log(Level.INFO, s + " clicked");
         Knot[] knots = ClientData.currentGame.getGameboard().getKnots();
         int knotIndex = 0;
         String[] values = s.split("_");
@@ -112,20 +107,24 @@ public class BuildCityActivity extends AppCompatActivity implements View.OnClick
      * This method is responsible for refreshing the player's resources.
      */
     private void updateResources() {
-        PlayerInventory playerInventory = ClientData.currentGame.getPlayer(ClientData.userId).getInventory();
+        PlayerInventory playerInventory = ClientData.currentGame.getCurr().getInventory();
+        Player currentP = ClientData.currentGame.getCurr();
 
-        woodCount = findViewById(R.id.woodCount);
-        woodCount.setText(Integer.toString(playerInventory.getWood()));
-        clayCount = findViewById(R.id.clayCount);
-        clayCount.setText(Integer.toString(playerInventory.getClay()));
-        wheatCount = findViewById(R.id.wheatCount);
-        wheatCount.setText(Integer.toString(playerInventory.getWheat()));
-        oreCount = findViewById(R.id.oreCount);
-        oreCount.setText(Integer.toString(playerInventory.getOre()));
-        woolCount = findViewById(R.id.woolCount);
-        woolCount.setText(Integer.toString(playerInventory.getWool()));
-        devCardCount = findViewById(R.id.devCardCount);
-        devCardCount.setText(Integer.toString(playerInventory.getCards()));
+        //TextViews for number of players resources
+        TextView woodCount = findViewById(R.id.woodCount);
+        woodCount.setText(String.format(Integer.toString(playerInventory.getWood())));
+        TextView clayCount = findViewById(R.id.clayCount);
+        clayCount.setText(String.format(Integer.toString(playerInventory.getClay())));
+        TextView wheatCount = findViewById(R.id.wheatCount);
+        wheatCount.setText(String.format(Integer.toString(playerInventory.getWheat())));
+        TextView oreCount = findViewById(R.id.oreCount);
+        oreCount.setText(String.format(Integer.toString(playerInventory.getOre())));
+        TextView woolCount = findViewById(R.id.woolCount);
+        woolCount.setText(String.format(Integer.toString(playerInventory.getWool())));
+        TextView currentPlayer = findViewById(R.id.currentPlayer);
+        currentPlayer.setText(String.format(currentP.getDisplayName() + " ist gerade am Zug"));
+        TextView devCardCount = findViewById(R.id.devCardCount);
+        devCardCount.setText(String.format(Integer.toString(playerInventory.getCards())));
     }
 
     /**
