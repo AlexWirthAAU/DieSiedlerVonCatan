@@ -31,7 +31,7 @@ public class BuildRoadActivity extends GameBoardOverviewActivity {
     private static final Logger logger = Logger.getLogger(BuildRoadActivity.class.getName()); // Logger
     private Handler handler = new BuildRoadHandler(Looper.getMainLooper(), this); // Handler
     private static String card = ""; // "CARD" when to Activity is started from the PlayCardActivity
-    private static String cardIn;
+    private String cardIn, cardString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class BuildRoadActivity extends GameBoardOverviewActivity {
 
         card = getIntent().getStringExtra("card");
         cardIn = "CardIn: " + card;
-        String cardString = "Card: " + card;
+        cardString = "Card: " + card;
         if (card != null) {
             logger.log(Level.INFO, cardIn);
         }
