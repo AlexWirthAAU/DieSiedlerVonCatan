@@ -63,7 +63,8 @@ public class BuildCityActivity extends GameBoardOverviewActivity {
      * @param s
      */
     public void clicked(String s) {
-        logger.log(Level.INFO, "Clicked: " + s);
+        String logging = "Clicked: " + s;
+        logger.log(Level.INFO, logging);
         Knot[] knots = ClientData.currentGame.getGameboard().getKnots();
         int knotIndex = 0;
         String[] values = s.split("_");

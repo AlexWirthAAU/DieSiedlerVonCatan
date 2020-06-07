@@ -31,6 +31,7 @@ public class BuildRoadActivity extends GameBoardOverviewActivity {
     private static final Logger logger = Logger.getLogger(BuildRoadActivity.class.getName()); // Logger
     private Handler handler = new BuildRoadHandler(Looper.getMainLooper(), this); // Handler
     private static String card = ""; // "CARD" when to Activity is started from the PlayCardActivity
+    private static String cardIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +39,12 @@ public class BuildRoadActivity extends GameBoardOverviewActivity {
         ClientData.currentHandler = handler;
 
         card = getIntent().getStringExtra("card");
+        cardIn = "CardIn: " + card;
+        String cardString = "Card: " + card;
         if (card != null) {
-            logger.log(Level.INFO, "CardIn: " + card);
+            logger.log(Level.INFO, cardIn);
         }
-        logger.log(Level.INFO, "Card: " + card);
+        logger.log(Level.INFO, cardString);
 
 
         UpdateBuildRoadView.updateView(ClientData.currentGame, richPathView, card);
@@ -81,7 +84,8 @@ public class BuildRoadActivity extends GameBoardOverviewActivity {
      * @param s
      */
     public void clicked(String s) {
-        logger.log(Level.INFO, "Clicked: " + s);
+        String logging = "Clicked: " + s;
+        logger.log(Level.INFO, logging);
         Edge[] edges = ClientData.currentGame.getGameboard().getEdges();
         int edgeIndex = 0;
         for (int i = 0; i < edges.length; i++) {
@@ -94,7 +98,7 @@ public class BuildRoadActivity extends GameBoardOverviewActivity {
         Thread networkThread;
 
         if (card != null) {
-            logger.log(Level.INFO, "CardIn: " + card);
+            logger.log(Level.INFO, cardIn);
             networkThread = new NetworkThread(ServerQueries.createStringQueryPlayBuildStreetCard(eIString));
         } else {
             networkThread = new NetworkThread(ServerQueries.createStringQueryBuildRoad(eIString));

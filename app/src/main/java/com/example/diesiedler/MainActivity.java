@@ -7,24 +7,16 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.catangame.Grab;
-import com.example.catangame.Player;
-import com.example.catangame.PlayerInventory;
-import com.example.diesiedler.cards.DevCardInventoryActivity;
 import com.example.diesiedler.cheating.CheatRevealActivity;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.UpdateGameboardView;
 import com.example.diesiedler.presenter.handler.GameHandler;
-import com.richpath.RichPathView;
 
-import org.w3c.dom.Text;
 
 import java.util.logging.Logger;
 
