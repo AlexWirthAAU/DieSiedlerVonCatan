@@ -2,6 +2,9 @@ package com.example.catanserver.businessLogic.model.trading;
 
 import com.example.catangame.Player;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @author Christina Senger
  * <p>
@@ -9,18 +12,20 @@ import com.example.catangame.Player;
  */
 public class Bank {
 
+    private static Logger logger = Logger.getLogger(Bank.class.getName()); // Logger
+
     private static String offered; // Name of the offerd Ressource
     private static String desired; // Name of the desired Ressource
 
     /**
      * @param currPlayer current Player
-     * @param give       Name of the given Ressource
+     * @param give Name of the given Ressource
      * @return true, when the Player <code>canBankTrade</code> and has
      * at least 4 of the offered Ressource, else false.
      */
     public static boolean checkTrade(Player currPlayer, String give) {
 
-        if (!currPlayer.getInventory().canBankTrade) {
+        if (!currPlayer.getInventory().isCanBankTrade()) {
             return false;
         }
 
@@ -61,7 +66,7 @@ public class Bank {
 
         offered = trd[0];
         desired = trd[1];
-        System.out.println(offered + " give " + desired + " get");
+        logger.log(Level.INFO, offered + " give " + desired + " get");
     }
 
     /**
@@ -96,7 +101,7 @@ public class Bank {
 
         message.append("Du hast erfolgreich 4 ").append(give).append(" gegen 1 ").append(get).append(" getauscht");
 
-        System.out.println(message.toString());
+        logger.log(Level.INFO, message.toString());
         return message.toString();
     }
 
@@ -110,7 +115,7 @@ public class Bank {
      */
     public static void exchangeRessources(String give, String get, Player currPlayer) {
 
-        System.out.println(currPlayer.getInventory().getAllRessources());
+        System.out.println(currPlayer.getInventory().getAllResources());
 
         switch (get) {
             case "Holz":
@@ -152,7 +157,7 @@ public class Bank {
                 break;
         }
 
-        System.out.println("4 " + give + " gegen 1 " + get);
-        System.out.println(currPlayer.getInventory().getAllRessources());
+        logger.log(Level.INFO, "4 " + give + " gegen 1 " + get);
+        logger.log(Level.INFO, currPlayer.getInventory().getAllResources());
     }
 }

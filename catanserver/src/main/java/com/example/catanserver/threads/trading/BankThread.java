@@ -9,17 +9,18 @@ import com.example.catanserver.threads.ErrorThread;
 import com.example.catanserver.threads.GameThread;
 import com.example.catanserver.threads.SendToClient;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @author Christina Senger
  * @author Fabian Schaffenrath (edit)
  */
 public class BankThread extends GameThread {
 
-    private String give; // Name of the offerd Ressource
-    private String get; // Name of the desired Ressource
+    private static Logger logger = Logger.getLogger(BankThread.class.getName()); // Logger
 
     private Player currPlayer; // current Player
-    private StringBuilder message = new StringBuilder(); // Message which should be sent to the Player
     private String tradeStr; // Trade-Offer
 
     /**
@@ -42,15 +43,18 @@ public class BankThread extends GameThread {
      * Additionally, the begin turn command is sent to the next user.
      * Otherwise an Error-Thread is started.
      */
+    @Override
     public void run() {
 
         Bank.setTradeData(tradeStr);
-        give = Bank.getOffered();
-        get = Bank.getDesired();
+        // Name of the offered Resource
+        String give = Bank.getOffered();
+        // Name of the desired Resource
+        String get = Bank.getDesired();
 
         if (Bank.checkTrade(currPlayer, give)) {
 
-            System.out.println("checked");
+            logger.log(Level.INFO, "checked");
             String mess = Bank.buildMessage(give, get);
             Bank.exchangeRessources(give, get, currPlayer);
             game.nextPlayer();
@@ -67,5 +71,6 @@ public class BankThread extends GameThread {
             ErrorThread errThread = new ErrorThread(user.getConnectionOutputStream(), "Nicht genug Rohstoffe um zu handeln");
             errThread.run();
         }
+        Server.currentlyThreaded.remove(game.getGameId());
     }
 }

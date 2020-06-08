@@ -13,10 +13,11 @@ import org.junit.Test;
 
 public class BuildSettlementTest {
 
-    GameSession gameSession;
-    Player player;
-    Knot toBeSettled;
-    PlayerInventory playerInventory;
+    private GameSession gameSession;
+    private Player player;
+    private Knot toBeSettled;
+    private PlayerInventory playerInventory;
+
     @Before
     public void setUp() {
         gameSession = new GameSession();
@@ -87,9 +88,9 @@ public class BuildSettlementTest {
         gameSession.addSettlement(gameSession.getGameboard().getKnots()[0]);
         gameSession.addSettlement(gameSession.getGameboard().getKnots()[40]);
 
-        Assert.assertEquals(false, toBeSettled.isSettled());
-        Assert.assertEquals(null, toBeSettled.getPlayer());
-        Assert.assertEquals(null, gameSession.getGameboard().getKnots()[10].getPlayer());
+        Assert.assertFalse(toBeSettled.isSettled());
+        Assert.assertNull(toBeSettled.getPlayer());
+        Assert.assertNull(gameSession.getGameboard().getKnots()[10].getPlayer());
         Assert.assertEquals(2, gameSession.getSettlements().size());
         Assert.assertEquals(2, player.getInventory().getSettlements().size());
         Assert.assertEquals(2, playerInventory.getWood());
@@ -100,7 +101,7 @@ public class BuildSettlementTest {
     }
 
     private void assertionsAfterRegularBuild() {
-        Assert.assertEquals(true, toBeSettled.isSettled());
+        Assert.assertTrue(toBeSettled.isSettled());
         Assert.assertEquals(player, toBeSettled.getPlayer());
         Assert.assertEquals(player, gameSession.getGameboard().getKnots()[10].getPlayer());
         Assert.assertEquals(3, gameSession.getSettlements().size());
@@ -113,9 +114,9 @@ public class BuildSettlementTest {
     }
 
     private void assertionsBeforeInitBuild() {
-        Assert.assertEquals(false, toBeSettled.isSettled());
-        Assert.assertEquals(null, toBeSettled.getPlayer());
-        Assert.assertEquals(null, gameSession.getGameboard().getKnots()[10].getPlayer());
+        Assert.assertFalse(toBeSettled.isSettled());
+        Assert.assertNull(toBeSettled.getPlayer());
+        Assert.assertNull(gameSession.getGameboard().getKnots()[10].getPlayer());
         Assert.assertEquals(0, gameSession.getSettlements().size());
         Assert.assertEquals(0, player.getInventory().getSettlements().size());
         Assert.assertEquals(2, playerInventory.getWood());
@@ -126,7 +127,7 @@ public class BuildSettlementTest {
     }
 
     private void assertionsAfterInitBuild() {
-        Assert.assertEquals(true, toBeSettled.isSettled());
+        Assert.assertTrue(toBeSettled.isSettled());
         Assert.assertEquals(player, toBeSettled.getPlayer());
         Assert.assertEquals(player, gameSession.getGameboard().getKnots()[10].getPlayer());
         Assert.assertEquals(1, gameSession.getSettlements().size());
@@ -139,32 +140,32 @@ public class BuildSettlementTest {
     }
 
     private void buildAtClayPort() {
-        Assert.assertEquals(true, gameSession.getGameboard().getKnots()[47].isHarbourKnot());
+        Assert.assertTrue(gameSession.getGameboard().getKnots()[47].isHarbourKnot());
         BuildSettlement.updateGameSession(gameSession, 47, player.getUserId());
-        Assert.assertEquals(true, playerInventory.isClayport());
+        Assert.assertTrue(playerInventory.isClayport());
     }
 
     private void buildAtOrePort() {
-        Assert.assertEquals(true, gameSession.getGameboard().getKnots()[3].isHarbourKnot());
+        Assert.assertTrue(gameSession.getGameboard().getKnots()[3].isHarbourKnot());
         BuildSettlement.updateGameSession(gameSession, 3, player.getUserId());
-        Assert.assertEquals(true, playerInventory.isOreport());
+        Assert.assertTrue(playerInventory.isOreport());
     }
 
     private void buildAtWheatPort() {
-        Assert.assertEquals(true, gameSession.getGameboard().getKnots()[5].isHarbourKnot());
+        Assert.assertTrue(gameSession.getGameboard().getKnots()[5].isHarbourKnot());
         BuildSettlement.updateGameSession(gameSession, 5, player.getUserId());
-        Assert.assertEquals(true, playerInventory.isWheatport());
+        Assert.assertTrue(playerInventory.isWheatport());
     }
 
     private void buildAtWoolPort() {
-        Assert.assertEquals(true, gameSession.getGameboard().getKnots()[15].isHarbourKnot());
+        Assert.assertTrue(gameSession.getGameboard().getKnots()[15].isHarbourKnot());
         BuildSettlement.updateGameSession(gameSession, 15, player.getUserId());
-        Assert.assertEquals(true, playerInventory.isWoolport());
+        Assert.assertTrue(playerInventory.isWoolport());
     }
 
     private void buildAtWoodPort() {
-        Assert.assertEquals(true, gameSession.getGameboard().getKnots()[53].isHarbourKnot());
+        Assert.assertTrue(gameSession.getGameboard().getKnots()[53].isHarbourKnot());
         BuildSettlement.updateGameSession(gameSession, 53, player.getUserId());
-        Assert.assertEquals(true, playerInventory.isWoodport());
+        Assert.assertTrue(playerInventory.isWoodport());
     }
 }

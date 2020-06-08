@@ -11,8 +11,8 @@ import org.junit.Test;
 
 public class BankTest {
 
-    GameSession gameSession;
-    Player player1;
+    private GameSession gameSession;
+    private Player player1;
 
     @Before
     public void setUp() {
@@ -39,10 +39,10 @@ public class BankTest {
         Assert.assertEquals(1, player1.getInventory().getWheat());
         Assert.assertEquals(1, player1.getInventory().getOre());
         Assert.assertEquals(1, player1.getInventory().getClay());
-        Assert.assertFalse(player1.getInventory().canBankTrade);
-        Assert.assertFalse(player1.getInventory().canPortTrade);
-        Assert.assertFalse(player1.getInventory().hasPorts);
-        Assert.assertTrue(player1.getInventory().canTrade);
+        Assert.assertFalse(player1.getInventory().isCanBankTrade());
+        Assert.assertFalse(player1.getInventory().isCanPortTrade());
+        Assert.assertFalse(player1.getInventory().isHasPorts());
+        Assert.assertTrue(player1.getInventory().isCanTrade());
     }
 
     @Test
@@ -89,21 +89,13 @@ public class BankTest {
     @Test
     public void buildMessage() {
 
-        StringBuilder message = new StringBuilder();
-
-        message.append("Du hast erfolgreich 4 ").append("Holz").append(" gegen 1 ").append("Wolle").append(" getauscht");
-
-        Assert.assertEquals(message.toString(), Bank.buildMessage("Holz", "Wolle"));
+        Assert.assertEquals("Du hast erfolgreich 4 " + "Holz" + " gegen 1 " + "Wolle" + " getauscht", Bank.buildMessage("Holz", "Wolle"));
     }
 
     @Test
     public void setTradeData() {
 
-        StringBuilder message = new StringBuilder();
-
-        message.append("Holz").append("/").append("Wolle");
-
-        Bank.setTradeData(message.toString());
+        Bank.setTradeData("Holz" + "/" + "Wolle");
 
         Assert.assertEquals("Holz", Bank.getOffered());
         Assert.assertEquals("Wolle", Bank.getDesired());
@@ -115,7 +107,7 @@ public class BankTest {
         Bank.exchangeRessources("Holz", "Wolle", player1);
         Assert.assertEquals(2, player1.getInventory().getWool());
         Assert.assertEquals(0, player1.getInventory().getWood());
-        Assert.assertFalse(player1.getInventory().canBankTrade);
+        Assert.assertFalse(player1.getInventory().isCanBankTrade());
     }
 
     @Test
@@ -124,7 +116,7 @@ public class BankTest {
         Bank.exchangeRessources("Wolle", "Weizen", player1);
         Assert.assertEquals(2, player1.getInventory().getWheat());
         Assert.assertEquals(0, player1.getInventory().getWool());
-        Assert.assertFalse(player1.getInventory().canBankTrade);
+        Assert.assertFalse(player1.getInventory().isCanBankTrade());
     }
 
     @Test
@@ -133,7 +125,7 @@ public class BankTest {
         Bank.exchangeRessources("Weizen", "Erz", player1);
         Assert.assertEquals(2, player1.getInventory().getOre());
         Assert.assertEquals(0, player1.getInventory().getWheat());
-        Assert.assertFalse(player1.getInventory().canBankTrade);
+        Assert.assertFalse(player1.getInventory().isCanBankTrade());
     }
 
     @Test
@@ -142,7 +134,7 @@ public class BankTest {
         Bank.exchangeRessources("Erz", "Lehm", player1);
         Assert.assertEquals(2, player1.getInventory().getClay());
         Assert.assertEquals(0, player1.getInventory().getOre());
-        Assert.assertFalse(player1.getInventory().canBankTrade);
+        Assert.assertFalse(player1.getInventory().isCanBankTrade());
     }
 
     @Test
@@ -151,6 +143,6 @@ public class BankTest {
         Bank.exchangeRessources("Lehm", "Holz", player1);
         Assert.assertEquals(2, player1.getInventory().getWood());
         Assert.assertEquals(0, player1.getInventory().getClay());
-        Assert.assertFalse(player1.getInventory().canBankTrade);
+        Assert.assertFalse(player1.getInventory().isCanBankTrade());
     }
 }

@@ -12,6 +12,8 @@ import com.example.catanserver.businessLogic.model.KnightPower;
 
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Christina Senger
@@ -21,18 +23,19 @@ import java.util.Random;
 public class Buy {
 
     private static Random rand = new Random();
+    private static Logger logger = Logger.getLogger(Buy.class.getName()); // Logger
 
     /**
      * @param player current Player
      * @param game   current Game
-     * @return true, when there are DevCards left and the Player has enough Ressources to buy on, else false
+     * @return true, when there are DevCards left and the Player has enough Resources to buy on, else false
      */
     public static boolean checkStack(Player player, GameSession game) {
 
         return (player.getInventory().getWool() != 0
                 && player.getInventory().getOre() != 0
                 && player.getInventory().getWheat() != 0
-                && game.getDevCards().size() != 0);
+                && !game.getDevCards().isEmpty());
     }
 
     /**
@@ -50,49 +53,46 @@ public class Buy {
         String cardName = null;
 
         DevCard card;
-        System.out.println(player.getInventory().getAllSupplies());
+        logger.log(Level.ALL, player.getInventory().getAllSupplies());
 
         player.getInventory().removeWool(1);
         player.getInventory().removeWheat(1);
         player.getInventory().removeOre(1);
 
-        System.out.println(devCardStack.size());
-
         if (devCardStack.size() > 23) {
             card = devCardStack.remove(0);
-            System.out.println("first");
         } else {
             card = devCardStack.remove(rand.nextInt(devCardStack.size()));
-            System.out.println("random");
+            logger.log(Level.INFO, "random");
         }
 
         if (card instanceof BuildStreetCard) {
             player.getInventory().addBuildStreetCard(1);
             cardName = "Strassenbaukarte";
-            System.out.println(cardName);
+            logger.log(Level.INFO, cardName);
 
         } else if (card instanceof KnightCard) {
             player.getInventory().addKnightCard(1);
             cardName = "Ritterkarte";
             KnightPower.checkKnightPowerOnBuy(game, player.getInventory().getKnightCard(), player);
-            System.out.println(cardName);
+            logger.log(Level.INFO, cardName);
 
         } else if (card instanceof InventionCard) {
             player.getInventory().addInventianCard(1);
             cardName = "Erfindungskarte";
-            System.out.println(cardName);
+            logger.log(Level.INFO, cardName);
 
         } else if (card instanceof MonopolCard) {
             player.getInventory().addMonopolCard(1);
             cardName = "Monopolkarte";
-            System.out.println(cardName);
+            logger.log(Level.INFO, cardName);
 
         } else if (card instanceof VictoryPointCard) {
             player.getInventory().addVictoryCard();
             cardName = "Siegpunktkarte";
-            System.out.println(cardName);
+            logger.log(Level.INFO, cardName);
         }
-        System.out.println(player.getInventory().getAllSupplies());
+        logger.log(Level.INFO, player.getInventory().getAllSupplies());
         return cardName;
     }
 
@@ -113,7 +113,7 @@ public class Buy {
             message.append(" und einen Siegpunkt erhalten");
         }
 
-        System.out.println(message.toString());
+        logger.log(Level.INFO, message.toString());
         return message.toString();
     }
 }

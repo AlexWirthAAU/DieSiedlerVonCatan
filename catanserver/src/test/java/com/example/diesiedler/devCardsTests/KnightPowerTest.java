@@ -12,16 +12,15 @@ import org.junit.Test;
 
 public class KnightPowerTest {
 
-    GameSession gameSession;
-    Player player1;
-    Player player2;
-    Player player3;
-    Player player4;
-    KnightPower knightPower;
-    PlayerInventory playerInventory1;
-    PlayerInventory playerInventory2;
-    PlayerInventory playerInventory3;
-    PlayerInventory playerInventory4;
+    private GameSession gameSession;
+    private Player player1;
+    private Player player2;
+    private Player player3;
+    private Player player4;
+    private PlayerInventory playerInventory1;
+    private PlayerInventory playerInventory2;
+    private PlayerInventory playerInventory3;
+    private PlayerInventory playerInventory4;
 
     @Before
     public void setUp() {
@@ -34,7 +33,6 @@ public class KnightPowerTest {
         gameSession.setPlayer(player2);
         gameSession.setPlayer(player3);
         gameSession.setPlayer(player4);
-        knightPower = new KnightPower();
         playerInventory1 = player1.getInventory();
         playerInventory2 = player2.getInventory();
         playerInventory3 = player3.getInventory();
@@ -71,7 +69,7 @@ public class KnightPowerTest {
     @Test
     public void firstKnightBuy() {
         player1.getInventory().setKnightCard(1);
-        knightPower.checkKnightPowerOnBuy(gameSession, playerInventory1.getKnightCard(), player1);
+        KnightPower.checkKnightPowerOnBuy(gameSession, playerInventory1.getKnightCard(), player1);
         Assert.assertEquals(1, playerInventory1.getKnightCard());
         Assert.assertEquals(1, gameSession.getKnightPowerCount());
         Assert.assertEquals(2, playerInventory1.getVictoryPoints());
@@ -86,7 +84,7 @@ public class KnightPowerTest {
         gameSession.setKnightPowerCount(playerInventory1.getKnightCard());
         gameSession.setKnightPowerOwner(player1);
         playerInventory2.setKnightCard(1);
-        knightPower.checkKnightPowerOnBuy(gameSession, playerInventory2.getKnightCard(), player2);
+        KnightPower.checkKnightPowerOnBuy(gameSession, playerInventory2.getKnightCard(), player2);
         Assert.assertEquals(1, playerInventory1.getKnightCard());
         Assert.assertEquals(1, playerInventory2.getKnightCard());
         Assert.assertEquals(1, gameSession.getKnightPowerCount());
@@ -102,7 +100,7 @@ public class KnightPowerTest {
         playerInventory1.setVictoryPoints(2);
         gameSession.setKnightPowerCount(playerInventory1.getKnightCard());
         gameSession.setKnightPowerOwner(player1);
-        knightPower.checkKnightPowerOnBuy(gameSession, playerInventory1.getKnightCard(), player1);
+        KnightPower.checkKnightPowerOnBuy(gameSession, playerInventory1.getKnightCard(), player1);
         Assert.assertEquals(2, playerInventory1.getKnightCard());
         Assert.assertEquals(2, gameSession.getKnightPowerCount());
         Assert.assertEquals(2, playerInventory1.getVictoryPoints());
@@ -117,7 +115,7 @@ public class KnightPowerTest {
         gameSession.setKnightPowerCount(playerInventory1.getKnightCard());
         gameSession.setKnightPowerOwner(player1);
         playerInventory2.setKnightCard(2);
-        knightPower.checkKnightPowerOnBuy(gameSession, playerInventory2.getKnightCard(), player2);
+        KnightPower.checkKnightPowerOnBuy(gameSession, playerInventory2.getKnightCard(), player2);
         Assert.assertEquals(1, playerInventory1.getKnightCard());
         Assert.assertEquals(2, playerInventory2.getKnightCard());
         Assert.assertEquals(2, gameSession.getKnightPowerCount());
@@ -134,7 +132,7 @@ public class KnightPowerTest {
         gameSession.setKnightPowerCount(playerInventory1.getKnightCard());
         gameSession.setKnightPowerOwner(player1);
         playerInventory2.setKnightCard(2);
-        knightPower.checkKnightPowerOnPlay(gameSession, playerInventory2.getKnightCard(), player2);
+        KnightPower.checkKnightPowerOnPlay(gameSession, playerInventory2.getKnightCard(), player2);
         Assert.assertEquals(5, playerInventory1.getKnightCard());
         Assert.assertEquals(2, playerInventory2.getKnightCard());
         Assert.assertEquals(5, gameSession.getKnightPowerCount());
@@ -153,7 +151,7 @@ public class KnightPowerTest {
         playerInventory2.setKnightCard(0);
         playerInventory3.setKnightCard(0);
         playerInventory4.setKnightCard(0);
-        knightPower.checkKnightPowerOnPlay(gameSession, playerInventory1.getKnightCard(), player1);
+        KnightPower.checkKnightPowerOnPlay(gameSession, playerInventory1.getKnightCard(), player1);
         Assert.assertEquals(5, playerInventory1.getKnightCard());
         Assert.assertEquals(0, playerInventory2.getKnightCard());
         Assert.assertEquals(0, playerInventory3.getKnightCard());
@@ -174,7 +172,7 @@ public class KnightPowerTest {
         gameSession.setKnightPowerCount(playerInventory1.getKnightCard());
         gameSession.setKnightPowerOwner(player1);
         playerInventory2.setKnightCard(5);
-        knightPower.checkKnightPowerOnPlay(gameSession, playerInventory1.getKnightCard(), player1);
+        KnightPower.checkKnightPowerOnPlay(gameSession, playerInventory1.getKnightCard(), player1);
         Assert.assertEquals(5, playerInventory1.getKnightCard());
         Assert.assertEquals(5, playerInventory2.getKnightCard());
         Assert.assertEquals(5, gameSession.getKnightPowerCount());
@@ -193,7 +191,7 @@ public class KnightPowerTest {
         playerInventory2.setKnightCard(0);
         playerInventory3.setKnightCard(0);
         playerInventory4.setKnightCard(0);
-        knightPower.checkKnightPowerOnPlay(gameSession, playerInventory1.getKnightCard(), player1);
+        KnightPower.checkKnightPowerOnPlay(gameSession, playerInventory1.getKnightCard(), player1);
         Assert.assertEquals(0, playerInventory1.getKnightCard());
         Assert.assertEquals(0, playerInventory2.getKnightCard());
         Assert.assertEquals(0, playerInventory3.getKnightCard());
@@ -215,7 +213,7 @@ public class KnightPowerTest {
         playerInventory2.setKnightCard(4);
         playerInventory3.setKnightCard(2);
         playerInventory4.setKnightCard(1);
-        knightPower.checkKnightPowerOnPlay(gameSession, playerInventory1.getKnightCard(), player1);
+        KnightPower.checkKnightPowerOnPlay(gameSession, playerInventory1.getKnightCard(), player1);
         Assert.assertEquals(3, playerInventory1.getKnightCard());
         Assert.assertEquals(4, playerInventory2.getKnightCard());
         Assert.assertEquals(2, playerInventory3.getKnightCard());
@@ -238,7 +236,7 @@ public class KnightPowerTest {
         playerInventory2.setKnightCard(4);
         playerInventory3.setKnightCard(4);
         playerInventory4.setKnightCard(1);
-        knightPower.checkKnightPowerOnPlay(gameSession, playerInventory1.getKnightCard(), player1);
+        KnightPower.checkKnightPowerOnPlay(gameSession, playerInventory1.getKnightCard(), player1);
         Assert.assertEquals(3, playerInventory1.getKnightCard());
         Assert.assertEquals(4, playerInventory2.getKnightCard());
         Assert.assertEquals(4, playerInventory3.getKnightCard());

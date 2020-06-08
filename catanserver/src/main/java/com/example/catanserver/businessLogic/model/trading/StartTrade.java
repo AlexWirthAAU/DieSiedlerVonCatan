@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Christina Senger
@@ -16,18 +18,20 @@ import java.util.Map;
  */
 public class StartTrade {
 
+    private static Logger logger = Logger.getLogger(StartTrade.class.getName()); // Logger
+
     private Map<String, Integer> offer = new HashMap<>(); // Map of the offered Ressources
     private Map<String, Integer> want = new HashMap<>(); // Map of the desired Ressources
 
     /**
-     * @param offer      Map with the offer Ressources
+     * @param offer Map with the offer Resources
      * @param currPlayer current Player
      * @return true, when the Player <code>canTrade</code> and has
-     * at least the number of offered Ressources, else false.
+     * at least the number of offered Resources, else false.
      */
     public boolean checkTrade(Map<String, Integer> offer, Player currPlayer) {
 
-        if (!currPlayer.getInventory().canTrade) {
+        if (!currPlayer.getInventory().isCanTrade()) {
             return false;
         } else return currPlayer.getInventory().getWood() >= offer.get("Holz")
                 && currPlayer.getInventory().getWool() >= offer.get("Wolle")
@@ -38,11 +42,11 @@ public class StartTrade {
 
     /**
      * It iterates through all Players in the Game. When the Player is not
-     * the current Player and has the desired Ressources, he is added to
+     * the current Player and has the desired Resources, he is added to
      * the List of potential Trading-Partners.
      *
-     * @param game       current Game
-     * @param want       Map with the desired Ressources
+     * @param game current Game
+     * @param want Map with the desired Ressources
      * @param currPlayer current Player
      */
     public List<Player> checkAndSetTradingPartners(GameSession game, Map<String, Integer> want, Player currPlayer) {
@@ -52,19 +56,15 @@ public class StartTrade {
 
         for (Player player : players) {
 
-            if (!player.equals(currPlayer)) {
+            if (!player.equals(currPlayer) && player.getInventory().getWood() >= want.get("Holz")
+                    && player.getInventory().getWool() >= want.get("Wolle")
+                    && player.getInventory().getWheat() >= want.get("Weizen")
+                    && player.getInventory().getOre() >= want.get("Erz")
+                    && player.getInventory().getClay() >= want.get("Lehm")) {
 
-                if (player.getInventory().getWood() >= want.get("Holz")
-                        && player.getInventory().getWool() >= want.get("Wolle")
-                        && player.getInventory().getWheat() >= want.get("Weizen")
-                        && player.getInventory().getOre() >= want.get("Erz")
-                        && player.getInventory().getClay() >= want.get("Lehm")) {
-
-                    potentialTradingPartners.add(player);
-                }
+                potentialTradingPartners.add(player);
             }
         }
-        System.out.println("trading partners" + potentialTradingPartners);
         return potentialTradingPartners;
     }
 
@@ -98,18 +98,18 @@ public class StartTrade {
             i += 2;
         }
 
-        System.out.println("offer " + offer + " want " + want);
+        logger.log(Level.INFO, "offer " + offer + " want " + want);
     }
 
     /**
-     * @return Map of the offered Ressources
+     * @return Map of the offered Resources
      */
     public Map<String, Integer> getOffered() {
         return offer;
     }
 
     /**
-     * @return Map of the desired Ressources
+     * @return Map of the desired Resources
      */
     public Map<String, Integer> getDesired() {
         return want;
@@ -118,7 +118,7 @@ public class StartTrade {
 
     /**
      * Creates a Message, specific to the Name and Amount
-     * of the Ressources and appends it to a StringBuilder.
+     * of the Resources and appends it to a StringBuilder.
      *
      * @param currPlayer current Player
      * @param offer      Map with the offered Ressources
@@ -145,21 +145,21 @@ public class StartTrade {
             }
         }
 
-        System.out.println(message.toString());
+        logger.log(Level.INFO, message.toString());
         return message.toString();
     }
 
     /**
      * Sets the Data on the Trade and activates a Trade in the Game
      *
-     * @param offer                    Map of offered Ressources
-     * @param want                     Map of desired Ressources
+     * @param offer                    Map of offered Resources
+     * @param want                     Map of desired Resources
      * @param currPlayer               current Player
      * @param potentialTradingPartners List of all potential Trading-Partners
      * @param mess                     Trade-Message
      * @param gs                       current Game
      */
-    public void setTrade(Map offer, Map want, Player currPlayer, List<Player> potentialTradingPartners, String mess, GameSession gs) {
+    public void setTrade(Map<String, Integer> offer, Map<String, Integer> want, Player currPlayer, List<Player> potentialTradingPartners, String mess, GameSession gs) {
         Trade trade = new Trade(offer, want, currPlayer, potentialTradingPartners, mess, gs);
         gs.setTrade(trade);
         gs.setIsTradeOn(true);

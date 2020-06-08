@@ -29,7 +29,7 @@ import java.util.logging.Logger;
  */
 public class PortChangeActivity extends AppCompatActivity {
 
-    private static final Logger logger = Logger.getLogger(BankChangeActivity.class.getName()); // Logger
+    private static final Logger logger = Logger.getLogger(PortChangeActivity.class.getName()); // Logger
 
     List<Button> giveBtns = new ArrayList<>(); // List of all Give-Buttons
     List<Button> getBtns = new ArrayList<>(); // List of all Get-Buttons
@@ -38,7 +38,7 @@ public class PortChangeActivity extends AppCompatActivity {
 
     /**
      * Adds all Buttons to their List and enables them, when the
-     * Player has less than 3 of the correspondending Ressource or no Port.
+     * Player has less than 3 of the corresponding Resource or no Port.
      * Specifies the Handler in ClientData for the current Activity.
      *
      * @param savedInstanceState saved State
@@ -187,8 +187,6 @@ public class PortChangeActivity extends AppCompatActivity {
      * Handler for the PortChangeActivity
      */
     private class PortChangeHandler extends GameHandler {
-
-        private String mess;
 
         PortChangeHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);

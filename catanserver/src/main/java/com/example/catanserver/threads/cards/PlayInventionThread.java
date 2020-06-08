@@ -9,6 +9,9 @@ import com.example.catanserver.threads.ErrorThread;
 import com.example.catanserver.threads.GameThread;
 import com.example.catanserver.threads.SendToClient;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @author Christina Senger
  * @author Fabian Schaffenrath (edit)
@@ -17,18 +20,18 @@ import com.example.catanserver.threads.SendToClient;
  */
 public class PlayInventionThread extends GameThread {
 
+    private static Logger logger = Logger.getLogger(PlayInventionThread.class.getName()); // Logger
+
     private Player player; // current Player
-    private StringBuilder message = new StringBuilder(); // Message send to the User
 
     private String res;
-    private String resName; // Name of the Ressource (german)
 
     /**
-     * Contructor - The Name of the Ressource and the Player is set.
+     * Constructor - The Name of the Resource and the Player is set.
      * <p>
      * {@inheritDoc}
      *
-     * @param res Name of the Ressource (english, lowercase)
+     * @param res Name of the Resource (english, lowercase)
      */
     public PlayInventionThread(User user, GameSession game, String res) {
         super(user, game);
@@ -43,11 +46,13 @@ public class PlayInventionThread extends GameThread {
      * Additionally, the begin turn command is sent to the next user.
      * Otherwise an Error-Thread is started.
      */
+    @Override
     public void run() {
 
         if (Invention.checkCards(player)) {
-            System.out.println("checked");
-            resName = Invention.playCard(player, res);
+            logger.log(Level.INFO, "checked");
+            // Name of the Resource (german)
+            String resName = Invention.playCard(player, res);
             String mess = Invention.buildMessage(resName);
             game.nextPlayer();
             if(!endTurn()) {
@@ -63,5 +68,6 @@ public class PlayInventionThread extends GameThread {
             ErrorThread errThread = new ErrorThread(user.getConnectionOutputStream(), "Karte konnte nicht gespielt werden");
             errThread.run();
         }
+        Server.currentlyThreaded.remove(game.getGameId());
     }
 }

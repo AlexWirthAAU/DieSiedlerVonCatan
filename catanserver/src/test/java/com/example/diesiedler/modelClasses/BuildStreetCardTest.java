@@ -9,7 +9,7 @@ import org.junit.Test;
 
 public class BuildStreetCardTest {
 
-    BuildStreetCard buildStreetCard;
+    private BuildStreetCard buildStreetCard;
 
     @Before
     public void setUp() {

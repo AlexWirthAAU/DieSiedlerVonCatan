@@ -13,8 +13,8 @@ import org.junit.Test;
 
 public class ResourceAllocationCityTest {
 
-    GameSession gameSession;
-    Player p;
+    private GameSession gameSession;
+    private Player p;
 
     @Before
     public void setUp() {

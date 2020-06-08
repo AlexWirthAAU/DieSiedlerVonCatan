@@ -37,7 +37,7 @@ public class BankChangeActivity extends AppCompatActivity {
 
     /**
      * Adds all Buttons to their List and enables them, when the
-     * Player has less than 4 of the correspondending Ressource.
+     * Player has less than 4 of the corresponding Resource.
      * Specifies the Handler in ClientData for the current Activity.
      *
      * @param savedInstanceState saved State
@@ -167,8 +167,6 @@ public class BankChangeActivity extends AppCompatActivity {
      * Handler for the BankChangeActivity
      */
     private class BankChangeHandler extends GameHandler {
-
-        private String mess;
 
         BankChangeHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);

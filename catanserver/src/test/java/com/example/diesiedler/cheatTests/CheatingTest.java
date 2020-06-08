@@ -12,8 +12,8 @@ import org.junit.Test;
 
 public class CheatingTest {
 
-    GameSession game;
-    Player player1, player2, player3;
+    private GameSession game;
+    private Player player1, player2, player3;
 
     @Before
     public void before(){

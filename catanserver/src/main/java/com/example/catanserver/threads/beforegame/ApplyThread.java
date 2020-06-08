@@ -29,6 +29,7 @@ public class ApplyThread extends Thread{
      * Adds applying User to the List of currently searching Users and sends the
      * new Searching-List Broadcast to all searching Users.
      */
+    @Override
     public void run(){
         Server.currentlySearching.add(user);
         SendToClient.sendSearchingListBroadcast(Server.currentlySearching);

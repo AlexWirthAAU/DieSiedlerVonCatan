@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final Logger logger = Logger.getLogger(LoginActivity.class.getName());
 
-    public Handler loginHandler = new LoginHandler(Looper.getMainLooper(), this); // Handler
+    Handler loginHandler = new LoginHandler(Looper.getMainLooper(), this); // Handler
     private EditText displayName; // Input Field for the Username
 
     /**

@@ -27,6 +27,7 @@ public class StopThread extends Thread {
      * Removes a User from the searching list and sends an updated
      * List of searching Users to everyone still present in the List.
      */
+    @Override
     public void run() {
         if (Server.currentlySearching.remove(user)) {
             SendToClient.sendSearchingListBroadcast(Server.currentlySearching);

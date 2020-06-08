@@ -2,6 +2,9 @@ package com.example.catanserver.businessLogic.model.trading;
 
 import com.example.catangame.Player;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @author Christina Senger
  * <p>
@@ -9,21 +12,22 @@ import com.example.catangame.Player;
  */
 public class Port {
 
-    private static String offered; // Name of the offerd Ressource
-    private static String desired; // Name of the desired Ressource
+    private static Logger logger = Logger.getLogger(Port.class.getName()); // Logger
+
+    private static String offered; // Name of the offered Resource
+    private static String desired; // Name of the desired Resource
 
     /**
      * @param currPlayer current Player
-     * @param get        Name of the desired Ressource
+     * @param get Name of the desired Ressource
      * @return true, when the Player <code>canPortTrade</code> and has
-     * at least 3 of the offered Ressource, else false.
+     * at least 3 of the offered Resource, else false.
      */
     public static boolean checkTrade(Player currPlayer, String get) {
 
         boolean invent = false;
 
-        if (!currPlayer.getInventory().canPortTrade || !currPlayer.getInventory().hasPorts) {
-            System.out.println("firstcheck");
+        if (!currPlayer.getInventory().isCanPortTrade() || !currPlayer.getInventory().isHasPorts()) {
             return false;
         }
 
@@ -36,7 +40,6 @@ public class Port {
                 break;
             case "Weizen":
                 invent = currPlayer.getInventory().isWheatport();
-                System.out.println("portcheck");
                 break;
             case "Erz":
                 invent = currPlayer.getInventory().isOreport();
@@ -53,7 +56,7 @@ public class Port {
 
     /**
      * The Trade-Offer is splitted by /. The first Elements
-     * is the offered, the second is the desired Ressource.
+     * is the offered, the second is the desired Resource.
      *
      * @param tradeStr Trade-Offer sent from Client
      */
@@ -63,11 +66,11 @@ public class Port {
 
         offered = trd[0];
         desired = trd[1];
-        System.out.println(offered + " give " + desired + " get");
+        logger.log(Level.INFO, offered + " give " + desired + " get");
     }
 
     /**
-     * @return Name of the offered Ressources
+     * @return Name of the offered Resources
      */
     public static String getOffered() {
         String ret = offered;
@@ -76,7 +79,7 @@ public class Port {
     }
 
     /**
-     * @return Name of the desired Ressources
+     * @return Name of the desired Resources
      */
     public static String getDesired() {
         String ret = desired;
@@ -85,11 +88,11 @@ public class Port {
     }
 
     /**
-     * Creates a Message, specific to the Name of the Ressources,
+     * Creates a Message, specific to the Name of the Resources,
      * and appends it to a StringBuilder.
      *
-     * @param give Name of the given Ressource
-     * @param get  Name of the desired Ressource
+     * @param give Name of the given Resource
+     * @param get  Name of the desired Resource
      * @return the StringBuilder as a String
      */
     public static String buildMessage(String give, String get) {
@@ -97,7 +100,7 @@ public class Port {
         StringBuilder message = new StringBuilder();
 
         message.append("Du hast erfolgreich 3 ").append(give).append(" gegen 1 ").append(get).append(" getauscht");
-        System.out.println(message.toString());
+        logger.log(Level.INFO, message.toString());
         return message.toString();
     }
 
@@ -151,7 +154,7 @@ public class Port {
                 break;
         }
 
-        System.out.println("3 " + give + " gegen 1 " + get);
-        System.out.println(currPlayer.getInventory().getAllRessources());
+        logger.log(Level.INFO, "3 " + give + " gegen 1 " + get);
+        logger.log(Level.INFO, currPlayer.getInventory().getAllResources());
     }
 }

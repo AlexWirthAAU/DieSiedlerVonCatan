@@ -11,12 +11,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class MonopolTest {
-    GameSession gameSession;
-    Player player1;
-    Player player2;
-    Player player3;
-    Player player4;
-    PlayerInventory playerInventory1;
+    private GameSession gameSession;
+    private Player player1;
+    private Player player2;
+    private Player player3;
+    private Player player4;
 
     @Before
     public void setUp() {
@@ -62,7 +61,7 @@ public class MonopolTest {
 
     @Test
     public void assertBeforeAll() {
-        playerInventory1 = player1.getInventory();
+        PlayerInventory playerInventory1 = player1.getInventory();
         Assert.assertEquals(0, playerInventory1.getVictoryPoints());
         Assert.assertEquals(0, playerInventory1.getBuildStreetCard());
         Assert.assertEquals(0, playerInventory1.getKnightCard());
@@ -91,12 +90,9 @@ public class MonopolTest {
     @Test
     public void buildMessage() {
 
-        StringBuilder message = new StringBuilder();
-
-        message.append("Du hast eine Monopolkarte gespielt und ");
-        message.append(5).append(" ").append("Ressourcen").append(" erhalten");
-
-        Assert.assertEquals(message.toString(), Monopol.buildMessage("Ressourcen", 5));
+        String message = "Du hast eine Monopolkarte gespielt und " +
+                5 + " " + "Ressourcen" + " erhalten";
+        Assert.assertEquals(message, Monopol.buildMessage("Ressourcen", 5));
     }
 
     @Test

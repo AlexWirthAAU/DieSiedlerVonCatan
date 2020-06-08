@@ -14,14 +14,14 @@ import com.example.catanserver.businessLogic.model.Thief;
 
 public class ThiefThread extends GameThread {
 
-    String tileIndex;
+    private String tileIndex;
     private String card;
 
     /**
-     * @param user
-     * @param game
-     * @param tileIndex
-     * @param "CARD"    when the Thread was loaded playing a BuildStreetCard, else " "
+     * @param user current User
+     * @param game current Game
+     * @param tileIndex Index of the Tile the Thief should be moved to
+     * @param card    when the Thread was loaded playing a BuildStreetCard, else " "
      */
     public ThiefThread(User user, GameSession game, String tileIndex, String card) {
         super(user, game);
@@ -34,6 +34,7 @@ public class ThiefThread extends GameThread {
      * Method in <code>Thief</code>. It broadcasts a new GameSession, as well as sends a
      * command String to the current user and possibly the next user.
      */
+    @Override
     public void run(){
         try {
             int thiefIndex = Integer.parseInt(tileIndex);

@@ -26,10 +26,8 @@ public class ClientData {
 
     private static final Logger logger = Logger.getLogger(ClientData.class.getName()); // Logger
 
-    // Socket and Streams
-    public static Socket SERVER;//NOSONAR
     public static ObjectInputStream GET_FROM_SERVER;//NOSONAR
-    public static ObjectOutputStream SEND_TO_SERVER;//NOSONAR
+    static ObjectOutputStream SEND_TO_SERVER;//NOSONAR
 
     // this Users ID
     public static int userId = 0;//NOSONAR
@@ -57,7 +55,9 @@ public class ClientData {
      */
     public static void initializeServerConnection() {
         try {
-            SERVER = new Socket(HOST, PORT);
+            // Socket and Streams
+            //NOSONAR
+            Socket SERVER = new Socket(HOST, PORT);
             logger.log(Level.INFO, "Socket created.");
 
             SERVER.setKeepAlive(true);
@@ -71,17 +71,6 @@ public class ClientData {
 
             SERVER.setSoTimeout(0);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Closes the Socket.
-     */
-    public static void closeServerConnection() {
-        try {
-            SERVER.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

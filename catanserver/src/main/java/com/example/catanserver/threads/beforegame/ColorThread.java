@@ -35,6 +35,7 @@ public class ColorThread extends GameThread {
      * as the Players Color. The Game is removed from currentlyThreaded.
      * It sends an updated GameSession object to every player.
      */
+    @Override
     public void run(){
         try {
             Colors color = Colors.valueOf(this.colorString);
@@ -47,11 +48,11 @@ public class ColorThread extends GameThread {
             }
             if (!taken) {
                 game.getPlayer(user.getUserId()).setColor(color);
-                System.out.println(game.getPlayer(user.getUserId()).getColor());
+                System.out.println(game.getPlayer(user.getUserId()).getColor());//NOSONAR
                 SendToClient.sendGameSessionBroadcast(game);
             }
         } catch (IllegalArgumentException e) {
-            e.printStackTrace();
+            e.printStackTrace();//NOSONAR
         }
         Server.currentlyThreaded.remove(game.getGameId());
     }

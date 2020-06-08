@@ -16,12 +16,12 @@ import java.util.Map;
 
 public class TradeTest {
 
-    StartTrade startTrade;
-    GameSession gameSession;
-    Player player1;
-    Player player2;
-    Player player3;
-    Player player4;
+    private StartTrade startTrade;
+    private GameSession gameSession;
+    private Player player1;
+    private Player player2;
+    private Player player3;
+    private Player player4;
 
     @Before
     public void setUp() {
@@ -74,10 +74,10 @@ public class TradeTest {
         Assert.assertEquals(1, player1.getInventory().getWheat());
         Assert.assertEquals(1, player1.getInventory().getOre());
         Assert.assertEquals(1, player1.getInventory().getClay());
-        Assert.assertFalse(player1.getInventory().canBankTrade);
-        Assert.assertFalse(player1.getInventory().canPortTrade);
-        Assert.assertFalse(player1.getInventory().hasPorts);
-        Assert.assertTrue(player1.getInventory().canTrade);
+        Assert.assertFalse(player1.getInventory().isCanBankTrade());
+        Assert.assertFalse(player1.getInventory().isCanPortTrade());
+        Assert.assertFalse(player1.getInventory().isHasPorts());
+        Assert.assertTrue(player1.getInventory().isCanTrade());
     }
 
     @Test
@@ -131,11 +131,7 @@ public class TradeTest {
         map2.put("Erz", 1);
         map2.put("Lehm", 0);
 
-        StringBuilder message = new StringBuilder();
-
-        message.append(player1.getDisplayName()).append(" bietet ").append("2 Holz und moechte dafuer 2 Holz, 1 Erz, ");
-
-        Assert.assertEquals(message.toString(), startTrade.buildMessage(player1, map, map2));
+        Assert.assertEquals(player1.getDisplayName() + " bietet " + "2 Holz und moechte dafuer 2 Holz, 1 Erz, ", startTrade.buildMessage(player1, map, map2));
     }
 
     @Test

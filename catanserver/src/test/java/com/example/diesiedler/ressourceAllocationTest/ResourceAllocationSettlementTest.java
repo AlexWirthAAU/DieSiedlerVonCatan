@@ -11,8 +11,8 @@ import org.junit.Test;
 
 public class ResourceAllocationSettlementTest {
 
-    GameSession gameSession;
-    Player p;
+    private GameSession gameSession;
+    private Player p;
 
     @Before
     public void setUp() {

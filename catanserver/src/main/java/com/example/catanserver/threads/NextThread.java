@@ -23,6 +23,7 @@ public class NextThread extends GameThread {
      * GameSession and also sends the end turn command to the current user as well as the begin
      * turn command to the next user.
      */
+    @Override
     public void run() {
         game.nextPlayer();
         if(!endTurn()) {

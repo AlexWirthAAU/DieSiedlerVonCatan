@@ -2,7 +2,6 @@ package com.example.catanserver.threads.trading;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
-import com.example.catangame.Trade;
 import com.example.catanserver.Server;
 import com.example.catanserver.User;
 import com.example.catanserver.businessLogic.model.trading.StartTrade;
@@ -10,10 +9,10 @@ import com.example.catanserver.threads.ErrorThread;
 import com.example.catanserver.threads.GameThread;
 import com.example.catanserver.threads.SendToClient;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Christina Senger
@@ -23,12 +22,8 @@ import java.util.Map;
  */
 public class TradeThread extends GameThread {
 
-    private List<Player> potentialTradingPartners = new ArrayList<>(); // List of all potential Trading-Partner (have enough Ressources)
+    private static Logger logger = Logger.getLogger(TradeThread.class.getName()); // Logger
 
-    private Map<String, Integer> offer = new HashMap<>(); // Map of the offered Ressources
-    private Map<String, Integer> want = new HashMap<>(); // Map of the desired Ressources
-
-    private Trade trade; // Representation of a Trade
     private GameSession gs; // current Game
 
     private Player currPlayer; // current Player
@@ -60,15 +55,18 @@ public class TradeThread extends GameThread {
         StartTrade startTrade = new StartTrade();
 
         startTrade.setTradeData(tradeStr);
-        offer = startTrade.getOffered();
-        want = startTrade.getDesired();
+        // Map of the offered Resources
+        Map<String, Integer> offer = startTrade.getOffered();
+        // Map of the desired Resources
+        Map<String, Integer> want = startTrade.getDesired();
 
         if (startTrade.checkTrade(offer, currPlayer)) {
 
-            System.out.println("checked");
-            potentialTradingPartners = startTrade.checkAndSetTradingPartners(game, want,currPlayer);
+            logger.log(Level.INFO, "checked");
+            // List of all potential Trading-Partner (have enough Ressources)
+            List<Player> potentialTradingPartners = startTrade.checkAndSetTradingPartners(game, want, currPlayer);
 
-            if (potentialTradingPartners.size() == 0) {
+            if (potentialTradingPartners.isEmpty()) {
                 game.nextPlayer();
                 SendToClient.sendGameSessionBroadcast(game);
                 SendToClient.sendStringMessage(user, SendToClient.HEADER_ENDTURN + " Keine Handelspartner");
@@ -88,5 +86,6 @@ public class TradeThread extends GameThread {
             ErrorThread errThread = new ErrorThread(user.getConnectionOutputStream(),"Nicht genug Rohstoffe um zu handeln");
             errThread.run();
         }
+        Server.currentlyThreaded.remove(game.getGameId());
     }
 }

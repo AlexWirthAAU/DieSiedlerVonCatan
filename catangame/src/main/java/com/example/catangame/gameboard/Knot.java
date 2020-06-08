@@ -140,12 +140,8 @@ public class Knot implements Serializable {
                 this.isWoodPort = true;
                 break;
             default: {
-                this.isHarbourKnot = false;
-                this.isOrePort = false;
-                this.isClayPort = false;
-                this.isWheatPort = false;
-                this.isWoodPort = false;
-                this.isWoolPort = false;
+                setFalsePorts();
+                break;
             }
         }
     }
@@ -173,6 +169,16 @@ public class Knot implements Serializable {
 
     public boolean isClayPort() {
         return isClayPort;
+    }
+
+
+    private void setFalsePorts() {
+        this.isHarbourKnot = false;
+        this.isOrePort = false;
+        this.isClayPort = false;
+        this.isWheatPort = false;
+        this.isWoodPort = false;
+        this.isWoolPort = false;
     }
 }
 

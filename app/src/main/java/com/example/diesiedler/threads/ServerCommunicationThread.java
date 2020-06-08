@@ -28,8 +28,8 @@ public class ServerCommunicationThread extends Thread {
     private static final Logger logger = Logger.getLogger(ServerCommunicationThread.class.getName()); // Logger
 
     /**
-     * Waites on Input from Server. Sobald dieser auftritt, werden die Daten abgespeichert und der
-     * derzeitige Handler mit einer Message angesprochen.
+     * Waites on Input from Server. If there is one, the Date is stored and the
+     * current Handler gets called with a Message.
      * <p>
      * msg.arg1 Codes: TODO: Change to enums
      * -1 StartServerCommunicationThread -> Connection could not be established
@@ -40,6 +40,7 @@ public class ServerCommunicationThread extends Thread {
      * 4 GameSession returned
      * 5 String returned (obj contains string)
      */
+    @Override
     public void run() {
         try {
             Object read;

@@ -16,14 +16,14 @@ import java.util.List;
 import java.util.Map;
 
 public class AnswerTest {
-    GameSession gameSession;
-    Player player1;
-    Player player2;
-    Player player3;
-    Player player4;
-    Trade trade;
-    Map<String, Integer> map;
-    Map<String, Integer> map2;
+    private GameSession gameSession;
+    private Player player1;
+    private Player player2;
+    private Player player3;
+    private Player player4;
+    private Trade trade;
+    private Map<String, Integer> map;
+    private Map<String, Integer> map2;
 
     @Before
     public void setUp() {

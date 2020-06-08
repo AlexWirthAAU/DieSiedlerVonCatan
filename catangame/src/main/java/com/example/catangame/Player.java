@@ -48,6 +48,7 @@ public class Player implements Serializable {
         return inventory;
     }
 
+
     // Set Color
     public void setColor(Colors color) {
         this.color = color;
@@ -64,10 +65,7 @@ public class Player implements Serializable {
     }
 
     public boolean hasToSkip(){
-        if(toSkip>0){
-            return true;
-        }
-        return false;
+        return toSkip > 0;
     }
 
 }

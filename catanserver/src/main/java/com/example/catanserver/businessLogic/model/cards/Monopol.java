@@ -3,6 +3,9 @@ package com.example.catanserver.businessLogic.model.cards;
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @author Christina Senger
  * <p>
@@ -10,6 +13,7 @@ import com.example.catangame.Player;
  */
 public class Monopol {
 
+    private static Logger logger = Logger.getLogger(Monopol.class.getName()); // Logger
     private static int number = 0;
 
     /**
@@ -33,7 +37,7 @@ public class Monopol {
     public static String playCard(Player player, String res, GameSession game) {
 
         String resName = null;
-        System.out.println(player.getInventory().getAllSupplies());
+        logger.log(Level.INFO, player.getInventory().getAllSupplies());
 
         switch (res) {
             case "wood":
@@ -91,7 +95,7 @@ public class Monopol {
         }
 
         player.getInventory().removeMonopolCard(1);
-        System.out.println(player.getInventory().getAllSupplies() + " after");
+        logger.log(Level.INFO, player.getInventory().getAllSupplies());
 
         return resName;
     }
@@ -116,7 +120,7 @@ public class Monopol {
 
         message.append("Du hast eine Monopolkarte gespielt und ");
         message.append(number).append(" ").append(resName).append(" erhalten");
-        System.out.println(message.toString());
+        logger.log(Level.INFO, message.toString());
         return message.toString();
     }
 }

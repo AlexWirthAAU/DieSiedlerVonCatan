@@ -24,6 +24,7 @@ import com.example.diesiedler.presenter.UpdateGameboardView;
 import com.example.diesiedler.presenter.handler.GameHandler;
 import com.richpath.RichPathView;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -35,27 +36,15 @@ import java.util.logging.Logger;
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final Logger logger = Logger.getLogger(MainActivity.class.getName()); // Logger
+    private Logger logger = Logger.getLogger(MainActivity.class.getName()); // Logger
     private Handler handler = new MainHandler(Looper.getMainLooper(), this); // Handler
     private RichPathView richPathView;
-
-    private TextView woodCount; // Number of Ressources
-    private TextView clayCount;
-    private TextView wheatCount;
-    private TextView oreCount;
-    private TextView woolCount;
-    private TextView devCardCount;
-
-    private TextView currentPlayer; // View of the current Player
-
-    private ImageView devCards; // Button to show Score and DevCards
-    private Button scoreBoard;
 
     private ImageView grabView;
     private String grabberId;
 
     /**
-     * Loads actual Gameboard and Ressources. Sets Handler.
+     * Loads actual Gameboard and Resources. Sets Handler.
      * If the Intent has an Extra, a Alert-Message with its Test is shown.
      *
      * @param savedInstanceState saved State
@@ -66,9 +55,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.gameboardview);
         richPathView = findViewById(R.id.ic_gameboardView);
 
-        devCards = findViewById(R.id.devCard);
+        // Button to show Score and DevCards
+        ImageView devCards = findViewById(R.id.devCard);
         devCards.setOnClickListener(this);
-        scoreBoard = findViewById(R.id.scoreBoard);
+        Button scoreBoard = findViewById(R.id.scoreBoard);
         scoreBoard.setOnClickListener(this);
 
         // Cheating
@@ -84,11 +74,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String intentMess = getIntent().getStringExtra("mess");
 
         if (intentMess != null) {
-            System.out.println(intentMess + " inentmessinMainin");
+            logger.log(Level.INFO, intentMess + " inentmessinMainin");
             alert(intentMess);
         }
 
-        System.out.println(intentMess + " inentmessinMainout");
+        logger.log(Level.INFO, intentMess + " inentmessinMainout");
     }
 
     @Override
@@ -132,19 +122,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         PlayerInventory playerInventory = ClientData.currentGame.getPlayer(ClientData.userId).getInventory();
         Player currentP = ClientData.currentGame.getCurr();
 
-        woodCount = findViewById(R.id.woodCount);
+        // Number of Resources
+        TextView woodCount = findViewById(R.id.woodCount);
         woodCount.setText(Integer.toString(playerInventory.getWood()));
-        clayCount = findViewById(R.id.clayCount);
+        TextView clayCount = findViewById(R.id.clayCount);
         clayCount.setText(Integer.toString(playerInventory.getClay()));
-        wheatCount = findViewById(R.id.wheatCount);
+        TextView wheatCount = findViewById(R.id.wheatCount);
         wheatCount.setText(Integer.toString(playerInventory.getWheat()));
-        oreCount = findViewById(R.id.oreCount);
+        TextView oreCount = findViewById(R.id.oreCount);
         oreCount.setText(Integer.toString(playerInventory.getOre()));
-        woolCount = findViewById(R.id.woolCount);
+        TextView woolCount = findViewById(R.id.woolCount);
         woolCount.setText(Integer.toString(playerInventory.getWool()));
-        currentPlayer = findViewById(R.id.currentPlayer);
+        // View of the current Player
+        TextView currentPlayer = findViewById(R.id.currentPlayer);
         currentPlayer.setText(currentP.getDisplayName() + " ist gerade am Zug");
-        devCardCount = findViewById(R.id.devCardCount);
+        TextView devCardCount = findViewById(R.id.devCardCount);
         devCardCount.setText(Integer.toString(playerInventory.getCards()));
 
     }

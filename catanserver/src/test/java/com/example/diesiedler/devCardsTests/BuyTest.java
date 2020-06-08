@@ -15,9 +15,9 @@ import java.util.ArrayList;
 
 public class BuyTest {
 
-    GameSession gameSession;
-    Player player1;
-    PlayerInventory playerInventory1;
+    private GameSession gameSession;
+    private Player player1;
+    private PlayerInventory playerInventory1;
 
     @Before
     public void setUp() {
@@ -65,7 +65,7 @@ public class BuyTest {
 
     @Test
     public void checkFailedOnStack() {
-        ArrayList<DevCard> stack = gameSession.getDevCards();
+        ArrayList<DevCard> stack = (ArrayList<DevCard>) gameSession.getDevCards();
         stack.clear();
         gameSession.setDevCards(stack);
         Assert.assertFalse(Buy.checkStack(player1, gameSession));
@@ -78,19 +78,16 @@ public class BuyTest {
 
     @Test
     public void buildMessage() {
-        StringBuilder mess = new StringBuilder();
-        mess.append("Du hast eine ").append("Karte").append(" gekauft");
 
-        Assert.assertEquals(mess.toString(), Buy.buildMessage("Karte"));
+        Assert.assertEquals("Du hast eine " + "Karte" + " gekauft", Buy.buildMessage("Karte"));
     }
 
     @Test
     public void buildVictoryMessage() {
-        StringBuilder mess = new StringBuilder();
-        mess.append("Du hast eine ").append("Siegpunktkarte").append(" gekauft");
-        mess.append(" und einen Siegpunkt erhalten");
 
-        Assert.assertEquals(mess.toString(), Buy.buildMessage("Siegpunktkarte"));
+        String mess = "Du hast eine " + "Siegpunktkarte" + " gekauft" +
+                " und einen Siegpunkt erhalten";
+        Assert.assertEquals(mess, Buy.buildMessage("Siegpunktkarte"));
     }
 
     @Test
