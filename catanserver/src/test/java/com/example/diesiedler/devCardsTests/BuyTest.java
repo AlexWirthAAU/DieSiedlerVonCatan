@@ -4,7 +4,7 @@ import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catangame.PlayerInventory;
 import com.example.catangame.devcards.DevCard;
-import com.example.catanserver.businessLogic.model.cards.Buy;
+import com.example.catanserver.businesslogic.model.cards.Buy;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -15,9 +15,9 @@ import java.util.ArrayList;
 
 public class BuyTest {
 
-    GameSession gameSession;
-    Player player1;
-    PlayerInventory playerInventory1;
+    private GameSession gameSession;
+    private Player player1;
+    private PlayerInventory playerInventory1;
 
     @Before
     public void setUp() {
@@ -64,8 +64,26 @@ public class BuyTest {
     }
 
     @Test
+    public void checkFailedOnWheat() {
+        player1.getInventory().setWool(1);
+        player1.getInventory().setWheat(0);
+        player1.getInventory().setOre(0);
+        playerInventory1 = player1.getInventory();
+        Assert.assertFalse(Buy.checkStack(player1, gameSession));
+    }
+
+    @Test
+    public void checkFailedOnOre() {
+        player1.getInventory().setWool(1);
+        player1.getInventory().setWheat(1);
+        player1.getInventory().setOre(0);
+        playerInventory1 = player1.getInventory();
+        Assert.assertFalse(Buy.checkStack(player1, gameSession));
+    }
+
+    @Test
     public void checkFailedOnStack() {
-        ArrayList<DevCard> stack = gameSession.getDevCards();
+        ArrayList<DevCard> stack = (ArrayList<DevCard>) gameSession.getDevCards();
         stack.clear();
         gameSession.setDevCards(stack);
         Assert.assertFalse(Buy.checkStack(player1, gameSession));
@@ -78,19 +96,16 @@ public class BuyTest {
 
     @Test
     public void buildMessage() {
-        StringBuilder mess = new StringBuilder();
-        mess.append("Du hast eine ").append("Karte").append(" gekauft");
 
-        Assert.assertEquals(mess.toString(), Buy.buildMessage("Karte"));
+        Assert.assertEquals("Du hast eine " + "Karte" + " gekauft", Buy.buildMessage("Karte"));
     }
 
     @Test
     public void buildVictoryMessage() {
-        StringBuilder mess = new StringBuilder();
-        mess.append("Du hast eine ").append("Siegpunktkarte").append(" gekauft");
-        mess.append(" und einen Siegpunkt erhalten");
 
-        Assert.assertEquals(mess.toString(), Buy.buildMessage("Siegpunktkarte"));
+        String mess = "Du hast eine " + "Siegpunktkarte" + " gekauft" +
+                " und einen Siegpunkt erhalten";
+        Assert.assertEquals(mess, Buy.buildMessage("Siegpunktkarte"));
     }
 
     @Test

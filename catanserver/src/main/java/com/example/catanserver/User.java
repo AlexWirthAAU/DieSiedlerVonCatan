@@ -47,7 +47,7 @@ public class User {
         this.connectionInputStream = ois;
         this.connectionOutputStream = oos;
 
-        gameSessions = Collections.synchronizedList(new LinkedList<GameSession>());
+        gameSessions = Collections.synchronizedList(new LinkedList<>());
     }
 
     // Getter
@@ -59,52 +59,15 @@ public class User {
         return displayName;
     }
 
-    public Socket getConnection() {
-        return connection;
-    }
-
-    // Setters
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public void setConnection(Socket connection) {
-        this.connection = connection;
-    }
-
     public ObjectOutputStream getConnectionOutputStream() {
         return connectionOutputStream;
     }
 
-    public List<GameSession> getGameSessions() {
+    List<GameSession> getGameSessions() {
         return gameSessions;
-    }
-
-    public int getWins() {
-        return wins;
-    }
-
-    public ObjectInputStream getConnectionInputStream() {
-        return connectionInputStream;
-    }
-
-    public void setConnectionOutputStream(ObjectOutputStream connectionOutputStream) {
-        this.connectionOutputStream = connectionOutputStream;
-    }
-
-    public void setConnectionInputStream(ObjectInputStream connectionInputStream) {
-        this.connectionInputStream = connectionInputStream;
-    }
-
-    public void addWin() {
-        wins++;
     }
 
     public void addGameSession(GameSession game) {
         gameSessions.add(game);
-    }
-
-    public void removeGameSession(GameSession game) {
-        gameSessions.remove(game);
     }
 }

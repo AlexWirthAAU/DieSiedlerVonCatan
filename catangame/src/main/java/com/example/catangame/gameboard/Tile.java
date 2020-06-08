@@ -58,8 +58,8 @@ public class Tile implements Serializable {
     }
 
     private void setResource() {
-        int id = this.id;
-        switch (id) {
+        int idSwitch = this.id;
+        switch (idSwitch) {
             case 1:
             case 9:
             case 15:

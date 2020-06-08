@@ -2,8 +2,8 @@ package com.example.catanserver.threads.cheating;
 
 import com.example.catangame.GameSession;
 import com.example.catanserver.User;
+import com.example.catanserver.businesslogic.model.Cheating;
 import com.example.catanserver.threads.GameThread;
-import com.example.catanserver.businessLogic.model.Cheating;
 import com.example.catanserver.threads.SendToClient;
 
 /**

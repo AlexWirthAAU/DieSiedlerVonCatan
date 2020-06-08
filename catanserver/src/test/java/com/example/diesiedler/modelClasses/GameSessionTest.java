@@ -13,20 +13,16 @@ import java.util.List;
 
 public class GameSessionTest {
 
-    Player player1;
-    Player player2;
-    Player player3;
+    private GameSession gameSession;
 
-    GameSession gameSession;
-
-    List<Player> list = new ArrayList<>();
+    private List<Player> list = new ArrayList<>();
 
     @Before
     public void setUp() {
         gameSession = new GameSession();
-        player1 = new Player("Test1", 0);
-        player2 = new Player("Test2", 1);
-        player3 = new Player("Test3", 2);
+        Player player1 = new Player("Test1", 0);
+        Player player2 = new Player("Test2", 1);
+        Player player3 = new Player("Test3", 2);
         list.add(player1);
         list.add(player2);
         list.add(player3);

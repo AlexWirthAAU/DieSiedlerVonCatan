@@ -11,8 +11,6 @@ import com.example.catangame.gameboard.Tile;
 import com.richpath.RichPath;
 import com.richpath.RichPathView;
 
-//TODO: Handle Colors!
-
 /**
  * @author Alex Wirth
  * This class updates the gameboard depending on the state of the current gamesession object.
@@ -20,6 +18,10 @@ import com.richpath.RichPathView;
  * Also the thief's position is checked to view him on the correct tile.
  */
 public class UpdateGameboardView {
+
+    private UpdateGameboardView() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static void updateView(GameSession gs, RichPathView rpv) {
         Gameboard g = gs.getGameboard();

@@ -56,7 +56,7 @@ public class DevCardListAdapter extends ArrayAdapter<String> {
         TextView devCardAmount = retConvertView.findViewById(R.id.devCardAmount);
 
         devCard.setText(name);
-        devCardAmount.setText(Integer.toString(amount));
+        devCardAmount.setText(String.format(Integer.toString(amount)));
 
         return retConvertView;
     }

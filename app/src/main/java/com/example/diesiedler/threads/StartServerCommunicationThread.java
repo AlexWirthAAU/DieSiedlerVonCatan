@@ -33,6 +33,7 @@ public class StartServerCommunicationThread extends Thread {
      * Initialises the Server-Connection and send a Message
      * to the Handler when it was successful.
      */
+    @Override
     public void run() {
         ClientData.initializeServerConnection();
         logger.log(Level.INFO, "Initialization done.");

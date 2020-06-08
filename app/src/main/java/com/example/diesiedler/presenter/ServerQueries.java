@@ -1,7 +1,7 @@
 package com.example.diesiedler.presenter;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,7 +23,7 @@ public class ServerQueries {
      */
     public static void sendStringQuery(String query) {
         try {
-            logger.log(Level.INFO, "MSG: " + query);
+            logger.log(Level.INFO, "MSG: " + query);//NOSONAR
             ClientData.SEND_TO_SERVER.writeUTF(query);
             ClientData.SEND_TO_SERVER.flush();
         } catch (IOException ex) {
@@ -42,35 +42,18 @@ public class ServerQueries {
     }
 
     /**
-     * Creates Apply-Query
-     *
-     * @return Query with Identifier
-     */
-    public static String createStringQueryApply() {
-        return "APPLY";
-    }
-
-    /**
-     * Creates Stop-Query
-     *
-     * @return Query with Identifier
-     */
-    public static String createStringQueryStop() {
-        return "STOP";
-    }
-
-    /**
      * Creates Create-Query
      *
      * @param users List with IDs of all selected Users
      * @return Query with Identifier and all User-IDs
      */
-    public static String createStringQueryCreate(ArrayList<Integer> users) {
-        String query = "CREATE " + ClientData.userId;
+    public static String createStringQueryCreate(List<Integer> users) {
+        StringBuilder query = new StringBuilder();
+        query.append("CREATE ").append(ClientData.userId);
         for (Integer user : users) {
-            query += " " + user;
+            query.append(" ").append(user);
         }
-        return query;
+        return query.toString();
     }
 
     /**

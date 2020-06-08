@@ -1,4 +1,4 @@
-package com.example.catanserver.businessLogic.model;
+package com.example.catanserver.businesslogic.model;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
@@ -13,7 +13,7 @@ import java.util.List;
  * Class is executed, when a Player buys or plays a Knight-Card.
  * It checks for the greatest Knightpower.
  */
-public class KnightPower {
+public class KnightPower {//NOSONAR
 
     /**
      * When the Player has more Cards than the one with the greatest Knightpower
@@ -53,7 +53,7 @@ public class KnightPower {
 
                 knightPowerCandidate.getInventory().addVictoryPoints(2);
 
-                if (ownerId != -1 && knightCountOwner != null) { // knightCountOwner != null for Sonar
+                if (knightCountOwner != null) { // knightCountOwner != null for Sonar
                     knightCountOwner.getInventory().removeVictoryPoints(2);
                     toSend.add(knightCountOwner);
                     SendToClient.sendGameSessionBroadcast(game);

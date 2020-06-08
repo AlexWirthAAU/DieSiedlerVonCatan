@@ -4,8 +4,11 @@ import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catanserver.Server;
 import com.example.catanserver.User;
-import com.example.catanserver.businessLogic.model.Cheating;
-import com.example.catanserver.businessLogic.model.resourceallocation.InitResAllocation;
+import com.example.catanserver.businesslogic.model.Cheating;
+import com.example.catanserver.businesslogic.model.resourceallocation.InitResAllocation;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Fabian Schaffenrath
@@ -16,8 +19,10 @@ import com.example.catanserver.businessLogic.model.resourceallocation.InitResAll
  */
 public abstract class GameThread extends Thread {
 
-    public User user;
-    public GameSession game;
+    private static Logger logger = Logger.getLogger(GameThread.class.getName()); // Logger
+
+    public User user;//NOSONAR
+    public GameSession game;//NOSONAR
 
     /**
      * Constructor - Sets User and his Game.
@@ -30,8 +35,9 @@ public abstract class GameThread extends Thread {
         this.user = user;
     }
 
+    @Override
     public void run(){
-        System.out.println("Thread is started.");
+        logger.log(Level.INFO, "Thread is started.");
     }
 
     /**
@@ -41,7 +47,7 @@ public abstract class GameThread extends Thread {
      */
     public boolean endTurn(){
         checkInitialized();
-        Cheating.processGrabs(game,user);
+        Cheating.processGrabs(game,user.getUserId());
         return checkForWin();
     }
 

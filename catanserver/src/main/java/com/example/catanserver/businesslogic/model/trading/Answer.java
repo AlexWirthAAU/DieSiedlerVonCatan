@@ -1,10 +1,10 @@
-package com.example.catanserver.businessLogic.model.trading;
+package com.example.catanserver.businesslogic.model.trading;
 
 import com.example.catangame.Player;
 import com.example.catangame.Trade;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Christina Senger
@@ -12,6 +12,8 @@ import java.util.List;
  * Class makes Logic for answer to a Trade
  */
 public class Answer {
+
+    private static Logger logger = Logger.getLogger(Answer.class.getName()); // Logger
 
     /**
      * Adds the Player which has answered the the List of answered Players
@@ -31,7 +33,7 @@ public class Answer {
             trade.addAnswers(currPlayer, false);
         }
 
-        System.out.println(trade.getAnsweredPlayers().size() + " " + trade.getAnswers());
+        logger.log(Level.INFO, trade.getAnsweredPlayers().size() + " " + trade.getAnswers());
     }
 
     /**
@@ -74,23 +76,22 @@ public class Answer {
         trade.setTradingPartner(tradingPartner);
 
         if (tradingPartner != null) {
-            System.out.println(tradingOfferer + " offer " + tradingPartner + " partner");
+            logger.log(Level.INFO, tradingOfferer + " offer " + tradingPartner + " partner");
 
-            System.out.println(tradingOfferer.getInventory().getAllSupplies() + " curr ");
-            System.out.println(tradingPartner.getInventory().getAllSupplies());
+            logger.log(Level.INFO, tradingOfferer.getInventory().getAllSupplies() + " curr ");
+            logger.log(Level.INFO, tradingPartner.getInventory().getAllSupplies());
             exchangeRessources(tradingPartner, tradingOfferer, trade);
 
-            System.out.println("Handel durchgefuehrt");
-            System.out.println("Handel zwischen " + tradingOfferer.getDisplayName() + " und " + tradingPartner.getDisplayName() + " durchgefuehrt");
+            logger.log(Level.INFO, "Handel zwischen " + tradingOfferer.getDisplayName() + " und " + tradingPartner.getDisplayName() + " durchgefuehrt");
             return true;
         }
         return false;
     }
 
     /**
-     * The offered Ressources are removed from the current Players Inventory
+     * The offered Resources are removed from the current Players Inventory
      * and added to the Trading Partners Inventory.
-     * The desired Ressources are added to the current Players Inventory
+     * The desired Resources are added to the current Players Inventory
      * and removed from the Trading Partners Inventory.
      *
      * @param tradingPartner Player which answered first with accepted
@@ -123,7 +124,7 @@ public class Answer {
         tradingPartner.getInventory().removeOre(trade.getOreGet());
         tradingPartner.getInventory().removeClay(trade.getClayGet());
 
-        System.out.println(tradingOfferer.getInventory().getAllSupplies() + " curr ");
-        System.out.println(tradingPartner.getInventory().getAllSupplies());
+        logger.log(Level.INFO, tradingOfferer.getInventory().getAllSupplies() + " curr ");
+        logger.log(Level.INFO, tradingPartner.getInventory().getAllSupplies());
     }
 }

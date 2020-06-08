@@ -36,9 +36,9 @@ public class SelectableItem {
     }
 
     /**
-     * Überprüft ob die Variable Text eines initialisierten,
-     * obj der Klasse SelectableItem gleich dem Text der aktuellen
-     * Instanz ist.
+     * Checks if the Variable Text of a initialised
+     * obj of Class SelectableItem equals the Text of
+     * the actual Instance.
      *
      * @param obj Reference of the Object to compare
      * @return true, when obj is not null, Instance of the class
@@ -50,14 +50,11 @@ public class SelectableItem {
 
         SelectableItem itemCompare;
 
-        if (obj != null) {
+        if (obj instanceof SelectableItem) {
 
-            if (obj instanceof SelectableItem) {
-
-                itemCompare = (SelectableItem) obj;
-                String testString = itemCompare.getText();
-                return testString.equals(this.getText());
-            }
+            itemCompare = (SelectableItem) obj;
+            String testString = itemCompare.getText();
+            return testString.equals(this.getText());
         }
         return false;
     }

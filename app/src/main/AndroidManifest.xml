@@ -19,13 +19,10 @@
         <activity android:name=".cheating.CheatRevealActivity" />
         <activity android:name=".ThiefActivity" />
         <activity android:name=".ShowInventoryActivity" />
-        <activity android:name=".cards.PlayMonopolActivity" />
-        <activity android:name=".cards.PlayInventionActivity" />
-        <activity android:name=".cards.PlayKnightActivity" />
+        <activity android:name=".cards.PlayMonopolOrInventionActivity" />
         <activity android:name=".cards.PlayCardActivity" />
         <activity android:name=".RollDiceActivity" />
-        <activity android:name=".trading.PortChangeActivity" />
-        <activity android:name=".trading.BankChangeActivity" />
+        <activity android:name=".trading.BankOrPortChangeActivity" />
         <activity android:name=".trading.AnswerToTradeActivity" />
         <activity android:name=".trading.TradeActivity" />
         <activity android:name=".MainActivity" />

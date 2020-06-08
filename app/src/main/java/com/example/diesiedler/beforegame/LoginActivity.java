@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final Logger logger = Logger.getLogger(LoginActivity.class.getName());
 
-    public Handler loginHandler = new LoginHandler(Looper.getMainLooper(), this); // Handler
+    Handler loginHandler = new LoginHandler(Looper.getMainLooper(), this); // Handler
     private EditText displayName; // Input Field for the Username
 
     /**
@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         /**
-         * When the Login was succesfull the SearchPlayersActivity is started
+         * When the Login was successful the SearchPlayersActivity is started
          *
          * @param msg msg.arg1 has the Param for further Actions
          */

@@ -1,6 +1,9 @@
-package com.example.catanserver.businessLogic.model.cards;
+package com.example.catanserver.businesslogic.model.cards;
 
 import com.example.catangame.Player;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Christina Senger
@@ -8,6 +11,8 @@ import com.example.catangame.Player;
  * Class makes logic for playing an Invention-Card
  */
 public class Invention {
+
+    private static Logger logger = Logger.getLogger(Invention.class.getName()); // Logger
 
     /**
      * @param player current Player
@@ -19,18 +24,19 @@ public class Invention {
     }
 
     /**
-     * Depending on the Name of the desired Ressource, the Value of
+     * Depending on the Name of the desired Resource, the Value of
      * the Ressource is increases by 2. The Invention Card is
      * removed from the Players Inventory.
      *
      * @param player current Player
-     * @param res    english Name of the selected Ressource
+     * @param res    english Name of the selected Resource
      */
     public static String playCard(Player player, String res) {
 
         String resName = null;
 
-        System.out.println(player.getInventory().getAllSupplies());
+        logger.log(Level.INFO, player.getInventory().getAllSupplies());
+
         switch (res) {
             case "wood":
                 player.getInventory().addWood(2);
@@ -62,7 +68,7 @@ public class Invention {
         }
 
         player.getInventory().removeInventianCard(1);
-        System.out.println(player.getInventory().getAllSupplies() + " after");
+        logger.log(Level.INFO, player.getInventory().getAllSupplies());
         return resName;
     }
 
@@ -80,7 +86,7 @@ public class Invention {
         message.append("Du hast eine Erfindungskarte gespielt und zwei ");
         message.append(resName).append(" erhalten");
 
-        System.out.println(message.toString());
+        logger.log(Level.INFO, message.toString());
         return message.toString();
     }
 }

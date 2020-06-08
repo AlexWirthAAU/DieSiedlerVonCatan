@@ -4,10 +4,14 @@ import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catanserver.Server;
 import com.example.catanserver.User;
-import com.example.catanserver.businessLogic.model.trading.Port;
+import com.example.catanserver.businesslogic.model.trading.Port;
+import com.example.catanserver.businesslogic.model.trading.TradingGeneral;
 import com.example.catanserver.threads.ErrorThread;
 import com.example.catanserver.threads.GameThread;
 import com.example.catanserver.threads.SendToClient;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Christina Senger
@@ -15,11 +19,11 @@ import com.example.catanserver.threads.SendToClient;
  */
 public class PortThread extends GameThread {
 
-    private String give; // Name of the offered Ressource
-    private String get; // Name of the desired Ressource
+    private static Logger logger = Logger.getLogger(PortThread.class.getName()); // Logger
 
     private Player currPlayer; // current Player
     private String tradeStr;
+    private TradingGeneral tradingGeneral = new TradingGeneral();
 
     /**
      * Constructor - Gets the current Player from the Game und sets the Trade-Offer.
@@ -41,17 +45,20 @@ public class PortThread extends GameThread {
      * Additionally, the begin turn command is sent to the next user.
      * Otherwise an Error-Thread is started.
      */
+    @Override
     public void run() {
 
-        Port.setTradeData(tradeStr);
-        give = Port.getOffered();
-        get = Port.getDesired();
+        tradingGeneral.setTradeData(tradeStr);
+        // Name of the offered Resource
+        String give = tradingGeneral.getOffered();
+        // Name of the desired Resource
+        String get = tradingGeneral.getDesired();
 
         if (Port.checkTrade(currPlayer, get)) {
 
-            System.out.println("checked");
-            String mess = Port.buildMessage(give, get);
-            Port.exchangeRessources(give, get, currPlayer);
+            logger.log(Level.INFO, "checked");
+            String mess = tradingGeneral.buildMessage(give, get, 3);
+            tradingGeneral.exchangeResources(give, get, currPlayer, 3);
             game.nextPlayer();
             if(!endTurn()) {
                 SendToClient.sendGameSessionBroadcast(game);
@@ -66,5 +73,6 @@ public class PortThread extends GameThread {
             ErrorThread errThread = new ErrorThread(user.getConnectionOutputStream(), "Nicht genug Rohstoffe um zu handeln");
             errThread.run();
         }
+        Server.currentlyThreaded.remove(game.getGameId());
     }
 }

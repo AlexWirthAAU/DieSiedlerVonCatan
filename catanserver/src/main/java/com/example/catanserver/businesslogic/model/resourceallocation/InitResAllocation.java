@@ -1,4 +1,4 @@
-package com.example.catanserver.businessLogic.model.resourceallocation;
+package com.example.catanserver.businesslogic.model.resourceallocation;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
@@ -9,11 +9,13 @@ import com.example.catangame.gameboard.Tile;
 
 public class InitResAllocation {
 
+    private InitResAllocation() {
+        throw new IllegalStateException("Utility class");
+    }
 
-    private static Gameboard gameboard;
 
     public static void allocateInit(GameSession g) {
-        gameboard = g.getGameboard();
+        Gameboard gameboard = g.getGameboard();
         Tile[] tiles = gameboard.getTiles();
         String tResource;
 

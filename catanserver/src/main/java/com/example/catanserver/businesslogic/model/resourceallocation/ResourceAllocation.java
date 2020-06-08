@@ -1,4 +1,4 @@
-package com.example.catanserver.businessLogic.model.resourceallocation;
+package com.example.catanserver.businesslogic.model.resourceallocation;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
@@ -17,6 +17,10 @@ import java.util.List;
  */
 
 public class ResourceAllocation {
+
+    private ResourceAllocation() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static void updateResources(GameSession game, int diceValue) {
 
@@ -65,7 +69,7 @@ public class ResourceAllocation {
 
         for (Tile t : game.getGameboard().getTiles()
         ) {
-            if (t.getDiceValue() == diceValue && t.isThief() == false) {
+            if (t.getDiceValue() == diceValue && !(t.isThief())) {
                 resourceTiles.add(t);
                 System.out.println("RESOURCE-ALLOCATION: Added Tile: " + t.getId());
             }
@@ -84,7 +88,7 @@ public class ResourceAllocation {
         for (int i = 0; i < tileKnots.length; i++) {
             Player p = tileKnots[i].getPlayer();
             if (p != null) {
-                if (tileKnots[i].hasCity() == true) {
+                if (tileKnots[i].hasCity()) {
                     p.getInventory().addWood(2);
                     System.out.println("Updated Wood +2  for " + p.getDisplayName());
                 } else {
@@ -100,7 +104,7 @@ public class ResourceAllocation {
         for (int i = 0; i < tileKnots.length; i++) {
             Player p = tileKnots[i].getPlayer();
             if (p != null) {
-                if (tileKnots[i].hasCity() == true) {
+                if (tileKnots[i].hasCity()) {
                     p.getInventory().addWool(2);
                     System.out.println("Updated Wool +2 for " + p.getDisplayName());
                 } else {
@@ -116,7 +120,7 @@ public class ResourceAllocation {
         for (int i = 0; i < tileKnots.length; i++) {
             Player p = tileKnots[i].getPlayer();
             if (p != null) {
-                if (tileKnots[i].hasCity() == true) {
+                if (tileKnots[i].hasCity()) {
                     p.getInventory().addClay(2);
                     System.out.println("Updated Clay +2  for " + p.getDisplayName());
                 } else {
@@ -133,7 +137,7 @@ public class ResourceAllocation {
         for (int i = 0; i < tileKnots.length; i++) {
             Player p = tileKnots[i].getPlayer();
             if (p != null) {
-                if (tileKnots[i].hasCity() == true) {
+                if (tileKnots[i].hasCity()) {
                     p.getInventory().addOre(2);
                     System.out.println("Updated Ore +2  for " + p.getDisplayName());
                 } else {
@@ -149,7 +153,7 @@ public class ResourceAllocation {
         for (int i = 0; i < tileKnots.length; i++) {
             Player p = tileKnots[i].getPlayer();
             if (p != null) {
-                if (tileKnots[i].hasCity() == true) {
+                if (tileKnots[i].hasCity()) {
                     p.getInventory().addWheat(2);
                     System.out.println("Updated Wheat +2  for " + p.getDisplayName());
                 } else {

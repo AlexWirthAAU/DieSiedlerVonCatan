@@ -23,6 +23,7 @@ public class LoginThread extends Thread{
     /**
      * Sends to UserId to the User.
      */
+    @Override
     public void run(){
         SendToClient.sendUserId(user, user.getUserId());
     }

@@ -15,14 +15,13 @@ public class Knot implements Serializable {
     private int row;
     private int column;
     private String id; // Each Knot is identified by Row and Column
-    private String idFigures;
 
     private ArrayList<Knot> path; // As soon as a Knots Player != null -> path = new ArrayList and push the Knot in this List (beginning of a Path)
 
     private boolean isSettled; // States whether a Knot is settled
     private boolean hasCity; // States whether a Knot has a City
 
-    private Player player; //TODO: When a player builds a settlement, he owns this knot
+    private Player player;
 
     private boolean isHarbourKnot;  // States whether a Knot has a Harbour or not
     private boolean isWoodPort; // States whether a Knot has a specific Harbour
@@ -46,7 +45,6 @@ public class Knot implements Serializable {
         this.path = null;
         this.isSettled = false;
         this.hasCity = false;
-        this.idFigures = row + "" + column;
         setIsHarbourKnot(this.id);
     }
 
@@ -140,12 +138,8 @@ public class Knot implements Serializable {
                 this.isWoodPort = true;
                 break;
             default: {
-                this.isHarbourKnot = false;
-                this.isOrePort = false;
-                this.isClayPort = false;
-                this.isWheatPort = false;
-                this.isWoodPort = false;
-                this.isWoolPort = false;
+                setFalsePorts();
+                break;
             }
         }
     }
@@ -173,6 +167,16 @@ public class Knot implements Serializable {
 
     public boolean isClayPort() {
         return isClayPort;
+    }
+
+
+    private void setFalsePorts() {
+        this.isHarbourKnot = false;
+        this.isOrePort = false;
+        this.isClayPort = false;
+        this.isWheatPort = false;
+        this.isWoodPort = false;
+        this.isWoolPort = false;
     }
 }
 

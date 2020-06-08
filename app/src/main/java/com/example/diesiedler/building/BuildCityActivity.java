@@ -1,32 +1,22 @@
 package com.example.diesiedler.building;
 
-
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.catangame.PlayerInventory;
 import com.example.catangame.gameboard.Knot;
-import com.example.diesiedler.R;
-import com.example.diesiedler.ScoreBoardActivity;
-import com.example.diesiedler.cards.DevCardInventoryActivity;
+import com.example.diesiedler.GameBoardOverviewActivity;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.UpdateBuildCityView;
 import com.example.diesiedler.presenter.UpdateGameboardView;
 import com.example.diesiedler.presenter.handler.GameHandler;
-import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
 import com.example.diesiedler.threads.NetworkThread;
-import com.richpath.RichPathView;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Alex Wirth
@@ -37,41 +27,17 @@ import com.richpath.RichPathView;
  * Also, the view of this activity shows the player's resources.
  * If there is no knot where the player can build a city, he will be informed about that and lead to the ChooseAction-Activity.
  */
-public class BuildCityActivity extends AppCompatActivity implements View.OnClickListener {
+public class BuildCityActivity extends GameBoardOverviewActivity {
 
+    private static final Logger logger = Logger.getLogger(BuildCityActivity.class.getName()); // Logger
     private Handler handler = new BuildCityHandler(Looper.getMainLooper(), this); // Handler
-    private RichPathView richPathView;
-
-    // TextViews for number of resources
-    private TextView woodCount;
-    private TextView clayCount;
-    private TextView wheatCount;
-    private TextView oreCount;
-    private TextView woolCount;
-    private TextView devCardCount;
-
-    // Buttons to show score and inventory:
-    private ImageView devCards;
-    private Button scoreBoard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gameboardview);
-        richPathView = findViewById(R.id.ic_gameboardView);
-
-        devCards = findViewById(R.id.devCard);
-        devCards.setOnClickListener(this);
-        scoreBoard = findViewById(R.id.scoreBoard);
-        scoreBoard.setOnClickListener(this);
-
-        UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
-        updateResources();
-        UpdateBuildCityView.updateView(ClientData.currentGame, richPathView);
         ClientData.currentHandler = handler;
 
-
-        GameBoardClickListener gameBoardClickListener = new GameBoardClickListener(richPathView, this);
+        UpdateBuildCityView.updateView(ClientData.currentGame, richPathView);
         gameBoardClickListener.clickBoard("BuildCity");
     }
 
@@ -79,10 +45,15 @@ public class BuildCityActivity extends AppCompatActivity implements View.OnClick
     public void onResume() {
         super.onResume();
         ClientData.currentHandler = handler;
+        UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
+        updateResources();
     }
+
     public void onRestart() {
         super.onRestart();
         ClientData.currentHandler = handler;
+        UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
+        updateResources();
     }
 
     /**
@@ -92,6 +63,8 @@ public class BuildCityActivity extends AppCompatActivity implements View.OnClick
      * @param s
      */
     public void clicked(String s) {
+        String logging = "Clicked: " + s;
+        logger.log(Level.INFO, logging);
         Knot[] knots = ClientData.currentGame.getGameboard().getKnots();
         int knotIndex = 0;
         String[] values = s.split("_");
@@ -108,48 +81,6 @@ public class BuildCityActivity extends AppCompatActivity implements View.OnClick
         networkThread.start();
     }
 
-    /**
-     * This method is responsible for refreshing the player's resources.
-     */
-    private void updateResources() {
-        PlayerInventory playerInventory = ClientData.currentGame.getPlayer(ClientData.userId).getInventory();
-
-        woodCount = findViewById(R.id.woodCount);
-        woodCount.setText(Integer.toString(playerInventory.getWood()));
-        clayCount = findViewById(R.id.clayCount);
-        clayCount.setText(Integer.toString(playerInventory.getClay()));
-        wheatCount = findViewById(R.id.wheatCount);
-        wheatCount.setText(Integer.toString(playerInventory.getWheat()));
-        oreCount = findViewById(R.id.oreCount);
-        oreCount.setText(Integer.toString(playerInventory.getOre()));
-        woolCount = findViewById(R.id.woolCount);
-        woolCount.setText(Integer.toString(playerInventory.getWool()));
-        devCardCount = findViewById(R.id.devCardCount);
-        devCardCount.setText(Integer.toString(playerInventory.getCards()));
-    }
-
-    /**
-     * The View has to buttons that can be clicked.
-     * "devCards" will lead the player to an overview of his card-inventory where he can see all his dev-cards
-     * "scoreBoard" will load an overview of the current victory points of each player. This activity will also be used for cheating.
-     */
-    @Override
-    public void onClick(View view) {
-        Intent intent;
-        switch (view.getId()) {
-            case R.id.devCard:
-                intent = new Intent(getBaseContext(), DevCardInventoryActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.scoreBoard:
-                intent = new Intent(getBaseContext(), ScoreBoardActivity.class);
-                startActivity(intent);
-                break;
-            default:
-                break;
-        }
-    }
-
 
     /**
      * Handler is responsible for reacting to the new gamesession object received by the server.
@@ -162,10 +93,9 @@ public class BuildCityActivity extends AppCompatActivity implements View.OnClick
 
         @Override
         public void handleMessage(Message msg) {
-            if(msg.arg1 == 5){
+            if (msg.arg1 == 5) {
                 super.handleMessage(msg);
-            }
-            else if (msg.arg1 == 4) {
+            } else if (msg.arg1 == 4) {
                 UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
                 updateResources();
                 UpdateBuildCityView.updateView(ClientData.currentGame, richPathView);

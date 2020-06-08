@@ -14,7 +14,7 @@ import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.handler.GameHandler;
 import com.example.diesiedler.threads.NetworkThread;
-import com.example.diesiedler.trading.BankChangeActivity;
+import com.example.diesiedler.trading.BankOrPortChangeActivity;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,12 +25,13 @@ import java.util.logging.Logger;
  * Activity to select the Ressource of which to Player wants to get,
  * all of those from his opponents through playing a Monopol Card.
  */
-public class PlayMonopolActivity extends AppCompatActivity {
+public class PlayMonopolOrInventionActivity extends AppCompatActivity {
 
-    private static final Logger logger = Logger.getLogger(BankChangeActivity.class.getName()); // Logger
-    Handler handler = new PlayMonopolHandler(Looper.getMainLooper(), this); // Handler
+    private static final Logger logger = Logger.getLogger(BankOrPortChangeActivity.class.getName()); // Logger
+    Handler handler = new PlayMonopolOrInventionHandler(Looper.getMainLooper(), this); // Handler
 
-    String res; // String to save the Ressource of the clicked Button
+    String res; // String to save the Resource of the clicked Button
+    String card;
 
     /**
      * The Handler in ClientData is set for the current Activity
@@ -41,6 +42,8 @@ public class PlayMonopolActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play_monopol);
 
         ClientData.currentHandler = handler;
+
+        card = getIntent().getStringExtra("card");
     }
 
     @Override
@@ -110,7 +113,13 @@ public class PlayMonopolActivity extends AppCompatActivity {
      * @param view View to access the Button
      */
     public void start(View view) {
-        Thread networkThread = new NetworkThread(ServerQueries.createStringQueryPlayMonopolCard(res));
+        Thread networkThread;
+
+        if (card.equals("monopol")) {
+            networkThread = new NetworkThread(ServerQueries.createStringQueryPlayMonopolCard(res));
+        } else {
+            networkThread = new NetworkThread(ServerQueries.createStringQueryPlayInventionCard(res));
+        }
         networkThread.start();
     }
 
@@ -119,11 +128,9 @@ public class PlayMonopolActivity extends AppCompatActivity {
      *
      * Handler for the PlayMonopolActivity
      */
-    private class PlayMonopolHandler extends GameHandler {
+    private class PlayMonopolOrInventionHandler extends GameHandler {
 
-        private String mess;
-
-        PlayMonopolHandler(Looper mainLooper, Activity ac) {
+        PlayMonopolOrInventionHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
         }
 

@@ -43,7 +43,7 @@ public class TradeActivity extends AppCompatActivity {
     private int clayGet = STARTVALUE;
 
     Handler handler = new TradeHandler(Looper.getMainLooper(), this); // Handler
-    private int woodGet = STARTVALUE; // Values of desired and offered Ressources
+    private int woodGet = STARTVALUE; // Values of desired and offered Resources
     private int woodGive = STARTVALUE;
     TextView countWoolGive;
     TextView countWoolGet;
@@ -360,8 +360,6 @@ public class TradeActivity extends AppCompatActivity {
      * Handler for the TradeActivity
      */
     private class TradeHandler extends GameHandler {
-
-        private String mess;
 
         TradeHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
