@@ -208,13 +208,14 @@ public class GameSession implements Serializable {
         return null;
     }
 
-    public Grab getGrabFrom(int userId){
+    public List<Grab> getGrabsFrom(int userId){
+        List<Grab> retList = new LinkedList<>();
         for (Grab grab:this.grabs) {
             if(grab.getGrabber().getUserId() == userId){
-                return grab;
+                retList.add(grab);
             }
         }
-        return null;
+        return retList;
     }
 
     public void addGrab(Grab grab){
