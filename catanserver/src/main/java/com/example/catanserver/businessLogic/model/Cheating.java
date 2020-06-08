@@ -43,7 +43,7 @@ public class Cheating {
         for (Grab grab:game.getGrabs()) {
             if(grab.getGrabbed().getUserId() == grabbedId && (grab.getRevealed() == null || !grab.getRevealed())){
                 if(grab(grab)){
-                    System.out.println("Transfered " + grab.getResource() + " from " + grab.getGrabbed() + " to " + grab.getGrabber());
+                    System.out.println("Transfered " + grab.getResource() + " from " + grab.getGrabbed().getDisplayName() + " to " + grab.getGrabber().getDisplayName());
                 }
                 removeGrabs.add(grab);
             }
