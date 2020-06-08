@@ -10,6 +10,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Fabian Schaffenrath
@@ -19,6 +21,8 @@ import java.util.Set;
  * This Class handles everything that is related to Messages being sent to the Client.
  */
 public class SendToClient {
+
+    static final String HEADER_ERROR = "ERROR";
 
     // Used for the steps before the first dice roll
     public static final String HEADER_START = "STARTGAME";
@@ -37,12 +41,9 @@ public class SendToClient {
     public static final String HEADER_TRADE = "TRADE";
     public static final String HEADER_TRADECOMPLETE = "TRADECOMPLETE";
     public static final String HEADER_KNIGHT = "KNIGHT";
-
-    public static final String HEADER_ERROR = "ERROR";
-
-    public static final String HEADER_WON = "WON";
-    public static final String HEADER_LOST = "LOST";
-
+    static final String HEADER_WON = "WON";
+    static final String HEADER_LOST = "LOST";
+    private static Logger logger = Logger.getLogger(SendToClient.class.getName()); // Logger
 
     /**
      * Send his own Id to a User.
@@ -54,8 +55,8 @@ public class SendToClient {
         try {
             sendToClient(user, userId);
         }catch(IOException ex){
-            System.err.println(ex.getMessage());
-            System.err.println("Could not send UserId to Client.");
+            logger.log(Level.SEVERE, ex.getMessage());
+            logger.log(Level.SEVERE, "Could not send UserId to Client.");
         }
     }
 
@@ -71,8 +72,8 @@ public class SendToClient {
             try {
                 sendToClient(user, searchingList);
             } catch (IOException ex) {
-                System.err.println(ex.getMessage());
-                System.err.println("Could not send List to Client" + user.getDisplayName() + ".");
+                logger.log(Level.SEVERE, ex.getMessage());
+                logger.log(Level.SEVERE, "Could not send List to Client" + user.getDisplayName() + ".");
             }
         }
     }
@@ -90,32 +91,12 @@ public class SendToClient {
                 try {
                     sendToClient(user, game);
                 } catch (IOException ex) {
-                    System.err.println(ex.getMessage());
-                    System.err.println("Could not send GameSession to Client " + user.getDisplayName() + ".");
+                    logger.log(Level.SEVERE, ex.getMessage());
+                    logger.log(Level.SEVERE, "Could not send GameSession to Client " + user.getDisplayName() + ".");
                 }
             }
         } else {
             // TODO: What happens if a user cant be found? (should not happen)
-        }
-    }
-
-    /**
-     * Creates a Userlist from the Playerlist and sends the Message to
-     * every User in this List.
-     *
-     * @param toSend List of all Player to which the Trade-Message should be sent
-     * @param message specific Trade-Message
-     */
-    public static void sendTradeMessageBroadcast(List<Player> toSend, String message, GameSession game) {
-        List<User> userList = createUserListFromPlayerList(toSend);
-        for (User user : userList) {
-            try {
-                sendToClient(user, game);
-                sendToClient(user, message);
-            } catch (IOException ex) {
-                System.err.println(ex.getMessage());
-                System.err.println("Could not send Message to Client" + user.getDisplayName() + ".");
-            }
         }
     }
 
@@ -131,9 +112,10 @@ public class SendToClient {
             connectionOutputStream.writeObject(message);
             connectionOutputStream.flush();
         } catch (IOException ex) {
-            System.err.println(ex.getMessage());
-            System.err.println("Could not send string message to Client.");
-            System.err.println("Message: " + message);
+            logger.log(Level.SEVERE, ex.getMessage());
+            logger.log(Level.SEVERE, ex.getMessage());
+            logger.log(Level.SEVERE, "Could not send string message to Client.");
+            logger.log(Level.SEVERE, "Message: " + message);
         }
     }
 
@@ -147,9 +129,9 @@ public class SendToClient {
         try {
             sendToClient(user,message);
         } catch (IOException ex) {
-            System.err.println(ex.getMessage());
-            System.err.println("Could not send string message to Client.");
-            System.err.println("Message: " + message);
+            logger.log(Level.SEVERE, ex.getMessage());
+            logger.log(Level.SEVERE, "Could not send string message to Client.");
+            logger.log(Level.SEVERE, "Message: " + message);
         }
     }
 
@@ -166,8 +148,8 @@ public class SendToClient {
             try {
                 sendToClient(user, message);
             } catch (IOException ex) {
-                System.err.println(ex.getMessage());
-                System.err.println("Could not send Message to Client" + user.getDisplayName() + ".");
+                logger.log(Level.SEVERE, ex.getMessage());
+                logger.log(Level.SEVERE, "Could not send Message to Client" + user.getDisplayName() + ".");
             }
         }
     }
@@ -185,9 +167,9 @@ public class SendToClient {
                 try {
                     sendToClient(user, message);
                 } catch (IOException ex) {
-                    System.err.println(ex.getMessage());
-                    System.err.println("Could not send string message to Client " + user.getDisplayName() + ".");
-                    System.err.println("Message: " + message);
+                    logger.log(Level.SEVERE, ex.getMessage());
+                    logger.log(Level.SEVERE, "Could not send Message to Client" + user.getDisplayName() + ".");
+                    logger.log(Level.SEVERE, "Message: " + message);
                 }
             }
         } else {

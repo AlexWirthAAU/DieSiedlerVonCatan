@@ -73,7 +73,7 @@ public class AnswerToTradeActivity extends AppCompatActivity {
      * When the Player dismisses the Offer, the NetworkThread is started,
      * which sends the Answer-String to the Server.
      *
-     * @param view
+     * @param view View to access the Button
      */
     public void dismiss(View view) {
 
@@ -87,7 +87,7 @@ public class AnswerToTradeActivity extends AppCompatActivity {
      * When the Player accepts the Offer, the NetworkThread is started,
      * which sends the Answer-String to the Server.
      *
-     * @param view
+     * @param view View to access the Button
      */
     public void accept(View view) {
 
@@ -103,8 +103,6 @@ public class AnswerToTradeActivity extends AppCompatActivity {
      * Handler for the AnswerToTradeActivity
      */
     private class AnswerToTradeHandler extends GameHandler {
-
-        private String mess;
 
         AnswerToTradeHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);

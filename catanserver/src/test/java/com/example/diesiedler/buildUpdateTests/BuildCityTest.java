@@ -4,7 +4,7 @@ import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catangame.PlayerInventory;
 import com.example.catangame.gameboard.Knot;
-import com.example.catanserver.businessLogic.model.building.BuildCity;
+import com.example.catanserver.businesslogic.model.building.BuildCity;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -14,9 +14,9 @@ import org.junit.Test;
 public class BuildCityTest {
 
 
-    GameSession gameSession;
-    Player player;
-    Knot toBeSettled;
+    private GameSession gameSession;
+    private Player player;
+    private Knot toBeSettled;
 
     @Before
     public void setUp() {
@@ -50,7 +50,7 @@ public class BuildCityTest {
     private void beforeBuilding() {
         PlayerInventory playerInventory = player.getInventory();
 
-        Assert.assertEquals(false, toBeSettled.hasCity());
+        Assert.assertFalse(toBeSettled.hasCity());
         Assert.assertEquals(player, toBeSettled.getPlayer());
         Assert.assertEquals(0, gameSession.getCities().size());
         Assert.assertEquals(0, player.getInventory().getCities().size());
@@ -63,7 +63,7 @@ public class BuildCityTest {
     private void afterBuilding() {
         PlayerInventory playerInventory = player.getInventory();
 
-        Assert.assertEquals(true, toBeSettled.hasCity());
+        Assert.assertTrue(toBeSettled.hasCity());
         Assert.assertEquals(player, toBeSettled.getPlayer());
         Assert.assertEquals(1, gameSession.getCities().size());
         Assert.assertEquals(1, player.getInventory().getCities().size());

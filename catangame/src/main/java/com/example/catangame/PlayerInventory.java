@@ -5,8 +5,8 @@ import com.example.catangame.gameboard.Edge;
 import com.example.catangame.gameboard.Knot;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Christina Senger
@@ -17,23 +17,21 @@ import java.util.LinkedList;
  */
 public class PlayerInventory implements Serializable {
 
-    private final int STARTVALUE = 0; // Every Player has 3 of every Ressource on Game-Start
-    private final int victoryPointsSettlement = 2; // Victory Points for Building
+    private static final int STARTVALUE = 0; // Every Player has 3 of every Resource on Game-Start
     private int wool;
     private int wheat;
     private int ore;
     private int clay;
-    private final int victoryPointsCity = 3;
     private int buildStreetCard;
     private int inventionCard;
     private int monopolCard;
     private int cards;
-    public boolean canTrade; // states whether a Player can Trade
-    public boolean hasPorts; // states whether a Player has (specific) Ports
-    private int wood; // Values of Ressources
+    private boolean canTrade; // states whether a Player can Trade
+    private boolean hasPorts; // states whether a Player has (specific) Ports
+    private int wood; // Values of Resources
     private int knightCard; // Values of Cards
-    public boolean canBankTrade;
-    public boolean canPortTrade;
+    private boolean canBankTrade;
+    private boolean canPortTrade;
     private int victoryPoints; // Victory Points
     private boolean woodport;
     private boolean woolport;
@@ -48,8 +46,7 @@ public class PlayerInventory implements Serializable {
 
     private LinkedList<BuildStreetCard> buildStreetCardLinkedList = new LinkedList<>(); // List of BuildStreetCards
 
-    private int[] resValues = new int[5]; // Array of Ressource-Values
-    private boolean[] portValues = new boolean[5]; // Array of Port-Values
+    private int[] resValues = new int[5]; // Array of Resource-Values
 
     /**
      * Constructor - Set Values 0 or false
@@ -80,9 +77,6 @@ public class PlayerInventory implements Serializable {
         this.resValues[3] = this.ore;
         this.resValues[4] = this.clay;
 
-        for (int i = 0; i < 5; i++) {
-            this.portValues[i] = false;
-        }
         this.hasPorts = false;
 
         this.canBankTrade = false;
@@ -96,15 +90,15 @@ public class PlayerInventory implements Serializable {
      */
     public String getAllSupplies() {
         return "Wood: " + this.wood + "\nWool: " + this.wool + "\nWheat: " + this.wheat + "\nOre: " + this.ore
-                + "\nClay: " + this.clay + "\nVictoty points: " + this.victoryPoints + "\nKnightCard: " + this.knightCard
+                + "\nClay: " + this.clay + "\nVictory points: " + this.victoryPoints + "\nKnightCard: " + this.knightCard
                 + "\nInventionCard: " + this.inventionCard + "\nBuildStreetCard: " + this.buildStreetCard
-                + "\nMonopolCard: " + this.monopolCard + "\nVictoty points: " + this.victoryPoints;
+                + "\nMonopolCard: " + this.monopolCard;
     }
 
     /**
      * @return A String displaying all Resources
      */
-    public String getAllRessources() {
+    public String getAllResources() {
         return "Wood: " + this.wood + "\nWool: " + this.wool + "\nWheat: " + this.wheat + "\nOre: " + this.ore
                 + "\nClay: " + this.clay;
     }
@@ -218,32 +212,19 @@ public class PlayerInventory implements Serializable {
 
     public void addSettlement(Knot settlementKnot) {
         this.settlements.add(settlementKnot);
-        this.victoryPoints += this.victoryPointsSettlement;
+        // Victory Points for Building
+        int victoryPointsSettlement = 2;
+        this.victoryPoints += victoryPointsSettlement;
     }
 
     public void addCity(Knot cityKnot) {
         this.cities.add(cityKnot);
-        this.victoryPoints += this.victoryPointsCity;
+        int victoryPointsCity = 3;
+        this.victoryPoints += victoryPointsCity;
     }
 
     public void addRoadKnots(Knot k) {
         this.roadKnots.add(k);
-    }
-
-
-    // removing Structures
-    public void removeRoad(Edge roadEdge) {
-        this.roads.remove(roadEdge);
-    }
-
-    public void removeSettlement(Knot settlementKnot) {
-        this.settlements.remove(settlementKnot);
-        this.victoryPoints -= this.victoryPointsSettlement;
-    }
-
-    public void removeCity(Knot cityKnot) {
-        this.cities.remove(cityKnot);
-        this.victoryPoints -= this.victoryPointsCity;
     }
 
 
@@ -351,6 +332,7 @@ public class PlayerInventory implements Serializable {
         return this.resValues;
     }
 
+
     // Get and Set Victory Points
     public int getVictoryPoints() {
         return victoryPoints;
@@ -374,36 +356,20 @@ public class PlayerInventory implements Serializable {
         return buildStreetCard;
     }
 
-    public void setBuildStreetCard(int buildStreetCard) {
-        this.buildStreetCard = buildStreetCard;
-    }
-
     public int getInventionCard() {
         return inventionCard;
-    }
-
-    public void setInventionCard(int inventionCard) {
-        this.inventionCard = inventionCard;
     }
 
     public int getMonopolCard() {
         return monopolCard;
     }
 
-    public void setMonopolCard(int monopolCard) {
-        this.monopolCard = monopolCard;
-    }
-
     public int getCards() {
         return this.cards;
     }
 
-    public LinkedList<BuildStreetCard> getBuildStreetCardLinkedList() {
+    public List<BuildStreetCard> getBuildStreetCardLinkedList() {
         return buildStreetCardLinkedList;
-    }
-
-    public void setBuildStreetCardLinkedList(LinkedList<BuildStreetCard> buildStreetCardLinkedList) {
-        this.buildStreetCardLinkedList = buildStreetCardLinkedList;
     }
 
 
@@ -456,35 +422,42 @@ public class PlayerInventory implements Serializable {
         this.hasPorts = hasPorts;
     }
 
+
     //Get Structures
-    public LinkedList getSettlements() {
+    public List<Knot> getSettlements() {
         return this.settlements;
     }
 
-    public Collection getRoads() {
+    public List<Edge> getRoads() {
         return this.roads;
     }
 
-    public LinkedList<Knot> getRoadKnots() {
+    public List<Knot> getRoadKnots() {
         return roadKnots;
     }
 
-    public LinkedList<Knot> getCities() {
+    public List<Knot> getCities() {
         return cities;
     }
 
 
-    //Set Player Options
-    public void setCanTrade(boolean canTrade) {
-        this.canTrade = canTrade;
+    //Get Player Options
+    public boolean isCanTrade() {
+        return this.canTrade;
     }
 
+    public boolean isCanBankTrade() {
+        return this.canBankTrade;
+    }
+
+    public boolean isCanPortTrade() {
+        return this.canPortTrade;
+    }
+
+
+    //Set Player Options
     public void setCanBankTrade(boolean canBankTrade) {
         this.canBankTrade = canBankTrade;
-    }
-
-    public void setCanPortTrade(boolean canTrade) {
-        this.canPortTrade = canPortTrade;
     }
 
 
@@ -498,11 +471,7 @@ public class PlayerInventory implements Serializable {
             canBankTrade = false;
         }
 
-        if ((isWoodport() || isWoolport() || isWheatport() || isOreport() || isClayport())) {
-            hasPorts = true;
-        } else {
-            hasPorts = false;
-        }
+        hasPorts = (isWoodport() || isWoolport() || isWheatport() || isOreport() || isClayport());
 
         if (i >= 3) {
             canTrade = true;
@@ -511,18 +480,10 @@ public class PlayerInventory implements Serializable {
             canPortTrade = false;
         }
 
-        if (i >= 1) {
-            canTrade = true;
-        } else {
-            canTrade = false;
-        }
+        canTrade = i >= 1;
     }
 
     public void checkPlayerOptions() {
-        if ((isWoodport() || isWoolport() || isWheatport() || isOreport() || isClayport())) {
-            hasPorts = true;
-        } else {
-            hasPorts = false;
-        }
+        hasPorts = (isWoodport() || isWoolport() || isWheatport() || isOreport() || isClayport());
     }
 }

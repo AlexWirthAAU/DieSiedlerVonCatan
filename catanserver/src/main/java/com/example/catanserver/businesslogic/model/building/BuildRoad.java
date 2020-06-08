@@ -1,4 +1,4 @@
-package com.example.catanserver.businessLogic.model.building;
+package com.example.catanserver.businesslogic.model.building;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
@@ -8,6 +8,8 @@ import com.example.catangame.gameboard.Edge;
 import com.example.catangame.gameboard.Gameboard;
 
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -16,6 +18,8 @@ import java.util.LinkedList;
  * @author Fabian Schaffenrath
  */
 public class BuildRoad {
+
+    private static Logger logger = Logger.getLogger(BuildRoad.class.getName()); // Logger
 
     public static void updateGameSession(GameSession gameSession, int roadIndex, int userID) {
         Gameboard gameboard = gameSession.getGameboard();
@@ -33,32 +37,30 @@ public class BuildRoad {
             updatePlayerInventory(player, road);
         }
 
-        System.out.println("Road built from Player: " + player.getUserId());
+        logger.log(Level.ALL, "Road built from Player: " + player.getUserId());
 
-        /**
+        /*
          * If the player has less than two roads, the resources are not affected, as the first two roads can be built for free.
          * If its a regular built, the resources need to be reduced.
          */
-
-
-        if (player.getInventory().getRoads().size() == 1 && !(player.getUserId() == lastPlayer.getUserId())) {
+        if (player.getInventory().getRoads().size() == 1 && player.getUserId() != lastPlayer.getUserId()) {
             gameSession.nextPlayer();
-            System.out.println("Next Player");
+            logger.log(Level.ALL, "Next Player");
         }
 
         if (player.getInventory().getRoads().size() == 2) {
             gameSession.previousPlayer();
-            System.out.println("Spieler in the middle");
+            logger.log(Level.ALL, "Spieler in the middle");
         }
 
         if (player.getInventory().getRoads().size() == 2 && player.getUserId() == firstPlayer.getUserId()) {
             gameSession.nextPlayer();
-            System.out.println("Letzter INIT Spielzug");
+            logger.log(Level.ALL, "Letzter INIT Spielzug");
         }
 
         if (player.getInventory().getRoads().size() > 2) {
             gameSession.nextPlayer();
-            System.out.println("Regulärer Spielzug");
+            logger.log(Level.ALL, "Regulärer Spielzug");
         }
     }
 
@@ -78,7 +80,7 @@ public class BuildRoad {
         Gameboard gameboard = gameSession.getGameboard();
         Edge road = gameboard.getEdges()[roadIndex];
         Player player = gameSession.getPlayer(userID);
-        LinkedList<BuildStreetCard> list = player.getInventory().getBuildStreetCardLinkedList();
+        LinkedList<BuildStreetCard> list = (LinkedList<BuildStreetCard>) player.getInventory().getBuildStreetCardLinkedList();
 
         updatePlayerInventoryInit(player, road);
 

@@ -1,4 +1,4 @@
-package com.example.catanserver.businessLogic.model.resourceallocation;
+package com.example.catanserver.businesslogic.model.resourceallocation;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;

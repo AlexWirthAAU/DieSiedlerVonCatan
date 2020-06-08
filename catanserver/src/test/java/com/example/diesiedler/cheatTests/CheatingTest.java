@@ -3,7 +3,7 @@ package com.example.diesiedler.cheatTests;
 import com.example.catangame.GameSession;
 import com.example.catangame.Grab;
 import com.example.catangame.Player;
-import com.example.catanserver.businessLogic.model.Cheating;
+import com.example.catanserver.businesslogic.model.Cheating;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -12,8 +12,8 @@ import org.junit.Test;
 
 public class CheatingTest {
 
-    GameSession game;
-    Player player1, player2, player3;
+    private GameSession game;
+    private Player player1, player2, player3;
 
     @Before
     public void before(){

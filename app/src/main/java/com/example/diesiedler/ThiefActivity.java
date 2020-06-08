@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -94,7 +93,7 @@ public class ThiefActivity extends AppCompatActivity {
 
     private class ThiefHandler extends GameHandler {
 
-        public ThiefHandler(Looper mainLooper, Activity ac) {
+        ThiefHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
         }
 

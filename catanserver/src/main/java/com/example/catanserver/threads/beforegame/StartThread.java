@@ -27,6 +27,7 @@ public class StartThread extends GameThread {
      * to every user indicating a game start.
      * Game is removed from currentlyThreaded.
      */
+    @Override
     public void run(){
         boolean allColorsSet = true;
         for (Player player:game.getPlayers()) {

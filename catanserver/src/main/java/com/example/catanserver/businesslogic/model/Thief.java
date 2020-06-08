@@ -1,4 +1,4 @@
-package com.example.catanserver.businessLogic.model;
+package com.example.catanserver.businesslogic.model;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
@@ -25,9 +25,9 @@ public class Thief {
     public static boolean moveThief(GameSession game, int destinationIndex){
         Tile[] tiles = game.getGameboard().getTiles();
         if(destinationIndex >= 0 && destinationIndex < tiles.length) {
-            for (int i = 0; i < tiles.length; i++) {
-                if (tiles[i].isThief()) {
-                    tiles[i].setThief(false);
+            for (Tile tile : tiles) {
+                if (tile.isThief()) {
+                    tile.setThief(false);
                     tiles[destinationIndex].setThief(true);
                     return true;
                 }
@@ -73,9 +73,9 @@ public class Thief {
             Tile tile = tiles[destinationIndex];
             Knot[] knotes = tile.getKnots();
 
-            for (int i = 0; i < knotes.length; i++) {
+            for (Knot knote : knotes) {
 
-                Player player = knotes[i].getPlayer();
+                Player player = knote.getPlayer();
 
                 if (player != null && player.getUserId() != curr.getUserId()) {
 
@@ -83,9 +83,9 @@ public class Thief {
                 }
             }
 
-            int number = -1;
+            int number;
 
-            if (players.size() > 0) {
+            if (!players.isEmpty()) {
 
                 playerToStealFrom = players.get(rand.nextInt(players.size()));
                 res = playerToStealFrom.getInventory().getResValues();
@@ -149,8 +149,8 @@ public class Thief {
 
         int counter = 0;
 
-        for (int i = 0; i < res.length; i++) {
-            if (res[i] != 0) {
+        for (int re : res) {
+            if (re != 0) {
                 counter++;
             }
         }

@@ -23,19 +23,16 @@ import java.util.List;
 public class MyAdapter extends RecyclerView.Adapter implements SelectableViewHolder.OnItemSelectedListener {
 
     private final List<SelectableItem> myValues;
-    private SelectableViewHolder.OnItemSelectedListener listener;
     private boolean isMultiSelectionEnabled;
 
     /**
      * Constructor - adds all Selectable Items to the local List myValues
      *
-     * @param listener OnItemSelectListener for the Class SelecableViewHolder
-     * @param data Liste of all Items (active User)
+     * @param data List of all Items (active User)
      * @param isMultiSelectionEnabled can one select multiple Elements? here: true
      */
-    MyAdapter(SelectableViewHolder.OnItemSelectedListener listener, List<SelectableItem> data, boolean isMultiSelectionEnabled) {
+    MyAdapter(List<SelectableItem> data, boolean isMultiSelectionEnabled) {
 
-        this.listener = listener;
         this.isMultiSelectionEnabled = isMultiSelectionEnabled;
 
         myValues = new ArrayList<>();
@@ -43,24 +40,7 @@ public class MyAdapter extends RecyclerView.Adapter implements SelectableViewHol
     }
 
     /**
-     * Make all Items in the new List SelectableItems. Deletes all values from
-     * myValues (curr SelectableItems) and adds all new Items.
-     * Notifies to Adapter, that Items have changed.
-     *
-     * @param newUsernames new List of active Users
-     */
-    public void update(List<String> newUsernames) {
-
-        myValues.clear();
-
-        for (String str : newUsernames) {
-            myValues.add(new SelectableItem(str, false));
-        }
-        notifyDataSetChanged();
-    }
-
-    /**
-     * Gets called, when the Recycerview needs a new Viewholder.
+     * Gets called, when the Recyclerview needs a new Viewholder.
      * With inflate, it is put in the Parent-Element and is used,
      * to show a SelectableItem.
      *
@@ -155,7 +135,7 @@ public class MyAdapter extends RecyclerView.Adapter implements SelectableViewHol
     }
 
     /**
-     * Selects or disselcts an Item, depending on if it already was selected.
+     * Selects or deselects an Item, depending on if it already was selected.
      * Notifies the Adapter, that the Data has changed.
      *
      * @param item last selected Item

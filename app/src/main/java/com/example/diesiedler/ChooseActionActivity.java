@@ -24,10 +24,8 @@ import com.example.diesiedler.presenter.UpdateBuildCityView;
 import com.example.diesiedler.presenter.UpdateBuildRoadView;
 import com.example.diesiedler.presenter.UpdateBuildSettlementView;
 import com.example.diesiedler.presenter.handler.GameHandler;
-
 import com.example.diesiedler.threads.NetworkThread;
-import com.example.diesiedler.trading.BankChangeActivity;
-import com.example.diesiedler.trading.PortChangeActivity;
+import com.example.diesiedler.trading.BankOrPortChangeActivity;
 import com.example.diesiedler.trading.TradeActivity;
 
 import java.util.logging.Level;
@@ -42,19 +40,8 @@ import java.util.logging.Logger;
  */
 public class ChooseActionActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final Logger logger = Logger.getLogger(MainActivity.class.getName()); // Logger
-    private Button buildRoad;
-    private Button loadMain;
-    private Button buildCity;
-    private Button buyDevCard;
-    private Button playdevCard;
-    private Button trade;
-    private Button exchangeBank;
-    private Button exchangePort;
-    private Button showCosts;
-    private Button ahead;
+    private static final Logger logger = Logger.getLogger(ChooseActionActivity.class.getName()); // Logger
     Handler handler = new ChooseActionHandler(Looper.getMainLooper(), this); // Hanlder
-    private Button buildSettlement; // Action-Buttons
     private Player player; // current Player and Game
     private GameSession game;
 
@@ -69,17 +56,18 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chooseaction);
 
-        buildSettlement = findViewById(R.id.buildSettlement);
-        buildRoad = findViewById(R.id.buildRoad);
-        buildCity = findViewById(R.id.buildCity);
-        loadMain = findViewById(R.id.loadOverview);
-        buyDevCard = findViewById(R.id.buyDevCard);
-        playdevCard = findViewById(R.id.setDevCard);
-        trade = findViewById(R.id.trade);
-        exchangeBank = findViewById(R.id.exchangeBank);
-        exchangePort = findViewById(R.id.exchangePort);
-        showCosts = findViewById(R.id.showCosts);
-        ahead = findViewById(R.id.ahead);
+        // Action-Buttons
+        Button buildSettlement = findViewById(R.id.buildSettlement);
+        Button buildRoad = findViewById(R.id.buildRoad);
+        Button buildCity = findViewById(R.id.buildCity);
+        Button loadMain = findViewById(R.id.loadOverview);
+        Button buyDevCard = findViewById(R.id.buyDevCard);
+        Button playdevCard = findViewById(R.id.setDevCard);
+        Button trade = findViewById(R.id.trade);
+        Button exchangeBank = findViewById(R.id.exchangeBank);
+        Button exchangePort = findViewById(R.id.exchangePort);
+        Button showCosts = findViewById(R.id.showCosts);
+        Button ahead = findViewById(R.id.ahead);
 
         buildSettlement.setOnClickListener(this);
         buildRoad.setOnClickListener(this);
@@ -166,27 +154,29 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
                 startActivity(intent);
                 break;
             case R.id.exchangeBank:
-                if (player.getInventory().canBankTrade) {
-                    intent = new Intent(getBaseContext(), BankChangeActivity.class);
+                if (player.getInventory().isCanBankTrade()) {
+                    intent = new Intent(getBaseContext(), BankOrPortChangeActivity.class);
+                    intent.putExtra("kind", "bank");
                     startActivity(intent);
                 } else {
                     alert(messNoResources);
                 }
                 break;
             case R.id.exchangePort:
-                if (player.getInventory().canPortTrade && player.getInventory().hasPorts) {
-                    intent = new Intent(getBaseContext(), PortChangeActivity.class);
+                if (player.getInventory().isCanPortTrade() && player.getInventory().isHasPorts()) {
+                    intent = new Intent(getBaseContext(), BankOrPortChangeActivity.class);
+                    intent.putExtra("kind", "port");
                     startActivity(intent);
-                } else if (!player.getInventory().canPortTrade && player.getInventory().hasPorts) {
+                } else if (!player.getInventory().isCanPortTrade() && player.getInventory().isHasPorts()) {
                     alert(messNoResources);
-                } else if (player.getInventory().canPortTrade && !player.getInventory().hasPorts) {
+                } else if (player.getInventory().isCanPortTrade() && !player.getInventory().isHasPorts()) {
                     alert("Du besitzt keine Häfen");
                 } else {
                     alert(messNoResources + " Du besitzt keine Häfen.");
                 }
                 break;
             case R.id.trade:
-                if (player.getInventory().canTrade) {
+                if (player.getInventory().isCanTrade()) {
                     intent = new Intent(getBaseContext(), TradeActivity.class);
                     startActivity(intent);
                 } else {
@@ -203,13 +193,13 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
                 break;
             case R.id.buyDevCard:
                 boolean res = player.getInventory().getWool() > 0 && player.getInventory().getWheat() > 0 && player.getInventory().getOre() > 0;
-                if (res && game.getDevCards().size() > 0) {
+                if (res && !game.getDevCards().isEmpty()) {
                     logger.log(Level.INFO, "BUY CARD");
                     Thread networkThread = new NetworkThread(ServerQueries.createStringQueryBuyCard());
                     networkThread.start();
-                } else if (!res && game.getDevCards().size() > 0) {
+                } else if (!res && !game.getDevCards().isEmpty()) {
                     alert(messNoResources);
-                } else if (game.getDevCards().size() == 0 && res) {
+                } else if (game.getDevCards().isEmpty() && res) {
                     alert("Es gibt keine Entwicklungskarten mehr");
                 } else {
                     alert(messNoResources + " Es gibt keine Entwicklungskarten mehr.");

@@ -27,6 +27,9 @@ import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
 import com.example.diesiedler.threads.NetworkThread;
 import com.richpath.RichPathView;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @author Alex Wirth
  * @author Christina Senger (edit)
@@ -39,6 +42,7 @@ import com.richpath.RichPathView;
 public class BuildRoadActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Handler handler = new BuildRoadHandler(Looper.getMainLooper(), this); // Handler
+    private static final Logger logger = Logger.getLogger(BuildRoadActivity.class.getName()); // Logger
     private RichPathView richPathView;
 
     // TextViews for number of resources
@@ -71,10 +75,10 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
         card = getIntent().getStringExtra("card");
 
         if (card != null) {
-            System.out.println(card + " cardin");
+            logger.log(Level.INFO, card + " cardin");
         }
 
-        System.out.println(card + " card");
+        logger.log(Level.INFO, card + " card");
 
         ClientData.currentHandler = handler;
 
@@ -184,7 +188,8 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
      * Handler for the BuildRoadActivity
      */
     private class BuildRoadHandler extends GameHandler {
-        public BuildRoadHandler(Looper mainLooper, Activity ac) {
+
+        BuildRoadHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
         }
 

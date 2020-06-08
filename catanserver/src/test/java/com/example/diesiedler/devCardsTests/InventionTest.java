@@ -3,7 +3,7 @@ package com.example.diesiedler.devCardsTests;
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catangame.PlayerInventory;
-import com.example.catanserver.businessLogic.model.cards.Invention;
+import com.example.catanserver.businesslogic.model.cards.Invention;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -13,9 +13,8 @@ import org.junit.Test;
 public class InventionTest {
 
 
-    GameSession gameSession;
-    Player player1;
-    PlayerInventory playerInventory1;
+    private GameSession gameSession;
+    private Player player1;
 
     @Before
     public void setUp() {
@@ -37,7 +36,7 @@ public class InventionTest {
 
     @Test
     public void assertBeforeAll() {
-        playerInventory1 = player1.getInventory();
+        PlayerInventory playerInventory1 = player1.getInventory();
         Assert.assertEquals(0, playerInventory1.getVictoryPoints());
         Assert.assertEquals(0, playerInventory1.getBuildStreetCard());
         Assert.assertEquals(0, playerInventory1.getKnightCard());
@@ -65,12 +64,10 @@ public class InventionTest {
 
     @Test
     public void buildMessage() {
-        StringBuilder message = new StringBuilder();
 
-        message.append("Du hast eine Erfindungskarte gespielt und zwei ");
-        message.append("Ressourcen").append(" erhalten");
-
-        Assert.assertEquals(message.toString(), Invention.buildMessage("Ressourcen"));
+        String message = "Du hast eine Erfindungskarte gespielt und zwei " +
+                "Ressourcen" + " erhalten";
+        Assert.assertEquals(message, Invention.buildMessage("Ressourcen"));
     }
 
     @Test

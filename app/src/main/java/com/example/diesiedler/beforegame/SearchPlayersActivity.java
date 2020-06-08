@@ -38,8 +38,8 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
     Handler handler = new SearchPlayersHandler(Looper.getMainLooper(), this); // Handler
     private RecyclerView recyclerView; // Recyclerview with all active Users as Items
     private MyAdapter myAdapter; // Adapter-Class for the Recyclerview
-    private Button searchButton; // Button to start seraching for Players
-    private Button stopButton; // Button to stop seraching for Players
+    private Button searchButton; // Button to start searching for Players
+    private Button stopButton; // Button to stop searching for Players
 
     /**
      * The Recyclerview is loaded from the xml and gets a Layoutmanager.
@@ -82,13 +82,13 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
     }
 
     /**
-     * When the Actity is destroyed, the NetworkThread sends the
+     * When the Activity is destroyed, the NetworkThread sends the
      * Logout from the Search to the Server.
      */
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Thread networkThread = new NetworkThread(ServerQueries.createStringQueryStop());
+        Thread networkThread = new NetworkThread("STOP");
         networkThread.start();
         // TODO: Liste leeren oder nicht?
     }
@@ -141,7 +141,7 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
      * @param view View, to access the SearchButton
      */
     public void startSearching(View view) {
-        Thread networkThread = new NetworkThread(ServerQueries.createStringQueryApply());
+        Thread networkThread = new NetworkThread("APPLY");
         networkThread.start();
     }
 
@@ -151,7 +151,7 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
      * @param view View, to access StopButton
      */
     public void stopSearching(View view){
-        Thread networkThread = new NetworkThread(ServerQueries.createStringQueryStop());
+        Thread networkThread = new NetworkThread("STOP");
         networkThread.start();
         searchButton.setVisibility(View.VISIBLE);
         stopButton.setVisibility(View.GONE);
@@ -192,7 +192,7 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
                     selectableItems.add(user);
                 }
 
-                myAdapter = new MyAdapter((SearchPlayersActivity)activity, selectableItems, true);
+                myAdapter = new MyAdapter(selectableItems, true);
                 recyclerView.setAdapter(myAdapter);
             }
 

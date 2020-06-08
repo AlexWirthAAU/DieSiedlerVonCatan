@@ -2,7 +2,7 @@ package com.example.diesiedler.ressourceAllocationTest;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
-import com.example.catanserver.businessLogic.model.resourceallocation.ResourceAllocation;
+import com.example.catanserver.businesslogic.model.resourceallocation.ResourceAllocation;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,8 +11,8 @@ import org.junit.Test;
 
 public class ResourceAllocationSettlementTest {
 
-    GameSession gameSession;
-    Player p;
+    private GameSession gameSession;
+    private Player p;
 
     @Before
     public void setUp() {
