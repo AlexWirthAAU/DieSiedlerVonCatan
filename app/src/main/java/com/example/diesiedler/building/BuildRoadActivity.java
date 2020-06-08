@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.catangame.PlayerInventory;
+import com.example.catangame.devcards.BuildStreetCard;
 import com.example.catangame.gameboard.Edge;
 import com.example.diesiedler.R;
 import com.example.diesiedler.ScoreBoardActivity;
@@ -101,8 +102,17 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
      */
     @Override
     public void onBackPressed() {
-        if(ClientData.currentGame.isInitialized()){
-            super.onBackPressed();
+        boolean isUsingBuildCard = false;
+        for(BuildStreetCard card:ClientData.currentGame.getPlayer(ClientData.userId).getInventory().getBuildStreetCardLinkedList()){
+            if(card.getCounter() < 2){
+                isUsingBuildCard = true;
+                break;
+            }
+        }
+        if(!isUsingBuildCard) {
+            if (ClientData.currentGame.isInitialized()) {
+                super.onBackPressed();
+            }
         }
     }
 
