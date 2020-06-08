@@ -34,6 +34,7 @@ public class ThiefThread extends GameThread {
      * Method in <code>Thief</code>. It broadcasts a new GameSession, as well as sends a
      * command String to the current user and possibly the next user.
      */
+    @Override
     public void run(){
         try {
             int thiefIndex = Integer.parseInt(tileIndex);

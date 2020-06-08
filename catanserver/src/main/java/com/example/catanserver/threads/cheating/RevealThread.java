@@ -28,6 +28,7 @@ public class RevealThread extends GameThread {
      * message is sent to the revealing user. If revealed, a cheater command with a message is sent
      * to the cheating user as well.
      */
+    @Override
     public void run(){
         int grabberIdInt = -1;
         try{
