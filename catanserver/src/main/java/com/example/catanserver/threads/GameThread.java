@@ -41,7 +41,7 @@ public abstract class GameThread extends Thread {
      */
     public boolean endTurn(){
         checkInitialized();
-        Cheating.processGrabs(game,user);
+        Cheating.processGrabs(game,user.getUserId());
         return checkForWin();
     }
 

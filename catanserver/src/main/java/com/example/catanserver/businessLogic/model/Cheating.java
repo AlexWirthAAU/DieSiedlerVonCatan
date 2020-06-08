@@ -36,14 +36,14 @@ public class Cheating {
     /**
      * Processes the Grabs for a specific Player (to be stolen from). Is called after each turn.
      * @param game The GameSession in which to operate
-     * @param grabbed The User to be stolen from
+     * @param grabbedId The UserId of the Player to be stolen from
      */
-    public static void processGrabs(GameSession game, User grabbed){
+    public static void processGrabs(GameSession game, int grabbedId){
         LinkedList<Grab> removeGrabs = new LinkedList<>();
         for (Grab grab:game.getGrabs()) {
-            if(grab.getGrabbed().getUserId() == grabbed.getUserId() && !grab.getRevealed()){
+            if(grab.getGrabbed().getUserId() == grabbedId && (grab.getRevealed() == null || !grab.getRevealed())){
                 if(grab(grab)){
-                    System.out.println("Transfered " + grab.getResource() + " from " + grab.getGrabbed() + " to " + grab.getGrabber());
+                    System.out.println("Transfered " + grab.getResource() + " from " + grab.getGrabbed().getDisplayName() + " to " + grab.getGrabber().getDisplayName());
                 }
                 removeGrabs.add(grab);
             }
