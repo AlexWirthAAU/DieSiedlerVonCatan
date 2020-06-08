@@ -2,7 +2,7 @@ package com.example.diesiedler.tradeTests;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
-import com.example.catanserver.businessLogic.model.trading.Bank;
+import com.example.catanserver.businesslogic.model.trading.Bank;
 
 import org.junit.After;
 import org.junit.Assert;

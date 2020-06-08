@@ -2,7 +2,7 @@ package com.example.diesiedler.ressourceAllocationTest;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
-import com.example.catanserver.businessLogic.model.resourceallocation.InitResAllocation;
+import com.example.catanserver.businesslogic.model.resourceallocation.InitResAllocation;
 
 import org.junit.Assert;
 import org.junit.Before;

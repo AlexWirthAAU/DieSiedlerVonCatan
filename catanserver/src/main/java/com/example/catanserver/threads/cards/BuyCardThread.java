@@ -5,7 +5,7 @@ import com.example.catangame.Player;
 import com.example.catangame.devcards.DevCard;
 import com.example.catanserver.Server;
 import com.example.catanserver.User;
-import com.example.catanserver.businessLogic.model.cards.Buy;
+import com.example.catanserver.businesslogic.model.cards.Buy;
 import com.example.catanserver.threads.ErrorThread;
 import com.example.catanserver.threads.GameThread;
 import com.example.catanserver.threads.SendToClient;

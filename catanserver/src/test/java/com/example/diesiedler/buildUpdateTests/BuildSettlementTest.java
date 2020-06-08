@@ -4,7 +4,7 @@ import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catangame.PlayerInventory;
 import com.example.catangame.gameboard.Knot;
-import com.example.catanserver.businessLogic.model.building.BuildSettlement;
+import com.example.catanserver.businesslogic.model.building.BuildSettlement;
 
 import org.junit.After;
 import org.junit.Assert;

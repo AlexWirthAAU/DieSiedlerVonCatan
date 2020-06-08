@@ -1,4 +1,4 @@
-package com.example.catanserver.businessLogic.model.cards;
+package com.example.catanserver.businesslogic.model.cards;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
@@ -8,7 +8,7 @@ import com.example.catangame.devcards.InventionCard;
 import com.example.catangame.devcards.KnightCard;
 import com.example.catangame.devcards.MonopolCard;
 import com.example.catangame.devcards.VictoryPointCard;
-import com.example.catanserver.businessLogic.model.KnightPower;
+import com.example.catanserver.businesslogic.model.KnightPower;
 
 import java.util.List;
 import java.util.Random;

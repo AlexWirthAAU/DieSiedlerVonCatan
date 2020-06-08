@@ -4,7 +4,7 @@ import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catangame.PlayerInventory;
 import com.example.catangame.devcards.DevCard;
-import com.example.catanserver.businessLogic.model.cards.Buy;
+import com.example.catanserver.businesslogic.model.cards.Buy;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -58,6 +58,24 @@ public class BuyTest {
     public void checkFailedOnInventory() {
         player1.getInventory().setWool(0);
         player1.getInventory().setWheat(0);
+        player1.getInventory().setOre(0);
+        playerInventory1 = player1.getInventory();
+        Assert.assertFalse(Buy.checkStack(player1, gameSession));
+    }
+
+    @Test
+    public void checkFailedOnWheat() {
+        player1.getInventory().setWool(1);
+        player1.getInventory().setWheat(0);
+        player1.getInventory().setOre(0);
+        playerInventory1 = player1.getInventory();
+        Assert.assertFalse(Buy.checkStack(player1, gameSession));
+    }
+
+    @Test
+    public void checkFailedOnOre() {
+        player1.getInventory().setWool(1);
+        player1.getInventory().setWheat(1);
         player1.getInventory().setOre(0);
         playerInventory1 = player1.getInventory();
         Assert.assertFalse(Buy.checkStack(player1, gameSession));

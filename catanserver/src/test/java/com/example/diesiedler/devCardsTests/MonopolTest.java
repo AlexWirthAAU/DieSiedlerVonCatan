@@ -3,7 +3,7 @@ package com.example.diesiedler.devCardsTests;
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catangame.PlayerInventory;
-import com.example.catanserver.businessLogic.model.cards.Monopol;
+import com.example.catanserver.businesslogic.model.cards.Monopol;
 
 import org.junit.After;
 import org.junit.Assert;

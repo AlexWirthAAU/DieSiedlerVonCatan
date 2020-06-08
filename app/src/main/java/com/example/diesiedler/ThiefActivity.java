@@ -28,7 +28,7 @@ public class ThiefActivity extends AppCompatActivity {
 
     private Handler handler = new ThiefHandler(Looper.getMainLooper(), this);
     private RichPathView richPathView;
-    private String card; // "CARD" when to Activity is started from the PlayCardActivity
+    String card; // "CARD" when to Activity is started from the PlayCardActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

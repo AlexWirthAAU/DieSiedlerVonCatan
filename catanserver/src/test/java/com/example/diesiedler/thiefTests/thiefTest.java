@@ -4,7 +4,7 @@ import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catangame.gameboard.Knot;
 import com.example.catangame.gameboard.Tile;
-import com.example.catanserver.businessLogic.model.Thief;
+import com.example.catanserver.businesslogic.model.Thief;
 
 import org.junit.After;
 import org.junit.Assert;

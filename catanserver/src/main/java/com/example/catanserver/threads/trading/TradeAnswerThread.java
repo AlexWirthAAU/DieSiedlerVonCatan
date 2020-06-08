@@ -5,7 +5,7 @@ import com.example.catangame.Player;
 import com.example.catangame.Trade;
 import com.example.catanserver.Server;
 import com.example.catanserver.User;
-import com.example.catanserver.businessLogic.model.trading.Answer;
+import com.example.catanserver.businesslogic.model.trading.Answer;
 import com.example.catanserver.threads.GameThread;
 import com.example.catanserver.threads.SendToClient;
 

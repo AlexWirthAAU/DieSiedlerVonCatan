@@ -1,4 +1,4 @@
-package com.example.catanserver.businessLogic.model.cards;
+package com.example.catanserver.businesslogic.model.cards;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;

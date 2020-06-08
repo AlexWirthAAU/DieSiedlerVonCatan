@@ -4,8 +4,8 @@ import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catanserver.Server;
 import com.example.catanserver.User;
-import com.example.catanserver.businessLogic.model.Cheating;
-import com.example.catanserver.businessLogic.model.resourceallocation.InitResAllocation;
+import com.example.catanserver.businesslogic.model.Cheating;
+import com.example.catanserver.businesslogic.model.resourceallocation.InitResAllocation;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

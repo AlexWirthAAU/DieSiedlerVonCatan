@@ -4,7 +4,7 @@ import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catanserver.Server;
 import com.example.catanserver.User;
-import com.example.catanserver.businessLogic.model.Thief;
+import com.example.catanserver.businesslogic.model.Thief;
 
 /**
  * @author Fabian Schaffenrath

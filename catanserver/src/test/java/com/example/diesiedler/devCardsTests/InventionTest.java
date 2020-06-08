@@ -3,7 +3,7 @@ package com.example.diesiedler.devCardsTests;
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catangame.PlayerInventory;
-import com.example.catanserver.businessLogic.model.cards.Invention;
+import com.example.catanserver.businesslogic.model.cards.Invention;
 
 import org.junit.After;
 import org.junit.Assert;

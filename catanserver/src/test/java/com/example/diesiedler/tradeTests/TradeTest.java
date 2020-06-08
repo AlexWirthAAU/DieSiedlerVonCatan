@@ -2,7 +2,7 @@ package com.example.diesiedler.tradeTests;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
-import com.example.catanserver.businessLogic.model.trading.StartTrade;
+import com.example.catanserver.businesslogic.model.trading.StartTrade;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -92,7 +92,7 @@ public class TradeTest {
     }
 
     @Test
-    public void checkFailedOnRessource() {
+    public void checkFailedOnResource() {
         Map<String, Integer> map = new HashMap<>();
         map.put("Holz", 2);
         map.put("Wolle", 0);
@@ -103,7 +103,7 @@ public class TradeTest {
     }
 
     @Test
-    public void checkSucceed() {
+    public void checkSucceedOnWood() {
         player1.getInventory().addWood(1);
         Map<String, Integer> map = new HashMap<>();
         map.put("Holz", 2);
@@ -111,6 +111,54 @@ public class TradeTest {
         map.put("Weizen", 0);
         map.put("Erz", 0);
         map.put("Lehm", 0);
+        Assert.assertTrue(startTrade.checkTrade(map, player1));
+    }
+
+    @Test
+    public void checkSucceedOnWool() {
+        player1.getInventory().addWool(1);
+        Map<String, Integer> map = new HashMap<>();
+        map.put("Holz", 0);
+        map.put("Wolle", 2);
+        map.put("Weizen", 0);
+        map.put("Erz", 0);
+        map.put("Lehm", 0);
+        Assert.assertTrue(startTrade.checkTrade(map, player1));
+    }
+
+    @Test
+    public void checkSucceedOnWheat() {
+        player1.getInventory().addWheat(1);
+        Map<String, Integer> map = new HashMap<>();
+        map.put("Holz", 0);
+        map.put("Wolle", 0);
+        map.put("Weizen", 2);
+        map.put("Erz", 0);
+        map.put("Lehm", 0);
+        Assert.assertTrue(startTrade.checkTrade(map, player1));
+    }
+
+    @Test
+    public void checkSucceedOnOre() {
+        player1.getInventory().addOre(1);
+        Map<String, Integer> map = new HashMap<>();
+        map.put("Holz", 0);
+        map.put("Wolle", 0);
+        map.put("Weizen", 0);
+        map.put("Erz", 2);
+        map.put("Lehm", 0);
+        Assert.assertTrue(startTrade.checkTrade(map, player1));
+    }
+
+    @Test
+    public void checkSucceedOnClay() {
+        player1.getInventory().addClay(1);
+        Map<String, Integer> map = new HashMap<>();
+        map.put("Holz", 0);
+        map.put("Wolle", 0);
+        map.put("Weizen", 0);
+        map.put("Erz", 0);
+        map.put("Lehm", 2);
         Assert.assertTrue(startTrade.checkTrade(map, player1));
     }
 
