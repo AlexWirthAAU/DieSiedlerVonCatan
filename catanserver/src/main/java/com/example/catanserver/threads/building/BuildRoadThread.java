@@ -46,7 +46,7 @@ public class BuildRoadThread extends GameThread {
         } else {
             BuildRoad.updateGameSession(game, edgeIndex, userID);
         }
-        if(card.equals("CARD") & game.getCurr().getUserId() == user.getUserId()) {
+        if(card.equals("CARD") && game.getCurr().getUserId() == user.getUserId()) {
             SendToClient.sendGameSessionBroadcast(game);
             SendToClient.sendStringMessage(user, SendToClient.HEADER_ROAD);
         }
