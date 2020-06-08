@@ -26,8 +26,10 @@ public class ClientData {
 
     private static final Logger logger = Logger.getLogger(ClientData.class.getName()); // Logger
 
+    // Socket and Streams
+    public static Socket SERVER;//NOSONAR
     public static ObjectInputStream GET_FROM_SERVER;//NOSONAR
-    static ObjectOutputStream SEND_TO_SERVER;//NOSONAR
+    public static ObjectOutputStream SEND_TO_SERVER;//NOSONAR
 
     // this Users ID
     public static int userId = 0;//NOSONAR
@@ -55,23 +57,31 @@ public class ClientData {
      */
     public static void initializeServerConnection() {
         try {
-            // Socket and Streams
-            //NOSONAR
-            try (Socket SERVER = new Socket(HOST, PORT)) {
-                logger.log(Level.INFO, "Socket created.");
+            SERVER = new Socket(HOST, PORT);
+            logger.log(Level.INFO, "Socket created.");
 
-                SERVER.setKeepAlive(true);
-                logger.log(Level.INFO, "Socket kept alive.");
+            SERVER.setKeepAlive(true);
+            logger.log(Level.INFO, "Socket kept alive.");
 
-                SEND_TO_SERVER = new ObjectOutputStream(SERVER.getOutputStream());
-                logger.log(Level.INFO, "Object Output Stream created.");
+            SEND_TO_SERVER = new ObjectOutputStream(SERVER.getOutputStream());
+            logger.log(Level.INFO, "Object Output Stream created.");
 
-                GET_FROM_SERVER = new ObjectInputStream(SERVER.getInputStream());
-                logger.log(Level.INFO, "Object Input Stream created.");
+            GET_FROM_SERVER = new ObjectInputStream(SERVER.getInputStream());
+            logger.log(Level.INFO, "Object Input Stream created.");
 
-                SERVER.setSoTimeout(0);
-            }
+            SERVER.setSoTimeout(0);
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Closes the Socket.
+     */
+    public static void closeServerConnection() {
+        try {
+            SERVER.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

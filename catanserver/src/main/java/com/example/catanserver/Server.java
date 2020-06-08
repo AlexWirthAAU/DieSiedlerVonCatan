@@ -32,7 +32,7 @@ public class Server {
     public static final Set<User> currentlySearching = Collections.synchronizedSet(new HashSet<>());//NOSONAR
     // List of all Connections that are currently active
     static final List<Socket> currentConnections = Collections.synchronizedList(new LinkedList<>());//NOSONAR
-    private static final int SERVER_PORT = 10; // Port the Server listens to
+    private static final int SERVER_PORT = 2020; // Port the Server listens to
     private static Logger logger = Logger.getLogger(Server.class.getName()); // Logger
 
     /**
