@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         /**
-         * When the Login was succesfull the SearchPlayersActivity is started
+         * When the Login was successful the SearchPlayersActivity is started
          *
          * @param msg msg.arg1 has the Param for further Actions
          */
