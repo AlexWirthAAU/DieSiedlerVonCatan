@@ -41,7 +41,7 @@ public class Cheating {
     public static void processGrabs(GameSession game, int grabbedId){
         LinkedList<Grab> removeGrabs = new LinkedList<>();
         for (Grab grab:game.getGrabs()) {
-            if(grab.getGrabbed().getUserId() == grabbedId && !grab.getRevealed()){
+            if(grab.getGrabbed().getUserId() == grabbedId && (grab.getRevealed() == null || !grab.getRevealed())){
                 if(grab(grab)){
                     System.out.println("Transfered " + grab.getResource() + " from " + grab.getGrabbed() + " to " + grab.getGrabber());
                 }
