@@ -1,11 +1,14 @@
-# DieSiedlerVonCatan
 
 [![Build Status](https://travis-ci.com/AlexWirthAAU/DieSiedlerVonCatan.svg?branch=master)](https://travis-ci.com/AlexWirthAAU/DieSiedlerVonCatan)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DieSiedlerVonCatan&metric=alert_status)](https://sonarcloud.io/dashboard?id=DieSiedlerVonCatan)
 
-# Allgemein: 
+<h1 align="center">Die Sielder von Catan</h1>
+
+<p align="center"><img src="https://twoaveragegamers.com/wp-content/uploads/2018/10/catanBanner.jpg" height="200"></p>
+
+
 ## Spielablauf:
-Zu Beginn loggt sich der User mit seinem Namen ein. Dann wird er in eine Lobby weitergeleitet, wo er nach Mitspielern suchen kann. Er kann zwischen zwei und drei Mitspielern auswählen und das Spiel starten. Ist dies passiert, kommen alle gewählten Spieler zu einer Farbauswahl. Haben alle ihre Spielfarbe gewählt, kann das Hauptspiel gestartet werden. Es beginnt jener Spieler, der zuerst die App gestartet hat. Zu Beginn kann jeder Spieler „kostenlos“ zwei Siedlungen und Straßen bauen. Basierend auf den Landschaften, an denen er Siedlungen gebaut hat, erhält jeder Spieler seine Startrohstoffe.Dann beginnt der normale Spielablauf: Zu Beginn muss der Spieler würfeln, indem er das Handy schüttelt. Je nach Augenzahl werden die Rohstoffe verteilt und Spieler kommt zu einer Auswahl bei der aus folgenden Optionen wählen kann: 
+Zu Beginn loggt sich der User mit seinem Namen ein. Dann wird er in eine Lobby weitergeleitet, wo er nach Mitspielern suchen kann. Er kann zwischen 1 - 3 Mitspielern auswählen und das Spiel starten. Ist dies passiert, kommen alle gewählten Spieler zu einer Farbauswahl. Haben alle ihre Spielfarbe gewählt, kann das Hauptspiel gestartet werden. Es beginnt jener Spieler, der zuerst die App gestartet hat. Zu Beginn kann jeder Spieler „kostenlos“ zwei Siedlungen und Straßen bauen. Basierend auf den Landschaften, an denen er Siedlungen gebaut hat, erhält jeder Spieler seine Startrohstoffe. Dann beginnt der normale Spielablauf: Zu Beginn muss der Spieler würfeln, indem er das Handy schüttelt. Je nach Augenzahl werden die Rohstoffe verteilt und Spieler kommt zu einer Auswahl bei der aus folgenden Optionen wählen kann: 
 
   * Siedlung bauen 
   * Straße bauen 
@@ -20,12 +23,13 @@ Zu Beginn loggt sich der User mit seinem Namen ein. Dann wird er in eine Lobby w
   * Weiter 
 
 \
-Es darf jeweils nur eine Aktion pro Spielzug gewählt werden. Wird eine 7 gewürfelt, werden keine Rohstoffe verteilt und der Spieler darf den Räuber versetzten. Befindet sich der Räuber auf der Landschaft mit der gewürfelten Zahl gibt es ebenso keine Rohstoffe. Für jede Siedlung gibt es 2, für jeder Stadt 3 Siegpunkte. Eine Siegpunktkarte bringt einen Siegpunkt. Für die größte Rittermacht gibt es 2 Siegpunkte. Hat ein Spieler 10 Siegpunkte erreicht, ist das Spiel beendet und die Spieler kommen wieder in die Lobby. \
+Es darf jeweils nur eine Aktion pro Spielzug gewählt werden. Wird eine 7 gewürfelt, werden keine Rohstoffe verteilt und der Spieler darf den Räuber versetzten. Befindet sich der Räuber auf der Landschaft mit der gewürfelten Zahl gibt es ebenso keine Rohstoffe. Für jede Siedlung gibt es 2, für jeder Stadt 3 Siegpunkte. Eine Siegpunktkarte bringt einen Siegpunkt. Für die größte Rittermacht gibt es 2 Siegpunkte. Hat ein Spieler 10 Siegpunkte erreicht, ist das Spiel beendet und die Spieler kommen wieder in die Lobby. 
 
 ## Regelanpassungen:
 * nur eine Aktion pro Spielzug erlaubt
 * es gibt nur Spezialhäfen
-* beim Räuber erhält der Spieler einen zufälligen Rohstoff von einem zufälligen Spieler
+* beim Versetzen des Räubers werden den Besitzern der angrenzenden Siedlungen/Städte keine Rohstoffe gestohlen
+* Es ist auch möglich zu zweit zu spielen
 * die größte Rittermacht erhält man bereits ab einem Ritter
 
 **@author Alex Wirth**
@@ -50,17 +54,17 @@ Es darf jeweils nur eine Aktion pro Spielzug gewählt werden. Wird eine 7 gewür
 Das Spielbrett besteht aus 19 Feldern, die einer bestimmten Ressource zugeteilt sind und einen Würfelwert zwischen 2-12 haben. An jedem Knotenpunkt der Felder können Siedlungen gebaut werden, die mit Straßen verbunden sind. Einige Knotenpunkte sind Hafensiedlungen. An ihnen ist ein weißes Schiff zu erkennen. 
 
 ### Bauen
-Entscheidet sich der Spieler eine Siedlung zu bauen, so werden ihm alle möglichen Knotenpunkte in Rot markiert. Klickt er auf einen dieser markierten Punkte, wird der Punkt besiedelt und in seiner Spielerfarbe eingefärbt. Eine Siedlung kann nur an einer Straße des Spielers gebaut werden sofern die benachbarten Kreuzungen noch nicht besiedelt sind.
+Entscheidet sich der Spieler eine Siedlung zu bauen, so werden ihm alle möglichen Knotenpunkte in rot markiert. Klickt er auf einen dieser markierten Punkte, wird der Punkt besiedelt und in seiner Spielerfarbe eingefärbt. Eine Siedlung kann nur an einer Straße des Spielers gebaut werden sofern die benachbarten Kreuzungen noch nicht besiedelt sind.
 Straßen können entweder an andere bereits existierende Straßen des Spielers oder an eine seiner Siedlungen gebaut werden. Auch hier werden die möglichen Kanten zunächst rot eingefärbt. Baut der Spieler eine Straße, wird sie in seiner Spielfarbe eingefärbt.
 Siedlungen können im Verlauf des Spieles zu Städten umgebaut werden. Städte werden als schwarze Quadrate mit Punkten der Spielerfarbe dargestellt.
 
-### Würfeln
+### Würfeln & Rohstoffverteilung
 Wenn ein Spieler an der Reihe ist, wird er aufgefordert zu würfeln. Dies passiert durch Schütteln seines Smartphones. Eine zufallsgenerierte Zahl wird dem Spieler angezeigt.
-Je nach Zahl werden Rohstoffe an jene Spieler verteilt, die Siedlungen bzw. Städte an den betroffenen Feldern haben. Siedlungen bringen eine Einheit des Rohstoffs, Städte zwei.
-Wird eine 7 gewürfelt, so werden keine Rohstoffe verteilt, sondern der würfelnde Spieler kann den Räuber auf ein anderes Rohstofffeld setzen.
+Je nach Zahl werden Rohstoffe an jene Spieler verteilt, die Siedlungen bzw. Städte an den betroffenen Feldern haben. Siedlungen bringen eine Einheit des Rohstoffs, Städte zwei. Wird die Zahl 7 gewürfelt startet die Aktion Räuber.
 
 ### Räuber 
-Der Räuber belegt zu jeder Zeit eines der Rohstofffelder auf dem Spielfeld. Spieler, deren Siedlungen an dieses Rohstofffeld grenzen, erhalten aber keine Rohstoffe von diesem Feld.
+Der Räuber belegt zu jeder Zeit eines der Rohstofffelder auf dem Spielfeld. Zu Beginn des Spiels befindet er sich am Spielfeld "Wüste". Würfelt ein Spieler die Zahl 7, muss er den Räuber auf ein anderes Spielfeld versetzen. 
+Alle Spieler, die Siedlungen oder Städte besitzen, die an das Feld mit dem Räuber angrenzen, bekommen keine Rohstoffe beim Würfeln der entsprechenden Zahl.
 
 ### Schummeln
 Ein Spieler kann zu jeder Zeit versuchen, einem anderen Spieler einen Rohstoff zu stehlen. Dabei wählt er einen Spieler und danach einen Rohstoff aus. Der zu bestehlende Spieler hat während seines nächsten Zuges die Möglichkeit, diesen Diebstahlsversuch aufzudecken. Dabei muss er das Diebstahlsicon berühren und raten, welche seiner Rohstoffe gestohlen wird. Sollte der Spieler richtig raten, so darf er versuchen, einen Rohstoff von seinem Dieb zurückzustehlen. Außerdem muss der Dieb seinen nächsten Zug aussetzen. Ratet der Spieler falsch, so wird ihm am Ende seines Spielzuges der Rohstoff gestohlen.
