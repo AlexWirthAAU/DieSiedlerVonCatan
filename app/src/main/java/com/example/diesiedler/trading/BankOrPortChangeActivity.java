@@ -27,17 +27,32 @@ import java.util.logging.Logger;
  * <p>
  * Activity to setup a 4:1 Trade with the Bank.
  */
-public class BankChangeActivity extends AppCompatActivity {
+public class BankOrPortChangeActivity extends AppCompatActivity {
 
-    private static final Logger logger = Logger.getLogger(BankChangeActivity.class.getName()); // Logger
+    private static final Logger logger = Logger.getLogger(BankOrPortChangeActivity.class.getName()); // Logger
     List<Button> giveBtns = new ArrayList<>(); // List of all Give-Buttons
     List<Button> getBtns = new ArrayList<>(); // List of all Get-Buttons
     StringBuilder res = new StringBuilder(); // StringBuilder for the Trade-Offer
-    Handler handler = new BankChangeHandler(Looper.getMainLooper(), this); // Handler
+    Handler handler = new BankOrPortChangeHandler(Looper.getMainLooper(), this); // Handler
+
+    String kind; // bank or port, depending on the chosen Action
+
+    PlayerInventory playerInventory; // current Players Inventory
+
+    Button woolGive = findViewById(R.id.woolGive); // Resource-Buttons
+    Button wheatGive = findViewById(R.id.wheatGive);
+    Button oreGive = findViewById(R.id.oreGive);
+    Button clayGive = findViewById(R.id.clayGive);
+    Button woodGive = findViewById(R.id.woodGive);
+
+    Button woolGet = findViewById(R.id.woolGet);
+    Button wheatGet = findViewById(R.id.wheatGet);
+    Button oreGet = findViewById(R.id.oreGet);
+    Button clayGet = findViewById(R.id.clayGet);
+    Button woodGet = findViewById(R.id.woodGet);
 
     /**
-     * Adds all Buttons to their List and enables them, when the
-     * Player has less than 4 of the corresponding Resource.
+     * Adds all Buttons to their List.
      * Specifies the Handler in ClientData for the current Activity.
      *
      * @param savedInstanceState saved State
@@ -46,18 +61,6 @@ public class BankChangeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bank_change);
-
-        Button woolGive = findViewById(R.id.woolGive);
-        Button wheatGive = findViewById(R.id.wheatGive);
-        Button oreGive = findViewById(R.id.oreGive);
-        Button clayGive = findViewById(R.id.clayGive);
-        Button woodGive = findViewById(R.id.woodGive);
-
-        Button woolGet = findViewById(R.id.woolGet);
-        Button wheatGet = findViewById(R.id.wheatGet);
-        Button oreGet = findViewById(R.id.oreGet);
-        Button clayGet = findViewById(R.id.clayGet);
-        Button woodGet = findViewById(R.id.woodGet);
 
         giveBtns.add(woodGive);
         giveBtns.add(woolGive);
@@ -71,8 +74,26 @@ public class BankChangeActivity extends AppCompatActivity {
         getBtns.add(oreGet);
         getBtns.add(clayGet);
 
-        PlayerInventory playerInventory = ClientData.currentGame.getPlayer(ClientData.userId).getInventory();
+        kind = getIntent().getStringExtra("kind");
 
+        playerInventory = ClientData.currentGame.getPlayer(ClientData.userId).getInventory();
+
+        if (kind.equals("bank")) {
+            setBankButtons();
+        }
+
+        if (kind.equals("port")) {
+            setPortButtons();
+        }
+
+        ClientData.currentHandler = handler;
+    }
+
+    /**
+     * Enables the Resource-Buttons, when the
+     * Player has less than 4 of the corresponding Resource.
+     */
+    private void setBankButtons() {
         if (playerInventory.getWood() < 4) {
             woodGive.setEnabled(false);
         }
@@ -92,8 +113,53 @@ public class BankChangeActivity extends AppCompatActivity {
         if (playerInventory.getClay() < 4) {
             clayGive.setEnabled(false);
         }
+    }
 
-        ClientData.currentHandler = handler;
+    /**
+     * Enables the Resource-Buttons, when the
+     * Player has less than 3 of the corresponding Resource or no Port.
+     */
+    private void setPortButtons() {
+
+        if (playerInventory.getWood() < 3) {
+            woodGive.setEnabled(false);
+        }
+
+        if (!playerInventory.isWoodport()) {
+            woodGet.setEnabled(false);
+        }
+
+        if (playerInventory.getWool() < 3) {
+            woolGive.setEnabled(false);
+        }
+
+        if (!playerInventory.isWoolport()) {
+            woolGet.setEnabled(false);
+        }
+
+        if (playerInventory.getWheat() < 3) {
+            wheatGive.setEnabled(false);
+        }
+
+        if (!playerInventory.isWheatport()) {
+            wheatGet.setEnabled(false);
+        }
+
+        if (playerInventory.getOre() < 3) {
+            oreGive.setEnabled(false);
+        }
+
+        if (!playerInventory.isOreport()) {
+            oreGet.setEnabled(false);
+        }
+
+        if (playerInventory.getClay() < 3) {
+            clayGive.setEnabled(false);
+        }
+
+        if (!playerInventory.isClayport()) {
+            clayGet.setEnabled(false);
+        }
     }
 
     @Override
@@ -155,8 +221,15 @@ public class BankChangeActivity extends AppCompatActivity {
      */
     public void change(View view) {
         String toSendTrade = res.toString();
-        logger.log(Level.INFO, "CREATE BANK CHANGE");
-        Thread networkThread = new NetworkThread(ServerQueries.createStringQueryBankChange(toSendTrade));
+        Thread networkThread;
+
+        if (kind.equals("bank")) {
+            networkThread = new NetworkThread(ServerQueries.createStringQueryBankChange(toSendTrade));
+            logger.log(Level.INFO, "CREATE BANK CHANGE");
+        } else {
+            networkThread = new NetworkThread(ServerQueries.createStringQueryPortChange(toSendTrade));
+            logger.log(Level.INFO, "CREATE PORT CHANGE");
+        }
         networkThread.start();
     }
 
@@ -166,9 +239,9 @@ public class BankChangeActivity extends AppCompatActivity {
      *
      * Handler for the BankChangeActivity
      */
-    private class BankChangeHandler extends GameHandler {
+    private class BankOrPortChangeHandler extends GameHandler {
 
-        BankChangeHandler(Looper mainLooper, Activity ac) {
+        BankOrPortChangeHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
         }
 

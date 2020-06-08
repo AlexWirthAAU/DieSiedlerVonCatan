@@ -25,8 +25,7 @@ import com.example.diesiedler.presenter.UpdateBuildRoadView;
 import com.example.diesiedler.presenter.UpdateBuildSettlementView;
 import com.example.diesiedler.presenter.handler.GameHandler;
 import com.example.diesiedler.threads.NetworkThread;
-import com.example.diesiedler.trading.BankChangeActivity;
-import com.example.diesiedler.trading.PortChangeActivity;
+import com.example.diesiedler.trading.BankOrPortChangeActivity;
 import com.example.diesiedler.trading.TradeActivity;
 
 import java.util.logging.Level;
@@ -156,7 +155,8 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
                 break;
             case R.id.exchangeBank:
                 if (player.getInventory().isCanBankTrade()) {
-                    intent = new Intent(getBaseContext(), BankChangeActivity.class);
+                    intent = new Intent(getBaseContext(), BankOrPortChangeActivity.class);
+                    intent.putExtra("kind", "bank");
                     startActivity(intent);
                 } else {
                     alert(messNoResources);
@@ -164,7 +164,8 @@ public class ChooseActionActivity extends AppCompatActivity implements View.OnCl
                 break;
             case R.id.exchangePort:
                 if (player.getInventory().isCanPortTrade() && player.getInventory().isHasPorts()) {
-                    intent = new Intent(getBaseContext(), PortChangeActivity.class);
+                    intent = new Intent(getBaseContext(), BankOrPortChangeActivity.class);
+                    intent.putExtra("kind", "port");
                     startActivity(intent);
                 } else if (!player.getInventory().isCanPortTrade() && player.getInventory().isHasPorts()) {
                     alert(messNoResources);

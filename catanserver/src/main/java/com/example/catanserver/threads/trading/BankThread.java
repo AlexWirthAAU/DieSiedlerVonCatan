@@ -5,6 +5,7 @@ import com.example.catangame.Player;
 import com.example.catanserver.Server;
 import com.example.catanserver.User;
 import com.example.catanserver.businesslogic.model.trading.Bank;
+import com.example.catanserver.businesslogic.model.trading.TradingGeneral;
 import com.example.catanserver.threads.ErrorThread;
 import com.example.catanserver.threads.GameThread;
 import com.example.catanserver.threads.SendToClient;
@@ -22,6 +23,7 @@ public class BankThread extends GameThread {
 
     private Player currPlayer; // current Player
     private String tradeStr; // Trade-Offer
+    private TradingGeneral tradingGeneral = new TradingGeneral();
 
     /**
      * Constructor - Gets the current Player from the Game und sets the Trade-Offer.
@@ -46,17 +48,17 @@ public class BankThread extends GameThread {
     @Override
     public void run() {
 
-        Bank.setTradeData(tradeStr);
+        tradingGeneral.setTradeData(tradeStr);
         // Name of the offered Resource
-        String give = Bank.getOffered();
+        String give = tradingGeneral.getOffered();
         // Name of the desired Resource
-        String get = Bank.getDesired();
+        String get = tradingGeneral.getDesired();
 
         if (Bank.checkTrade(currPlayer, give)) {
 
             logger.log(Level.INFO, "checked");
-            String mess = Bank.buildMessage(give, get);
-            Bank.exchangeRessources(give, get, currPlayer);
+            String mess = tradingGeneral.buildMessage(give, get, 4);
+            tradingGeneral.exchangeResources(give, get, currPlayer, 4);
             game.nextPlayer();
             if(!endTurn()) {
                 SendToClient.sendGameSessionBroadcast(game);
