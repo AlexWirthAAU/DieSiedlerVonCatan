@@ -21,6 +21,7 @@ import com.example.diesiedler.presenter.handler.PreGameHandler;
 import com.example.diesiedler.threads.NetworkThread;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -62,7 +63,7 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
         stopButton = this.findViewById(R.id.stopButton);
 
         ClientData.currentHandler = handler;
-
+        ClientData.chosenPlayers = new HashMap<>();
         ClientData.emptyGameData();
     }
 
@@ -90,7 +91,6 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
         super.onDestroy();
         Thread networkThread = new NetworkThread(ServerQueries.createStringQueryStop());
         networkThread.start();
-        // TODO: Liste leeren oder nicht?
     }
 
     /**
@@ -155,6 +155,9 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
         networkThread.start();
         searchButton.setVisibility(View.VISIBLE);
         stopButton.setVisibility(View.GONE);
+        List<SelectableItem> selectableItems = new ArrayList<>();
+        myAdapter = new MyAdapter(this, selectableItems, true);
+        recyclerView.setAdapter(myAdapter);
     }
 
     /**
@@ -178,9 +181,7 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
 
         @Override
         public void handleMessage(Message msg){
-            if(msg.arg1 == 3){  // TODO: Change to enums
-
-                // TODO: Keep chosen players
+            if(msg.arg1 == 3){
 
                 searchButton.setVisibility(View.GONE);
                 stopButton.setVisibility(View.VISIBLE);
@@ -188,15 +189,23 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
                 List<SelectableItem> selectableItems = new ArrayList<>();
 
                 for (String str:ClientData.searchingUserNames) {
-                    SelectableItem user = new SelectableItem(str, false);
+                    SelectableItem user;
+                    if(ClientData.chosenPlayers.get(str) != null && ClientData.chosenPlayers.get(str)){
+                        user = new SelectableItem(str, true);
+                        logger.log(Level.INFO,"IST TRUE");
+                    }
+                    else {
+                        user = new SelectableItem(str, false);
+                    }
                     selectableItems.add(user);
                 }
 
                 myAdapter = new MyAdapter((SearchPlayersActivity)activity, selectableItems, true);
                 recyclerView.setAdapter(myAdapter);
+
             }
 
-            if(msg.arg1 == 4){  // TODO: Change to enums
+            if(msg.arg1 == 4){
                 Intent intent = new Intent(activity, SelectColorsActivity.class);
                 startActivity(intent);
             }

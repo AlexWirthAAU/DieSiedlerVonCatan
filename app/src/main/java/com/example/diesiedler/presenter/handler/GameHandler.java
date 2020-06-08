@@ -93,7 +93,7 @@ public class GameHandler extends Handler {
             else if(((String) msg.obj).startsWith("CHEATER")){
                 showAlert(titleCheat,message);
             }
-            else if(((String) msg.obj).startsWith("CHEATEDREVEAL")){  //TODO: putExtra of playerId umgehen
+            else if(((String) msg.obj).startsWith("CHEATEDREVEAL")){
                 if(message != null){
                     showAlertWithCheatCounterActivityCall(titleCheat,message);
                 }

@@ -56,7 +56,6 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
 
 
     private static String card = ""; // "CARD" when to Activity is started from the PlayCardActivity
-    //TODO: Methoden kommentieren
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

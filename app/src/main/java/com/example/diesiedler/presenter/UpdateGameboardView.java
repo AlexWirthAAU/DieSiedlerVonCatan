@@ -11,8 +11,6 @@ import com.example.catangame.gameboard.Tile;
 import com.richpath.RichPath;
 import com.richpath.RichPathView;
 
-//TODO: Handle Colors!
-
 /**
  * @author Alex Wirth
  * This class updates the gameboard depending on the state of the current gamesession object.

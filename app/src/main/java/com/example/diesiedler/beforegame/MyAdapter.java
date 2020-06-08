@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.diesiedler.R;
+import com.example.diesiedler.presenter.ClientData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,23 +41,7 @@ public class MyAdapter extends RecyclerView.Adapter implements SelectableViewHol
 
         myValues = new ArrayList<>();
         myValues.addAll(data);
-    }
 
-    /**
-     * Make all Items in the new List SelectableItems. Deletes all values from
-     * myValues (curr SelectableItems) and adds all new Items.
-     * Notifies to Adapter, that Items have changed.
-     *
-     * @param newUsernames new List of active Users
-     */
-    public void update(List<String> newUsernames) {
-
-        myValues.clear();
-
-        for (String str : newUsernames) {
-            myValues.add(new SelectableItem(str, false));
-        }
-        notifyDataSetChanged();
     }
 
     /**
@@ -74,7 +59,6 @@ public class MyAdapter extends RecyclerView.Adapter implements SelectableViewHol
 
         Context context = parent.getContext();
         View v = LayoutInflater.from(context).inflate(R.layout.user, parent, false);
-
         return new SelectableViewHolder(v, this);
     }
 

@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
          */
         @Override
         public void handleMessage(Message msg) {
-            if (msg.arg1 == 2) {  // TODO: Change to enums
+            if (msg.arg1 == 2) {
                 ClientData.userDisplayName = ((LoginActivity) activity).displayName.getText().toString();
                 Intent intent = new Intent(activity, SearchPlayersActivity.class);
                 startActivity(intent);

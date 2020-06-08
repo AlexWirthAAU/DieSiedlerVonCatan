@@ -22,7 +22,7 @@ public class Knot implements Serializable {
     private boolean isSettled; // States whether a Knot is settled
     private boolean hasCity; // States whether a Knot has a City
 
-    private Player player; //TODO: When a player builds a settlement, he owns this knot
+    private Player player; // When a player builds a settlement, he owns this knot
 
     private boolean isHarbourKnot;  // States whether a Knot has a Harbour or not
     private boolean isWoodPort; // States whether a Knot has a specific Harbour

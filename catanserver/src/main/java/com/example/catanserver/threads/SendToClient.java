@@ -96,8 +96,6 @@ public class SendToClient {
                     System.err.println("Could not send GameSession to Client " + user.getDisplayName() + ".");
                 }
             }
-        } else {
-            // TODO: What happens if a user cant be found? (should not happen)
         }
     }
 
@@ -192,8 +190,6 @@ public class SendToClient {
                     System.err.println("Message: " + message);
                 }
             }
-        } else {
-            // TODO: What happens if a user cant be found? (should not happen)
         }
     }
 

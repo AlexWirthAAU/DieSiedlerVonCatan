@@ -7,8 +7,6 @@ import com.example.catanserver.businessLogic.model.building.BuildRoad;
 import com.example.catanserver.threads.GameThread;
 import com.example.catanserver.threads.SendToClient;
 
-// TODO: kommentieren
-
 /**
  * @author Alex Wirth
  * @author Christina Senger (edit)
