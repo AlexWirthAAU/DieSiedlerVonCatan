@@ -42,17 +42,18 @@ public class Server {
     public static void main(String[] args) {
         try {
             // ServerSocket
-            ServerSocket listenerSocket = new ServerSocket(SERVER_PORT);
-            logger.log(Level.INFO, "Server running on: " + listenerSocket.getInetAddress() + SERVER_PORT);
+            try (ServerSocket listenerSocket = new ServerSocket(SERVER_PORT)) {
+                logger.log(Level.INFO, "Server running on: " + listenerSocket.getInetAddress() + SERVER_PORT);
 
-            while(true){//NOSONAR
-                // Client Socket
-                Socket caughtConnection = listenerSocket.accept();
-                if(caughtConnection != null){
-                    logger.log(Level.INFO, "Connection to " + caughtConnection.getInetAddress() + ":" + caughtConnection.getPort() + "(ListenerThread)");
-                    logger.log(Level.INFO, "Remote: " + caughtConnection.getRemoteSocketAddress());
-                    Thread serverReaderThread = new ClientListenerThread(caughtConnection);
-                    serverReaderThread.start();
+                while (true) {//NOSONAR
+                    // Client Socket
+                    Socket caughtConnection = listenerSocket.accept();
+                    if (caughtConnection != null) {
+                        logger.log(Level.INFO, "Connection to " + caughtConnection.getInetAddress() + ":" + caughtConnection.getPort() + "(ListenerThread)");
+                        logger.log(Level.INFO, "Remote: " + caughtConnection.getRemoteSocketAddress());
+                        Thread serverReaderThread = new ClientListenerThread(caughtConnection);
+                        serverReaderThread.start();
+                    }
                 }
             }
         }catch(IOException ex){

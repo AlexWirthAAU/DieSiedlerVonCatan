@@ -57,19 +57,20 @@ public class ClientData {
         try {
             // Socket and Streams
             //NOSONAR
-            Socket SERVER = new Socket(HOST, PORT);
-            logger.log(Level.INFO, "Socket created.");
+            try (Socket SERVER = new Socket(HOST, PORT)) {
+                logger.log(Level.INFO, "Socket created.");
 
-            SERVER.setKeepAlive(true);
-            logger.log(Level.INFO, "Socket kept alive.");
+                SERVER.setKeepAlive(true);
+                logger.log(Level.INFO, "Socket kept alive.");
 
-            SEND_TO_SERVER = new ObjectOutputStream(SERVER.getOutputStream());
-            logger.log(Level.INFO, "Object Output Stream created.");
+                SEND_TO_SERVER = new ObjectOutputStream(SERVER.getOutputStream());
+                logger.log(Level.INFO, "Object Output Stream created.");
 
-            GET_FROM_SERVER = new ObjectInputStream(SERVER.getInputStream());
-            logger.log(Level.INFO, "Object Input Stream created.");
+                GET_FROM_SERVER = new ObjectInputStream(SERVER.getInputStream());
+                logger.log(Level.INFO, "Object Input Stream created.");
 
-            SERVER.setSoTimeout(0);
+                SERVER.setSoTimeout(0);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
