@@ -442,7 +442,6 @@ public class ClientListenerThread extends Thread {
      * @return Array with Message-Parts
      */
     private String[] splitMessage(String msg){
-        // TODO: optimize
         ArrayList<String> stringList = new ArrayList<>();
         while(true){
             int index = msg.indexOf(" ");

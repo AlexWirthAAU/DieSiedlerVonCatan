@@ -50,6 +50,7 @@ public class TradeThread extends GameThread {
      * is distributed to all potential Trading-Partners. Else, an Error-Thread
      * is created.
      */
+    @Override
     public void run() {
 
         StartTrade startTrade = new StartTrade();

@@ -32,20 +32,6 @@
         app:layout_constraintVertical_bias="0.557" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="470dp"
-        android:text="Längste Handelsstraße hat: Spieler"
-        android:textAlignment="center"
-        android:textColor="#FBC02D"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/scorelist"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="0dp" />
-
-    <TextView
         android:id="@+id/knightpower"
         android:layout_width="match_parent"
         android:layout_height="80dp"

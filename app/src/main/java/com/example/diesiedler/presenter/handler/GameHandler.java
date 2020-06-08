@@ -93,7 +93,7 @@ public class GameHandler extends Handler {
             else if(((String) msg.obj).startsWith("CHEATER")){
                 showAlert(titleCheat,message);
             }
-            else if(((String) msg.obj).startsWith("CHEATEDREVEAL")){  //TODO: putExtra of playerId umgehen
+            else if(((String) msg.obj).startsWith("CHEATEDREVEAL")){
                 if(message != null){
                     showAlertWithCheatCounterActivityCall(titleCheat,message);
                 }
@@ -115,6 +115,11 @@ public class GameHandler extends Handler {
             }
             else if(((String) msg.obj).startsWith("KNIGHT")){
                 showAlert("Ritter",message);
+            }
+            else if(((String) msg.obj).startsWith("ROAD")){
+                Intent intent = new Intent(activity,BuildRoadActivity.class);
+                intent.putExtra("card","CARD");
+                activity.startActivity(intent);
             }
             else if(((String) msg.obj).startsWith("ERROR")){
                 showAlert("Fehler",message);

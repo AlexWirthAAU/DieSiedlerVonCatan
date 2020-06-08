@@ -73,7 +73,7 @@ public class WelcomeActivity extends AppCompatActivity {
          */
         @Override
         public void handleMessage(Message msg) {
-            if (msg.arg1 == 1) {  // TODO: Change to enums
+            if (msg.arg1 == 1) {
                 ClientData.SERVER_COMMUNICATION_THREAD = new ServerCommunicationThread();
                 ClientData.SERVER_COMMUNICATION_THREAD.start();
                 Intent intent = new Intent(activity, LoginActivity.class);

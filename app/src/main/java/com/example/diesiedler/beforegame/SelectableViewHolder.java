@@ -7,6 +7,7 @@ import android.widget.CheckedTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.diesiedler.R;
+import com.example.diesiedler.presenter.ClientData;
 
 /**
  * @author Christina Senger
@@ -61,8 +62,10 @@ class SelectableViewHolder extends RecyclerView.ViewHolder {
 
         if (value) {
             textView.setBackgroundColor(Color.YELLOW);
+            ClientData.chosenPlayers.put(textView.getText().toString(),true);
         } else {
             textView.setBackground(null);
+            ClientData.chosenPlayers.remove(textView.getText().toString());
         }
 
         myItem.setSelected(value);

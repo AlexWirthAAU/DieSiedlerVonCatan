@@ -41,9 +41,13 @@ public class SendToClient {
     public static final String HEADER_TRADE = "TRADE";
     public static final String HEADER_TRADECOMPLETE = "TRADECOMPLETE";
     public static final String HEADER_KNIGHT = "KNIGHT";
-    static final String HEADER_WON = "WON";
-    static final String HEADER_LOST = "LOST";
+    public static final String HEADER_ROAD = "ROAD";
+
+    public static final String HEADER_WON = "WON";
+    public static final String HEADER_LOST = "LOST";
+  
     private static Logger logger = Logger.getLogger(SendToClient.class.getName()); // Logger
+
 
     /**
      * Send his own Id to a User.
@@ -95,8 +99,6 @@ public class SendToClient {
                     logger.log(Level.SEVERE, "Could not send GameSession to Client " + user.getDisplayName() + ".");
                 }
             }
-        } else {
-            // TODO: What happens if a user cant be found? (should not happen)
         }
     }
 
@@ -172,8 +174,6 @@ public class SendToClient {
                     logger.log(Level.SEVERE, "Message: " + message);
                 }
             }
-        } else {
-            // TODO: What happens if a user cant be found? (should not happen)
         }
     }
 
