@@ -5,19 +5,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.view.View;
-import androidx.appcompat.app.AppCompatActivity;
 import com.example.catangame.gameboard.Edge;
 import com.example.diesiedler.GameBoardOverviewActivity;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
-import com.example.diesiedler.presenter.UpdateBuildRoadView;
 import com.example.diesiedler.presenter.UpdateGameboardView;
 import com.example.diesiedler.presenter.handler.GameHandler;
-import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
 import com.example.diesiedler.threads.NetworkThread;
-import com.richpath.RichPathView;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -29,7 +25,7 @@ import java.util.logging.Logger;
  * Also, the view of this activity shows the player's resources.
  * If there is no edge where the player can build a city, he will be informed about that and lead to the ChooseAction-Activity.
  */
-public class BuildRoadActivity extends AppCompatActivity implements View.OnClickListener {
+public class BuildRoadActivity extends GameBoardOverviewActivity {
 
 
     private static final Logger logger = Logger.getLogger(BuildRoadActivity.class.getName()); // Logger
@@ -116,7 +112,7 @@ public class BuildRoadActivity extends AppCompatActivity implements View.OnClick
      */
     private class BuildRoadHandler extends GameHandler {
 
-        public BuildRoadHandler(Looper mainLooper, Activity ac) {
+        BuildRoadHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
         }
 

@@ -12,9 +12,7 @@ import com.example.diesiedler.presenter.ServerQueries;
 import com.example.diesiedler.presenter.UpdateGameboardView;
 import com.example.diesiedler.presenter.UpdateThiefView;
 import com.example.diesiedler.presenter.handler.GameHandler;
-import com.example.diesiedler.presenter.interaction.GameBoardClickListener;
 import com.example.diesiedler.threads.NetworkThread;
-import com.richpath.RichPathView;
 
 /**
  * @author Fabian Schaffenrath
@@ -22,7 +20,7 @@ import com.richpath.RichPathView;
  * Once selected, the TileIndex is sent to the Server to execute the movement.
  */
 
-public class ThiefActivity extends MainActivity {
+public class ThiefActivity extends GameBoardOverviewActivity {
 
     private Handler handler = new ThiefHandler(Looper.getMainLooper(), this);
     public String card; // "CARD" when to Activity is started from the PlayCardActivity
