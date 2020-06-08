@@ -8,6 +8,10 @@ import com.example.catangame.gameboard.Knot;
 
 public class BuildCity {
 
+    private BuildCity() {
+        throw new IllegalStateException("Utility class");
+    }
+
     /**
      * @author Alex Wirth
      * <p>

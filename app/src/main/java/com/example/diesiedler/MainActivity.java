@@ -7,24 +7,14 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
-
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.catangame.Grab;
-import com.example.catangame.Player;
-import com.example.catangame.PlayerInventory;
-import com.example.diesiedler.cards.DevCardInventoryActivity;
 import com.example.diesiedler.cheating.CheatRevealActivity;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.UpdateGameboardView;
 import com.example.diesiedler.presenter.handler.GameHandler;
-import com.richpath.RichPathView;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -34,17 +24,15 @@ import java.util.logging.Logger;
  * <p>
  * Overview of Gameboard and Inventory
  */
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends GameBoardOverviewActivity {
 
-    private Logger logger = Logger.getLogger(MainActivity.class.getName()); // Logger
+    private static final Logger logger = Logger.getLogger(MainActivity.class.getName()); // Logger
     private Handler handler = new MainHandler(Looper.getMainLooper(), this); // Handler
-    private RichPathView richPathView;
-
     private ImageView grabView;
     private String grabberId;
 
     /**
-     * Loads actual Gameboard and Resources. Sets Handler.
+     * Loads actual Gameboard and Ressources. Sets Handler.
      * If the Intent has an Extra, a Alert-Message with its Test is shown.
      *
      * @param savedInstanceState saved State
@@ -52,33 +40,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gameboardview);
-        richPathView = findViewById(R.id.ic_gameboardView);
-
-        // Button to show Score and DevCards
-        ImageView devCards = findViewById(R.id.devCard);
-        devCards.setOnClickListener(this);
-        Button scoreBoard = findViewById(R.id.scoreBoard);
-        scoreBoard.setOnClickListener(this);
+        ClientData.currentHandler = handler;
 
         // Cheating
         grabView = findViewById(R.id.grabActive);
         grabView.setVisibility(View.GONE);
         checkForGrab();
 
-        UpdateGameboardView.updateView(ClientData.currentGame, richPathView);
-        updateResources();
-
-        ClientData.currentHandler = handler;
 
         String intentMess = getIntent().getStringExtra("mess");
 
         if (intentMess != null) {
-            logger.log(Level.INFO, intentMess + " inentmessinMainin");
+            System.out.println(intentMess + " inentmessinMainin");
             alert(intentMess);
         }
 
-        logger.log(Level.INFO, intentMess + " inentmessinMainout");
+        System.out.println(intentMess + " inentmessinMainout");
     }
 
     @Override
@@ -115,46 +92,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             builder1.setMessage(tradeMessage);
             AlertDialog alert1 = builder1.create();
             alert1.show();
-        }
-    }
-
-    private void updateResources() {
-        PlayerInventory playerInventory = ClientData.currentGame.getPlayer(ClientData.userId).getInventory();
-        Player currentP = ClientData.currentGame.getCurr();
-
-        // Number of Resources
-        TextView woodCount = findViewById(R.id.woodCount);
-        woodCount.setText(Integer.toString(playerInventory.getWood()));
-        TextView clayCount = findViewById(R.id.clayCount);
-        clayCount.setText(Integer.toString(playerInventory.getClay()));
-        TextView wheatCount = findViewById(R.id.wheatCount);
-        wheatCount.setText(Integer.toString(playerInventory.getWheat()));
-        TextView oreCount = findViewById(R.id.oreCount);
-        oreCount.setText(Integer.toString(playerInventory.getOre()));
-        TextView woolCount = findViewById(R.id.woolCount);
-        woolCount.setText(Integer.toString(playerInventory.getWool()));
-        // View of the current Player
-        TextView currentPlayer = findViewById(R.id.currentPlayer);
-        currentPlayer.setText(currentP.getDisplayName() + " ist gerade am Zug");
-        TextView devCardCount = findViewById(R.id.devCardCount);
-        devCardCount.setText(Integer.toString(playerInventory.getCards()));
-
-    }
-
-    @Override
-    public void onClick(View view) {
-        Intent intent;
-        switch (view.getId()) {
-            case R.id.devCard:
-                intent = new Intent(getBaseContext(), DevCardInventoryActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.scoreBoard:
-                intent = new Intent(getBaseContext(), ScoreBoardActivity.class);
-                startActivity(intent);
-                break;
-            default:
-                break;
         }
     }
 

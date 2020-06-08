@@ -8,8 +8,8 @@ import com.example.catangame.gameboard.Edge;
 import com.example.catangame.gameboard.Gameboard;
 
 import java.util.LinkedList;
-import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.Level;
 
 
 /**
@@ -20,6 +20,10 @@ import java.util.logging.Logger;
 public class BuildRoad {
 
     private static Logger logger = Logger.getLogger(BuildRoad.class.getName()); // Logger
+
+    private BuildRoad() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static void updateGameSession(GameSession gameSession, int roadIndex, int userID) {
         Gameboard gameboard = gameSession.getGameboard();
@@ -39,11 +43,12 @@ public class BuildRoad {
 
         logger.log(Level.ALL, "Road built from Player: " + player.getUserId());
 
-        /*
+        /**
          * If the player has less than two roads, the resources are not affected, as the first two roads can be built for free.
          * If its a regular built, the resources need to be reduced.
          */
-        if (player.getInventory().getRoads().size() == 1 && player.getUserId() != lastPlayer.getUserId()) {
+
+        if (player.getInventory().getRoads().size() == 1 && !(player.getUserId() == lastPlayer.getUserId())) {
             gameSession.nextPlayer();
             logger.log(Level.ALL, "Next Player");
         }

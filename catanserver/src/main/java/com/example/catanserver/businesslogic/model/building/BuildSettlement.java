@@ -8,6 +8,10 @@ import com.example.catangame.gameboard.Knot;
 
 public class BuildSettlement {
 
+    private BuildSettlement() {
+        throw new IllegalStateException("Utility class");
+    }
+
     /**
      * @author Alex Wirth
      * <p>
