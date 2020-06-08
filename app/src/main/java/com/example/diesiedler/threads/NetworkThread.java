@@ -24,6 +24,7 @@ public class NetworkThread extends Thread {
     /**
      * Executes sendStringQuery-Method of ServerQueries-Class with the Query.
      */
+    @Override
     public void run() {
         ServerQueries.sendStringQuery(query);
     }

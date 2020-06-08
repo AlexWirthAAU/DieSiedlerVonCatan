@@ -39,7 +39,7 @@ public class StopTest {
     StopThread stopThread;
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() {
         try {
             connection = Mockito.mock(Socket.class);
             Mockito.when(connection.getOutputStream()).thenReturn(oos);

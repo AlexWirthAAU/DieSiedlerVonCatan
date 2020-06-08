@@ -4,10 +4,13 @@ import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catanserver.Server;
 import com.example.catanserver.User;
-import com.example.catanserver.businessLogic.model.cards.Monopol;
+import com.example.catanserver.businesslogic.model.cards.Monopol;
 import com.example.catanserver.threads.ErrorThread;
 import com.example.catanserver.threads.GameThread;
 import com.example.catanserver.threads.SendToClient;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Christina Senger
@@ -15,20 +18,18 @@ import com.example.catanserver.threads.SendToClient;
  */
 public class PlayMonopolThread extends GameThread {
 
+    private static Logger logger = Logger.getLogger(PlayMonopolThread.class.getName()); // Logger
+
     private Player player; // current Player
-    private StringBuilder message = new StringBuilder(); // Message send to the User
 
     private String res;
-    private String resName; // Name of the Ressource (german)
-
-    private int number; // Number of how many of a Ressource to Player gets
 
     /**
-     * Contructor - The Name of the Ressource and the Player is set.
+     * Constructor - The Name of the Resource and the Player is set.
      * <p>
      * {@inheritDoc}
      *
-     * @param res Name of the Ressource (english, lowercase)
+     * @param res Name of the Resource (english, lowercase)
      */
     public PlayMonopolThread(User user, GameSession game, String res) {
         super(user, game);
@@ -47,9 +48,11 @@ public class PlayMonopolThread extends GameThread {
     public void run() {
 
         if (Monopol.checkCards(player)) {
-            System.out.println("checked");
-            resName = Monopol.playCard(player, res, game);
-            number = Monopol.getNumber();
+            logger.log(Level.INFO, "checked");
+            // Name of the Resource (german)
+            String resName = Monopol.playCard(player, res, game);
+            // Number of how many of a Resource to Player gets
+            int number = Monopol.getNumber();
             String mess = Monopol.buildMessage(resName, number);
             game.nextPlayer();
             if(!endTurn()) {
@@ -65,5 +68,6 @@ public class PlayMonopolThread extends GameThread {
             ErrorThread errThread = new ErrorThread(user.getConnectionOutputStream(), "Karte konnte nicht gespielt werden");
             errThread.run();
         }
+        Server.currentlyThreaded.remove(game.getGameId());
     }
 }

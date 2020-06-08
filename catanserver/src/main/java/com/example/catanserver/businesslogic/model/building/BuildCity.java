@@ -1,4 +1,4 @@
-package com.example.catanserver.businessLogic.model.building;
+package com.example.catanserver.businesslogic.model.building;
 
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
@@ -7,6 +7,10 @@ import com.example.catangame.gameboard.Gameboard;
 import com.example.catangame.gameboard.Knot;
 
 public class BuildCity {
+
+    private BuildCity() {
+        throw new IllegalStateException("Utility class");
+    }
 
     /**
      * @author Alex Wirth

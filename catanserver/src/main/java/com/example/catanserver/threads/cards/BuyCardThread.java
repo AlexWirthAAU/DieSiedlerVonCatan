@@ -3,18 +3,16 @@ package com.example.catanserver.threads.cards;
 import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catangame.devcards.DevCard;
-import com.example.catangame.devcards.InventionCard;
-import com.example.catangame.devcards.KnightCard;
-import com.example.catangame.devcards.MonopolCard;
-import com.example.catangame.devcards.VictoryPointCard;
 import com.example.catanserver.Server;
 import com.example.catanserver.User;
-import com.example.catanserver.businessLogic.model.cards.Buy;
+import com.example.catanserver.businesslogic.model.cards.Buy;
 import com.example.catanserver.threads.ErrorThread;
 import com.example.catanserver.threads.GameThread;
 import com.example.catanserver.threads.SendToClient;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Christina Senger
@@ -24,11 +22,9 @@ import java.util.List;
  */
 public class BuyCardThread extends GameThread {
 
+    private static Logger logger = Logger.getLogger(BuyCardThread.class.getName()); // Logger
     private List<DevCard> devCardStack;
     private Player player;
-
-    private StringBuilder message = new StringBuilder(); // Message which is send to the User
-    private String cardName; // the Name of the bought Card
 
     /**
      * Constructor - Gets the DevCard-Stack from the Game
@@ -49,12 +45,14 @@ public class BuyCardThread extends GameThread {
      * sent to the next user.
      * Otherwise an Error-Thread is started.
      */
+    @Override
     public void run() {
 
         if (Buy.checkStack(player, game)) {
 
-            System.out.println("checked");
-            cardName = Buy.buyCard(player, devCardStack, game);
+            logger.log(Level.INFO, "checked");
+            // the Name of the bought Card
+            String cardName = Buy.buyCard(player, devCardStack, game);
             String mess = Buy.buildMessage(cardName);
             game.nextPlayer();
             if(!endTurn()) {
@@ -67,9 +65,10 @@ public class BuyCardThread extends GameThread {
             }
 
         } else {
-            System.out.println("error");
+            logger.log(Level.SEVERE, "error");
             ErrorThread errThread = new ErrorThread(user.getConnectionOutputStream(), "Nicht genug Rohstoffe um Karten zu kaufen");
             errThread.run();
         }
+        Server.currentlyThreaded.remove(game.getGameId());
     }
 }

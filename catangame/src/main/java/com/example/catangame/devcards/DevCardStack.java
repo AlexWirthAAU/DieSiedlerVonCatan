@@ -2,6 +2,7 @@ package com.example.catangame.devcards;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -13,10 +14,6 @@ public class DevCardStack implements Serializable {
 
     private ArrayList<DevCard> stack = new ArrayList<>(26); // List of all available Cards
 
-    private int i = 0; // Counters
-    private int j = 0;
-    private int k = 0;
-
     /**
      * Constructor - adds Cards the the List
      * The first 3 Cards are a Knight-, a BuildStreet- and a VictoryPointCard.
@@ -27,16 +24,19 @@ public class DevCardStack implements Serializable {
         this.stack.add(new BuildStreetCard());
         this.stack.add(new VictoryPointCard());
 
+        int i = 0;
         while (i < 13) {
             this.stack.add(new KnightCard());
             i++;
         }
 
+        int j = 0;
         while (j < 5) {
             this.stack.add(new VictoryPointCard());
             j++;
         }
 
+        int k = 0;
         while (k < 2) {
             this.stack.add(new InventionCard());
             this.stack.add(new MonopolCard());
@@ -47,7 +47,7 @@ public class DevCardStack implements Serializable {
     }
 
     // Get a new Stack
-    public ArrayList<DevCard> getDevCardStack() {
+    public List<DevCard> getDevCardStack() {
         return this.stack;
     }
 }

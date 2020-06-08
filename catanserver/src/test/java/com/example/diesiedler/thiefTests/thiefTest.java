@@ -4,7 +4,7 @@ import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catangame.gameboard.Knot;
 import com.example.catangame.gameboard.Tile;
-import com.example.catanserver.businessLogic.model.Thief;
+import com.example.catanserver.businesslogic.model.Thief;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -89,12 +89,12 @@ public class thiefTest {
     }
 
     @Test
-    public void updateRessourcesBigIndex() {
+    public void updateResourcesBigIndex() {
         Assert.assertFalse(Thief.updateRessources(testGameSession, 500, player));
     }
 
     @Test
-    public void updateRessourcesNoPlayer() {
+    public void updateResourcesNoPlayer() {
         Assert.assertTrue(Thief.updateRessources(testGameSession, 12, player));
         Assert.assertEquals(1, player.getInventory().getWood());
         Assert.assertEquals(1, player.getInventory().getWool());
@@ -105,7 +105,7 @@ public class thiefTest {
     }
 
     @Test
-    public void updateRessourcesWood() {
+    public void updateResourcesWood() {
         Tile tile = testGameSessionTiles[12];
         Knot[] knotes = tile.getKnots();
 
@@ -124,7 +124,7 @@ public class thiefTest {
     }
 
     @Test
-    public void updateRessourcesWool() {
+    public void updateResourcesWool() {
         Tile tile = testGameSessionTiles[12];
         Knot[] knotes = tile.getKnots();
 
@@ -142,7 +142,7 @@ public class thiefTest {
     }
 
     @Test
-    public void updateRessourcesWheat() {
+    public void updateResourcesWheat() {
         Tile tile = testGameSessionTiles[12];
         Knot[] knotes = tile.getKnots();
 
@@ -161,7 +161,7 @@ public class thiefTest {
     }
 
     @Test
-    public void updateRessourcesOre() {
+    public void updateResourcesOre() {
         Tile tile = testGameSessionTiles[12];
         Knot[] knotes = tile.getKnots();
 
@@ -180,7 +180,7 @@ public class thiefTest {
     }
 
     @Test
-    public void updateRessourcesClay() {
+    public void updateResourcesClay() {
         Tile tile = testGameSessionTiles[12];
         Knot[] knotes = tile.getKnots();
 
@@ -198,7 +198,7 @@ public class thiefTest {
     }
 
     @Test
-    public void updateNoRessources() {
+    public void updateNoResources() {
         Tile tile = testGameSessionTiles[12];
         Knot[] knotes = tile.getKnots();
 

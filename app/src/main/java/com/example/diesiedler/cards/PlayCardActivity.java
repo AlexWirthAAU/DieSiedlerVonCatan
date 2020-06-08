@@ -58,7 +58,7 @@ public class PlayCardActivity extends AppCompatActivity {
      * If the Button with the Text "Ritterkarte" is clicked, "CARD" is set as
      * extra to the Intent and the ThiefActivity is started.
      *
-     * @param view View to acces the Button
+     * @param view View to access the Button
      */
     public void playKnight(View view) {
         Intent intent = new Intent(this, ThiefActivity.class);
@@ -67,22 +67,24 @@ public class PlayCardActivity extends AppCompatActivity {
     }
 
     /**
-     * If the Button with the Text "Monopolkarte" is clicked, the PlayMonopolActivity is started.
+     * If the Button with the Text "Monopolkarte" is clicked, the PlayMonopolOrInventionActivity.class is started.
      *
-     * @param view View to acces the Button
+     * @param view View to access the Button
      */
     public void playMonopol(View view) {
-        Intent intent = new Intent(this, PlayMonopolActivity.class);
+        Intent intent = new Intent(this, PlayMonopolOrInventionActivity.class);
+        intent.putExtra("card", "monopol");
         startActivity(intent);
     }
 
     /**
-     * If the Button with the Text "Erfindungskarte" is clicked, the PlayInventionActivity is started.
+     * If the Button with the Text "Erfindungskarte" is clicked, the PlayMonopolOrInventionActivity.class is started.
      *
-     * @param view View to acces the Button
+     * @param view View to access the Button
      */
     public void playInvention(View view) {
-        Intent intent = new Intent(this, PlayInventionActivity.class);
+        Intent intent = new Intent(this, PlayMonopolOrInventionActivity.class);
+        intent.putExtra("card", "invention");
         startActivity(intent);
     }
 

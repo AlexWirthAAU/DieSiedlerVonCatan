@@ -19,6 +19,10 @@ import com.richpath.RichPathView;
  */
 public class UpdateGameboardView {
 
+    private UpdateGameboardView() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static void updateView(GameSession gs, RichPathView rpv) {
         Gameboard g = gs.getGameboard();
         RichPathView richPathView = rpv;

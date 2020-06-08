@@ -4,13 +4,13 @@ import com.example.catangame.GameSession;
 import com.example.catanserver.threads.ErrorThread;
 import com.example.catanserver.threads.NextThread;
 import com.example.catanserver.threads.ResourceAllocationThread;
-import com.example.catanserver.threads.beforegame.StartThread;
-import com.example.catanserver.threads.beforegame.StopThread;
 import com.example.catanserver.threads.ThiefThread;
 import com.example.catanserver.threads.beforegame.ApplyThread;
 import com.example.catanserver.threads.beforegame.ColorThread;
 import com.example.catanserver.threads.beforegame.CreateThread;
 import com.example.catanserver.threads.beforegame.LoginThread;
+import com.example.catanserver.threads.beforegame.StartThread;
+import com.example.catanserver.threads.beforegame.StopThread;
 import com.example.catanserver.threads.building.BuildCityThread;
 import com.example.catanserver.threads.building.BuildRoadThread;
 import com.example.catanserver.threads.building.BuildSettlementThread;
@@ -32,6 +32,8 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Fabian Schaffenrath
@@ -42,6 +44,8 @@ import java.util.Arrays;
  *  is validated.
  */
 public class ClientListenerThread extends Thread {
+
+    private Logger logger = Logger.getLogger(ClientListenerThread.class.getName()); // Logger
 
     private User user;
 
@@ -55,7 +59,7 @@ public class ClientListenerThread extends Thread {
      *
      * @param connection the Clients Connection (Socket)
      */
-    public ClientListenerThread(Socket connection){
+    ClientListenerThread(Socket connection) {
         this.connection = connection;
         Server.currentConnections.add(connection);
     }
@@ -75,16 +79,16 @@ public class ClientListenerThread extends Thread {
         // Getting Streams from the Connection.
         try {
             connectionInputStream = new ObjectInputStream(connection.getInputStream());
-            System.out.println("ClientReader: InputStream created.");
+            logger.log(Level.INFO, "ClientReader: InputStream created.");
             connectionOutputStream = new ObjectOutputStream(connection.getOutputStream());
-            System.out.println("ClientReader: OutputStream created.");
+            logger.log(Level.INFO, "ClientReader: OutputStream created.");
             connection.setKeepAlive(true);
             connection.setSoTimeout(0);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        System.out.println("Start Listening.");
+        logger.log(Level.INFO, "Start Listening.");
 
         // Reading UTF from InputStream and storing it into <code>message</code>.
         String message = null;
@@ -105,7 +109,7 @@ public class ClientListenerThread extends Thread {
             // When there is a Message, the <code>message</code> is splitted.
             if (message != null) {
                 message = message.trim();
-                System.out.println("MSG: \"" + message + "\"");
+                logger.log(Level.INFO, "MSG: \"" + message + "\"");
                 String[] messageSplit = splitMessage(message);
 
                 if (messageSplit.length > 0) {
@@ -130,11 +134,11 @@ public class ClientListenerThread extends Thread {
                                 }
                             }
                             if(user != null) {
-                                System.out.println("Starting LOGINThread.");
+                                logger.log(Level.INFO, "Starting LOGINThread.");
                                 Thread loginThread = new LoginThread(user);
                                 loginThread.start();
                             } else{
-                                System.out.println("Starting ErrorThread [LOGIN]");
+                                logger.log(Level.INFO, "Starting ErrorThread [LOGIN]");
                                 Thread errorThread = new ErrorThread(connectionOutputStream, "This name is taken!");
                                 errorThread.start();
                             }
@@ -144,7 +148,7 @@ public class ClientListenerThread extends Thread {
                         // Apply for searching
                         // A ApplyThread is started with the User as Data.
                         if (messageSplit[0].equals("APPLY")) {
-                            System.out.println("Starting APPLYThread.");
+                            logger.log(Level.INFO, "Starting APPLYThread.");
                             Thread applyThread = new ApplyThread(user);
                             applyThread.start();
                         }
@@ -152,7 +156,7 @@ public class ClientListenerThread extends Thread {
                         // Stop Searching
                         // A StopThread is started with the User as Data.
                         else if (messageSplit[0].equals("STOP")) {
-                            System.out.println("Starting STOPThread.");
+                            logger.log(Level.INFO, "Starting STOPThread.");
                             Thread stopThread = new StopThread(user);
                             stopThread.start();
                         }
@@ -162,7 +166,7 @@ public class ClientListenerThread extends Thread {
                         // a CreateThread is started with all Users as Data.
                         else if (messageSplit[0].equals("CREATE")) {
                             if (messageSplit.length > 2 && messageSplit.length < 6) {
-                                System.out.println("Starting CREATEThread.");
+                                logger.log(Level.INFO, "Starting CREATEThread.");
                                 Thread startThread = new CreateThread(Arrays.copyOfRange(messageSplit, 1, messageSplit.length));
                                 startThread.start();
                             }
@@ -194,7 +198,7 @@ public class ClientListenerThread extends Thread {
                                                 // A new ColorThread is started with the User, the GameId and the Color as Data.
                                                 if (messageSplit[2].equals("COLOR") && messageSplit.length > 3) {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
-                                                    System.out.println("Starting COLORThread.");
+                                                    logger.log(Level.INFO, "Starting COLORThread.");
                                                     Thread colorThread = new ColorThread(user, foundGame, messageSplit[3]);
                                                     colorThread.start();
                                                     threadCreated = true;
@@ -204,7 +208,7 @@ public class ClientListenerThread extends Thread {
                                                 // A new StartThread is started with the User and the GameId as Data.
                                                 else if (messageSplit[2].equals("START")) {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
-                                                    System.out.println("Starting STARTThread.");
+                                                    logger.log(Level.INFO, "Starting STARTThread.");
                                                     Thread startThread = new StartThread(user, foundGame);
                                                     startThread.start();
                                                     threadCreated = true;
@@ -217,7 +221,6 @@ public class ClientListenerThread extends Thread {
                                                     Thread tradeThread = new TradeThread(user, foundGame, messageSplit[3]);
                                                     tradeThread.start();
                                                     threadCreated = true;
-                                                    Server.currentlyThreaded.remove(foundGame.getGameId());  // TODO: has to be called inside the created thread.
                                                 }
 
                                                 // Answering to a Trade
@@ -227,7 +230,6 @@ public class ClientListenerThread extends Thread {
                                                     Thread tradeAnswerThread = new TradeAnswerThread(user, foundGame, messageSplit[3]);
                                                     tradeAnswerThread.start();
                                                     threadCreated = true;
-                                                    Server.currentlyThreaded.remove(foundGame.getGameId());  // TODO: has to be called inside the created thread.
                                                 }
 
                                                 // Trading with the Bank
@@ -237,7 +239,6 @@ public class ClientListenerThread extends Thread {
                                                     Thread bankThread = new BankThread(user, foundGame, messageSplit[3]);
                                                     bankThread.start();
                                                     threadCreated = true;
-                                                    Server.currentlyThreaded.remove(foundGame.getGameId());  // TODO: has to be called inside the created thread.
                                                 }
 
                                                 // Trading over a Port
@@ -247,7 +248,6 @@ public class ClientListenerThread extends Thread {
                                                     Thread portThread = new PortThread(user, foundGame, messageSplit[3]);
                                                     portThread.start();
                                                     threadCreated = true;
-                                                    Server.currentlyThreaded.remove(foundGame.getGameId());  // TODO: has to be called inside the created thread.
                                                 }
 
                                                 // Answer for a Trade
@@ -257,25 +257,23 @@ public class ClientListenerThread extends Thread {
                                                     Thread tradeanswerThread = new TradeAnswerThread(user, foundGame, messageSplit[3]);
                                                     tradeanswerThread.start();
                                                     threadCreated = true;
-                                                    Server.currentlyThreaded.remove(foundGame.getGameId());  // TODO: has to be called inside the created thread.
                                                 }
 
                                                 // Buying a DevCard
                                                 // A new BuyCardThread is started with the User and the GameId as Data.
                                                 else if (messageSplit[2].equals("BUYCARD")) {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
-                                                    System.out.println("Starting BUYCARDThread.");
+                                                    logger.log(Level.INFO, "Starting BUYCARDThread.");
                                                     Thread buyCadThread = new BuyCardThread(user, foundGame);
                                                     buyCadThread.start();
                                                     threadCreated = true;
-                                                    Server.currentlyThreaded.remove(foundGame.getGameId());  // TODO: has to be called inside the created thread.
                                                 }
 
                                                 // Playing a Knight Card
                                                 // A new PlayKnightThread is started with the User, the GameId and the id of the Tile as Data.
                                                 else if (messageSplit[2].equals("PLAYKNIGHT")) {
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
-                                                    System.out.println("Starting ThiefThread");
+                                                    logger.log(Level.INFO, "Starting ThiefThread");
                                                     Thread thiefThread = new ThiefThread(user, foundGame, messageSplit[3], "CARD");
                                                     thiefThread.start();
                                                     threadCreated = true;
@@ -288,7 +286,6 @@ public class ClientListenerThread extends Thread {
                                                     Thread playMonopolThread = new PlayMonopolThread(user, foundGame, messageSplit[3]);
                                                     playMonopolThread.start();
                                                     threadCreated = true;
-                                                    Server.currentlyThreaded.remove(foundGame.getGameId());  // TODO: has to be called inside the created thread.
                                                 }
 
                                                 // Playing a Invention Card
@@ -298,7 +295,6 @@ public class ClientListenerThread extends Thread {
                                                     Thread playInventionThread = new PlayInventionThread(user, foundGame, messageSplit[3]);
                                                     playInventionThread.start();
                                                     threadCreated = true;
-                                                    Server.currentlyThreaded.remove(foundGame.getGameId());  // TODO: has to be called inside the created thread.
                                                 }
 
                                                 // Playing a BuildStreet Card
@@ -307,11 +303,10 @@ public class ClientListenerThread extends Thread {
                                                 else if (messageSplit[2].equals("PLAYBUILDSTREET")) {
                                                     int edgeIndex = Integer.parseInt(messageSplit[3]);
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
-                                                    System.out.println("Starting BUILDROADThread.");
+                                                    logger.log(Level.INFO, "Starting BUILDROADThread.");
                                                     Thread brThread = new BuildRoadThread(user, foundGame, edgeIndex, "CARD");
                                                     brThread.start();
                                                     threadCreated = true;
-                                                    Server.currentlyThreaded.remove(foundGame.getGameId());  // TODO: has to be called inside the created thread.
                                                 }
 
                                                 // Going on to the next Player
@@ -321,7 +316,6 @@ public class ClientListenerThread extends Thread {
                                                     Thread nextThread = new NextThread(user, foundGame);
                                                     nextThread.start();
                                                     threadCreated = true;
-                                                    Server.currentlyThreaded.remove(foundGame.getGameId());  // TODO: has to be called inside the created thread.
                                                 }
 
                                                 // Building a Settlement
@@ -330,7 +324,7 @@ public class ClientListenerThread extends Thread {
                                                 else if (messageSplit[2].equals("BUILDSETTLEMENT")) {
                                                     int knotIndex = Integer.parseInt(messageSplit[3]);
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
-                                                    System.out.println("Starting BUILDSETTLEMENTThread.");
+                                                    logger.log(Level.INFO, "Starting BUILDSETTLEMENTThread.");
                                                     Thread bsThread = new BuildSettlementThread(user, foundGame, knotIndex);
                                                     bsThread.start();
                                                     threadCreated = true;
@@ -342,7 +336,7 @@ public class ClientListenerThread extends Thread {
                                                 else if (messageSplit[2].equals("BUILDROAD")) {
                                                     int edgeIndex = Integer.parseInt(messageSplit[3]);
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
-                                                    System.out.println("Starting BUILDROADThread.");
+                                                    logger.log(Level.INFO, "Starting BUILDROADThread.");
                                                     Thread brThread = new BuildRoadThread(user, foundGame, edgeIndex, " ");
                                                     brThread.start();
                                                     threadCreated = true;
@@ -354,7 +348,7 @@ public class ClientListenerThread extends Thread {
                                                 else if (messageSplit[2].equals("BUILDCITY")) {
                                                     int knotIndex = Integer.parseInt(messageSplit[3]);
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
-                                                    System.out.println("Starting BUILDCITYThread.");
+                                                    logger.log(Level.INFO, "Starting BUILDCITYThread.");
                                                     Thread bcThread = new BuildCityThread(foundGame, user, knotIndex);
                                                     bcThread.start();
                                                     threadCreated = true;
@@ -366,7 +360,7 @@ public class ClientListenerThread extends Thread {
                                                 else if (messageSplit[2].equals("DICEVALUE")) {
                                                     int diceValue = Integer.parseInt(messageSplit[3]);
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
-                                                    System.out.println("Starting DICEVALUEThread");
+                                                    logger.log(Level.INFO, "Starting DICEVALUEThread");
                                                     Thread rAThread = new ResourceAllocationThread(user, foundGame, diceValue);
                                                     rAThread.start();
                                                     threadCreated = true;
@@ -375,7 +369,7 @@ public class ClientListenerThread extends Thread {
                                                 // A new ThiefThread is started wirh the user, the game, the TileId and an empty cardstring
                                                 else if(messageSplit[2].equals("THIEF") && messageSplit.length > 3){
                                                     Server.currentlyThreaded.add(foundGame.getGameId());
-                                                    System.out.println("Starting ThiefThread");
+                                                    logger.log(Level.INFO, "Starting ThiefThread");
                                                     Thread thiefThread = new ThiefThread(user, foundGame, messageSplit[3], " ");
                                                     thiefThread.start();
                                                     threadCreated = true;
@@ -390,7 +384,7 @@ public class ClientListenerThread extends Thread {
                                             // A new CheatThread is started with the user, the game, the user to be stolen from
                                             // and the resource to be stolen
                                             if(messageSplit[2].equals("CHEAT") && messageSplit.length > 4){
-                                                System.out.println("Starting CheatThread.");
+                                                logger.log(Level.INFO, "Starting CheatThread.");
                                                 Thread cheatThread = new CheatThread(user,foundGame,messageSplit[3],messageSplit[4]);
                                                 cheatThread.start();
                                                 threadCreated = true;
@@ -399,7 +393,7 @@ public class ClientListenerThread extends Thread {
                                             // A new RevealThread is started with the user, the game, the cheating userId
                                             // and the guessed stolen resource
                                             else if(messageSplit[2].equals("REVEAL") && messageSplit.length > 4){
-                                                System.out.println("Starting RevealThread.");
+                                                logger.log(Level.INFO, "Starting RevealThread.");
                                                 Thread revealThread = new RevealThread(user,foundGame,messageSplit[3],messageSplit[4]);
                                                 revealThread.start();
                                                 threadCreated = true;
@@ -408,7 +402,7 @@ public class ClientListenerThread extends Thread {
                                             // A new CounterThread is started with the user, the game, the cheating userId
                                             // and the to be stolen resource
                                             else if(messageSplit[2].equals("COUNTER") && messageSplit.length > 4){
-                                                System.out.println("Starting CounterThread.");
+                                                logger.log(Level.INFO, "Starting CounterThread.");
                                                 Thread counterThread = new CounterThread(user,foundGame,messageSplit[3],messageSplit[4]);
                                                 counterThread.start();
                                                 threadCreated = true;
@@ -430,7 +424,7 @@ public class ClientListenerThread extends Thread {
                                     errorThread.start();
                                 }
                             }catch(NumberFormatException e){
-                                System.out.println("Integer parsing failed.");
+                                logger.log(Level.INFO, "Integer parsing failed.");
                             }
                         }
                     }

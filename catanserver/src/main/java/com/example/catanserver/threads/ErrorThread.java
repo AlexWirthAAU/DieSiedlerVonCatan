@@ -27,6 +27,7 @@ public class ErrorThread extends Thread {
     /**
      * Sends an error command with an error message to the client.
      */
+    @Override
     public void run(){
         SendToClient.sendStringMessage(connectionOutputStream, SendToClient.HEADER_ERROR + " " + errorMessage);
     }

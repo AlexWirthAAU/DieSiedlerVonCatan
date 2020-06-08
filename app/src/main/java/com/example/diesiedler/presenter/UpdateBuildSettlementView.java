@@ -21,6 +21,10 @@ public class UpdateBuildSettlementView {
 
     private static final Logger logger = Logger.getLogger(UpdateBuildSettlementView.class.getName());
 
+    private UpdateBuildSettlementView() {
+        throw new IllegalStateException("Utility class");
+    }
+
     /**
      * The delivered list contains all knots a player can possibly settle. These knots are highlighted in red.
      *
@@ -50,7 +54,7 @@ public class UpdateBuildSettlementView {
         LinkedList<Knot> possibleKnots = new LinkedList<>();
         Player currentP = gs.getCurr();
 
-        if (currentP.getInventory().getSettlements().size() >= 2 && hasResources(currentP) == false) {
+        if (currentP.getInventory().getSettlements().size() >= 2 && !(hasResources(currentP))) {
             /**
              * Player does not have enough resources to build
              */
@@ -97,7 +101,7 @@ public class UpdateBuildSettlementView {
 
         if (possibleKnots == null) {
             return 0;
-        } else if (possibleKnots.size() == 0) {
+        } else if (possibleKnots.isEmpty()) {
             return -1;
         } else {
             return 1;

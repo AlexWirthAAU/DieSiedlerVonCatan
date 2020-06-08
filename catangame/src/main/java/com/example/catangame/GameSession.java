@@ -29,7 +29,6 @@ public class GameSession implements Serializable {
     private int currPlayer; // current Player and his index
     private ArrayList<DevCard> devCards; // List of DevCards
     private String message; // optional Message to alert after an Action
-    private boolean isCardBuild; // states whether a BuildRoad is started playing a Card
     private boolean isTradeOn; // states whether a Trade is active
     private Trade currTrade; // current active Trade
     private int knightPowerCount; // Number of Knight-Cards the Player with the greatest Knightpower has
@@ -50,7 +49,7 @@ public class GameSession implements Serializable {
         settlements = new LinkedList<>();
         cities = new LinkedList<>();
         currPlayer = 0;
-        this.devCards = new DevCardStack().getDevCardStack();
+        this.devCards = (ArrayList<DevCard>) new DevCardStack().getDevCardStack();
         this.grabs = new LinkedList<>();
         isInitialized = false;
         this.knightPowerCount = 0;
@@ -86,15 +85,11 @@ public class GameSession implements Serializable {
         return gameboard;
     }
 
-    public LinkedList<Edge> getRoads() {
-        return roads;
-    }
-
-    public LinkedList<Knot> getSettlements() {
+    public List<Knot> getSettlements() {
         return settlements;
     }
 
-    public LinkedList<Knot> getCities() {
+    public List<Knot> getCities() {
         return cities;
     }
 
@@ -102,7 +97,7 @@ public class GameSession implements Serializable {
         return players.get(currPlayer);
     }
 
-    public ArrayList<DevCard> getDevCards() {
+    public List<DevCard> getDevCards() {
         return devCards;
     }
 
@@ -118,21 +113,18 @@ public class GameSession implements Serializable {
         return this.message;
     }
 
-    public boolean isCardBuild() {
-        return this.isCardBuild;
-    }
+    public void setDevCards(ArrayList<DevCard> devCards) {
+        this.devCards = devCards;
+    }//NOSONAR
 
     public int getKnightPowerCount() {
         return this.knightPowerCount;
     }
 
-    public void setKnightPowerCount(int knightPowerCount) {
-        this.knightPowerCount = knightPowerCount;
-    }
-
     public boolean isInitialized() {
         return isInitialized;
     }
+
 
     // Setters
     public void setPlayers(List<Player> players) {
@@ -163,23 +155,18 @@ public class GameSession implements Serializable {
         this.message = message;
     }
 
-    public void setCardBuild(boolean isCardBuild) {
-        this.isCardBuild = isCardBuild;
-    }
-
     public void setCurrPlayer(int index) {
         this.currPlayer = index;
     }
 
-    public void setDevCards(ArrayList<DevCard> devCards) {
-        this.devCards = devCards;
+    public void setKnightPowerCount(int knightPowerCount) {
+        this.knightPowerCount = knightPowerCount;
     }
-
-    ;
 
     public void setInitialized(boolean initialized) {
         isInitialized = initialized;
     }
+
 
     // add Structures
     public void addRoad(Edge road) {
@@ -195,7 +182,8 @@ public class GameSession implements Serializable {
         cities.add(settlement);
     }
 
-    public LinkedList<Grab> getGrabs() {
+    // Grab
+    public List<Grab> getGrabs() {
         return grabs;
     }
 
@@ -237,6 +225,9 @@ public class GameSession implements Serializable {
         }
     }
 
+    /**
+     * Make the previous Player in the Row the current Player
+     */
     public void previousPlayer() {
         if (currPlayer == 0) {
             currPlayer = players.size() - 1;

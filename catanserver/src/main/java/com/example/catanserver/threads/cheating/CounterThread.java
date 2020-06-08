@@ -4,7 +4,7 @@ import com.example.catangame.GameSession;
 import com.example.catangame.Grab;
 import com.example.catanserver.Server;
 import com.example.catanserver.User;
-import com.example.catanserver.businessLogic.model.Cheating;
+import com.example.catanserver.businesslogic.model.Cheating;
 import com.example.catanserver.threads.GameThread;
 import com.example.catanserver.threads.SendToClient;
 

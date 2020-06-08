@@ -1,7 +1,7 @@
 package com.example.diesiedler.threads;
 
-import android.os.Message;
 
+import android.os.Message;
 import com.example.catangame.GameSession;
 import com.example.diesiedler.presenter.ClientData;
 

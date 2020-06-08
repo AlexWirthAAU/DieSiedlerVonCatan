@@ -4,7 +4,7 @@ import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catanserver.Server;
 import com.example.catanserver.User;
-import com.example.catanserver.businessLogic.model.Thief;
+import com.example.catanserver.businesslogic.model.Thief;
 
 /**
  * @author Fabian Schaffenrath
@@ -14,14 +14,14 @@ import com.example.catanserver.businessLogic.model.Thief;
 
 public class ThiefThread extends GameThread {
 
-    String tileIndex;
+    private String tileIndex;
     private String card;
 
     /**
-     * @param user
-     * @param game
-     * @param tileIndex
-     * @param "CARD"    when the Thread was loaded playing a BuildStreetCard, else " "
+     * @param user current User
+     * @param game current Game
+     * @param tileIndex Index of the Tile the Thief should be moved to
+     * @param card    when the Thread was loaded playing a BuildStreetCard, else " "
      */
     public ThiefThread(User user, GameSession game, String tileIndex, String card) {
         super(user, game);

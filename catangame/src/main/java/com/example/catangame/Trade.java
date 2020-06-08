@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class Trade implements Serializable {
 
-    private int woodGive; // Values of d´desired and offered Ressources
+    private int woodGive; // Values of desired and offered Resources
     private int woodGet;
     private int woolGive;
     private int woolGet;
@@ -25,25 +25,23 @@ public class Trade implements Serializable {
     private int clayGet;
 
     private Map<String, Integer> offer;
-    private Map<String, Integer> want;
 
     private Player currPlayer;
     private List<Player> potentialTradingPartners;
     private String message;
     private GameSession game;
 
-    private Player tradingPartner; // Player which first acceted the Trade
+    private Player tradingPartner; // Player which first accepted the Trade
     private Map<Player, Boolean> answers = new HashMap<>(); // Map of all Answers
     private List<Player> answeredPlayers = new ArrayList<>(); // List of all Player, that have answered
-    private String answerMessage; // Message to send after the Trade
 
     /**
      * Constructor - creates Trade with Data from Thread
      *
-     * @param offer Map of offerd Ressources
-     * @param want Map of desired Ressources
+     * @param offer Map of offered Resources
+     * @param want Map of desired Resources
      * @param currPlayer current Player
-     * @param potentialTradingPartners List of all Player with enough Ressources
+     * @param potentialTradingPartners List of all Player with enough Resources
      * @param mess Trade-Message
      * @param game current Game
      */
@@ -60,17 +58,14 @@ public class Trade implements Serializable {
         this.clayGive = offer.get("Lehm");
         this.clayGet = want.get("Lehm");
 
-        System.out.println(String.valueOf(woodGive) + String.valueOf(woolGive) + String.valueOf(wheatGive) + String.valueOf(oreGive) + String.valueOf(clayGive) + String.valueOf(woodGet) + String.valueOf(woolGet) + String.valueOf(wheatGet) + String.valueOf(oreGet) + String.valueOf(clayGet));
-
         this.offer = offer;
-        this.want = want;
         this.currPlayer = currPlayer;
         this.potentialTradingPartners = potentialTradingPartners;
         this.message = mess;
         this.game = game;
     }
 
-    // Get Ressources
+    // Get Resources
     public int getWoodGive() {
         return woodGive;
     }
@@ -111,13 +106,10 @@ public class Trade implements Serializable {
         return clayGet;
     }
 
+
     // More Getter
     public Map<String, Integer> getOffer() {
         return offer;
-    }
-
-    public Map<String, Integer> getWant() {
-        return want;
     }
 
     public Player getCurrPlayer() {
@@ -148,9 +140,6 @@ public class Trade implements Serializable {
         return answeredPlayers;
     }
 
-    public String getAnswerMessage() {
-        return answerMessage;
-    }
 
     // Setter
     public void setMessage(String message) {
@@ -167,10 +156,6 @@ public class Trade implements Serializable {
 
     public void addAnsweredPlayer(Player player) {
         this.answeredPlayers.add(player);
-    }
-
-    public void setAnswerMessage(String answerMessage) {
-        this.answerMessage = answerMessage;
     }
 
     public void setTradingPartner(Player tradingPartner) {

@@ -5,11 +5,9 @@ import com.example.catangame.Player;
 import com.example.catangame.Trade;
 import com.example.catanserver.Server;
 import com.example.catanserver.User;
-import com.example.catanserver.businessLogic.model.trading.Answer;
+import com.example.catanserver.businesslogic.model.trading.Answer;
 import com.example.catanserver.threads.GameThread;
 import com.example.catanserver.threads.SendToClient;
-
-import java.util.List;
 
 /**
  * @author Christina Senger
@@ -21,7 +19,6 @@ public class TradeAnswerThread extends GameThread {
 
     private Trade trade; // Trade which was answered to
     private Player currPlayer; // current Player
-    private Player tradingPartner; // Trading-Partner
     private Player tradingOfferer; // Player which started the Trade
 
     private String answerStr;
@@ -47,6 +44,7 @@ public class TradeAnswerThread extends GameThread {
      * When all Players have answered, the first one which answered with
      * accepted is set as Trading-Partner.
      */
+    @Override
     public void run() {
 
         Answer.addAnsweredPlayer(answerStr, trade, currPlayer);
@@ -62,7 +60,8 @@ public class TradeAnswerThread extends GameThread {
                 SendToClient.sendGameSessionBroadcast(game);
 
                 if (Answer.trade(this.tradingOfferer, trade)) {
-                    tradingPartner = trade.getTradingPartner();
+                    // Trading-Partner
+                    Player tradingPartner = trade.getTradingPartner();
                     String mess = "Handel zwischen " + tradingOfferer.getDisplayName() + " und " + tradingPartner.getDisplayName() + " durchgefuehrt.";
                     SendToClient.sendStringMessage(Server.findUser(tradingOfferer.getUserId()), SendToClient.HEADER_ENDTURN + " " + mess);
 
@@ -91,5 +90,6 @@ public class TradeAnswerThread extends GameThread {
                 }
             }
         }
+        Server.currentlyThreaded.remove(game.getGameId());
     }
 }

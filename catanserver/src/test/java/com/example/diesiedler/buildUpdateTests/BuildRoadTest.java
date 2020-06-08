@@ -4,7 +4,7 @@ import com.example.catangame.GameSession;
 import com.example.catangame.Player;
 import com.example.catangame.PlayerInventory;
 import com.example.catangame.gameboard.Edge;
-import com.example.catanserver.businessLogic.model.building.BuildRoad;
+import com.example.catanserver.businesslogic.model.building.BuildRoad;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -14,12 +14,12 @@ import org.junit.Test;
 
 public class BuildRoadTest {
 
-    GameSession gameSession;
-    Player playerOne;
-    Player playerTwo;
-    Edge toBeBuildOne, toBeBuildTwo, toBeBuildThree, toBeBuildFour;
-    PlayerInventory playerInventoryOne;
-    PlayerInventory playerInventoryTwo;
+    private GameSession gameSession;
+    private Player playerOne;
+    private Player playerTwo;
+    private Edge toBeBuildOne, toBeBuildTwo, toBeBuildThree, toBeBuildFour;
+    private PlayerInventory playerInventoryOne;
+    private PlayerInventory playerInventoryTwo;
 
     @Before
     public void setUp() {
@@ -109,13 +109,13 @@ public class BuildRoadTest {
         Assert.assertEquals(0, playerInventoryOne.getClay());
         Assert.assertEquals(0, playerInventoryOne.getRoads().size());
         Assert.assertEquals(0, playerInventoryOne.getRoadKnots().size());
-        Assert.assertEquals(null, toBeBuildOne.getPlayer());
+        Assert.assertNull(toBeBuildOne.getPlayer());
 
         Assert.assertEquals(0, playerInventoryTwo.getWood());
         Assert.assertEquals(0, playerInventoryTwo.getClay());
         Assert.assertEquals(0, playerInventoryTwo.getRoads().size());
         Assert.assertEquals(0, playerInventoryTwo.getRoadKnots().size());
-        Assert.assertEquals(null, toBeBuildOne.getPlayer());
+        Assert.assertNull(toBeBuildOne.getPlayer());
     }
 
 
@@ -160,7 +160,7 @@ public class BuildRoadTest {
         Assert.assertEquals(1, playerInventoryOne.getClay());
         Assert.assertEquals(2, playerInventoryOne.getRoads().size());
         Assert.assertEquals(4, playerInventoryOne.getRoadKnots().size());
-        Assert.assertEquals(null, toBeBuildOne.getPlayer());
+        Assert.assertNull(toBeBuildOne.getPlayer());
     }
 
     private void assertionsAfterRegularBuilding() {

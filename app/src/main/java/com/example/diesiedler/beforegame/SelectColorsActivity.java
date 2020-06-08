@@ -26,8 +26,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author Christina Senger
@@ -36,8 +34,6 @@ import java.util.logging.Logger;
  * Activity where the Users can select their Colors and Start the Game.
  */
 public class SelectColorsActivity extends AppCompatActivity {
-
-    private static final Logger logger = Logger.getLogger(SelectColorsActivity.class.getName()); // Logger
 
     private Button green; // Color-Buttons
     private Button orange;
@@ -78,7 +74,6 @@ public class SelectColorsActivity extends AppCompatActivity {
         colorsMap.put(Colors.LIGHTBLUE, lightblue);
 
         ClientData.currentHandler = handler;
-
     }
 
     @Override
@@ -88,6 +83,8 @@ public class SelectColorsActivity extends AppCompatActivity {
 
     /**
      * When the green Button is clicked, the NetworkThread is started to send a Color-Selection to the Server.
+     *
+     * @param view View to access the Button
      */
     public void onGreen(View view) {
 
@@ -99,6 +96,8 @@ public class SelectColorsActivity extends AppCompatActivity {
 
     /**
      * When the orange Button is clicked, the NetworkThread is started to send a Color-Selection to the Server.
+     *
+     * @param view View to access the Button
      */
     public void onOrange(View view) {
 
@@ -110,6 +109,8 @@ public class SelectColorsActivity extends AppCompatActivity {
 
     /**
      * When the violett Button is clicked, the NetworkThread is started to send a Color-Selection to the Server.
+     *
+     * @param view View to access the Button
      */
     public void onViolett(View view) {
 
@@ -121,6 +122,8 @@ public class SelectColorsActivity extends AppCompatActivity {
 
     /**
      * When the lightblue Button is clicked, the NetworkThread is started to send a Color-Selection to the Server.
+     *
+     * @param view View to access the Button
      */
     public void onLightblue(View view) {
 

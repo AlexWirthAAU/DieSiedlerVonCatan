@@ -10,6 +10,8 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Fabian Schaffenrath
@@ -21,18 +23,17 @@ import java.util.Set;
 public class Server {
 
     // List of all Users that are currently active
-    public static final List<User> currentUsers = Collections.synchronizedList(new LinkedList<User>());//NOSONAR
-    // List of all Connections that are currently active
-    public static final List<Socket> currentConnections = Collections.synchronizedList(new LinkedList<Socket>());//NOSONAR
+    public static final List<User> currentUsers = Collections.synchronizedList(new LinkedList<>());//NOSONAR
     // List of all Games that are currently active
-    public static final List<GameSession> currentGames = Collections.synchronizedList(new LinkedList<GameSession>());//NOSONAR
+    public static final List<GameSession> currentGames = Collections.synchronizedList(new LinkedList<>());//NOSONAR
     // Set of all Games (GameId) in which Players are currently making a Network Call
-    public static final Set<Integer> currentlyThreaded = Collections.synchronizedSet(new HashSet<Integer>());//NOSONAR
+    public static final Set<Integer> currentlyThreaded = Collections.synchronizedSet(new HashSet<>());//NOSONAR
     // Set of all Users that are currently searching for Opponents
-    public static final Set<User> currentlySearching = Collections.synchronizedSet(new HashSet<User>());//NOSONAR
-    private final static int SERVER_PORT = 10; // Port the Server listens to
-    private static ServerSocket listenerSocket; // ServerSocket
-    private static Socket caughtConnection; // Client Socket
+    public static final Set<User> currentlySearching = Collections.synchronizedSet(new HashSet<>());//NOSONAR
+    // List of all Connections that are currently active
+    static final List<Socket> currentConnections = Collections.synchronizedList(new LinkedList<>());//NOSONAR
+    private static final int SERVER_PORT = 2020; // Port the Server listens to
+    private static Logger logger = Logger.getLogger(Server.class.getName()); // Logger
 
     /**
      * The ServerSocket is started and waits for Clients to accept.
@@ -40,21 +41,24 @@ public class Server {
      */
     public static void main(String[] args) {
         try {
-            listenerSocket = new ServerSocket(SERVER_PORT);
-            System.out.println("Server running on: " + listenerSocket.getInetAddress() + SERVER_PORT);
+            // ServerSocket
+            try (ServerSocket listenerSocket = new ServerSocket(SERVER_PORT)) {
+                logger.log(Level.INFO, "Server running on: " + listenerSocket.getInetAddress() + SERVER_PORT);
 
-            while(true){//NOSONAR
-                caughtConnection = listenerSocket.accept();
-                if(caughtConnection != null){
-                    System.out.println("Connection to " + caughtConnection.getInetAddress() + ":" + caughtConnection.getPort() + "(ListenerThread)");
-                    System.out.println("Remote: " + caughtConnection.getRemoteSocketAddress());
-                    Thread serverReaderThread = new ClientListenerThread(caughtConnection);
-                    serverReaderThread.start();
+                while (true) {//NOSONAR
+                    // Client Socket
+                    Socket caughtConnection = listenerSocket.accept();
+                    if (caughtConnection != null) {
+                        logger.log(Level.INFO, "Connection to " + caughtConnection.getInetAddress() + ":" + caughtConnection.getPort() + "(ListenerThread)");
+                        logger.log(Level.INFO, "Remote: " + caughtConnection.getRemoteSocketAddress());
+                        Thread serverReaderThread = new ClientListenerThread(caughtConnection);
+                        serverReaderThread.start();
+                    }
                 }
             }
         }catch(IOException ex){
-            System.err.println(ex.getMessage());
-            System.err.println("Server could not be started!");
+            logger.log(Level.SEVERE, ex.getMessage());
+            logger.log(Level.SEVERE, "Server could not be started!");
         }
     }
 

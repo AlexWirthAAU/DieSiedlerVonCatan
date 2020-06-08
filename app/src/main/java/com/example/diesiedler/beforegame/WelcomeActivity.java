@@ -17,8 +17,6 @@ import com.example.diesiedler.presenter.handler.PreGameHandler;
 import com.example.diesiedler.threads.ServerCommunicationThread;
 import com.example.diesiedler.threads.StartServerCommunicationThread;
 
-import java.util.logging.Logger;
-
 /**
  * @author Christina Senger
  * @author Fabian Schaffenrath (edit)
@@ -27,7 +25,6 @@ import java.util.logging.Logger;
  */
 public class WelcomeActivity extends AppCompatActivity {
 
-    private static final Logger logger = Logger.getLogger(WelcomeActivity.class.getName()); // Logger
     private Handler handler; // Handler
 
     /**
