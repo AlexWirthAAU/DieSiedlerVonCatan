@@ -156,7 +156,7 @@ public class SearchPlayersActivity extends AppCompatActivity implements Selectab
         searchButton.setVisibility(View.VISIBLE);
         stopButton.setVisibility(View.GONE);
         List<SelectableItem> selectableItems = new ArrayList<>();
-        myAdapter = new MyAdapter(this, selectableItems, true);
+        myAdapter = new MyAdapter(selectableItems, true);
         recyclerView.setAdapter(myAdapter);
     }
 

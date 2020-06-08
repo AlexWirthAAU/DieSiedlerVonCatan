@@ -43,8 +43,6 @@ public class SendToClient {
     public static final String HEADER_KNIGHT = "KNIGHT";
     public static final String HEADER_ROAD = "ROAD";
 
-    public static final String HEADER_ERROR = "ERROR";
-
     public static final String HEADER_WON = "WON";
     public static final String HEADER_LOST = "LOST";
   
