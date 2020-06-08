@@ -7,7 +7,6 @@ import com.example.catanserver.businesslogic.model.building.BuildRoad;
 import com.example.catanserver.threads.GameThread;
 import com.example.catanserver.threads.SendToClient;
 
-
 /**
  * @author Alex Wirth
  * @author Christina Senger (edit)
@@ -47,9 +46,9 @@ public class BuildRoadThread extends GameThread {
         } else {
             BuildRoad.updateGameSession(game, edgeIndex, userID);
         }
-        if(card.equals("CARD")) {
+        if(card.equals("CARD") & game.getCurr().getUserId() == user.getUserId()) {
             SendToClient.sendGameSessionBroadcast(game);
-            SendToClient.sendStringMessage(user, SendToClient.HEADER_ROLLED);
+            SendToClient.sendStringMessage(user, SendToClient.HEADER_ROAD);
         }
         else {
             if (!endTurn()) {

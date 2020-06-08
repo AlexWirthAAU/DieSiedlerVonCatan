@@ -30,7 +30,7 @@
 
             <Button
                 android:id="@+id/knight"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="50dp"
@@ -42,7 +42,7 @@
 
             <Button
                 android:id="@+id/buildStreet"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
@@ -54,7 +54,7 @@
 
             <Button
                 android:id="@+id/monopol"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
@@ -66,7 +66,7 @@
 
             <Button
                 android:id="@+id/invention"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"

@@ -7,7 +7,6 @@ import com.example.diesiedler.building.BuildRoadActivity;
 import com.example.diesiedler.building.BuildSettlementActivity;
 import com.richpath.RichPath;
 import com.richpath.RichPathView;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,7 +20,6 @@ import java.util.logging.Logger;
  * The clickBoard method is called in activities concerning buildings and moving the thief. There the server communication for requesting to change
  * the gameboard is handled.
  */
-
 public class GameBoardClickListener {
 
     private RichPathView richPathView;
@@ -39,6 +37,7 @@ public class GameBoardClickListener {
             public void onClick(RichPath richPath) {
                 String pathType = getPathType(richPath);
                 if (pathType.contains("tile")) {
+                    //What should happen if Tile is clicked
                     if(activity.equals("MoveThief") || activity.equals("MoveThiefCARD")){
                         toSend[0] = richPath.getName();
                         ThiefActivity thiefActivity = new ThiefActivity();
@@ -50,6 +49,7 @@ public class GameBoardClickListener {
                     toSend[0] = richPath.getName();
 
                 } else if (pathType.contains("settlement")) {
+                    //What should happen if Knot is clicked
                     if (activity.equals("BuildSettlement") && richPath.getFillColor() == Color.RED) {
                         toSend[0] = richPath.getName();
                         new BuildSettlementActivity().clicked(toSend[0]);
@@ -58,6 +58,7 @@ public class GameBoardClickListener {
                         new BuildCityActivity().clicked(toSend[0]);
                     }
                 } else if (pathType.contains("edge")) {
+                    //What should happen if Edge is clicked
                     if (activity.equals("BuildRoad") && richPath.getFillColor() == Color.RED) {
                         toSend[0] = richPath.getName();
                         new BuildRoadActivity().clicked(toSend[0]);

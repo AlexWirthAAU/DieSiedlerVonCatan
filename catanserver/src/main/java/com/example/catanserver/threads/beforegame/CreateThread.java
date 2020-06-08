@@ -46,7 +46,7 @@ public class CreateThread extends Thread {
             }
         }
 
-        if (foundPlayers > 1) { // TODO: Update later to 2
+        if (foundPlayers > 1) {
             for (User userToRemove : usersToRemove) {
                 Player player = new Player(userToRemove.getDisplayName(), userToRemove.getUserId());
                 userToRemove.addGameSession(game);

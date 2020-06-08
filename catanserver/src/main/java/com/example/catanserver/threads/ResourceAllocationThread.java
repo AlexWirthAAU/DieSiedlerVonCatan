@@ -6,7 +6,6 @@ import com.example.catanserver.Server;
 import com.example.catanserver.User;
 import com.example.catanserver.businesslogic.model.resourceallocation.ResourceAllocation;
 
-// TODO: kommentieren
 public class ResourceAllocationThread extends GameThread {
 
     int diceValue;

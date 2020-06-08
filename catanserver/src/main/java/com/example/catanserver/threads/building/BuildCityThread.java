@@ -14,7 +14,6 @@ import com.example.catanserver.threads.SendToClient;
  * New Gamesession broadcasted to all players. The currentplayer will additionally get an message which ends his turn.
  * Also the next Player is choosen and informed.
  */
-
 public class BuildCityThread extends GameThread {
 
     int knotIndex;

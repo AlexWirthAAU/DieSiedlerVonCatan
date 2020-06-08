@@ -187,7 +187,7 @@ public class SelectColorsActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
 
-            if (msg.arg1 == 4) {  // TODO: Change to enums
+            if (msg.arg1 == 4) {
                 for (Button button : ((SelectColorsActivity) activity).colors) {
                     button.setText("");
                     button.setEnabled(true);
@@ -201,7 +201,7 @@ public class SelectColorsActivity extends AppCompatActivity {
                     }
                 }
 
-            } else if (msg.arg1 == 5 && msg.obj.equals("STARTGAME")) {  // TODO: Change to enums
+            } else if (msg.arg1 == 5 && msg.obj.equals("STARTGAME")) {
                 if (ClientData.currentGame.getCurr().getUserId() == ClientData.userId) {
                     Intent intent = new Intent(activity, BuildSettlementActivity.class);
                     startActivity(intent);

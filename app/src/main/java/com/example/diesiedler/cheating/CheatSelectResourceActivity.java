@@ -43,22 +43,42 @@ public class CheatSelectResourceActivity extends AppCompatActivity {
         ClientData.currentHandler = handler;
     }
 
+    /**
+     *
+     * @param view Holds the View, but is not needed.
+     */
     public void chooseWood(View view){
         send("WOOD");
     }
 
+    /**
+     *
+     * @param view Holds the View, but is not needed.
+     */
     public void chooseWool(View view){
         send("WOOL");
     }
 
+    /**
+     *
+     * @param view Holds the View, but is not needed.
+     */
     public void chooseClay(View view){
         send("CLAY");
     }
 
+    /**
+     *
+     * @param view Holds the View, but is not needed.
+     */
     public void chooseOre(View view){
         send("ORE");
     }
 
+    /**
+     *
+     * @param view Holds the View, but is not needed.
+     */
     public void chooseWheat(View view){
         send("WHEAT");
     }
@@ -69,8 +89,6 @@ public class CheatSelectResourceActivity extends AppCompatActivity {
     }
 
     private class CheatSelectPlayerAndResourceHandler extends GameHandler {
-
-        private String mess;
 
         public CheatSelectPlayerAndResourceHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);

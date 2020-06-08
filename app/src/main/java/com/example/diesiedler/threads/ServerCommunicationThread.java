@@ -31,7 +31,7 @@ public class ServerCommunicationThread extends Thread {
      * Waites on Input from Server. Sobald dieser auftritt, werden die Daten abgespeichert und der
      * derzeitige Handler mit einer Message angesprochen.
      * <p>
-     * msg.arg1 Codes: TODO: Change to enums
+     * msg.arg1 Codes
      * -1 StartServerCommunicationThread -> Connection could not be established
      * 0 Action not allowed (mostly ignored)
      * 1 StartServerCommunicationThread -> Connection established

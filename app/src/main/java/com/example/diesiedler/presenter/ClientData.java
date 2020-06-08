@@ -7,6 +7,7 @@ import com.example.catangame.GameSession;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
@@ -40,6 +41,8 @@ public class ClientData {
     public static Set<String> searchingUserNames;//NOSONAR
     // all currently searching Users and their ID
     public static Map<String, Integer> searchingUsers;//NOSONAR
+    // currently selected Users
+    public static Map<String,Boolean> chosenPlayers;//NOSONAR
 
     // the current active Game
     public static GameSession currentGame;//NOSONAR

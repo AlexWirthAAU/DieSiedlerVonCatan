@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+
+import com.example.catangame.devcards.BuildStreetCard;
 import com.example.catangame.gameboard.Edge;
 import com.example.diesiedler.GameBoardOverviewActivity;
 import com.example.diesiedler.presenter.ClientData;
@@ -71,8 +73,17 @@ public class BuildRoadActivity extends GameBoardOverviewActivity {
      */
     @Override
     public void onBackPressed() {
-        if(ClientData.currentGame.isInitialized()){
-            super.onBackPressed();
+        boolean isUsingBuildCard = false;
+        for(BuildStreetCard card:ClientData.currentGame.getPlayer(ClientData.userId).getInventory().getBuildStreetCardLinkedList()){
+            if(card.getCounter() < 2){
+                isUsingBuildCard = true;
+                break;
+            }
+        }
+        if(!isUsingBuildCard) {
+            if (ClientData.currentGame.isInitialized()) {
+                super.onBackPressed();
+            }
         }
     }
 
