@@ -9,6 +9,7 @@ import com.example.catangame.gameboard.Edge;
 import com.example.diesiedler.GameBoardOverviewActivity;
 import com.example.diesiedler.presenter.ClientData;
 import com.example.diesiedler.presenter.ServerQueries;
+import com.example.diesiedler.presenter.UpdateBuildRoadView;
 import com.example.diesiedler.presenter.UpdateGameboardView;
 import com.example.diesiedler.presenter.handler.GameHandler;
 import com.example.diesiedler.threads.NetworkThread;
@@ -27,7 +28,6 @@ import java.util.logging.Logger;
  */
 public class BuildRoadActivity extends GameBoardOverviewActivity {
 
-
     private static final Logger logger = Logger.getLogger(BuildRoadActivity.class.getName()); // Logger
     private Handler handler = new BuildRoadHandler(Looper.getMainLooper(), this); // Handler
     private static String card = ""; // "CARD" when to Activity is started from the PlayCardActivity
@@ -45,6 +45,9 @@ public class BuildRoadActivity extends GameBoardOverviewActivity {
             logger.log(Level.INFO, cardIn);
         }
         logger.log(Level.INFO, cardString);
+
+
+        UpdateBuildRoadView.updateView(ClientData.currentGame, richPathView, card);
         gameBoardClickListener.clickBoard("BuildRoad");
     }
 
@@ -103,6 +106,7 @@ public class BuildRoadActivity extends GameBoardOverviewActivity {
         networkThread.start();
     }
 
+
     /**
      * @author Alex Wirth
      * @author Christina Senger (edit)
@@ -111,8 +115,7 @@ public class BuildRoadActivity extends GameBoardOverviewActivity {
      * Handler for the BuildRoadActivity
      */
     private class BuildRoadHandler extends GameHandler {
-
-        BuildRoadHandler(Looper mainLooper, Activity ac) {
+        public BuildRoadHandler(Looper mainLooper, Activity ac) {
             super(mainLooper, ac);
         }
 
