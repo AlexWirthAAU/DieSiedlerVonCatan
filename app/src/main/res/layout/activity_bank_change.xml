@@ -46,11 +46,11 @@
 
             <Button
                 android:id="@+id/woodGive"
-                android:layout_width="wrap_content"
+                android:layout_width="140dp"
                 android:layout_height="60dp"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginTop="35dp"
-                android:backgroundTint="#FFA000"
+                android:background="@drawable/tradebuttons"
                 android:onClick="setGive"
                 android:text="@string/wood"
                 android:textColor="#A10101"
@@ -58,11 +58,11 @@
 
             <Button
                 android:id="@+id/woolGive"
-                android:layout_width="wrap_content"
+                android:layout_width="140dp"
                 android:layout_height="60dp"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginTop="15dp"
-                android:backgroundTint="#FFA000"
+                android:background="@drawable/tradebuttons"
                 android:onClick="setGive"
                 android:text="@string/wool"
                 android:textColor="#A10101"
@@ -70,11 +70,11 @@
 
             <Button
                 android:id="@+id/wheatGive"
-                android:layout_width="wrap_content"
+                android:layout_width="140dp"
                 android:layout_height="60dp"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginTop="15dp"
-                android:backgroundTint="#FFA000"
+                android:background="@drawable/tradebuttons"
                 android:onClick="setGive"
                 android:text="@string/wheat"
                 android:textColor="#A10101"
@@ -82,11 +82,11 @@
 
             <Button
                 android:id="@+id/oreGive"
-                android:layout_width="wrap_content"
+                android:layout_width="140dp"
                 android:layout_height="60dp"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginTop="15dp"
-                android:backgroundTint="#FFA000"
+                android:background="@drawable/tradebuttons"
                 android:onClick="setGive"
                 android:text="@string/ore"
                 android:textColor="#A10101"
@@ -94,12 +94,12 @@
 
             <Button
                 android:id="@+id/clayGive"
-                android:layout_width="wrap_content"
+                android:layout_width="140dp"
                 android:layout_height="60dp"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginTop="15dp"
                 android:backgroundTint="#FFA000"
-                android:onClick="setGive"
+                android:background="@drawable/tradebuttons"
                 android:text="@string/clay"
                 android:textColor="#A10101"
                 android:textSize="30sp" />
@@ -118,11 +118,11 @@
 
             <Button
                 android:id="@+id/woodGet"
-                android:layout_width="wrap_content"
+                android:layout_width="140dp"
                 android:layout_height="60dp"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginTop="35dp"
-                android:backgroundTint="#FFA000"
+                android:background="@drawable/tradebuttons"
                 android:onClick="setGet"
                 android:text="@string/wood"
                 android:textColor="#A10101"
@@ -130,11 +130,11 @@
 
             <Button
                 android:id="@+id/woolGet"
-                android:layout_width="wrap_content"
+                android:layout_width="140dp"
                 android:layout_height="60dp"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginTop="15dp"
-                android:backgroundTint="#FFA000"
+                android:background="@drawable/tradebuttons"
                 android:onClick="setGet"
                 android:text="@string/wool"
                 android:textColor="#A10101"
@@ -142,11 +142,11 @@
 
             <Button
                 android:id="@+id/wheatGet"
-                android:layout_width="wrap_content"
+                android:layout_width="140dp"
                 android:layout_height="60dp"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginTop="15dp"
-                android:backgroundTint="#FFA000"
+                android:background="@drawable/tradebuttons"
                 android:onClick="setGet"
                 android:text="@string/wheat"
                 android:textColor="#A10101"
@@ -154,11 +154,11 @@
 
             <Button
                 android:id="@+id/oreGet"
-                android:layout_width="wrap_content"
+                android:layout_width="140dp"
                 android:layout_height="60dp"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginTop="15dp"
-                android:backgroundTint="#FFA000"
+                android:background="@drawable/tradebuttons"
                 android:onClick="setGet"
                 android:text="@string/ore"
                 android:textColor="#A10101"
@@ -166,12 +166,12 @@
 
             <Button
                 android:id="@+id/clayGet"
-                android:layout_width="wrap_content"
+                android:layout_width="140dp"
                 android:layout_height="60dp"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="35dp"
-                android:backgroundTint="#FFA000"
+                android:background="@drawable/tradebuttons"
                 android:onClick="setGet"
                 android:text="@string/clay"
                 android:textColor="#A10101"
@@ -179,12 +179,12 @@
 
             <Button
                 android:id="@+id/bankChange"
-                android:layout_width="wrap_content"
+                android:layout_width="190dp"
                 android:layout_height="60dp"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="45dp"
-                android:backgroundTint="#FFA000"
+                android:background="@drawable/tradebuttons"
                 android:onClick="change"
                 android:text="@string/change"
                 android:textColor="#A10101"

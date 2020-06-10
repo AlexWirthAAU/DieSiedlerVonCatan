@@ -1,6 +1,7 @@
 package com.example.diesiedler.trading;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -42,7 +43,7 @@ public class BankOrPortChangeActivity extends AppCompatActivity {
     // Resource-Buttons
     Button woolGive, wheatGive, oreGive, clayGive, woodGive;
     Button woolGet, wheatGet, oreGet, clayGet, woodGet;
-  
+
     /**
      * Adds all Buttons to their List.
      * Specifies the Handler in ClientData for the current Activity.
@@ -184,11 +185,11 @@ public class BankOrPortChangeActivity extends AppCompatActivity {
      * @param view View to access the Buttons
      */
     public void setGive(View view) {
-
         for (Button btn : giveBtns) {
             btn.setEnabled(false);
 
             if (btn.getId() == view.getId()) {
+                btn.setBackgroundResource(R.drawable.tradebuttonpressed);
                 if (res.toString().length() > 0) {
                     res.append("/");
                 }
@@ -204,11 +205,11 @@ public class BankOrPortChangeActivity extends AppCompatActivity {
      * @param view View to access the Buttons
      */
     public void setGet(View view) {
-
         for (Button btn : getBtns) {
             btn.setEnabled(false);
 
             if (btn.getId() == view.getId()) {
+                btn.setBackgroundResource(R.drawable.tradebuttonpressed);
                 if (res.toString().length() > 0) {
                     res.append("/");
                 }
