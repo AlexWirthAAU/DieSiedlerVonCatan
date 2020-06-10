@@ -39,18 +39,10 @@ public class BankOrPortChangeActivity extends AppCompatActivity {
 
     PlayerInventory playerInventory; // current Players Inventory
 
-    Button woolGive = findViewById(R.id.woolGive); // Resource-Buttons
-    Button wheatGive = findViewById(R.id.wheatGive);
-    Button oreGive = findViewById(R.id.oreGive);
-    Button clayGive = findViewById(R.id.clayGive);
-    Button woodGive = findViewById(R.id.woodGive);
-
-    Button woolGet = findViewById(R.id.woolGet);
-    Button wheatGet = findViewById(R.id.wheatGet);
-    Button oreGet = findViewById(R.id.oreGet);
-    Button clayGet = findViewById(R.id.clayGet);
-    Button woodGet = findViewById(R.id.woodGet);
-
+    // Resource-Buttons
+    Button woolGive, wheatGive, oreGive, clayGive, woodGive;
+    Button woolGet, wheatGet, oreGet, clayGet, woodGet;
+  
     /**
      * Adds all Buttons to their List.
      * Specifies the Handler in ClientData for the current Activity.
@@ -61,6 +53,18 @@ public class BankOrPortChangeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bank_change);
+
+        woolGive = findViewById(R.id.woolGive);
+        wheatGive = findViewById(R.id.wheatGive);
+        oreGive = findViewById(R.id.oreGive);
+        clayGive = findViewById(R.id.clayGive);
+        woodGive = findViewById(R.id.woodGive);
+
+        woolGet = findViewById(R.id.woolGet);
+        wheatGet = findViewById(R.id.wheatGet);
+        oreGet = findViewById(R.id.oreGet);
+        clayGet = findViewById(R.id.clayGet);
+        woodGet = findViewById(R.id.woodGet);
 
         giveBtns.add(woodGive);
         giveBtns.add(woolGive);
