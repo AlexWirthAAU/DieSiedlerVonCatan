@@ -14,35 +14,81 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".cheating.CheatSelectResourceActivity"></activity>
-        <activity android:name=".cheating.CheatCounterActivity" />
-        <activity android:name=".cheating.CheatRevealActivity" />
-        <activity android:name=".ThiefActivity" />
-        <activity android:name=".ShowInventoryActivity" />
-        <activity android:name=".cards.PlayMonopolOrInventionActivity" />
-        <activity android:name=".cards.PlayCardActivity" />
-        <activity android:name=".RollDiceActivity" />
-        <activity android:name=".trading.BankOrPortChangeActivity" />
-        <activity android:name=".trading.AnswerToTradeActivity" />
-        <activity android:name=".trading.TradeActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".ShowCostsActivity" />
-        <activity android:name=".beforegame.WelcomeActivity">
+        <activity
+            android:name=".cheating.CheatSelectResourceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".cheating.CheatCounterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".cheating.CheatRevealActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ThiefActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ShowInventoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".cards.PlayMonopolOrInventionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".cards.PlayCardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RollDiceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".trading.BankOrPortChangeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".trading.AnswerToTradeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".trading.TradeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ShowCostsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".beforegame.WelcomeActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".beforegame.SearchPlayersActivity" />
-        <activity android:name=".beforegame.SelectColorsActivity" />
-        <activity android:name=".beforegame.LoginActivity" />
-        <activity android:name=".building.BuildSettlementActivity" />
-        <activity android:name=".building.BuildRoadActivity" />
-        <activity android:name=".building.BuildCityActivity" />
-        <activity android:name=".ChooseActionActivity" />
-        <activity android:name=".ScoreBoardActivity" />
-        <activity android:name=".cards.DevCardInventoryActivity" />
+        <activity
+            android:name=".beforegame.SearchPlayersActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".beforegame.SelectColorsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".beforegame.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".building.BuildSettlementActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".building.BuildRoadActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".building.BuildCityActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ChooseActionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ScoreBoardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".cards.DevCardInventoryActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 
